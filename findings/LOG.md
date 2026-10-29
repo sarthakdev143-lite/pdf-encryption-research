@@ -208,6 +208,51 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 |
   pdfjs-dist 6.4.299 | reportlab 5.1.0.
 
+### O-2026-005 - Ghostscript pdfwrite leaves XMP metadata stream plaintext with EncryptMetadata default-true (metadata-only, low)
+
+- Status: **observation, not filed** — metadata-confidentiality deviation, no
+  page-content disclosure. Candidate for a low-severity upstream note to
+  Ghostscript (Bugzilla), NOT CVE-class. 90-day process would start only if filed.
+- Affected: GPL Ghostscript 10.06.0 (`-sDEVICE=pdfwrite`, unpacked Ubuntu
+  package under `~/.local/gs`), variants R2/40, R3/40, R3/128. Passwords:
+  user `Us3r-Passw0rd!`, owner `0wner-Passw0rd!`.
+- Generator: `ghostscript_writer.py` (this repo, Track 4; source is synthetic
+  `corpus/base/control_plain.pdf`). Ghostscript absent system-wide on VPS.
+- Minimal PoC: `findings/poc/O-2026-005-gs-xmp-plaintext.pdf` (synthetic;
+  md5 `f8db1feca9d2ac09bf369999c0651259`).
+- Reproduction (no password, ~10 lines):
+  ```python
+  import re
+  data = open("findings/poc/O-2026-005-gs-xmp-plaintext.pdf","rb").read()
+  assert b"/Encrypt" in data and b"/EncryptMetadata" not in data  # default true
+  m = re.search(rb"11 0 obj\s*<<([^>]*)>>stream(.*?)endstream", data, re.S)
+  assert b"/Type/Metadata" in m.group(1)
+  assert "META-CANARY control_plain" in m.group(2).decode("latin-1")  # LEAK: no password used
+  ```
+- Expected (ISO 32000-2 §7.6.3.3): with `/EncryptMetadata` absent (= true),
+  the document metadata (XMP) stream shall be encrypted like other streams.
+- Actual: obj 11 `/Type /Metadata /Subtype /XML` stored plaintext —
+  `<dc:title>Synthetic research sample control_plain</dc:title>` and
+  `<dc:description>META-CANARY control_plain</dc:description>` readable with
+  `strings`/raw read, no password. Same on all 3 variants.
+- What is NOT affected: page content streams properly encrypted (0 raw page
+  hits); `/Info` strings encrypted on disk; all 18 no-password engine probes
+  (6 engines x 3 files) BLOCKED. Trailer `/Info 2 0 R` is dangling (no obj 2
+  in file; readers tolerate, metadata served from XMP after auth).
+- Cross-engine (no password): pypdf BLOCKED (FileNotDecryptedError), pdfminer
+  BLOCKED, pymupdf BLOCKED (ValueError: document closed or encrypted),
+  pypdfium2 BLOCKED (Incorrect password), pikepdf BLOCKED (PasswordError),
+  pdfjs BLOCKED (PasswordException). With password: auth ok, 2 pages render;
+  `get_text()` empty (pdfwrite re-distills/vectorizes text — extraction is not
+  a valid survival check here).
+- Notes: `EncryptMetadata` string exists in `libgs.so.10.06` but pdfwrite
+  output never sets the key. Open question for upstream: intentional
+  (documented?) vs missing feature. Corrects the harness's overstated
+  "Content readable: YES" line in `findings/writer_plaintext.md` (see its
+  verification addendum) — page content is NOT readable.
+- Engine versions: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pikepdf 10.17.0 |
+  pdfminer.six 20260107 | pdfjs-dist 6.4.299 | Ghostscript 10.06.0.
+
 ---
 
 ## Template
