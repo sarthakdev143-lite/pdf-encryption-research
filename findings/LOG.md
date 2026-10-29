@@ -149,6 +149,36 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   pdfminer.six` / `node -p "require('pdfjs-dist/package.json').version"` on the
   VPS; recorded in `findings/24-7.log`.
 
+### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
+
+- Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
+  `findings/pdfex_static.csv`)
+- Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
+  control) = 9 files, 54 no-password probes across 6 engines. All revisions
+  appended WITHOUT the password (trailer without `/Encrypt`, `/Prev` ->
+  original xref). Payloads reference the ORIGINAL encrypted content-stream
+  object number: AcroForm field `/V` + `/SubmitForm` `/OpenAction` to
+  `http://example.invalid/collect` (never fetched) in `form_ref`; Form XObject
+  `/Fm0 Do` alias in `xobject_alias`; `/EmbeddedFiles` `/EF` alias in
+  `ef_alias`. User password `Us3r-Passw0rd!`.
+- Result without a password:
+  - **Original encrypted canary recovered: 0/36** encrypted engine-file pairs.
+  - Injected plaintext rendered: 24/36, all on pdfminer, pymupdf, pikepdf,
+    pdf.js. pypdf and PDFium refuse every variant (they carry `/Encrypt`
+    forward through `/Prev`).
+- Representative PoC: `findings/poc/O-2026-003-pdfex-form-ref.pdf`
+  (synthetic; user password `Us3r-Passw0rd!`). Without a password MuPDF opens
+  it (`needs_pass=0`) and renders only the injected page.
+- Interpretation: same integrity property as O-2026-001/O-2026-002 — static
+  scaffolding for PDFex-style attacks, not a user-password confidentiality
+  break. Actual with-password exfiltration (victim decrypts + viewer submits
+  to URL / renders XObject / saves attachment) needs a real viewer with a
+  network sink and was explicitly NOT tested here. See "What needs a real
+  viewer" in `findings/pdfex_static.md`. Not filed upstream.
+- Engine versions at time of run: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) |
+  pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 |
+  pdfjs-dist 6.4.299 | reportlab 5.1.0.
+
 ---
 
 ## Template

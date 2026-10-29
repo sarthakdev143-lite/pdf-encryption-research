@@ -1,0 +1,55 @@
+seed,variant,engine,status,encrypted,injected_shown,original_shown,detail
+aes256_r6__plain.pdf,form_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,xobject_alias,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,ef_alias,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,form_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,xobject_alias,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,ef_alias,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+control_plain.pdf,form_ref,pypdf,OK,False,True,False,
+control_plain.pdf,xobject_alias,pypdf,OK,False,True,False,
+control_plain.pdf,ef_alias,pypdf,OK,False,True,False,
+aes256_r6__plain.pdf,form_ref,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,xobject_alias,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,ef_alias,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,form_ref,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,xobject_alias,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,ef_alias,pdfminer,OK,True,True,False,
+control_plain.pdf,form_ref,pdfminer,OK,False,True,False,
+control_plain.pdf,xobject_alias,pdfminer,OK,False,True,False,
+control_plain.pdf,ef_alias,pdfminer,OK,False,True,False,
+aes256_r6__plain.pdf,form_ref,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,xobject_alias,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,ef_alias,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,form_ref,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,xobject_alias,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,ef_alias,pymupdf,OK,True,True,False,
+control_plain.pdf,form_ref,pymupdf,OK,False,True,False,
+control_plain.pdf,xobject_alias,pymupdf,OK,False,True,False,
+control_plain.pdf,ef_alias,pymupdf,OK,False,True,True,
+aes256_r6__plain.pdf,form_ref,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,xobject_alias,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,ef_alias,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,form_ref,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,xobject_alias,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,ef_alias,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+control_plain.pdf,form_ref,pypdfium2,OK,False,True,False,
+control_plain.pdf,xobject_alias,pypdfium2,OK,False,True,False,
+control_plain.pdf,ef_alias,pypdfium2,OK,False,True,False,
+aes256_r6__plain.pdf,form_ref,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,xobject_alias,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,ef_alias,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,form_ref,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,xobject_alias,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,ef_alias,pikepdf,OK,True,True,False,
+control_plain.pdf,form_ref,pikepdf,OK,False,True,True,
+control_plain.pdf,xobject_alias,pikepdf,OK,False,True,True,
+control_plain.pdf,ef_alias,pikepdf,OK,False,True,True,
+aes256_r6__plain.pdf,form_ref,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,xobject_alias,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,ef_alias,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,form_ref,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,xobject_alias,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,ef_alias,pdfjs,OK,True,True,False,
+control_plain.pdf,form_ref,pdfjs,OK,False,True,False,
+control_plain.pdf,xobject_alias,pdfjs,OK,False,True,False,
+control_plain.pdf,ef_alias,pdfjs,OK,False,True,False,
