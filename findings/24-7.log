@@ -9,111 +9,12 @@
 [2026-10-29T21:01:09Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF bundled) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299
 [2026-10-29T21:01:09Z] cycle 2 files: generate_corpus.py -> 24 base; prevchain.py -> corpus/prevchain/51 files (13 variants x 4 seeds), findings/prevchain.csv/.md, findings/poc/O-2026-002-shadow-encrypt-obj.pdf
 [2026-10-29T21:01:09Z] cycle 2 result: 306 no-password probes, ORIGINAL content shown 0, injected plaintext shown 50/234 encrypted pairs (pdfminer/pymupdf/pikepdf/pdfjs render; pypdf+PDFium refuse). With-password controls valid (alias_encrypt+pw renders canary). No leak. Logged O-2026-002 in findings/LOG.md (integrity observation, not reportable).
-[0m← [0mWrite findings/24-7.log
-Wrote file successfully: findings/24-7.log
-> build · muse-spark-1.3-contributor
-[0m$ [0mcd ~/pdf-encryption-research && tail -12 findings/report.md && echo "===" && git status --short && echo "===" && git diff --stat
-- LEAK: 0  CRASH/TIMEOUT: 0  INFO: 15
-
-No leaks or crashes in this run. Expand mutations (mutate.py) and extractors before concluding anything.
-
-<!-- track2:begin -->
-## Track 2 - /Prev chain and hybrid-xref confusion (2026-10-29)
-
-- matrix: 51 synthetic files (13 variants x 4 seeds), 306 no-password probes across 6 engines.
-- **original encrypted content recovered without password: 0**
-- injected plaintext rendered without password: 50 (integrity property, not confidentiality).
-- full table: `findings/prevchain.md` / `findings/prevchain.csv`; observation: `O-2026-002` in `findings/LOG.md`.
-<!-- track2:end -->
-===
-AM findings/24-7.log
- M findings/LOG.md
-AM findings/prevchain.csv
-AM findings/prevchain.md
- M findings/report.md
-A  prevchain.py
-?? corpus/
-?? findings/poc/O-2026-002-shadow-encrypt-obj.pdf
-===
- findings/24-7.log      | 2048 +-----------------------------------------------
- findings/LOG.md        |   43 +
- findings/prevchain.csv |    4 +-
- findings/prevchain.md  |    4 +-
- findings/report.md     |   11 +-
- 5 files changed, 69 insertions(+), 2041 deletions(-)
-> build · muse-spark-1.3-contributor
-[0m$ [0mcd ~/pdf-encryption-research && git diff findings/prevchain.csv | head -20; git diff findings/prevchain.md | head -20
-diff --git a/findings/prevchain.csv b/findings/prevchain.csv
-index d6c03ff..fb6a5fa 100644
---- a/findings/prevchain.csv
-+++ b/findings/prevchain.csv
-@@ -1,7 +1,7 @@
- seed,variant,engine,status,encrypted,injected_shown,original_shown,detail
- aes256_r6__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
- aes256_r6__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
--aes256_r6__plain.pdf,t_encrypt_empty,pypdf,ERROR,True,False,False,"PdfReadError: Invalid Elementary Object starting with b')' @35: b""a\xf4'd\xde\xde\xe2\xba\x94\x90\xa3\x19\xc3\xeb\x14\x9c?\xcar\xf1)\xf0X\x197\xde\xed\xd5f\xa4x"
-+aes256_r6__plain.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
- aes256_r6__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
- aes256_r6__plain.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
- aes256_r6__plain.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
-@@ -14,7 +14,7 @@ aes256_r6__plain.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecry
- aes256_r6__plain.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
- rc4_128_r4__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
- rc4_128_r4__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
--rc4_128_r4__plain.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
-+rc4_128_r4__plain.pdf,t_encrypt_empty,pypdf,ERROR,True,False,False,PdfReadError: Invalid Elementary Object starting with b'\x9f' @0: b'\x9f\x8c\x18\x12\xe3/\xadgK8\xd9\x106\xaa/\xf7\x1f\xce\x9f\x86\xae\x1f.\x89\x01\xf6\xe8\x83\
- rc4_128_r4__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
-diff --git a/findings/prevchain.md b/findings/prevchain.md
-index 61d4c14..67bac66 100644
---- a/findings/prevchain.md
-+++ b/findings/prevchain.md
-@@ -13,7 +13,7 @@ stream being dumped, not a rendered page.
- |---|---|---|---|---|---|---|
- | aes256_r6__plain.pdf | t_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
- | aes256_r6__plain.pdf | t_encrypt_ref | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
--| aes256_r6__plain.pdf | t_encrypt_empty | pypdf | ERROR | False | **False** | PdfReadError: Invalid Elementary Object starting with b')' @35: b"a\xf4'd\xde\xde\xe2\xba\x94\x90\xa3\x19\xc3\xeb\x14\x9c?\xcar\xf1)\xf0X\x197\xde\xed\xd5f\xa4x |
-+| aes256_r6__plain.pdf | t_encrypt_empty | pypdf | OK | False | **False** |  |
- | aes256_r6__plain.pdf | alias_plain | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
- | aes256_r6__plain.pdf | alias_encrypt | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
- | aes256_r6__plain.pdf | root_old | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
-@@ -26,7 +26,7 @@ stream being dumped, not a rendered page.
- | aes256_r6__plain.pdf | xs_pure_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
- | rc4_128_r4__plain.pdf | t_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
- | rc4_128_r4__plain.pdf | t_encrypt_ref | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
--| rc4_128_r4__plain.pdf | t_encrypt_empty | pypdf | OK | False | **False** |  |
-+| rc4_128_r4__plain.pdf | t_encrypt_empty | pypdf | ERROR | False | **False** | PdfReadError: Invalid Elementary Object starting with b'\x9f' @0: b'\x9f\x8c\x18\x12\xe3/\xadgK8\xd9\x106\xaa/\xf7\x1f\xce\x9f\x86\xae\x1f.\x89\x01\xf6\xe8\x83\ |
- | rc4_128_r4__plain.pdf | alias_plain | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
-> build · muse-spark-1.3-contributor
-[0m← [0mEdit findings/LOG.md
-Index: findings/LOG.md
-===================================================================
---- findings/LOG.md
-+++ findings/LOG.md
-@@ -135,8 +135,13 @@
-     is the barrier. `t_none` + password renders the injected page.
- - Representative PoC: `findings/poc/O-2026-002-shadow-encrypt-obj.pdf`
-   (synthetic; user password `Us3r-Passw0rd!`). Without a password MuPDF opens
-   it (`needs_pass=0`) and renders the injected page; pypdf/PDFium refuse.
-+- Note: `t_encrypt_empty` embeds a freshly generated empty-password donor dict
-+  per run, so its non-leak verdict (pypdf `OK`-empty vs `ERROR` on ciphertext
-+  parsed as objects) varies run to run. The security-relevant columns
-+  (`ORIGINAL=False` everywhere) are stable across both runs (51 files, 306
-+  probes each).
- - Interpretation: same as O-2026-001 — an integrity property (no MAC/signature
-   over revisions), not a user-password confidentiality break. Documents the
-   parser-disagreement surface on which PDFex-style attacks (which additionally
-   need a victim who decrypts with the password) are built. Not filed upstream.
-
-[0m← [0mEdit .gitignore
-Index: .gitignore
-===================================================================
---- .gitignore
-+++ .gitignore
-@@ -1,4 +1,5 @@
- node_modules/
- __pycache__/
- .opencode-logs/
- *.pyc
-+corpus/
-
-> build · muse-spark-1.3-contributor
+[2026-10-29T21:06:30Z] cycle 3 start (job 1: full-pipeline baseline re-run): branch research/vps-2026-10-29
+[2026-10-29T21:06:30Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0 (pyaes NOT installed -> reportlab strength=256 skipped by writers.py)
+[2026-10-29T21:06:30Z] cycle 3 files: generate_corpus.py -> 24 base; writers.py -> 10 writers (reportlab_s256 skipped, no pyaes); mutate.py -> 291 mutants; manifest 325 entries
+[2026-10-29T21:06:30Z] cycle 3 triage: 325 files x 6 engines = 1950 no-password probes -> LEAK 0, CRASH/TIMEOUT 0, INFO 15 (spec-unencrypted metadata, by design). All 116 SILENT verified text_len=0 (66 encrypt_ref_hidden, 17 all_identity, rest scattered) -> no hidden content.
+[2026-10-29T21:06:30Z] cycle 3 authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes -> AUTH-BYPASS 0, FAIL-CONTROL 0 (960 wrong-password REJECTED, 192+192 correct/owner ACCEPTED). reportlab_s256 absent (no pyaes); F-2026-002 still covered by frozen PoC findings/poc/reportlab_s256_nonconforming.pdf.
+[2026-10-29T21:06:30Z] cycle 3 fuzz: fuzz.py 1200 -> ~3600 ciphertext probes (pypdf/pdfminer/pikepdf native) -> crashes/timeouts 0. findings/crashes/index.jsonl empty.
+[2026-10-29T21:06:30Z] cycle 3 incremental: appended-revision injection, original encrypted content shown 0/4 on all 6 engines (O-2026-001 behavior unchanged; pypdf+PDFium refuse, others render injected page only).
+[2026-10-29T21:06:30Z] cycle 3 result: BASELINE CONFIRMED 0 leaks / 0 crashes on current mainline engines. report.md track2 block restored after triage.py regen clobbered it; authmatrix.md annotated for missing s256. No LOG.md entry (no new finding; F-2026-001/F-2026-002/O-2026-001/O-2026-002 unchanged).
+[2026-10-29T21:06:30Z] NOTE: 24-7.log rebuilt clean again (loop appends `opencode run` session transcript into this file; first 11 lines kept from HEAD 82d0a28, prior-cycle transcript garbage dropped, no research data lost).
