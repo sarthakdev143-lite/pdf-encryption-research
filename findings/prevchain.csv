@@ -1,0 +1,307 @@
+seed,variant,engine,status,encrypted,injected_shown,original_shown,detail
+aes256_r6__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,chain_none_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,chain_encrypt_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,shadow_encrypt_obj,pypdf,ERROR,True,False,False,NotImplementedError: only Standard PDF encryption handler is available
+aes256_r6__plain.pdf,h_refstm_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,h_trailer_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,t_encrypt_empty,pypdf,ERROR,True,False,False,PdfReadError: Invalid Elementary Object starting with b'\x9f' @0: b'\x9f\x8c\x18\x12\xe3/\xadgK8\xd9\x106\xaa/\xf7\x1f\xce\x9f\x86\xae\x1f.\x89\x01\xf6\xe8\x83\
+rc4_128_r4__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,chain_none_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,chain_encrypt_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pypdf,ERROR,True,False,False,NotImplementedError: only Standard PDF encryption handler is available
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,chain_none_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,chain_encrypt_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pypdf,ERROR,True,False,False,NotImplementedError: only Standard PDF encryption handler is available
+aes256_r6__objstm.pdf,h_refstm_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,h_trailer_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
+control_plain.pdf,t_none,pypdf,OK,False,True,False,
+control_plain.pdf,t_encrypt_ref,pypdf,OK,False,True,False,
+control_plain.pdf,t_encrypt_empty,pypdf,OK,False,False,False,
+control_plain.pdf,alias_plain,pypdf,OK,False,False,True,
+control_plain.pdf,alias_encrypt,pypdf,OK,False,False,True,
+control_plain.pdf,root_old,pypdf,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pypdf,OK,False,True,False,
+control_plain.pdf,chain_encrypt_none,pypdf,OK,False,True,False,
+control_plain.pdf,h_refstm_encrypt,pypdf,OK,False,True,False,
+control_plain.pdf,h_trailer_encrypt,pypdf,OK,False,True,False,
+control_plain.pdf,xs_pure_encrypt,pypdf,OK,False,True,False,
+control_plain.pdf,xs_pure_none,pypdf,OK,False,False,True,
+aes256_r6__plain.pdf,t_none,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,t_encrypt_ref,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__plain.pdf,t_encrypt_empty,pdfminer,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pdfminer,OK,True,False,False,
+aes256_r6__plain.pdf,alias_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__plain.pdf,root_old,pdfminer,OK,True,False,False,
+aes256_r6__plain.pdf,chain_none_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__plain.pdf,chain_encrypt_none,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,shadow_encrypt_obj,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,h_refstm_encrypt,pdfminer,OK,True,True,False,
+aes256_r6__plain.pdf,h_trailer_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__plain.pdf,xs_pure_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__plain.pdf,xs_pure_none,pdfminer,OK,True,False,False,
+rc4_128_r4__plain.pdf,t_none,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,t_encrypt_ref,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+rc4_128_r4__plain.pdf,t_encrypt_empty,pdfminer,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_plain,pdfminer,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+rc4_128_r4__plain.pdf,root_old,pdfminer,OK,True,False,False,
+rc4_128_r4__plain.pdf,chain_none_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+rc4_128_r4__plain.pdf,chain_encrypt_none,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pdfminer,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+rc4_128_r4__plain.pdf,xs_pure_none,pdfminer,OK,True,False,False,
+aes256_r6__objstm.pdf,t_none,pdfminer,OK,True,True,False,
+aes256_r6__objstm.pdf,t_encrypt_ref,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__objstm.pdf,t_encrypt_empty,pdfminer,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pdfminer,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__objstm.pdf,root_old,pdfminer,OK,True,False,False,
+aes256_r6__objstm.pdf,chain_none_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__objstm.pdf,chain_encrypt_none,pdfminer,OK,True,True,False,
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pdfminer,OK,True,False,False,
+aes256_r6__objstm.pdf,h_refstm_encrypt,pdfminer,OK,True,True,False,
+aes256_r6__objstm.pdf,h_trailer_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__objstm.pdf,xs_pure_encrypt,pdfminer,BLOCKED,True,False,False,PdfminerException: 
+aes256_r6__objstm.pdf,xs_pure_none,pdfminer,OK,True,False,False,
+control_plain.pdf,t_none,pdfminer,OK,False,True,False,
+control_plain.pdf,t_encrypt_ref,pdfminer,OK,False,True,False,
+control_plain.pdf,t_encrypt_empty,pdfminer,OK,False,False,False,
+control_plain.pdf,alias_plain,pdfminer,OK,False,False,True,
+control_plain.pdf,alias_encrypt,pdfminer,OK,False,False,True,
+control_plain.pdf,root_old,pdfminer,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pdfminer,OK,False,True,False,
+control_plain.pdf,chain_encrypt_none,pdfminer,OK,False,True,False,
+control_plain.pdf,h_refstm_encrypt,pdfminer,OK,False,True,False,
+control_plain.pdf,h_trailer_encrypt,pdfminer,OK,False,True,False,
+control_plain.pdf,xs_pure_encrypt,pdfminer,OK,False,True,False,
+control_plain.pdf,xs_pure_none,pdfminer,OK,False,False,True,
+aes256_r6__plain.pdf,t_none,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,t_encrypt_ref,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__plain.pdf,t_encrypt_empty,pymupdf,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pymupdf,OK,True,False,False,
+aes256_r6__plain.pdf,alias_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__plain.pdf,root_old,pymupdf,OK,True,False,False,
+aes256_r6__plain.pdf,chain_none_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__plain.pdf,chain_encrypt_none,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,shadow_encrypt_obj,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,h_refstm_encrypt,pymupdf,OK,True,True,False,
+aes256_r6__plain.pdf,h_trailer_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__plain.pdf,xs_pure_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__plain.pdf,xs_pure_none,pymupdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,t_none,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,t_encrypt_ref,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf,t_encrypt_empty,pymupdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_plain,pymupdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf,root_old,pymupdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,chain_none_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf,chain_encrypt_none,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pymupdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf,xs_pure_none,pymupdf,OK,True,False,False,
+aes256_r6__objstm.pdf,t_none,pymupdf,OK,True,True,False,
+aes256_r6__objstm.pdf,t_encrypt_ref,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__objstm.pdf,t_encrypt_empty,pymupdf,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pymupdf,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__objstm.pdf,root_old,pymupdf,OK,True,False,False,
+aes256_r6__objstm.pdf,chain_none_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__objstm.pdf,chain_encrypt_none,pymupdf,OK,True,True,False,
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pymupdf,OK,True,True,False,
+aes256_r6__objstm.pdf,h_refstm_encrypt,pymupdf,OK,True,True,False,
+aes256_r6__objstm.pdf,h_trailer_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__objstm.pdf,xs_pure_encrypt,pymupdf,BLOCKED,True,False,False,ValueError: document closed or encrypted
+aes256_r6__objstm.pdf,xs_pure_none,pymupdf,OK,True,False,False,
+control_plain.pdf,t_none,pymupdf,OK,False,True,False,
+control_plain.pdf,t_encrypt_ref,pymupdf,OK,False,True,False,
+control_plain.pdf,t_encrypt_empty,pymupdf,OK,False,False,False,
+control_plain.pdf,alias_plain,pymupdf,OK,False,False,True,
+control_plain.pdf,alias_encrypt,pymupdf,OK,False,False,True,
+control_plain.pdf,root_old,pymupdf,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pymupdf,OK,False,True,False,
+control_plain.pdf,chain_encrypt_none,pymupdf,OK,False,True,False,
+control_plain.pdf,h_refstm_encrypt,pymupdf,OK,False,True,False,
+control_plain.pdf,h_trailer_encrypt,pymupdf,OK,False,True,False,
+control_plain.pdf,xs_pure_encrypt,pymupdf,OK,False,True,False,
+control_plain.pdf,xs_pure_none,pymupdf,OK,False,False,True,
+aes256_r6__plain.pdf,t_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,t_encrypt_ref,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,t_encrypt_empty,pypdfium2,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,alias_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,root_old,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,chain_none_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,chain_encrypt_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,shadow_encrypt_obj,pypdfium2,ERROR,True,False,False,PdfiumError: Failed to load document (PDFium: Unsupported security scheme error).
+aes256_r6__plain.pdf,h_refstm_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,h_trailer_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,xs_pure_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf,xs_pure_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,t_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,t_encrypt_ref,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,t_encrypt_empty,pypdfium2,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_plain,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,alias_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,root_old,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,chain_none_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,chain_encrypt_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pypdfium2,ERROR,True,False,False,PdfiumError: Failed to load document (PDFium: Unsupported security scheme error).
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,xs_pure_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,t_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,t_encrypt_ref,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,t_encrypt_empty,pypdfium2,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,alias_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,root_old,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,chain_none_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,chain_encrypt_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pypdfium2,ERROR,True,False,False,PdfiumError: Failed to load document (PDFium: Unsupported security scheme error).
+aes256_r6__objstm.pdf,h_refstm_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,h_trailer_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,xs_pure_encrypt,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,xs_pure_none,pypdfium2,BLOCKED,True,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+control_plain.pdf,t_none,pypdfium2,OK,False,True,False,
+control_plain.pdf,t_encrypt_ref,pypdfium2,OK,False,True,False,
+control_plain.pdf,t_encrypt_empty,pypdfium2,OK,False,False,False,
+control_plain.pdf,alias_plain,pypdfium2,OK,False,False,True,
+control_plain.pdf,alias_encrypt,pypdfium2,OK,False,False,True,
+control_plain.pdf,root_old,pypdfium2,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pypdfium2,OK,False,True,False,
+control_plain.pdf,chain_encrypt_none,pypdfium2,OK,False,True,False,
+control_plain.pdf,h_refstm_encrypt,pypdfium2,OK,False,True,False,
+control_plain.pdf,h_trailer_encrypt,pypdfium2,OK,False,True,False,
+control_plain.pdf,xs_pure_encrypt,pypdfium2,OK,False,True,False,
+control_plain.pdf,xs_pure_none,pypdfium2,OK,False,False,True,
+aes256_r6__plain.pdf,t_none,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,t_encrypt_ref,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__plain__t_encrypt_ref.pdf: invalid password
+aes256_r6__plain.pdf,t_encrypt_empty,pikepdf,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,alias_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__plain__alias_encrypt.pdf: invalid password
+aes256_r6__plain.pdf,root_old,pikepdf,OK,True,False,False,
+aes256_r6__plain.pdf,chain_none_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__plain__chain_none_encrypt.pdf: invalid password
+aes256_r6__plain.pdf,chain_encrypt_none,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,shadow_encrypt_obj,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,h_refstm_encrypt,pikepdf,OK,True,True,False,
+aes256_r6__plain.pdf,h_trailer_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__plain__h_trailer_encrypt.pdf: invalid password
+aes256_r6__plain.pdf,xs_pure_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__plain__xs_pure_encrypt.pdf: invalid password
+aes256_r6__plain.pdf,xs_pure_none,pikepdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,t_none,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,t_encrypt_ref,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/rc4_128_r4__plain__t_encrypt_ref.pdf: invalid password
+rc4_128_r4__plain.pdf,t_encrypt_empty,pikepdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_plain,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,alias_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/rc4_128_r4__plain__alias_encrypt.pdf: invalid password
+rc4_128_r4__plain.pdf,root_old,pikepdf,OK,True,False,False,
+rc4_128_r4__plain.pdf,chain_none_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/rc4_128_r4__plain__chain_none_encrypt.pdf: invalid password
+rc4_128_r4__plain.pdf,chain_encrypt_none,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pikepdf,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/rc4_128_r4__plain__h_trailer_encrypt.pdf: invalid password
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/rc4_128_r4__plain__xs_pure_encrypt.pdf: invalid password
+rc4_128_r4__plain.pdf,xs_pure_none,pikepdf,OK,True,False,False,
+aes256_r6__objstm.pdf,t_none,pikepdf,OK,True,True,False,
+aes256_r6__objstm.pdf,t_encrypt_ref,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__t_encrypt_ref.pdf: invalid password
+aes256_r6__objstm.pdf,t_encrypt_empty,pikepdf,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pikepdf,OK,True,True,False,
+aes256_r6__objstm.pdf,alias_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__alias_encrypt.pdf: invalid password
+aes256_r6__objstm.pdf,root_old,pikepdf,ERROR,True,False,False,PdfError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__root_old.pdf: unable to find page tree
+aes256_r6__objstm.pdf,chain_none_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__chain_none_encrypt.pdf: invalid password
+aes256_r6__objstm.pdf,chain_encrypt_none,pikepdf,OK,True,True,False,
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pikepdf,OK,True,True,False,
+aes256_r6__objstm.pdf,h_refstm_encrypt,pikepdf,OK,True,True,False,
+aes256_r6__objstm.pdf,h_trailer_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__h_trailer_encrypt.pdf: invalid password
+aes256_r6__objstm.pdf,xs_pure_encrypt,pikepdf,BLOCKED,True,False,False,PasswordError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__xs_pure_encrypt.pdf: invalid password
+aes256_r6__objstm.pdf,xs_pure_none,pikepdf,ERROR,True,False,False,PdfError: /home/sarthak/pdf-encryption-research/corpus/prevchain/aes256_r6__objstm__xs_pure_none.pdf: unable to find page tree
+control_plain.pdf,t_none,pikepdf,OK,False,True,True,
+control_plain.pdf,t_encrypt_ref,pikepdf,OK,False,True,True,
+control_plain.pdf,t_encrypt_empty,pikepdf,OK,False,False,False,
+control_plain.pdf,alias_plain,pikepdf,OK,False,True,True,
+control_plain.pdf,alias_encrypt,pikepdf,OK,False,True,True,
+control_plain.pdf,root_old,pikepdf,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pikepdf,OK,False,True,True,
+control_plain.pdf,chain_encrypt_none,pikepdf,OK,False,True,True,
+control_plain.pdf,h_refstm_encrypt,pikepdf,OK,False,True,True,
+control_plain.pdf,h_trailer_encrypt,pikepdf,OK,False,True,True,
+control_plain.pdf,xs_pure_encrypt,pikepdf,OK,False,True,True,
+control_plain.pdf,xs_pure_none,pikepdf,OK,False,False,True,
+aes256_r6__plain.pdf,t_none,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,t_encrypt_ref,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__plain.pdf,t_encrypt_empty,pdfjs,OK,True,False,False,
+aes256_r6__plain.pdf,alias_plain,pdfjs,OK,True,False,False,
+aes256_r6__plain.pdf,alias_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__plain.pdf,root_old,pdfjs,OK,True,False,False,
+aes256_r6__plain.pdf,chain_none_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__plain.pdf,chain_encrypt_none,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,shadow_encrypt_obj,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,h_refstm_encrypt,pdfjs,OK,True,True,False,
+aes256_r6__plain.pdf,h_trailer_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__plain.pdf,xs_pure_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__plain.pdf,xs_pure_none,pdfjs,OK,True,False,False,
+rc4_128_r4__plain.pdf,t_none,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,t_encrypt_ref,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+rc4_128_r4__plain.pdf,t_encrypt_empty,pdfjs,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_plain,pdfjs,OK,True,False,False,
+rc4_128_r4__plain.pdf,alias_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+rc4_128_r4__plain.pdf,root_old,pdfjs,OK,True,False,False,
+rc4_128_r4__plain.pdf,chain_none_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+rc4_128_r4__plain.pdf,chain_encrypt_none,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,shadow_encrypt_obj,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_refstm_encrypt,pdfjs,OK,True,True,False,
+rc4_128_r4__plain.pdf,h_trailer_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+rc4_128_r4__plain.pdf,xs_pure_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+rc4_128_r4__plain.pdf,xs_pure_none,pdfjs,OK,True,False,False,
+aes256_r6__objstm.pdf,t_none,pdfjs,OK,True,True,False,
+aes256_r6__objstm.pdf,t_encrypt_ref,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__objstm.pdf,t_encrypt_empty,pdfjs,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_plain,pdfjs,OK,True,False,False,
+aes256_r6__objstm.pdf,alias_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__objstm.pdf,root_old,pdfjs,ERROR,True,False,False,InvalidPDFException: Invalid Root reference.
+aes256_r6__objstm.pdf,chain_none_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__objstm.pdf,chain_encrypt_none,pdfjs,OK,True,True,False,
+aes256_r6__objstm.pdf,shadow_encrypt_obj,pdfjs,OK,True,True,False,
+aes256_r6__objstm.pdf,h_refstm_encrypt,pdfjs,OK,True,True,False,
+aes256_r6__objstm.pdf,h_trailer_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__objstm.pdf,xs_pure_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
+aes256_r6__objstm.pdf,xs_pure_none,pdfjs,ERROR,True,False,False,InvalidPDFException: Invalid Root reference.
+control_plain.pdf,t_none,pdfjs,OK,False,True,False,
+control_plain.pdf,t_encrypt_ref,pdfjs,OK,False,True,False,
+control_plain.pdf,t_encrypt_empty,pdfjs,OK,False,False,False,
+control_plain.pdf,alias_plain,pdfjs,OK,False,False,True,
+control_plain.pdf,alias_encrypt,pdfjs,OK,False,False,True,
+control_plain.pdf,root_old,pdfjs,OK,False,False,True,
+control_plain.pdf,chain_none_encrypt,pdfjs,OK,False,True,False,
+control_plain.pdf,chain_encrypt_none,pdfjs,OK,False,True,False,
+control_plain.pdf,h_refstm_encrypt,pdfjs,OK,False,True,False,
+control_plain.pdf,h_trailer_encrypt,pdfjs,OK,False,True,False,
+control_plain.pdf,xs_pure_encrypt,pdfjs,OK,False,True,False,
+control_plain.pdf,xs_pure_none,pdfjs,OK,False,False,True,
