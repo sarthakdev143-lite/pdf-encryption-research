@@ -47,6 +47,8 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   password/decryption errors. MuPDF is the only outlier.
 - Disclosure: not yet reported. Planned: MuPDF bug tracker (Artifex), cc
   PyMuPDF if the wrapper surface matters. Ask 90-day window before publishing.
+  Re-verified 2026-10-29 on PyMuPDF 2.0 / MuPDF 1.28.5 (VPS): behavior
+  unchanged; see `findings/reports/mupdf-encrypted-objstm.md` §Disclosure.
 - Notes: harness lesson - PyMuPDF prints native engine diagnostics to **stdout**,
   which silently corrupts JSON subprocess protocols (see `capture_fd1` in
   `triage.py`).
@@ -76,7 +78,8 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Validated end-to-end: sizes become 32/32/16 and both MuPDF and pypdf open the
   file and extract the canary. Script: `findings/poc/validate_reportlab_fix.py`.
 - Disclosure: reportlab maintainers (tracker / GitHub mirror), 90-day window,
-  offer the patch as a PR.
+  offer the patch as a PR. Re-verified 2026-10-29 (static field sizes on frozen
+  PoC unchanged); see `findings/reports/reportlab-aes256.md` §Disclosure.
 - Notes: no content leak - all readers still refuse without the password.
 
 ---

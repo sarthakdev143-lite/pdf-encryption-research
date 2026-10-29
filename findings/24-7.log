@@ -22,3 +22,39 @@
 [2026-10-29T21:08:53Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0 (pyaes NOT installed -> reportlab strength=256 skipped by writers.py)
 [2026-10-29T21:08:53Z] cycle 4 files: pdfex_static.py (new) -> corpus/pdfex_static/9 files (3 variants form_ref/xobject_alias/ef_alias x 3 seeds aes256_r6+rc4_128+control), findings/pdfex_static.csv/.md, findings/poc/O-2026-003-pdfex-form-ref.pdf
 [2026-10-29T21:08:53Z] cycle 4 result: 54 no-password probes, ORIGINAL content shown 0/36 encrypted pairs, injected plaintext shown 24/36 (pdfminer/pymupdf/pikepdf/pdfjs render; pypdf+PDFium refuse). With-password exfil via real viewer explicitly NOT tested (needs Adobe/Chrome/Firefox + network sink). No leak. Logged O-2026-003 in findings/LOG.md (integrity observation, not reportable).
+[2026-10-29T21:09:30Z] cycle 1 exit=0 branch=research/vps-2026-10-29 daily-push
+[2026-10-29T21:11:31Z] cycle 2 start branch=research/vps-2026-10-29
+[2026-10-29T21:12:22Z] cycle 5 start (Track: file reports, step 1 - disclosure notes + VPS re-verify): branch research/vps-2026-10-29
+[2026-10-29T21:12:22Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0 (pyaes NOT installed)
+[2026-10-29T21:12:22Z] cycle 5 files: findings/reports/mupdf-encrypted-objstm.md (+Re-verified +Disclosure), findings/reports/reportlab-aes256.md (+Re-verified +Disclosure), findings/LOG.md (disclosure pointers)
+[2026-10-29T21:12:22Z] cycle 5 result: F-2026-001 live re-verified on MuPDF 1.28.5 (needs_pass=1 pages=0 IndexError; pw->2 pages). F-2026-002 static re-verified on frozen PoC (UE/OE 48B, Perms 32B). Both reports still NOT sent; 90-day window notes added proposing window from send date. No leak. No LOG.md finding entry (no new finding).
+[0m$ [0mcp /tmp/log24.dedup findings/24-7.log; wc -l findings/24-7.log; tail -n 6 findings/24-7.log; echo "==="; git diff --stat findings/24-7.log; git status --short
+30 findings/24-7.log
+[2026-10-29T21:09:30Z] cycle 1 exit=0 branch=research/vps-2026-10-29 daily-push
+[2026-10-29T21:11:31Z] cycle 2 start branch=research/vps-2026-10-29
+[2026-10-29T21:12:22Z] cycle 5 start (Track: file reports, step 1 - disclosure notes + VPS re-verify): branch research/vps-2026-10-29
+[2026-10-29T21:12:22Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0 (pyaes NOT installed)
+[2026-10-29T21:12:22Z] cycle 5 files: findings/reports/mupdf-encrypted-objstm.md (+Re-verified +Disclosure), findings/reports/reportlab-aes256.md (+Re-verified +Disclosure), findings/LOG.md (disclosure pointers)
+[2026-10-29T21:12:22Z] cycle 5 result: F-2026-001 live re-verified on MuPDF 1.28.5 (needs_pass=1 pages=0 IndexError; pw->2 pages). F-2026-002 static re-verified on frozen PoC (UE/OE 48B, Perms 32B). Both reports still NOT sent; 90-day window notes added proposing window from send date. No leak. No LOG.md finding entry (no new finding).
+===
+ findings/24-7.log | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-10-29.md
+ M findings/reports/mupdf-encrypted-objstm.md
+ M findings/reports/reportlab-aes256.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mls -la findings/crashes/ 2>&1; cat .gitignore
+total 8
+drwxrwxr-x 2 sarthak sarthak 4096 Oct 29 21:04 .
+drwxrwxr-x 6 sarthak sarthak 4096 Oct 29 21:08 ..
+-rw-rw-r-- 1 sarthak sarthak    0 Oct 29 21:04 index.jsonl
+node_modules/
+__pycache__/
+.opencode-logs/
+*.pyc
+corpus/
+> build · muse-spark-1.3-contributor
+Log is clean. Committing and pushing.
