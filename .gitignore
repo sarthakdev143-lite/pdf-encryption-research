@@ -3,3 +3,5 @@ __pycache__/
 .opencode-logs/
 *.pyc
 corpus/
+# local-only VPS automation docs, never push to GitHub
+/VPS*.md
