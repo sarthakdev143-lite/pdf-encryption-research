@@ -126,9 +126,11 @@ One entry per candidate. Keep everything reproducible from self-generated files.
     pdfminer, pymupdf, pikepdf, pdf.js. pypdf and PDFium refuse every variant
     (they carry `/Encrypt` forward through `/Prev`); pypdf additionally raises
     `NotImplementedError` on `shadow_encrypt_obj` (non-`/Standard` handler).
-  - Sharpest disagreements: `shadow_encrypt_obj` (redefining the `/Encrypt`
-    object number neutralises encryption for 4 engines, pypdf errors,
-    PDFium refuses), `h_refstm_encrypt` (trailer without `/Encrypt` wins over
+  - Sharpest disagreements: `shadow_encrypt_obj` (the appended trailer drops
+    `/Encrypt` *and* redefines the object number the original handler used;
+    pdfminer/MuPDF/qpdf/pdf.js open it and render the new page, pypdf raises
+    `NotImplementedError` and PDFium reports an unsupported security scheme),
+    `h_refstm_encrypt` (trailer without `/Encrypt` wins over
     xref-stream `/Encrypt` on 4 engines), `alias_plain` (pikepdf structural
     dump surfaces the unreferenced canary stream bytes as ciphertext, not a
     rendered leak).
@@ -178,6 +180,30 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   to URL / renders XObject / saves attachment) needs a real viewer with a
   network sink and was explicitly NOT tested here. See "What needs a real
   viewer" in `findings/pdfex_static.md`. Not filed upstream.
+- Engine versions at time of run: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) |
+  pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 |
+  pdfjs-dist 6.4.299 | reportlab 5.1.0.
+
+### O-2026-004 - Track 4 scoping: writer-diversity audit on available writers, no objects left unencrypted
+
+- Experiment: raw-byte `CANARY` search over `corpus/writers/*.pdf` (10 files:
+  reportlab s40/s128, pypdf rc4-40/rc4-128/aes-128/aes-256, pymupdf
+  rc440/rc4128/aes128/aes256) + `corpus/base/*.pdf` (24 qpdf seeds), plus
+  no-password triage on the 10 writer files x 6 engines = 60 probes.
+  Report: `findings/writer_audit.md`.
+- Result:
+  - **Content-stream canary in raw bytes: 0 files.** No available writer
+    leaves content plaintext.
+  - `META-CANARY` XMP in raw bytes: 5 files, all with `/EncryptMetadata
+    false` (verified via pikepdf) — permitted by ISO 32000-2 §7.6 → INFO,
+    not a bug (per scope rules: spec-unencrypted metadata).
+  - No-password triage on writer files: 60 BLOCKED, 0 leaks.
+- Tooling note: `gs`, `libreoffice`/`soffice`, Chrome/Chromium, qpdf CLI all
+  absent on this VPS, so external-producer samples (LibreOffice/Chrome/
+  Ghostscript, public test corpora) remain future work. No PoC file: nothing
+  leaked.
+- Interpretation: negative result on the available-writer surface; Track 4
+  needs producer tooling before it can advance. Not filed upstream.
 - Engine versions at time of run: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) |
   pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 |
   pdfjs-dist 6.4.299 | reportlab 5.1.0.
