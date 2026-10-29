@@ -1006,3 +1006,116 @@ pre-rebase.sample
 pre-receive.sample
 cat: .gitattributes: No such file or directory
 > build · muse-spark-1.3-contributor
+[0m$ [0mfor c in 12c0829 6ec329e d9539e9; do echo "== $c =="; git show $c:findings/daily/2026-10-29.md 2>/dev/null | md5sum; done; md5sum findings/daily/2026-10-29.md findings/report.md; echo ---; git show HEAD:findings/daily/2026-10-29.md | md5sum; git show HEAD:findings/report.md | md5sum
+== 12c0829 ==
+d41d8cd98f00b204e9800998ecf8427e  -
+== 6ec329e ==
+38b0428019df4ca7a1134e5b8a7296a6  -
+== d9539e9 ==
+0a7a54b1e2789434bccacd7d14b52949  -
+edd1a25e3d939bd16b973cc98ea8d6cb  findings/daily/2026-10-29.md
+b110db2bfe6fc11ff2bdfbbcc6dab439  findings/report.md
+---
+edd1a25e3d939bd16b973cc98ea8d6cb  -
+b110db2bfe6fc11ff2bdfbbcc6dab439  -
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit log --oneline -4; git status --short; git rev-parse HEAD; echo ---; git show HEAD --stat | head -n 12
+ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+8f5d315 Cycle 6: Track 4 scoping - writer-diversity audit on available writers (0 leaks, 5 INFO XMP)
+d9539e9 Cycle 5: disclosure notes + VPS re-verify for F-2026-001/F-2026-002 (0 leaks)
+6ec329e Track 3 static: PDFex-style scaffolding matrix (9 files, 54 probes, 0 leaks)
+ M findings/24-7.log
+?? findings/crashes/
+ed961e930a371a21effc5f17171b0a70c9933aaf
+---
+commit ed961e930a371a21effc5f17171b0a70c9933aaf
+Author: sarthakdev143-lite <sarthakdev143.official@gmail.com>
+Date:   Thu Oct 29 21:17:12 2026 +0000
+
+    log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+
+ findings/24-7.log | 351 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 351 insertions(+)
+> build · muse-spark-1.3-contributor
+[0m$ [0mhead -n 8 findings/daily/2026-10-29.md; echo ---; grep -c "track3static" findings/report.md; git diff --stat; git log --oneline -3 --date=iso --format="%h %ad %s"
+# 2026-10-29 — research/vps-2026-10-29
+
+- branch: `research/vps-2026-10-29`
+- cycles run: 6 (1 setup, 2 Track 2 prevchain, 3 full-pipeline baseline re-run, 4 Track 3 static, 5 report disclosure notes + VPS re-verify, 6 Track 4 scoping)
+- files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/pdfex_static 9, corpus/incremental 5
+
+## Probe counts
+
+---
+2
+ findings/24-7.log | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
+ed961e9 2026-10-29 21:17:12 +0000 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+8f5d315 2026-10-29 21:16:09 +0000 Cycle 6: Track 4 scoping - writer-diversity audit on available writers (0 leaks, 5 INFO XMP)
+d9539e9 2026-10-29 21:12:55 +0000 Cycle 5: disclosure notes + VPS re-verify for F-2026-001/F-2026-002 (0 leaks)
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit show HEAD:findings/LOG.md | grep -c "O-2026-004"; git show HEAD:findings/daily/2026-10-29.md | head -n 4; git show HEAD:findings/report.md | grep -c "track2:begin\|track3static:begin"; git ls-tree HEAD --name-only findings/ | head -20; echo ---; git show ed961e9 -- findings/24-7.log | grep "^+" | grep -v "^+++" | head -n 6 | cut -c1-160
+1
+# 2026-10-29 — research/vps-2026-10-29
+
+- branch: `research/vps-2026-10-29`
+- cycles run: 6 (1 setup, 2 Track 2 prevchain, 3 full-pipeline baseline re-run, 4 Track 3 static, 5 report disclosure notes + VPS re-verify, 6 Track 4 scoping)
+2
+findings/24-7.log
+findings/LOG.md
+findings/authmatrix.csv
+findings/authmatrix.md
+findings/daily
+findings/incremental.csv
+findings/incremental.md
+findings/pdfex_static.csv
+findings/pdfex_static.md
+findings/poc
+findings/prevchain.csv
+findings/prevchain.md
+findings/report.csv
+findings/report.md
+findings/reports
+findings/writer_audit.md
+---
++[0m$ [0mcat >> findings/24-7.log <<'EOF'
++[2026-10-29T21:16:00Z] cycle 6 Track-4-scoping: gs/libreoffice/chrome/qpdf-cli absent on VPS (confirmed via command -v); raw-byte CANARY audit 34 files (writer
++EOF
++git add findings/writer_audit.md findings/LOG.md findings/daily/2026-10-29.md findings/24-7.log && git status --short && git commit -m "Cycle 6: Track 4 scopin
++M  findings/24-7.log
++M  findings/LOG.md
+> build · muse-spark-1.3-contributor
+All cycle-6 content is intact in HEAD. Recording the incident note and closing out the cycle.
+[0m← [0mEdit findings/daily/2026-10-29.md
+Index: findings/daily/2026-10-29.md
+===================================================================
+--- findings/daily/2026-10-29.md
++++ findings/daily/2026-10-29.md
+@@ -33,4 +33,24 @@
+ 
+ ## Next step
+ 
+ - Send the two reports privately (Artifex tracker for F-2026-001, reportlab tracker/mirror for F-2026-002) to start the 90-day windows, OR advance Track 4 by installing/fetching Ghostscript/LibreOffice/Chromium samples (all absent on this VPS — confirmed this cycle).
++
++## Integrity note (concurrent-session collision observed ~21:16–21:17 UTC)
++
++- During this cycle the worktree files `findings/report.md` (track3 block
++  dropped, mtime 21:16:00) and `findings/daily/2026-10-29.md` (reverted to
++  cycle-2-era text, mtime 21:16:28) were transiently overwritten by something
++  other than this cycle's commands (all post-commit commands here were
++  read-only: `git show`/`grep`/`ls`/`ps`/`tmux`).
++- A foreign commit then landed on this branch: `ed961e9` (21:17:12,
++  "log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original
++  content", 24-7.log only) — consistent with a stale agent session from an
++  earlier cycle still operating on the same worktree. Only one
++  `run-research.sh` loop and one `opencode run` (this cycle) are visible in
++  `ps`; the stale writer is likely a lingering background agent process.
++- Verified after the fact: all cycle-6 content intact in HEAD
++  (`O-2026-004` in LOG.md, cycle-6 daily, track2+track3 blocks in
++  report.md, `findings/writer_audit.md`). History is linear
++  (ed961e9 child of 8f5d315), no action needed beyond this note.
++- Recommendation: ensure only one agent session per worktree; kill lingering
++  `opencode`/agent processes before starting a new cycle.
+
+> build · muse-spark-1.3-contributor
+[2026-10-29T21:19:00Z] cycle 6 closeout: verified HEAD(ed961e9) contains all cycle-6 work (LOG O-2026-004, cycle-6 daily, report track2+track3, writer_audit.md); transient worktree reverts of report.md/daily at 21:16:00/21:16:28 reverted-appearing content was NOT from this cycle (read-only cmds only); foreign commit ed961e9 (21:17:12, Track-2 message, 24-7.log only) suggests stale concurrent agent on same worktree; noted in daily file; pushing branch
