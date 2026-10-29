@@ -162,6 +162,16 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   `NotImplementedError` + PDFium unsupported-scheme refuse. Frozen PoC
   identical to fresh regen. pymupdf reports `encryption: None`, confirming
   the dropped-trailer-wins disagreement. Still integrity-only, not filed.
+- Extension 2026-10-29 (cycle 9, Track 2): new variant `t_encrypt_null`
+  (appended plaintext page, trailer `/Encrypt null /Root N 0 R /Prev <orig>`,
+  2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle9_encrypt_null.py`) — ORIGINAL canary
+  0/12, injected rendered 10/12 (pdfminer/pymupdf/pypdfium2/pikepdf/pdf.js),
+  pypdf refuses with clean `PdfReadError: /Encrypt entry of the trailer is
+  not a dictionary`. Disagreement nuance vs `t_none`: PDFium OPENS the
+  null-trailer file while it refused every `t_none` variant — an explicit
+  null is treated as "no encryption" by 5/6 stacks. Still integrity-only
+  (injected content only, original ciphertext never disclosed), not filed.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 

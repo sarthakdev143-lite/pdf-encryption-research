@@ -2547,3 +2547,1074 @@ tail -5 findings/24-7.log | cut -c1-200
 [2026-10-29T21:25:15Z] cycle 8 probes: frozen findings/poc/O-2026-002-shadow-encrypt-obj.pdf (md5 6224ebe68f9abc57d82410870592f868) + fresh corpus/prevchain/aes256_r6__plain__shadow_encrypt_obj.pdf x 
 [2026-10-29T21:25:15Z] cycle 8 files: findings/LOG.md (O-2026-002 re-verify note), findings/daily/2026-10-29.md (cycles 7->8). No new PoC (nothing leaked). Left findings/crashes/ + findings/writer_raw
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/LOG.md findings/daily/2026-10-29.md findings/24-7.log && git status --short && git commit -m "Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)" && git push -u origin research/vps-2026-10-29 2>&1 | tail -5
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-10-29.md
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.pdf
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+[research/vps-2026-10-29 f342f2b] Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+ 3 files changed, 579 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   bfffec9..f342f2b  research/vps-2026-10-29 -> research/vps-2026-10-29
+branch 'research/vps-2026-10-29' set up to track 'origin/research/vps-2026-10-29'.
+> build · muse-spark-1.3-contributor
+Cycle 8 done, committed (`f342f2b`) and pushed to `research/vps-2026-10-29`. One track only (Track 2).
+
+**What I did:** targeted re-verify of the sharpest Track 2 disagreement variant (`shadow_encrypt_obj` — appended revision drops `/Encrypt` and redefines the original handler object) instead of a full matrix re-run.
+
+**Result (12 no-password probes):**
+- Frozen PoC `findings/poc/O-2026-002-shadow-encrypt-obj.pdf` (md5-verified) + fresh matrix file, 6 engines each
+- **ORIGINAL canary: 0/12** — no user-password content leaks
+- Injected page rendered 8/12 (pdfminer, pymupdf, pikepdf, pdf.js show INJECTED-only text); pypdf (`NotImplementedError`) and PDFium (unsupported-scheme) refuse
+- pymupdf reports `encryption: None` — confirms the dropped-trailer-wins disagreement. Behavior identical between frozen PoC and fresh regen.
+
+**Classification:** matches O-2026-002 exactly — integrity property, not a confidentiality break, not filed. LOG.md gained a re-verify note; daily file now at 8 cycles; 24-7.log appended. Leaks: 0, crashes: 0, no new PoC files.
+
+**Left untouched:** `findings/crashes/`, `findings/writer_rawscan.csv`, and several new `O-2026-004*` PoC files that appeared mid-cycle — another session is still writing to this worktree, so I committed only my three files.
+[2026-10-29T21:25:33Z] cycle 5 exit=0 branch=research/vps-2026-10-29 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-29' set up to track 'origin/research/vps-2026-10-29'.
+Already on 'research/vps-2026-10-29'
+M	findings/24-7.log
+M	findings/writer_plaintext.csv
+M	findings/writer_plaintext.md
+M	ghostscript_writer.py
+Your branch is up to date with 'origin/research/vps-2026-10-29'.
+[2026-10-29T21:27:34Z] cycle 6 start branch=research/vps-2026-10-29
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the baseline and probing one track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead README.md 
+[0m→ [0mRead findings 
+[0m$ [0mgit branch --show-current; git status --short --branch; date -u; git log --oneline -5
+research/vps-2026-10-29
+## research/vps-2026-10-29...origin/research/vps-2026-10-29
+ M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+Thu Oct 29 21:27:37 UTC 2026
+f342f2b Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+bfffec9 Cycle 7: Track 4 Ghostscript verify - XMP-plaintext O-2026-005 (metadata-only, 0 page leaks)
+3e4f816 Cycle 6 closeout: note concurrent-session collision, all Track 4 work verified intact
+ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+8f5d315 Cycle 6: Track 4 scoping - writer-diversity audit on available writers (0 leaks, 5 INFO XMP)
+> build · muse-spark-1.3-contributor
+[0m✗ [0mRead findings/24-7.log failed
+[91m[1mError: [0mCannot read binary file: findings/24-7.log
+[0m→ [0mRead findings/LOG.md 
+[0m→ [0mRead findings/daily/2026-10-29.md 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff --stat HEAD; echo ---; git status --short; echo ---; tail -n 100 findings/24-7.log 2>&1 | cat; echo ===; ls findings/daily/; echo ===; ls findings/poc/ | head -n 50
+findings/24-7.log             |  73 ++++++++++++++++
+ findings/writer_plaintext.csv |   8 +-
+ findings/writer_plaintext.md  |  70 ++++++++-------
+ ghostscript_writer.py         | 193 +++++++++++++++++++++++++++---------------
+ 4 files changed, 242 insertions(+), 102 deletions(-)
+---
+ M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+---
+- cycle 5: `findings/reports/mupdf-encrypted-objstm.md` + `findings/reports/reportlab-aes256.md` (each gained Re-verified + Disclosure section with 90-day window notes; both still NOT sent); LOG.md disclosure pointers updated
+- cycle 6 (Track 4 scoping): `findings/writer_audit.md` (tool-absence table + raw-byte audit + 60-probe writers triage); LOG.md: `O-2026-004` (INFO, not reportable); no PoC (nothing leaked)
+- cycle 7 (Track 4 Ghostscript verify): adopted `ghostscript_writer.py` + `findings/writer_plaintext.{csv,md}` (stale-session work, headline corrected to metadata-only + verification addendum); `findings/poc/O-2026-005-gs-xmp-plaintext.pdf`; LOG.md: `O-2026-005` (low, not filed)
+
+## Next step
+
+- Send the two reports privately (Artifex tracker for F-2026-001, reportlab tracker/mirror for F-2026-002) to start the 90-day windows, OR optional low-severity Ghostscript Bugzilla note re O-2026-005 XMP+EncryptMetadata, OR advance Track 4 with LibreOffice/Chromium samples (still absent on this VPS).
+
+## Integrity note (concurrent-session collision observed ~21:16–21:17 UTC)
+> build · muse-spark-1.3-contributor
+[2026-10-29T21:25:15Z] cycle 8 start branch=research/vps-2026-10-29 track=Track-2-shadow-reverify
+[2026-10-29T21:25:15Z] cycle 8 engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0
+[2026-10-29T21:25:15Z] cycle 8 probes: frozen findings/poc/O-2026-002-shadow-encrypt-obj.pdf (md5 6224ebe68f9abc57d82410870592f868) + fresh corpus/prevchain/aes256_r6__plain__shadow_encrypt_obj.pdf x 6 engines no-password = 12 probes -> ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs render INJECTED-only text), pypdf NotImplementedError + PDFium unsupported-scheme refuse. pymupdf reports encryption None. Matches O-2026-002; integrity-only, not filed.
+[2026-10-29T21:25:15Z] cycle 8 files: findings/LOG.md (O-2026-002 re-verify note), findings/daily/2026-10-29.md (cycles 7->8). No new PoC (nothing leaked). Left findings/crashes/ + findings/writer_rawscan.csv untracked (other session's). leaks=0 crashes=0
+[0m$ [0mTS=$(date -u +%Y-%m-%dT%H:%M:%SZ); cat >> findings/24-7.log <<EOF
+[$TS] cycle 8 start branch=research/vps-2026-10-29 track=Track-2-shadow-reverify
+[$TS] cycle 8 engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0
+[$TS] cycle 8 probes: frozen findings/poc/O-2026-002-shadow-encrypt-obj.pdf (md5 6224ebe68f9abc57d82410870592f868) + fresh corpus/prevchain/aes256_r6__plain__shadow_encrypt_obj.pdf x 6 engines no-password = 12 probes -> ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs render INJECTED-only text), pypdf NotImplementedError + PDFium unsupported-scheme refuse. pymupdf reports encryption None. Matches O-2026-002; integrity-only, not filed.
+[$TS] cycle 8 files: findings/LOG.md (O-2026-002 re-verify note), findings/daily/2026-10-29.md (cycles 7->8). No new PoC (nothing leaked). Left findings/crashes/ + findings/writer_rawscan.csv untracked (other session's). leaks=0 crashes=0
+EOF
+tail -5 findings/24-7.log | cut -c1-200
+> build · muse-spark-1.3-contributor
+[2026-10-29T21:25:15Z] cycle 8 start branch=research/vps-2026-10-29 track=Track-2-shadow-reverify
+[2026-10-29T21:25:15Z] cycle 8 engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0
+[2026-10-29T21:25:15Z] cycle 8 probes: frozen findings/poc/O-2026-002-shadow-encrypt-obj.pdf (md5 6224ebe68f9abc57d82410870592f868) + fresh corpus/prevchain/aes256_r6__plain__shadow_encrypt_obj.pdf x 
+[2026-10-29T21:25:15Z] cycle 8 files: findings/LOG.md (O-2026-002 re-verify note), findings/daily/2026-10-29.md (cycles 7->8). No new PoC (nothing leaked). Left findings/crashes/ + findings/writer_raw
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/LOG.md findings/daily/2026-10-29.md findings/24-7.log && git status --short && git commit -m "Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)" && git push -u origin research/vps-2026-10-29 2>&1 | tail -5
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-10-29.md
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.pdf
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+[research/vps-2026-10-29 f342f2b] Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+ 3 files changed, 579 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   bfffec9..f342f2b  research/vps-2026-10-29 -> research/vps-2026-10-29
+branch 'research/vps-2026-10-29' set up to track 'origin/research/vps-2026-10-29'.
+> build · muse-spark-1.3-contributor
+Cycle 8 done, committed (`f342f2b`) and pushed to `research/vps-2026-10-29`. One track only (Track 2).
+
+**What I did:** targeted re-verify of the sharpest Track 2 disagreement variant (`shadow_encrypt_obj` — appended revision drops `/Encrypt` and redefines the original handler object) instead of a full matrix re-run.
+
+**Result (12 no-password probes):**
+- Frozen PoC `findings/poc/O-2026-002-shadow-encrypt-obj.pdf` (md5-verified) + fresh matrix file, 6 engines each
+- **ORIGINAL canary: 0/12** — no user-password content leaks
+- Injected page rendered 8/12 (pdfminer, pymupdf, pikepdf, pdf.js show INJECTED-only text); pypdf (`NotImplementedError`) and PDFium (unsupported-scheme) refuse
+- pymupdf reports `encryption: None` — confirms the dropped-trailer-wins disagreement. Behavior identical between frozen PoC and fresh regen.
+
+**Classification:** matches O-2026-002 exactly — integrity property, not a confidentiality break, not filed. LOG.md gained a re-verify note; daily file now at 8 cycles; 24-7.log appended. Leaks: 0, crashes: 0, no new PoC files.
+
+**Left untouched:** `findings/crashes/`, `findings/writer_rawscan.csv`, and several new `O-2026-004*` PoC files that appeared mid-cycle — another session is still writing to this worktree, so I committed only my three files.
+[2026-10-29T21:25:33Z] cycle 5 exit=0 branch=research/vps-2026-10-29 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-29' set up to track 'origin/research/vps-2026-10-29'.
+Already on 'research/vps-2026-10-29'
+M	findings/24-7.log
+M	findings/writer_plaintext.csv
+M	findings/writer_plaintext.md
+M	ghostscript_writer.py
+Your branch is up to date with 'origin/research/vps-2026-10-29'.
+[2026-10-29T21:27:34Z] cycle 6 start branch=research/vps-2026-10-29
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the baseline and probing one track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead README.md 
+[0m→ [0mRead findings 
+[0m$ [0mgit branch --show-current; git status --short --branch; date -u; git log --oneline -5
+research/vps-2026-10-29
+## research/vps-2026-10-29...origin/research/vps-2026-10-29
+ M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+Thu Oct 29 21:27:37 UTC 2026
+f342f2b Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+bfffec9 Cycle 7: Track 4 Ghostscript verify - XMP-plaintext O-2026-005 (metadata-only, 0 page leaks)
+3e4f816 Cycle 6 closeout: note concurrent-session collision, all Track 4 work verified intact
+ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+8f5d315 Cycle 6: Track 4 scoping - writer-diversity audit on available writers (0 leaks, 5 INFO XMP)
+> build · muse-spark-1.3-contributor
+[0m✗ [0mRead findings/24-7.log failed
+[91m[1mError: [0mCannot read binary file: findings/24-7.log
+[0m→ [0mRead findings/LOG.md 
+[0m→ [0mRead findings/daily/2026-10-29.md 
+> build · muse-spark-1.3-contributor
+===
+2026-10-29.md
+===
+F-2026-001-control-encrypted-plain-refuses.pdf
+F-2026-001-encrypted-objstm-no-password-error.pdf
+O-2026-002-shadow-encrypt-obj.pdf
+O-2026-003-pdfex-form-ref.pdf
+O-2026-004-gs-plaintext-xmp.pdf
+O-2026-004-source.ps
+O-2026-005-gs-xmp-plaintext.pdf
+gs_xmp_plaintext_repro.py
+o004_gs_encrypted.pdf
+o004_src.pdf
+reportlab_s256_fixed.pdf
+reportlab_s256_nonconforming.pdf
+validate_reportlab_fix.py
+> build · muse-spark-1.3-contributor
+[0m$ [0mcat .gitignore; echo ===; ls findings/reports/; echo ===; git diff --stat; echo ===; git diff ghostscript_writer.py | head -n 120; echo ===; git diff findings/writer_plaintext.md | head -n 150
+node_modules/
+__pycache__/
+.opencode-logs/
+*.pyc
+corpus/
+===
+mupdf-encrypted-objstm.md
+reportlab-aes256.md
+===
+ findings/24-7.log             | 209 ++++++++++++++++++++++++++++++++++++++++++
+ findings/writer_plaintext.csv |   8 +-
+ findings/writer_plaintext.md  |  70 ++++++++------
+ ghostscript_writer.py         | 193 ++++++++++++++++++++++++--------------
+ 4 files changed, 378 insertions(+), 102 deletions(-)
+===
+diff --git a/ghostscript_writer.py b/ghostscript_writer.py
+index a2d0665..10415e8 100644
+--- a/ghostscript_writer.py
++++ b/ghostscript_writer.py
+@@ -1,20 +1,25 @@
+ """
+ Track 4 - writer diversity: Ghostscript.
+ 
+-Question: does a real-world producer (Ghostscript's `pdfwrite`, used by print
+-pipelines, CUPS filters, `ps2pdf`, and many "flatten/repair this PDF" tools)
+-ever emit an encrypted PDF with content left in plaintext?  A user believes
+-such a file is locked; if the text is readable without the password that is a
+-writer-side confidentiality bug (scope table: "writer ... so the file is not
+-actually protected").
++Question: does a real-world producer (Ghostscript's `pdfwrite`, used by
++print pipelines, CUPS filters, `ps2pdf`, and many "flatten/repair this PDF"
++tools) ever emit an encrypted PDF with content left in plaintext?  A user
++believes such a file is locked; if the page text is readable without the
++password that is a writer-side confidentiality bug (scope table: "writer ...
++so the file is not actually protected").
+ 
+-This harness produces synthetic encrypted PDFs with the gs CLI from the repo's
+-own plaintext canary document, then tests them two independent ways:
++Input is PostScript written by this script, so Ghostscript produces the
++document itself (the real ps2pdf path) instead of re-rendering a foreign
++writer's PDF.  Canaries live in the page text and in the Info dictionary
++(title/subject/author), which Ghostscript copies into the XMP packet.
++
++Two independent tests per file:
+ 
+   1. RAW scan - the exact bytes of the file, and every stream that inflates
+-     (FlateDecode) WITHOUT any decryption, are searched for the page and
+-     metadata canaries.  A hit is plaintext content in a file that claims to
+-     be encrypted: engine-independent proof, no viewer needed.
++     (FlateDecode) WITHOUT any decryption, are searched for the canaries.  A
++     page-canary hit is engine-independent proof of content left unencrypted.
++     A plaintext control (same PostScript, no encryption) proves the detector
++     actually fires.
+   2. ENGINE differential - the six triage engines get the file with no
+      password.  LEAK means content came out of a user-password file.
+ 
+@@ -37,22 +42,16 @@ from pathlib import Path
+ ROOT = Path(__file__).resolve().parent
+ CORPUS = ROOT / "corpus"
+ WRITERS = CORPUS / "writers"
+-SOURCE = CORPUS / "base" / "control_plain.pdf"
++SOURCE = WRITERS / "gs_source.ps"
+ MANIFEST = CORPUS / "manifest.json"
+ FINDINGS = ROOT / "findings"
+ 
+ USER_PW = "Us3r-Passw0rd!"
+ OWNER_PW = "0wner-Passw0rd!"
+-DOC_ID = "control_plain"
+-CANARIES = [f"CANARY {DOC_ID} ALPHA", f"CANARY {DOC_ID} BRAVO"]
++DOC_ID = "gs"
++PAGE_CANARIES = [f"CANARY {DOC_ID} ALPHA", f"CANARY {DOC_ID} BRAVO"]
+ META_CANARY = f"META-CANARY {DOC_ID}"
+-# Text that appears in the page content but is not a canary: still a leak if
+-# it survives in plaintext.
+-EXTRA_NEEDLES = [
+-    "Synthetic research sample",
+-    "Page two secret payload",
+-    "Document id:",
+-]
++BODY_LINE = "Synthetic research sample - contains no real data."
+ 
+ GSROOT = Path(os.environ.get("PDF_GS_ROOT", Path.home() / ".local" / "gs"))
+ GS_BIN = Path(os.environ.get("PDF_GS", GSROOT / "usr/bin/gs"))
+@@ -62,7 +61,7 @@ GS_SHARE = GSROOT / "usr/share/ghostscript"
+ VARIANTS = [
+     ("r2_k40", 2, 40),    # RC4-40,  /V 1
+     ("r3_k40", 3, 40),    # RC4-40,  /V 2
+-    ("r3_k128", 3, 128),  # RC4-128, /V 2 (gs default for "strong" output)
++    ("r3_k128", 3, 128),  # RC4-128, /V 2
+ ]
+ 
+ 
+@@ -78,25 +77,47 @@ def gs_env() -> dict:
+     return env
+ 
+ 
+-def build(path: Path, R: int, keylen: int) -> None:
++def write_source() -> None:
++    ps = f"""%!PS-Adobe-3.0
++[ /Title ({META_CANARY})
++  /Subject ({META_CANARY} subject)
++  /Author (Synthetic Research)
++  /DOCINFO pdfmark
++/Helvetica findfont 18 scalefont setfont
++72 700 moveto ({PAGE_CANARIES[0]}) show
++72 670 moveto ({BODY_LINE}) show
++showpage
++/Helvetica findfont 18 scalefont setfont
++72 700 moveto ({PAGE_CANARIES[1]}) show
++showpage
++"""
++    SOURCE.write_text(ps)
++
++
++def run_gs(src: Path, out: Path, R: int | None = None, keylen: int | None = None) -> None:
+     cmd = [
+         str(GS_BIN), "-q", "-dNOPAUSE", "-dBATCH", "-dSAFER",
+-        "-sDEVICE=pdfwrite", f"-sOutputFile={path}",
+-        f"-sOwnerPassword={OWNER_PW}", f"-sUserPassword={USER_PW}",
+-        f"-dEncryptionR={R}", f"-dKeyLength={keylen}", "-dPermissions=-4",
+-        str(SOURCE),
++        "-sDEVICE=pdfwrite", f"-sOutputFile={out}",
+     ]
++    if R is not None:
++        cmd += [
++            f"-sOwnerPassword={OWNER_PW}", f"-sUserPassword={USER_PW}",
++            f"-dEncryptionR={R}", f"-dKeyLength={keylen}", "-dPermissions=-4",
++        ]
++    cmd.append(str(src))
+     proc = subprocess.run(cmd, capture_output=True, text=True, env=gs_env(), timeout=120)
+-    if proc.returncode != 0 or not path.exists() or path.stat().st_size == 0:
++    if proc.returncode != 0 or not out.exists() or out.stat().st_size == 0:
+         raise RuntimeError(f"gs failed ({proc.returncode}): {proc.stderr[-400:]}")
+ 
+ 
+===
+diff --git a/findings/writer_plaintext.md b/findings/writer_plaintext.md
+index ba69b2a..65d8aaa 100644
+--- a/findings/writer_plaintext.md
++++ b/findings/writer_plaintext.md
+@@ -1,20 +1,28 @@
+ # Track 4 - writer diversity: Ghostscript `pdfwrite`
+ 
+-Produced with GPL Ghostscript 10.06.0 (`-sDEVICE=pdfwrite`), because no
+-system-wide gs/libreoffice/chrome exists on this VPS; gs 10.06.0 was
+-unpacked from the Ubuntu package into `~/.local/gs` (userspace, no root).
+-
+-`raw plaintext hits` = a canary was found verbatim in the file bytes, or
+-inside a stream that inflates **without decryption**. That is
+-engine-independent proof of content left unencrypted. Only a *page*
+-canary (`CANARY ... ALPHA/BRAVO`) counts as a content leak; the metadata
+-canary is reported separately (scope: metadata only, at most INFO).
++Produced with GPL Ghostscript 10.06.0 (`-sDEVICE=pdfwrite`) from
++PostScript written by `ghostscript_writer.py` (the real `ps2pdf` path:
++Ghostscript produces the document, no foreign producer's PDF is
++re-rendered). No system-wide gs/libreoffice/chrome exists on this VPS;
++gs 10.06.0 was unpacked from the Ubuntu package into `~/.local/gs`
++(userspace, no root; the URW base-35 fonts and ICC profiles are needed
++or gs cannot render text / open a device).
++
++`page plaintext` = a page canary (`CANARY gs ALPHA/BRAVO`) was found
++verbatim in the file bytes, or inside a stream that inflates **without
++decryption**. That is engine-independent proof of page content left
++unencrypted. The metadata canary is reported separately (metadata only,
++at most INFO per the scope rules).
++
++Sensitivity control, same PostScript without encryption:
++**2/2 page canaries found in raw bytes** -
++the scanner fires on plaintext, so a clean encrypted result is meaningful.
+ 
+ | variant | R | key | bytes | streams | inflate-no-key | page plaintext | pw auth | canaries w/ pw | no-password engines |
+ |---|---|---|---|---|---|---|---|---|---|
+-| r2_k40 | 2 | 40 | 3322 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+-| r3_k40 | 3 | 40 | 3321 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+-| r3_k128 | 3 | 128 | 3324 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r2_k40 | 2 | 40 | 3895 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r3_k40 | 3 | 40 | 3895 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r3_k128 | 3 | 128 | 3899 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+ 
+ **Page content readable without the password: no** (0 leak signal(s) across 3 files).
+ 
+@@ -24,18 +32,20 @@ Non-zero is expected only for xref streams (never encrypted, ISO 32000-2
+ 
+ ## Metadata left in plaintext (gs)
+ 
+-All three variants carry the XMP packet unencrypted:
+-- `gs_r2_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
+-- `gs_r3_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
+-- `gs_r3_k128.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
++Every variant carries the XMP packet unencrypted:
++- `gs_r2_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
++- `gs_r3_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
++- `gs_r3_k128.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
+ 
+ The gs `/Encrypt` dictionary is V1/V2 (R2/R3), where there is no
+-`/EncryptMetadata` escape hatch: every stream except the xref stream must
+-be encrypted (ISO 32000-2 7.6.2, 7.5.8). gs writes the `/Metadata` XMP
+-stream in the clear, so the document title/author/description are
+-readable with `strings` on a locked file. No engine surfaces it without
+-the password (all six BLOCKED), and it is metadata only - observation
+-`O-2026-004`, not a confidentiality break of page content.
++`/EncryptMetadata` escape hatch: every stream except the xref stream
++must be encrypted (ISO 32000-2 7.6.2, 7.5.8; PDF 1.7 7.5.7 defaults
++EncryptMetadata to true). gs writes the `/Metadata` XMP stream in the
++clear, so the document title/author/subject are readable with `strings`
++on a locked file. Same revision, different writer: the qpdf V2/R3
++samples (`corpus/base/rc4_128_r3__plain.pdf`) encrypt their XMP stream.
++No engine surfaces it without the password (all six BLOCKED), and it is
++metadata only - observation `O-2026-004`, not a page-content leak.
+ 
+ ## With-password control
+ 
+@@ -43,11 +53,11 @@ Every file was reopened with the correct user password: `auth` is the
+ PyMuPDF authenticate() result (2 = user password accepted), `pages` and
+ `canaries` prove the document really contains the canary text.
+ 
+-| variant | auth | pages | canaries |
+-|---|---|---|---|
+-| r2_k40 | 2 | 2 | 0/2 |
+-| r3_k40 | 2 | 2 | 0/2 |
+-| r3_k128 | 2 | 2 | 0/2 |
++| variant | auth | pages | canaries | meta canary |
++|---|---|---|---|---|
++| r2_k40 | 2 | 2 | 2/2 | True |
++| r3_k40 | 2 | 2 | 2/2 | True |
++| r3_k128 | 2 | 2 | 2/2 | True |
+ 
+ ## Engine differential (no password)
+ 
+@@ -113,9 +123,9 @@ non-`-` would be a content leak; `meta plaintext` is only a finding when
+ | corpus/writers/pymupdf_rc4128.pdf | pymupdf | rc4128 | True | - | - |
+ | corpus/writers/pymupdf_aes128.pdf | pymupdf | aes128 | True | - | - |
+ | corpus/writers/pymupdf_aes256.pdf | pymupdf | aes256 | True | - | - |
+-| corpus/writers/gs_r2_k40.pdf | ghostscript | r2_k40 | True | - | META-CANARY control_plain @ obj 11 (stream) |
+-| corpus/writers/gs_r3_k40.pdf | ghostscript | r3_k40 | True | - | META-CANARY control_plain @ obj 11 (stream) |
+-| corpus/writers/gs_r3_k128.pdf | ghostscript | r3_k128 | True | - | META-CANARY control_plain @ obj 11 (stream) |
++| corpus/writers/gs_r2_k40.pdf | ghostscript | r2_k40 | True | - | META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream) |
++| corpus/writers/gs_r3_k40.pdf | ghostscript | r3_k40 | True | - | META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream) |
++| corpus/writers/gs_r3_k128.pdf | ghostscript | r3_k128 | True | - | META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream) |
+ 
+ - page-content plaintext in any writer sample: **0**
+ - metadata plaintext where `/EncryptMetadata` is true: **3**
+> build · muse-spark-1.3-contributor
+[0m$ [0mls corpus/ corpus/base 2>&1 | head -n 20; echo ===; .venv/bin/python --version; node --version; .venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six reportlab 2>/dev/null | grep -E "Name|Version"; node -p "require('pdfjs-dist/package.json').version"; echo ===; head -n 60 run-research.sh; echo ===; .venv/bin/python triage.py --help 2>&1 | head -n 40; echo ===; ls corpus/prevchain/ 2>&1 | head
+corpus/:
+base
+fuzz
+incremental
+manifest.json
+mutants
+pdfex_static
+prevchain
+writers
+
+corpus/base:
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+===
+Python 3.14.4
+v24.22.2
+6.4.299
+===
+#!/bin/bash
+# 24/7 research loop for ~/pdf-encryption-research on VPS
+# Runs inside tmux session `research`. Logs to findings/24-7.log
+# Policy: 1 day = 1 branch research/vps-YYYY-MM-DD, daily push to GitHub
+set -u
+cd "$HOME/pdf-encryption-research"
+export PATH="$HOME/.local/bin:$PATH"
+mkdir -p findings findings/daily
+
+echo "[$(date -u +%FT%TZ)] boot: $(git rev-parse --short HEAD 2>/dev/null) $(.venv/bin/python --version 2>&1) $(node --version)" >> findings/24-7.log
+
+CYCLE=0
+while true; do
+  CYCLE=$((CYCLE+1))
+  TODAY=$(date -u +%F)
+  BRANCH="research/vps-$TODAY"
+  if ! git rev-parse --verify "$BRANCH" >/dev/null 2>&1; then
+    git checkout -b "$BRANCH" >> findings/24-7.log 2>&1
+  else
+    git checkout "$BRANCH" >> findings/24-7.log 2>&1
+  fi
+  echo "[$(date -u +%FT%TZ)] cycle $CYCLE start branch=$BRANCH" >> findings/24-7.log
+  PROMPT_FILE=$(mktemp)
+  cat VPS_BRIEF.md > "$PROMPT_FILE"
+  {
+    echo ""
+    echo "Today is $TODAY, branch is $BRANCH (already checked out)."
+    echo "Work one track for this cycle only, smallest verifiable step."
+    echo "Commit to $BRANCH only. Update findings/daily/$TODAY.md and append to findings/24-7.log and findings/LOG.md."
+  } >> "$PROMPT_FILE"
+  MSG="Today is $TODAY branch $BRANCH. Read the attached brief and do one cycle."
+  opencode run --model opencode-go/muse-spark-1.3-contributor -f "$PROMPT_FILE" "$MSG" >> findings/24-7.log 2>&1
+  rm -f "$PROMPT_FILE"
+  echo "[$(date -u +%FT%TZ)] cycle $CYCLE exit=$? branch=$BRANCH daily-push" >> findings/24-7.log
+  git add findings/daily/"$TODAY".md findings/LOG.md findings/report.md findings/report.csv findings/authmatrix.md findings/authmatrix.csv findings/incremental.md findings/incremental.csv findings/prevchain.md findings/prevchain.csv 2>/dev/null || true
+  git diff --cached --quiet || git commit -qm "daily: $TODAY update cycle $CYCLE"
+  git push -u origin "$BRANCH" >> findings/24-7.log 2>&1 || true
+  sleep 120
+done
+===
+pypdf: 20/286 probes done
+pypdf: 40/286 probes done
+pypdf: 60/286 probes done
+pypdf: 80/286 probes done
+pypdf: 100/286 probes done
+pypdf: 120/286 probes done
+pypdf: 140/286 probes done
+pypdf: 160/286 probes done
+pypdf: 180/286 probes done
+pypdf: 200/286 probes done
+pypdf: 220/286 probes done
+pypdf: 240/286 probes done
+pypdf: 260/286 probes done
+pypdf: 280/286 probes done
+pypdf: 286/286 probes done
+pdfminer: 20/286 probes done
+pdfminer: 40/286 probes done
+pdfminer: 60/286 probes done
+pdfminer: 80/286 probes done
+pdfminer: 100/286 probes done
+pdfminer: 120/286 probes done
+pdfminer: 140/286 probes done
+pdfminer: 160/286 probes done
+pdfminer: 180/286 probes done
+pdfminer: 200/286 probes done
+pdfminer: 220/286 probes done
+pdfminer: 240/286 probes done
+pdfminer: 260/286 probes done
+pdfminer: 280/286 probes done
+pdfminer: 286/286 probes done
+pymupdf: 20/286 probes done
+pymupdf: 40/286 probes done
+pymupdf: 60/286 probes done
+pymupdf: 80/286 probes done
+pymupdf: 100/286 probes done
+pymupdf: 120/286 probes done
+pymupdf: 140/286 probes done
+pymupdf: 160/286 probes done
+pymupdf: 180/286 probes done
+pymupdf: 200/286 probes done
+===
+aes256_r6__objstm__alias_encrypt.pdf
+aes256_r6__objstm__alias_plain.pdf
+aes256_r6__objstm__chain_encrypt_none.pdf
+aes256_r6__objstm__chain_none_encrypt.pdf
+aes256_r6__objstm__h_refstm_encrypt.pdf
+aes256_r6__objstm__h_trailer_encrypt.pdf
+aes256_r6__objstm__root_old.pdf
+aes256_r6__objstm__shadow_encrypt_obj.pdf
+aes256_r6__objstm__t_encrypt_empty.pdf
+aes256_r6__objstm__t_encrypt_ref.pdf
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit status --short; echo ===; git diff --stat; echo ===; ps aux | grep -E "triage|python|opencode" | grep -v grep | head -n 20
+M findings/24-7.log
+ M findings/report.csv
+ M findings/report.md
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+===
+ findings/24-7.log             | 571 ++++++++++++++++++++++++++++++++++++++++++
+ findings/report.csv           | 406 +++++++-----------------------
+ findings/report.md            |  25 +-
+ findings/writer_plaintext.csv |   8 +-
+ findings/writer_plaintext.md  |  70 +++---
+ ghostscript_writer.py         | 193 +++++++++-----
+ 6 files changed, 829 insertions(+), 444 deletions(-)
+===
+root        1024  0.0  0.0  47104 28780 ?        Ss   Oct28   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root        1110  0.0  0.0 126472 31092 ?        Ssl  Oct28   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+sarthak     2587  0.0  0.0 182600 23304 ?        Ss   Oct28   0:12 /usr/bin/python3 /usr/local/bin/desk-upload
+desk-di+    2720  0.0  0.0 404256 27828 ?        Ssl  Oct28   0:14 /usr/bin/python3 -I /usr/local/lib/desk/desk_direct.py
+sarthak    14964  8.0  0.8 1809596 295600 ?      Ssl  Oct28 152:20 /opt/selkies/bin/python3 /usr/bin/selkies --web-root=/opt/desk-web --addr=0.0.0.0 --port=8082 --enable-https=false --basic-auth-user=sarthak --enable-resize=true --encoder=h264enc --use-cpu=true --mode=webrtc --keyframe-interval=5 --webrtc-udp-mux-port=8083 --webrtc-public-ip=187.126.125.50 --run-after-connect=/usr/local/bin/desk-after-connect --video-max-qp=35 --force-aligned-resolution=true
+sarthak  1149988  0.5  1.7 11697048 587044 ?     Ssl  05:50   4:42 /home/sarthak/.opencode/bin/opencode serve --service
+sarthak  2632384  0.7  0.3 6973084 103612 pts/5  Sl+  21:27   0:00 opencode run --model opencode-go/muse-spark-1.3-contributor -f /tmp/tmp.x0cNvTVTX5 Today is 2026-10-29 branch research/vps-2026-10-29. Read the attached brief and do one cycle.
+> build · muse-spark-1.3-contributor
+I accidentally triggered a full triage run — checking what it overwrote before proceeding.
+[0m$ [0mgit diff findings/report.md | head -n 80; echo ===; git diff findings/report.csv | head -n 30; echo ===; wc -l findings/report.csv; git show HEAD:findings/report.csv | wc -l; echo ===; git show HEAD:findings/report.md | head -n 40
+diff --git a/findings/report.md b/findings/report.md
+index d519ba5..02faff4 100644
+--- a/findings/report.md
++++ b/findings/report.md
+@@ -1,26 +1,7 @@
+ # Triage report
+ 
+-- files probed: 325
+-- probes run: 1950
++- files probed: 286
++- probes run: 1716
+ - LEAK: 0  CRASH/TIMEOUT: 0  INFO: 15
+ 
+-No leaks or crashes in this run. Expand mutations (mutate.py) and extractors before concluding anything.
+-
+-<!-- track2:begin -->
+-## Track 2 - /Prev chain and hybrid-xref confusion (2026-10-29)
+-
+-- matrix: 51 synthetic files (13 variants x 4 seeds), 306 no-password probes across 6 engines.
+-- **original encrypted content recovered without password: 0**
+-- injected plaintext rendered without password: 50 (integrity property, not confidentiality).
+-- full table: `findings/prevchain.md` / `findings/prevchain.csv`; observation: `O-2026-002` in `findings/LOG.md`.
+-<!-- track2:end -->
+-
+-<!-- track3static:begin -->
+-## Track 3 (static) - PDFex-style scaffolding (2026-10-29)
+-
+-- matrix: 9 synthetic files (3 variants x 3 seeds), 54 no-password probes across 6 engines.
+-- **original encrypted content recovered without password: 0**
+-- injected plaintext rendered without password: 24 (integrity property).
+-- full table: `findings/pdfex_static.md` / `findings/pdfex_static.csv`; observation: `O-2026-003` in `findings/LOG.md`.
+-- with-password exfil via real viewer explicitly NOT tested here.
+-<!-- track3static:end -->
++No leaks or crashes in this run. Expand mutations (mutate.py) and extractors before concluding anything.
+\ No newline at end of file
+===
+diff --git a/findings/report.csv b/findings/report.csv
+index 9275dc7..39cdc68 100644
+--- a/findings/report.csv
++++ b/findings/report.csv
+@@ -23,16 +23,6 @@ corpus/base/aes256_r6__nometa.pdf,aes256_r6__nometa,pypdf,BLOCKED,False,,FileNot
+ corpus/base/aes256_r6__form.pdf,aes256_r6__form,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+ corpus/base/rc4_128_r4__attach.pdf,rc4_128_r4__attach,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+ corpus/base/aes256_r6__attach.pdf,aes256_r6__attach,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/reportlab_s40.pdf,w_reportlab_s40,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/reportlab_s128.pdf,w_reportlab_s128,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pypdf_rc440.pdf,w_pypdf_rc4-40,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pypdf_rc4128.pdf,w_pypdf_rc4-128,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pypdf_aes128.pdf,w_pypdf_aes-128,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pypdf_aes256.pdf,w_pypdf_aes-256,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pymupdf_rc440.pdf,w_pymupdf_rc440,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pymupdf_rc4128.pdf,w_pymupdf_rc4128,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pymupdf_aes128.pdf,w_pymupdf_aes128,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+-corpus/writers/pymupdf_aes256.pdf,w_pymupdf_aes256,pypdf,BLOCKED,False,,FileNotDecryptedError: File has not been decrypted
+ corpus/mutants/rc4_40_r2__plain__filter_identity.pdf,rc4_40_r2__plain__filter_identity,pypdf,ERROR,True,filter_identity,NotImplementedError: only Standard PDF encryption handler is available
+ corpus/mutants/rc4_40_r2__plain__filter_bogus.pdf,rc4_40_r2__plain__filter_bogus,pypdf,ERROR,True,filter_bogus,NotImplementedError: only Standard PDF encryption handler is available
+ corpus/mutants/rc4_40_r2__plain__encrypt_ref_hidden.pdf,rc4_40_r2__plain__encrypt_ref_hidden,pypdf,PARTIAL,True,encrypt_ref_hidden,text_len=897
+@@ -281,49 +271,20 @@ corpus/mutants/aes256_r6__attach__filter_bogus.pdf,aes256_r6__attach__filter_bog
+ corpus/mutants/aes256_r6__attach__authevent_open.pdf,aes256_r6__attach__authevent_open,pypdf,BLOCKED,True,authevent_open,FileNotDecryptedError: File has not been decrypted
+ corpus/mutants/aes256_r6__attach__all_identity.pdf,aes256_r6__attach__all_identity,pypdf,BLOCKED,True,all_identity,FileNotDecryptedError: File has not been decrypted
+ corpus/mutants/aes256_r6__attach__encrypt_ref_hidden.pdf,aes256_r6__attach__encrypt_ref_hidden,pypdf,PARTIAL,True,encrypt_ref_hidden,text_len=1756
+-corpus/mutants/w_reportlab_s40__filter_identity.pdf,w_reportlab_s40__filter_identity,pypdf,ERROR,True,filter_identity,NotImplementedError: only Standard PDF encryption handler is available
+-corpus/mutants/w_reportlab_s40__filter_bogus.pdf,w_reportlab_s40__filter_bogus,pypdf,ERROR,True,filter_bogus,NotImplementedError: only Standard PDF encryption handler is available
+-corpus/mutants/w_reportlab_s40__encrypt_ref_hidden.pdf,w_reportlab_s40__encrypt_ref_hidden,pypdf,ERROR,True,encrypt_ref_hidden,ValueError: Non-Ascii85 digit found: ®
+-corpus/mutants/w_reportlab_s128__len128_to_40.pdf,w_reportlab_s128__len128_to_40,pypdf,BLOCKED,True,len128_to_40,FileNotDecryptedError: File has not been decrypted
+-corpus/mutants/w_reportlab_s128__filter_identity.pdf,w_reportlab_s128__filter_identity,pypdf,ERROR,True,filter_identity,NotImplementedError: only Standard PDF encryption handler is available
+===
+1717 findings/report.csv
+1951
+===
+# Triage report
+
+- files probed: 325
+- probes run: 1950
+- LEAK: 0  CRASH/TIMEOUT: 0  INFO: 15
+
+No leaks or crashes in this run. Expand mutations (mutate.py) and extractors before concluding anything.
+
+<!-- track2:begin -->
+## Track 2 - /Prev chain and hybrid-xref confusion (2026-10-29)
+
+- matrix: 51 synthetic files (13 variants x 4 seeds), 306 no-password probes across 6 engines.
+- **original encrypted content recovered without password: 0**
+- injected plaintext rendered without password: 50 (integrity property, not confidentiality).
+- full table: `findings/prevchain.md` / `findings/prevchain.csv`; observation: `O-2026-002` in `findings/LOG.md`.
+<!-- track2:end -->
+
+<!-- track3static:begin -->
+## Track 3 (static) - PDFex-style scaffolding (2026-10-29)
+
+- matrix: 9 synthetic files (3 variants x 3 seeds), 54 no-password probes across 6 engines.
+- **original encrypted content recovered without password: 0**
+- injected plaintext rendered without password: 24 (integrity property).
+- full table: `findings/pdfex_static.md` / `findings/pdfex_static.csv`; observation: `O-2026-003` in `findings/LOG.md`.
+- with-password exfil via real viewer explicitly NOT tested here.
+<!-- track3static:end -->
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit checkout HEAD -- findings/report.md findings/report.csv && git status --short; echo ===; grep -n "VARIANTS\|def \|variant" prevchain.py | head -n 40
+M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+===
+60:def last_startxref(data: bytes) -> int:
+69:def max_size(data: bytes) -> int:
+76:def pad_newline(buf: bytearray) -> None:
+81:def add_objects(buf: bytearray, objects: dict[int, bytes]) -> dict[int, int]:
+90:def add_classic_xref(
+107:def add_xref_stream(
+135:def page_objects(n: int, canary: str, contents_ref: bytes) -> dict[int, bytes]:
+151:def donor_empty_pw_encrypt() -> bytes:
+170:    def __init__(self, name: str) -> None:
+184:def build(seed: Seed, variant: str) -> tuple[Path, list[str]]:
+186:    canary = f"INJECTED {seed.stem} {variant} ALPHA"
+193:    def finish(name_suffix: str = "") -> Path:
+194:        out = OUT / f"{seed.stem}__{variant}{name_suffix}.pdf"
+200:    if variant in ("t_none", "t_encrypt_ref", "t_encrypt_empty"):
+203:        if variant == "t_none":
+205:        elif variant == "t_encrypt_ref":
+215:    if variant in ("alias_plain", "alias_encrypt"):
+218:        extra = b"" if variant == "alias_plain" else enc_ref
+222:    if variant == "root_old":
+228:    if variant in ("chain_none_encrypt", "chain_encrypt_none"):
+231:        first_extra = enc_ref if variant == "chain_encrypt_none" else b""
+235:        second_extra = enc_ref if variant == "chain_none_encrypt" else b""
+241:    if variant == "shadow_encrypt_obj":
+243:            raise ValueError("shadow variant needs an encrypted seed")
+251:    if variant in ("h_refstm_encrypt", "h_trailer_encrypt"):
+255:        xs_extra = enc_ref if variant == "h_refstm_encrypt" else b""
+260:            enc_ref if variant == "h_trailer_encrypt" else b""
+265:    if variant in ("xs_pure_encrypt", "xs_pure_none"):
+266:        if variant == "xs_pure_none":
+286:    raise ValueError(f"unknown variant {variant}")
+289:VARIANTS = [
+306:def password_controls() -> list[dict]:
+341:def append_report_block(lines: list[str]) -> None:
+356:def main() -> None:
+363:        for variant in VARIANTS:
+364:            if variant == "shadow_encrypt_obj" and not seed.encrypted:
+367:                path, injected = build(seed, variant)
+369:                print(f"[skip] {seed.stem} {variant}: {type(exc).__name__}: {exc}")
+374:                    "variant": variant,
+399:                    "variant": c["variant"],
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py [90m[limit=180, offset=135][0m
+[0m$ [0mgrep -n "^def \|^EXTRACTORS\|^CANARY\|def probe\|def extract" triage.py | head -n 30; echo ===; sed -n '1,80p' triage.py
+40:EXTRACTORS = ["pypdf", "pdfminer", "pymupdf", "pypdfium2", "pikepdf", "pdfjs"]
+51:def _norm(text: str) -> str:
+55:def _meta_text(meta) -> str:
+65:def extract_pypdf(path: Path) -> str:
+81:def extract_pdfminer(path: Path) -> str:
+88:def extract_pymupdf(path: Path) -> str:
+110:def extract_pypdfium2(path: Path) -> str:
+120:def extract_pikepdf(path: Path) -> str:
+149:def capture_fd1():
+166:def probe_one(extractor: str, path: Path) -> dict:
+179:def run_child_batch(extractor: str) -> None:
+209:def run_batch(extractor: str, abs_paths: list[str], timeout: int) -> tuple[dict[str, dict] | None, dict | None]:
+238:def probe_subprocess(extractor: str, rel_file: str) -> dict:
+244:def classify(entry: dict, result: dict) -> str:
+267:def main() -> None:
+===
+"""
+Differential triage harness: run every extractor against every corpus file
+WITHOUT a password and classify the outcome.
+
+Probes run in isolated subprocesses so a segfault becomes a recorded CRASH
+finding instead of killing the harness. Probes are batched per extractor for
+speed; any batch that dies is retried file-by-file to isolate the culprit.
+
+Statuses:
+  LEAK      - page content canary extracted from behind a user password -> bug
+  META-LEAK - metadata canary extracted although metadata should be encrypted -> bug
+  CRASH     - extractor died (non-zero exit / fatal error)             -> candidate bug
+  TIMEOUT   - extractor hung on the input                              -> candidate DoS bug
+  BLOCKED   - extractor correctly refused (password required)          -> expected
+  INFO      - metadata readable where /EncryptMetadata false says it may be -> by design
+  SILENT    - returned empty output without erroring                   -> manual triage
+  OK        - extraction succeeded where it should (controls)          -> sanity
+  ERROR     - clean exception that is not a password refusal           -> triage manually
+"""
+from __future__ import annotations
+
+import contextlib
+import csv
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+CORPUS = ROOT / "corpus"
+MANIFEST = CORPUS / "manifest.json"
+FINDINGS = ROOT / "findings"
+TIMEOUT_BATCH_S = 180
+TIMEOUT_ONE_S = 30
+BATCH_SIZE = 20
+
+EXTRACTORS = ["pypdf", "pdfminer", "pymupdf", "pypdfium2", "pikepdf", "pdfjs"]
+
+PASSWORD_HINTS = re.compile(
+    r"password|encrypted|decrypt|FPDF_ERROR_PASSWORD|file is encrypted"
+    r"|PDFPasswordIncorrect|PDFEncryptionError|PdfminerException",
+    re.I,
+)
+
+
+# ---------------------------------------------------------------- child side
+
+def _norm(text: str) -> str:
+    return re.sub(r"\s+", "", text)
+
+
+def _meta_text(meta) -> str:
+    try:
+        if meta is None:
+            return ""
+        items = meta.items() if hasattr(meta, "items") else meta
+        return json.dumps({str(k): str(v) for k, v in items}, default=str)
+    except Exception:
+        return ""
+
+
+def extract_pypdf(path: Path) -> str:
+    from pypdf import PdfReader
+
+    r = PdfReader(str(path))
+    parts = [(p.extract_text() or "") for p in r.pages]
+    parts.append(_meta_text(r.metadata))
+    try:
+        for name, streams in (r.attachments or {}).items():
+            for s in streams:
+                parts.append(str(name))
+                parts.append(s.get_data().decode("latin-1", "replace"))
+    except Exception:
+        pass
+    return "\n".join(parts)
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead triage.py [90m[limit=65, offset=209][0m
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead triage.py [90m[limit=43, offset=166][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mls corpus/base/ | head -n 30; echo ===; grep -n "BASE\s*=\|OUT\s*=\|USER_PW" prevchain.py | head
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+aes256_r6__objstm.pdf
+aes256_r6__plain.pdf
+control_owner_only.pdf
+control_plain.pdf
+rc4_128_r3__linearized.pdf
+rc4_128_r3__objstm.pdf
+rc4_128_r3__plain.pdf
+rc4_128_r4__attach.pdf
+rc4_128_r4__linearized.pdf
+rc4_128_r4__objstm.pdf
+rc4_128_r4__plain.pdf
+rc4_40_r2__linearized.pdf
+rc4_40_r2__objstm.pdf
+rc4_40_r2__plain.pdf
+===
+44:BASE = ROOT / "corpus" / "base"
+45:OUT = ROOT / "corpus" / "prevchain"
+48:USER_PW = "Us3r-Passw0rd!"
+177:        with pikepdf.open(str(self.path), password=USER_PW if self.encrypted else "") as pdf:
+330:            auth = doc.authenticate(USER_PW)
+> build · muse-spark-1.3-contributor
+Baseline restored. Now running the cycle's single track: a new Track 2 variant (`/Encrypt null` trailer) built in `/tmp`, probed read-only so shared files stay untouched.
+[0m← [0mWrite /tmp/opencode/cycle9_encrypt_null.py
+Created file successfully: /tmp/opencode/cycle9_encrypt_null.py
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python /tmp/opencode/cycle9_encrypt_null.py 2>/tmp/opencode/cycle9.stderr | tail -n 20; echo "EXIT=$?"; echo ===STDERR===; tail -n 5 /tmp/opencode/cycle9.stderr
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pypdf", "status": "ERROR", "error": "PdfReadError: /Encrypt entry of the trailer is not a dictionary", "original_hit": [], "injected_hit": []}
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pdfminer", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED aes256_r6__plain t_encrypt_null ALPHA"]}
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pymupdf", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED aes256_r6__plain t_encrypt_null ALPHA"]}
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pypdfium2", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED aes256_r6__plain t_encrypt_null ALPHA"]}
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pikepdf", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED aes256_r6__plain t_encrypt_null ALPHA"]}
+{"file": "aes256_r6__plain__t_encrypt_null.pdf", "engine": "pdfjs", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED aes256_r6__plain t_encrypt_null ALPHA"]}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pypdf", "status": "ERROR", "error": "PdfReadError: /Encrypt entry of the trailer is not a dictionary", "original_hit": [], "injected_hit": []}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pdfminer", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED rc4_128_r4__plain t_encrypt_null ALPHA"]}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pymupdf", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED rc4_128_r4__plain t_encrypt_null ALPHA"]}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pypdfium2", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED rc4_128_r4__plain t_encrypt_null ALPHA"]}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pikepdf", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED rc4_128_r4__plain t_encrypt_null ALPHA"]}
+{"file": "rc4_128_r4__plain__t_encrypt_null.pdf", "engine": "pdfjs", "status": "OK", "error": "", "original_hit": [], "injected_hit": ["INJECTED rc4_128_r4__plain t_encrypt_null ALPHA"]}
+SUMMARY files=2 engines=6 probes=12 ORIGINAL=0 INJECTED=10
+EXIT=0
+===STDERR===
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "
+import pikepdf
+for name in ['aes256_r6__plain.pdf','rc4_128_r4__plain.pdf']:
+    with pikepdf.open('corpus/base/'+name, password='Us3r-Passw0rd!') as d:
+        pg = d.pages[0]
+        print(name, 'pages=', len(d.pages), 'contents_ref=', pg.Contents.objgen)
+"; echo ===; grep -a -o -E "/Encrypt null|/Prev [0-9]+|INJECTED [a-z0-9_]+ t_encrypt_null ALPHA" /tmp/opencode/cycle9/*.pdf | head; echo ===; .venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six reportlab 2>/dev/null | grep -E "Name|Version"; node -p "require('pdfjs-dist/package.json').version"
+aes256_r6__plain.pdf pages= 2 contents_ref= (7, 0)
+rc4_128_r4__plain.pdf pages= 2 contents_ref= (7, 0)
+===
+/tmp/opencode/cycle9/aes256_r6__plain__t_encrypt_null.pdf:INJECTED aes256_r6__plain t_encrypt_null ALPHA
+/tmp/opencode/cycle9/aes256_r6__plain__t_encrypt_null.pdf:/Encrypt null
+/tmp/opencode/cycle9/aes256_r6__plain__t_encrypt_null.pdf:/Prev 3186
+/tmp/opencode/cycle9/rc4_128_r4__plain__t_encrypt_null.pdf:INJECTED rc4_128_r4__plain t_encrypt_null ALPHA
+/tmp/opencode/cycle9/rc4_128_r4__plain__t_encrypt_null.pdf:/Encrypt null
+/tmp/opencode/cycle9/rc4_128_r4__plain__t_encrypt_null.pdf:/Prev 2684
+===
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six reportlab 2>&1 | grep -E "^(Name|Version)"; .venv/bin/python -c "import pymupdf; print('mupdf', pymupdf.mupdf_version if hasattr(pymupdf,'mupdf_version') else pymupdf.__doc__)" 2>&1 | head -n 2
+mupdf 1.28.5
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf 2>&1 | head -n 5; .venv/bin/python -c "import pypdf,pypdfium2,pikepdf,pdfminer,reportlab; print('pypdf',pypdf.__version__)"; .venv/bin/python -c "import fitz; print('pymupdf', fitz.__doc__)" 2>&1 | head -n 2; .venv/bin/python -c "import importlib.metadata as m; print([(d.metadata['Name'],d.version) for d in m.distributions() if (d.metadata['Name'] or '').lower() in {'pypdf','pymupdf','pypdfium2','pikepdf','pdfminer.six','reportlab'}])"
+/bin/bash: line 1: .venv/bin/pip: No such file or directory
+pypdf 6.21.4
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+[('pypdf', '6.21.4'), ('pikepdf', '10.17.0'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pdfminer.six', '20260107'), ('reportlab', '5.1.0')]
+> build · muse-spark-1.3-contributor
+All verified. Now logging the cycle: `24-7.log`, daily file, and `LOG.md`.
+[2026-10-29T21:29:01Z] cycle 9 start branch=research/vps-2026-10-29 track=Track-2-encrypt-null
+[2026-10-29T21:29:01Z] cycle 9 engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0
+[2026-10-29T21:29:01Z] cycle 9 variant: t_encrypt_null (NEW, not in prevchain VARIANTS) - appended revision with new plaintext page, trailer '/Encrypt null /Root N 0 R /Prev <orig>', 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines no-password = 12 probes -> ORIGINAL 0/12, injected 10/12 (pdfminer/pymupdf/pypdfium2/pikepdf/pdfjs render INJECTED-only; pypdf clean ERROR 'trailer is not a dictionary'). Nuance vs t_none: PDFium OPENS null-trailer (refused t_none) - new disagreement point, still integrity-only. Builder+probes: /tmp/opencode/cycle9_encrypt_null.py (test PDFs in /tmp/opencode/cycle9/, not committed - negative result, no PoC). leaks=0 crashes=0
+[2026-10-29T21:29:01Z] cycle 9 files: findings/LOG.md (O-2026-002 extension note), findings/daily/2026-10-29.md (cycles 8->9). Untouched: ghostscript_writer.py, writer_plaintext.*, report.*, other session files. Note: reverted accidental triage.py --help full-run overwrite of report.md/csv (restored to HEAD) before probing.
+[0m$ [0mTS=$(date -u +%Y-%m-%dT%H:%M:%SZ); cat >> findings/24-7.log <<EOF
+[$TS] cycle 9 start branch=research/vps-2026-10-29 track=Track-2-encrypt-null
+[$TS] cycle 9 engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | reportlab 5.1.0
+[$TS] cycle 9 variant: t_encrypt_null (NEW, not in prevchain VARIANTS) - appended revision with new plaintext page, trailer '/Encrypt null /Root N 0 R /Prev <orig>', 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines no-password = 12 probes -> ORIGINAL 0/12, injected 10/12 (pdfminer/pymupdf/pypdfium2/pikepdf/pdfjs render INJECTED-only; pypdf clean ERROR 'trailer is not a dictionary'). Nuance vs t_none: PDFium OPENS null-trailer (refused t_none) - new disagreement point, still integrity-only. Builder+probes: /tmp/opencode/cycle9_encrypt_null.py (test PDFs in /tmp/opencode/cycle9/, not committed - negative result, no PoC). leaks=0 crashes=0
+[$TS] cycle 9 files: findings/LOG.md (O-2026-002 extension note), findings/daily/2026-10-29.md (cycles 8->9). Untouched: ghostscript_writer.py, writer_plaintext.*, report.*, other session files. Note: reverted accidental triage.py --help full-run overwrite of report.md/csv (restored to HEAD) before probing.
+EOF
+echo done; git diff --stat findings/24-7.log
+done
+ findings/24-7.log | 943 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 943 insertions(+)
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-29.md
+Index: findings/daily/2026-10-29.md
+===================================================================
+--- findings/daily/2026-10-29.md
++++ findings/daily/2026-10-29.md
+@@ -1,8 +1,8 @@
+ # 2026-10-29 — research/vps-2026-10-29
+ 
+ - branch: `research/vps-2026-10-29`
+-- cycles run: 8 (1 setup, 2 Track 2 prevchain, 3 full-pipeline baseline re-run, 4 Track 3 static, 5 report disclosure notes + VPS re-verify, 6 Track 4 scoping, 7 Track 4 Ghostscript verify+correct, 8 Track 2 shadow-encrypt-obj targeted re-verify)
++- cycles run: 9 (1 setup, 2 Track 2 prevchain, 3 full-pipeline baseline re-run, 4 Track 3 static, 5 report disclosure notes + VPS re-verify, 6 Track 4 scoping, 7 Track 4 Ghostscript verify+correct, 8 Track 2 shadow-encrypt-obj targeted re-verify, 9 Track 2 encrypt-null trailer)
+ - files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/pdfex_static 9, corpus/incremental 5
+ 
+ ## Probe counts
+ 
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-29.md
+Index: findings/daily/2026-10-29.md
+===================================================================
+--- findings/daily/2026-10-29.md
++++ findings/daily/2026-10-29.md
+@@ -14,8 +14,9 @@
+ - pdfex_static (Track 3 static, this cycle): 9 files x 6 engines = 54 probes → ORIGINAL 0/36, injected 24/36
+ - writer_audit (Track 4 scoping, cycle 6): raw-byte CANARY search over 34 files (writers 10 + base 24) → content-plaintext 0, INFO XMP 5 (`/EncryptMetadata false`, by spec); no-password triage on writers 10 x 6 = 60 probes → 60 BLOCKED, 0 leaks
+ - ghostscript verify (Track 4, cycle 7): 3 gs-pdfwrite files x 6 engines = 18 no-password probes → 18 BLOCKED, 0 page-content leaks; XMP metadata plaintext x3 (O-2026-005, metadata-only)
+ - shadow re-verify (Track 2, cycle 8): frozen PoC O-2026-002 + fresh matrix shadow_encrypt_obj x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12; PoC md5 `6224ebe68f9abc57d82410870592f868` identical behavior to fresh regen
++- encrypt-null trailer (Track 2, cycle 9): NEW variant `t_encrypt_null` (appended revision, trailer `/Encrypt null`, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 10/12 (pdfminer/pymupdf/pypdfium2/pikepdf/pdfjs render INJECTED-only; pypdf clean `PdfReadError`, refuses). Nuance vs `t_none`: PDFium OPENS null-trailer files but refused `t_none` — new disagreement point, still integrity-only (LOG.md O-2026-002 extension)
+ 
+ ## Leaks / crashes
+ 
+ - leaks: 0. No user-password content recoverable without password on any surface tested.
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-29.md
+Index: findings/daily/2026-10-29.md
+===================================================================
+--- findings/daily/2026-10-29.md
++++ findings/daily/2026-10-29.md
+@@ -26,8 +26,9 @@
+ 
+ ## New files (this cycle)
+ 
+ - cycle 8: no new files. Targeted re-verify only (frozen PoC + existing matrix file); LOG.md O-2026-002 gained a re-verify note.
++- cycle 9: no new repo files (negative result, no PoC). Builder + raw results: `/tmp/opencode/cycle9_encrypt_null.py`, test PDFs in `/tmp/opencode/cycle9/` (2 files, git-untracked by location); LOG.md O-2026-002 gained an encrypt-null extension note. Note: an accidental `triage.py --help` invocation ran a partial full triage that overwrote `findings/report.md/.csv` (dropped track blocks, 325→286 files); reverted to HEAD before probing — verify `git status` shows no report.* modification at commit time.
+ 
+ - `pdfex_static.py` (new harness)
+ - `corpus/pdfex_static/*.pdf` (9 synthetic files, gitignored via `corpus/`)
+ - `findings/pdfex_static.csv` / `findings/pdfex_static.md`
+
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mCould not find oldString in /home/sarthak/pdf-encryption-research/findings/LOG.md. It must match exactly, including whitespace and indentation.
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=12, offset=154][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0msed -n '163,164p' findings/LOG.md | cat -A | head
+identical to fresh regen. pymupdf reports `encryption: None`, confirming$
+  the dropped-trailer-wins disagreement. Still integrity-only, not filed.$
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mCould not find oldString in /home/sarthak/pdf-encryption-research/findings/LOG.md. It must match exactly, including whitespace and indentation.
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit status --short findings/LOG.md; git diff --stat findings/LOG.md; md5sum findings/LOG.md; grep -n "Still integrity-only, not filed" findings/LOG.md
+2aa699221869250a5e24eb97a600f5d2  findings/LOG.md
+164:  the dropped-trailer-wins disagreement. Still integrity-only, not filed.
+> build · muse-spark-1.3-contributor
+Indentation was 2 spaces, not 3 — retrying.
+[0m← [0mEdit findings/LOG.md
+Index: findings/LOG.md
+===================================================================
+--- findings/LOG.md
++++ findings/LOG.md
+@@ -161,8 +161,18 @@
+   injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdf.js), pypdf
+   `NotImplementedError` + PDFium unsupported-scheme refuse. Frozen PoC
+   identical to fresh regen. pymupdf reports `encryption: None`, confirming
+   the dropped-trailer-wins disagreement. Still integrity-only, not filed.
++- Extension 2026-10-29 (cycle 9, Track 2): new variant `t_encrypt_null`
++  (appended plaintext page, trailer `/Encrypt null /Root N 0 R /Prev <orig>`,
++  2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
++  probes, builder `/tmp/opencode/cycle9_encrypt_null.py`) — ORIGINAL canary
++  0/12, injected rendered 10/12 (pdfminer/pymupdf/pypdfium2/pikepdf/pdf.js),
++  pypdf refuses with clean `PdfReadError: /Encrypt entry of the trailer is
++  not a dictionary`. Disagreement nuance vs `t_none`: PDFium OPENS the
++  null-trailer file while it refused every `t_none` variant — an explicit
++  null is treated as "no encryption" by 5/6 stacks. Still integrity-only
++  (injected content only, original ciphertext never disclosed), not filed.
+ 
+ ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
+ 
+ - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit status --short; echo ===; git diff --stat
+M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-10-29.md
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+===
+ findings/24-7.log             | 1048 +++++++++++++++++++++++++++++++++++++++++
+ findings/LOG.md               |   10 +
+ findings/daily/2026-10-29.md  |    4 +-
+ findings/writer_plaintext.csv |    8 +-
+ findings/writer_plaintext.md  |   70 +--
+ ghostscript_writer.py         |  193 +++++---
+ 6 files changed, 1230 insertions(+), 103 deletions(-)
+> build · muse-spark-1.3-contributor
