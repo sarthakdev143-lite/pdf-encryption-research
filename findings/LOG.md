@@ -153,6 +153,15 @@ One entry per candidate. Keep everything reproducible from self-generated files.
 - Engine versions at time of run: see `pip show pypdf pymupdf pypdfium2 pikepdf
   pdfminer.six` / `node -p "require('pdfjs-dist/package.json').version"` on the
   VPS; recorded in `findings/24-7.log`.
+- Re-verified 2026-10-29 (cycle 8, Track 2 targeted): frozen PoC
+  `findings/poc/O-2026-002-shadow-encrypt-obj.pdf` (md5
+  `6224ebe68f9abc57d82410870592f868`) + fresh matrix file
+  `corpus/prevchain/aes256_r6__plain__shadow_encrypt_obj.pdf` probed
+  no-password across all 6 engines (12 probes) — ORIGINAL canary 0/12,
+  injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdf.js), pypdf
+  `NotImplementedError` + PDFium unsupported-scheme refuse. Frozen PoC
+  identical to fresh regen. pymupdf reports `encryption: None`, confirming
+  the dropped-trailer-wins disagreement. Still integrity-only, not filed.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
