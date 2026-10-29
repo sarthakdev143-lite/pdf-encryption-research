@@ -16,20 +16,22 @@ echo "[$(date -u +%FT%TZ)] boot 2h/day window ${START_HOUR_UTC}:00 UTC +${RUN_MI
 CYCLE=0
 while true; do
   NOW_EPOCH=$(date -u +%s)
-  DAY_START=$(date -u -d "$(date -u +%F) ${START_HOUR_UTC}:00" +%s)
+  DAY_START=$(date -u -d "$(date -u +%F) ${START_HOUR_UTC}:00:00" +%s)
   WINDOW_END=$((DAY_START + RUN_MINUTES * 60))
   if [ "$NOW_EPOCH" -lt "$DAY_START" ]; then
     SLEEP_SEC=$((DAY_START - NOW_EPOCH))
-    [ "$SLEEP_SEC" -gt 600 ] && SLEEP_SEC=600
+    if [ "$SLEEP_SEC" -lt 60 ]; then SLEEP_SEC=60; fi
+    if [ "$SLEEP_SEC" -gt 600 ]; then SLEEP_SEC=600; fi
     echo "[$(date -u +%FT%TZ)] idle until window ${START_HOUR_UTC}:00 UTC, sleep ${SLEEP_SEC}s" >> findings/24-7.log
     sleep "$SLEEP_SEC"
     continue
   fi
   if [ "$NOW_EPOCH" -ge "$WINDOW_END" ]; then
-    NEXT_DAY=$(date -u -d "tomorrow +%F")
-    NEXT_START=$(date -u -d "$NEXT_DAY ${START_HOUR_UTC}:00" +%s)
+    NEXT_DAY=$(date -u -d "tomorrow" +%F)
+    NEXT_START=$(date -u -d "$NEXT_DAY ${START_HOUR_UTC}:00:00" +%s)
     SLEEP_SEC=$((NEXT_START - NOW_EPOCH))
-    [ "$SLEEP_SEC" -gt 600 ] && SLEEP_SEC=600
+    if [ "$SLEEP_SEC" -lt 60 ]; then SLEEP_SEC=60; fi
+    if [ "$SLEEP_SEC" -gt 600 ]; then SLEEP_SEC=600; fi
     echo "[$(date -u +%FT%TZ)] window done, next ${NEXT_DAY} ${START_HOUR_UTC}:00 UTC, sleep ${SLEEP_SEC}s" >> findings/24-7.log
     sleep "$SLEEP_SEC"
     continue
