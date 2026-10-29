@@ -1,16 +1,39 @@
 #!/bin/bash
-# 24/7 research loop for ~/pdf-encryption-research on VPS
+# 2h/day research loop for ~/pdf-encryption-research on VPS
 # Runs inside tmux session `research`. Logs to findings/24-7.log
 # Policy: 1 day = 1 branch research/vps-YYYY-MM-DD, daily push to GitHub
+# Schedule: runs only 02:00-04:00 UTC daily (07:30-09:30 IST), idle otherwise
 set -u
 cd "$HOME/pdf-encryption-research"
 export PATH="$HOME/.local/bin:$PATH"
 mkdir -p findings findings/daily
 
-echo "[$(date -u +%FT%TZ)] boot: $(git rev-parse --short HEAD 2>/dev/null) $(.venv/bin/python --version 2>&1) $(node --version)" >> findings/24-7.log
+START_HOUR_UTC=2
+RUN_MINUTES=120
+
+echo "[$(date -u +%FT%TZ)] boot 2h/day window ${START_HOUR_UTC}:00 UTC +${RUN_MINUTES}min: $(git rev-parse --short HEAD 2>/dev/null)" >> findings/24-7.log
 
 CYCLE=0
 while true; do
+  NOW_EPOCH=$(date -u +%s)
+  DAY_START=$(date -u -d "$(date -u +%F) ${START_HOUR_UTC}:00" +%s)
+  WINDOW_END=$((DAY_START + RUN_MINUTES * 60))
+  if [ "$NOW_EPOCH" -lt "$DAY_START" ]; then
+    SLEEP_SEC=$((DAY_START - NOW_EPOCH))
+    [ "$SLEEP_SEC" -gt 600 ] && SLEEP_SEC=600
+    echo "[$(date -u +%FT%TZ)] idle until window ${START_HOUR_UTC}:00 UTC, sleep ${SLEEP_SEC}s" >> findings/24-7.log
+    sleep "$SLEEP_SEC"
+    continue
+  fi
+  if [ "$NOW_EPOCH" -ge "$WINDOW_END" ]; then
+    NEXT_DAY=$(date -u -d "tomorrow +%F")
+    NEXT_START=$(date -u -d "$NEXT_DAY ${START_HOUR_UTC}:00" +%s)
+    SLEEP_SEC=$((NEXT_START - NOW_EPOCH))
+    [ "$SLEEP_SEC" -gt 600 ] && SLEEP_SEC=600
+    echo "[$(date -u +%FT%TZ)] window done, next ${NEXT_DAY} ${START_HOUR_UTC}:00 UTC, sleep ${SLEEP_SEC}s" >> findings/24-7.log
+    sleep "$SLEEP_SEC"
+    continue
+  fi
   CYCLE=$((CYCLE+1))
   TODAY=$(date -u +%F)
   BRANCH="research/vps-$TODAY"
