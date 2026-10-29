@@ -2,3 +2,5 @@ node_modules/
 __pycache__/
 .opencode-logs/
 *.pyc
+# local-only VPS automation docs, never push to GitHub
+/VPS*.md
