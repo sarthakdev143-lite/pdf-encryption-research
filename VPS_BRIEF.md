@@ -32,3 +32,11 @@ Current state (README 2026-10-24): 0 leaks, 0 crashes on mainline. F-2026-001 (M
 
 Work in small commits to branch `research/vps-<date>`. Never push to main without human OK. Log every cycle to `findings/24-7.log` with UTC timestamp, files tested, result.
 Be thorough: check everything in depth, read ISO 32000-2 7.6, prior art (PDFex, Bock, BadPDF, Stevens).
+
+## Daily branch policy (strict: 1 day = 1 branch)
+- Branch name is `research/vps-YYYY-MM-DD` in UTC. Example: `research/vps-2026-10-30`.
+- Work ONLY on today's branch. Never commit to `main`, never commit to a past date branch.
+- At cycle start the runner already checks out today's branch (creating it from current HEAD on rollover so work carries forward).
+- During the cycle: small commits to today's branch only.
+- End of every cycle: update `findings/daily/YYYY-MM-DD.md` with: date, branch, cycles run, files tested, probe counts (triage/authmatrix/fuzz/prevchain), leaks/crashes (0 or list with PoC path), new files, next step. Then `git push -u origin <today-branch>`. Research branches may be pushed; `main` may not.
+- At UTC midnight the next cycle starts a new branch automatically. Do not merge yesterday into today manually — the runner creates today from HEAD, so history continues.
