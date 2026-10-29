@@ -285,6 +285,49 @@ One entry per candidate. Keep everything reproducible from self-generated files.
 - Engine versions: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pikepdf 10.17.0 |
   pdfminer.six 20260107 | pdfjs-dist 6.4.299 | Ghostscript 10.06.0.
 
+**Re-verification 2026-10-29 (cycle 11, PostScript pipeline) - corrects the
+empty-page caveat above.**
+
+- The cycle-7 note "get_text() empty (pdfwrite re-distills/vectorizes text)"
+  was a harness artifact, not a property of the output. gs was failing to
+  render the reportlab source (`error executing PDF token`) and wrote EMPTY
+  pages, so the with-password extraction check was vacuous. The "vectorizes
+  text" explanation is withdrawn.
+- Rebuilt with PostScript input written by this repo - the real `ps2pdf`
+  path, with gs producing the document itself. `ghostscript_writer.py` now
+  writes `corpus/writers/gs_source.ps` (page canaries + `/DOCINFO`
+  title/subject/author) and feeds it to gs.
+  - Correct user password: `auth=2`, 2/2 page canaries recovered, 2 pages.
+  - Unencrypted control from the same `.ps`: 2/2 page canaries found in raw
+    bytes, so the raw scanner is proven sensitive.
+  - All 3 encrypted variants: 0 page canaries in the file bytes or in streams
+    that inflate without a key. The only unencrypted, inflatable stream is the
+    xref stream (required to be unencrypted, ISO 32000 7.5.8).
+- Still true and now on valid samples: the XMP `/Metadata` stream is
+  plaintext, so title/subject/author are readable without the password.
+  Metadata-only; page content stays encrypted.
+- Cross-writer: qpdf's V2/R3 output
+  (`corpus/base/rc4_128_r3__plain.pdf`) encrypts its XMP stream -> the
+  behaviour is Ghostscript-specific, not a property of revision 3. Raw scan
+  of all 35 user-password writer samples in the repo (qpdf, reportlab, pypdf,
+  PyMuPDF, gs): 0 with page-content plaintext.
+- Spec anchor: ISO 32000-1 7.6.1 (ISO 32000-2 7.6.2) - "Encryption applies
+  to all strings and streams ... with the following exceptions: the values
+  for the ID entry in the trailer; any strings in an Encrypt dictionary; any
+  strings that are inside streams ...". `EncryptMetadata` is "meaningful only
+  when the value of V is 4" with "Default value: true" (Table 20); gs writes
+  `/V 2`, so no metadata exemption applies.
+- PoC for this re-verification:
+  `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (synthetic; user password
+  `user`), source `findings/poc/O-2026-005-source.ps`, repro
+  `findings/poc/gs_xmp_plaintext_repro.py`. The earlier PoC
+  `O-2026-005-gs-xmp-plaintext.pdf` (reportlab-sourced, empty pages) remains
+  as-is; this one supersedes it for the content/encryption control.
+- Environment note: gs only works here after unpacking ICC profiles
+  (`default_*.icc`, etc.) and the URW base-35 fonts; without them the device
+  refuses to open or every page renders empty. Repro recipe is in
+  `findings/writer_plaintext.md`.
+
 ---
 
 ## Template

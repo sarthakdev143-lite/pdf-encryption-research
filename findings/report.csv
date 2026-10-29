@@ -1949,3 +1949,27 @@ corpus/mutants/w_pypdf_aes-256__filter_bogus.pdf,w_pypdf_aes-256__filter_bogus,p
 corpus/mutants/w_pypdf_aes-256__authevent_open.pdf,w_pypdf_aes-256__authevent_open,pdfjs,BLOCKED,True,authevent_open,PasswordException: No password given
 corpus/mutants/w_pypdf_aes-256__all_identity.pdf,w_pypdf_aes-256__all_identity,pdfjs,BLOCKED,True,all_identity,PasswordException: No password given
 corpus/mutants/w_pypdf_aes-256__encrypt_ref_hidden.pdf,w_pypdf_aes-256__encrypt_ref_hidden,pdfjs,PARTIAL,True,encrypt_ref_hidden,text_len=254
+corpus/writers/gs_control_plain.pdf,w_gs_control,pypdf,OK,False,track4-plaintext-control,text_len=305
+corpus/writers/gs_control_plain.pdf,w_gs_control,pdfminer,OK,False,track4-plaintext-control,text_len=82
+corpus/writers/gs_control_plain.pdf,w_gs_control,pymupdf,OK,False,track4-plaintext-control,text_len=2024
+corpus/writers/gs_control_plain.pdf,w_gs_control,pypdfium2,OK,False,track4-plaintext-control,text_len=83
+corpus/writers/gs_control_plain.pdf,w_gs_control,pikepdf,OK,False,track4-plaintext-control,text_len=3014
+corpus/writers/gs_control_plain.pdf,w_gs_control,pdfjs,OK,False,track4-plaintext-control,text_len=2112
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pypdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pdfminer,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pymupdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pypdfium2,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pikepdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r2_k40.pdf,w_gs_r2_k40,pdfjs,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pypdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pdfminer,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pymupdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pypdfium2,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pikepdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k40.pdf,w_gs_r3_k40,pdfjs,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pypdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pdfminer,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pymupdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pypdfium2,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pikepdf,BLOCKED,False,track4-writer-gs,text_len=0
+corpus/writers/gs_r3_k128.pdf,w_gs_r3_k128,pdfjs,BLOCKED,False,track4-writer-gs,text_len=0

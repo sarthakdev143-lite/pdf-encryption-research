@@ -1,0 +1,36 @@
+file,writer,algorithm,meta_encrypted,page_plaintext,meta_plaintext,streams,inflated
+corpus/base/rc4_40_r2__plain.pdf,qpdf,rc4_40_r2,False,-,-,6,0
+corpus/base/rc4_40_r2__objstm.pdf,qpdf,rc4_40_r2,False,-,-,10,1
+corpus/base/rc4_40_r2__linearized.pdf,qpdf,rc4_40_r2,False,-,-,8,0
+corpus/base/rc4_128_r3__plain.pdf,qpdf,rc4_128_r3,False,-,-,6,0
+corpus/base/rc4_128_r3__objstm.pdf,qpdf,rc4_128_r3,False,-,-,10,1
+corpus/base/rc4_128_r3__linearized.pdf,qpdf,rc4_128_r3,False,-,-,8,0
+corpus/base/rc4_128_r4__plain.pdf,qpdf,rc4_128_r4,False,-,META-CANARY rc4_128_r4__plain @ obj 3 (stream); META-CANARY rc4_128_r4__plain @ obj 3 (stream),6,0
+corpus/base/rc4_128_r4__objstm.pdf,qpdf,rc4_128_r4,False,-,META-CANARY rc4_128_r4__objstm @ obj 9 (stream); META-CANARY rc4_128_r4__objstm @ obj 9 (stream),10,1
+corpus/base/rc4_128_r4__linearized.pdf,qpdf,rc4_128_r4,False,-,META-CANARY rc4_128_r4__linearized @ obj 5 (stream); META-CANARY rc4_128_r4__linearized @ obj 5 (stream),8,0
+corpus/base/aes128_r4__plain.pdf,qpdf,aes128_r4,True,-,-,6,0
+corpus/base/aes128_r4__objstm.pdf,qpdf,aes128_r4,True,-,-,10,1
+corpus/base/aes128_r4__linearized.pdf,qpdf,aes128_r4,True,-,-,8,0
+corpus/base/aes256_r5__plain.pdf,qpdf,aes256_r5,True,-,-,6,0
+corpus/base/aes256_r5__objstm.pdf,qpdf,aes256_r5,True,-,-,10,1
+corpus/base/aes256_r5__linearized.pdf,qpdf,aes256_r5,True,-,-,8,1
+corpus/base/aes256_r6__plain.pdf,qpdf,aes256_r6,True,-,-,6,0
+corpus/base/aes256_r6__objstm.pdf,qpdf,aes256_r6,True,-,-,10,1
+corpus/base/aes256_r6__linearized.pdf,qpdf,aes256_r6,True,-,-,8,0
+corpus/base/aes256_r6__nometa.pdf,qpdf,aes256_r6,False,-,META-CANARY aes256_r6__nometa @ obj 3 (stream); META-CANARY aes256_r6__nometa @ obj 3 (stream),6,0
+corpus/base/aes256_r6__form.pdf,qpdf,aes256_r6,True,-,-,8,0
+corpus/base/rc4_128_r4__attach.pdf,qpdf,rc4_128_r4,False,-,META-CANARY rc4_128_r4__attach @ obj 4 (stream); META-CANARY rc4_128_r4__attach @ obj 4 (stream),8,0
+corpus/base/aes256_r6__attach.pdf,qpdf,aes256_r6,True,-,-,8,0
+corpus/writers/reportlab_s40.pdf,reportlab,s40,True,-,-,4,0
+corpus/writers/reportlab_s128.pdf,reportlab,s128,True,-,-,4,0
+corpus/writers/pypdf_rc440.pdf,pypdf,rc4-40,True,-,-,4,0
+corpus/writers/pypdf_rc4128.pdf,pypdf,rc4-128,True,-,-,4,0
+corpus/writers/pypdf_aes128.pdf,pypdf,aes-128,True,-,-,4,0
+corpus/writers/pypdf_aes256.pdf,pypdf,aes-256,True,-,-,4,0
+corpus/writers/pymupdf_rc440.pdf,pymupdf,rc440,True,-,-,6,0
+corpus/writers/pymupdf_rc4128.pdf,pymupdf,rc4128,True,-,-,6,0
+corpus/writers/pymupdf_aes128.pdf,pymupdf,aes128,True,-,-,6,0
+corpus/writers/pymupdf_aes256.pdf,pymupdf,aes256,True,-,-,6,0
+corpus/writers/gs_r2_k40.pdf,ghostscript,r2_k40,True,-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),12,1
+corpus/writers/gs_r3_k40.pdf,ghostscript,r3_k40,True,-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),12,1
+corpus/writers/gs_r3_k128.pdf,ghostscript,r3_k128,True,-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),12,1
