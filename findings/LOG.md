@@ -172,6 +172,19 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   null-trailer file while it refused every `t_none` variant — an explicit
   null is treated as "no encryption" by 5/6 stacks. Still integrity-only
   (injected content only, original ciphertext never disclosed), not filed.
+- Extension 2026-10-29 (cycle 10, Track 2): new variant `t_encrypt_dangling`
+  (appended plaintext page, trailer `/Encrypt 9999 0 R` — indirect ref to a
+  never-defined object — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6 engines
+  = 12 no-password probes, builder `/tmp/opencode/cycle10_dangling.py`,
+  raw results `/tmp/opencode/cycle10/results.json`) — ORIGINAL canary 0/12,
+  injected rendered 8/12 (pymupdf/pypdfium2/pikepdf/pdf.js), 0 crashes.
+  Nuance vs `t_encrypt_null`: pypdf refuses identically (clean `PdfReadError:
+  /Encrypt entry of the trailer is not a dictionary`), but pdfminer REFUSES
+  the dangling ref (`PdfminerException: Unknown filter`, BLOCKED) while it
+  rendered the null-trailer file — a dangling indirect ref is fatal to
+  pdfminer where an explicit null is accepted. Still integrity-only, not
+  filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2
+  5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 

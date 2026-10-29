@@ -3618,3 +3618,891 @@ M findings/24-7.log
  ghostscript_writer.py         |  193 +++++---
  6 files changed, 1230 insertions(+), 103 deletions(-)
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/24-7.log findings/LOG.md findings/daily/2026-10-29.md && git status --short && git commit -m "Cycle 9: Track 2 encrypt-null trailer (12 probes, ORIGINAL 0/12, PDFium opens null-trailer vs refuses t_none)" && git push -u origin research/vps-2026-10-29 2>&1 | tail -3
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-10-29.md
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+[research/vps-2026-10-29 04edbdd] Cycle 9: Track 2 encrypt-null trailer (12 probes, ORIGINAL 0/12, PDFium opens null-trailer vs refuses t_none)
+ 3 files changed, 1084 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   f342f2b..04edbdd  research/vps-2026-10-29 -> research/vps-2026-10-29
+branch 'research/vps-2026-10-29' set up to track 'origin/research/vps-2026-10-29'.
+[2026-10-29T21:29:33Z] boot: 04edbdd Python 3.14.4 v24.22.2
+Already on 'research/vps-2026-10-29'
+M	findings/24-7.log
+M	findings/writer_plaintext.csv
+M	findings/writer_plaintext.md
+M	ghostscript_writer.py
+Your branch is up to date with 'origin/research/vps-2026-10-29'.
+[2026-10-29T21:29:33Z] cycle 1 start branch=research/vps-2026-10-29
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the baseline and probing a track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead README.md 
+[0m→ [0mRead findings/daily/2026-10-29.md 
+[0m$ [0mgit branch --show-current; git log --oneline -5; git status --short | head -20; date -u
+research/vps-2026-10-29
+04edbdd Cycle 9: Track 2 encrypt-null trailer (12 probes, ORIGINAL 0/12, PDFium opens null-trailer vs refuses t_none)
+f342f2b Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+bfffec9 Cycle 7: Track 4 Ghostscript verify - XMP-plaintext O-2026-005 (metadata-only, 0 page leaks)
+3e4f816 Cycle 6 closeout: note concurrent-session collision, all Track 4 work verified intact
+ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+ M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+Thu Oct 29 21:29:37 UTC 2026
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff --stat; echo ---; git diff findings/24-7.log | tail -30; echo ===; tail -30 findings/24-7.log; echo ===; tail -40 findings/LOG.md
+findings/24-7.log             |  54 +++++++++++
+ findings/writer_plaintext.csv |   8 +-
+ findings/writer_plaintext.md  |  70 ++++++++------
+ ghostscript_writer.py         | 208 ++++++++++++++++++++++++++++--------------
+ 4 files changed, 238 insertions(+), 102 deletions(-)
+---
++M	ghostscript_writer.py
++Your branch is up to date with 'origin/research/vps-2026-10-29'.
++[2026-10-29T21:29:33Z] cycle 1 start branch=research/vps-2026-10-29
++[0m
++> build · muse-spark-1.3-contributor
++Doing one research cycle — re-running the baseline and probing a track.
++[0m→ [0mRead . 
++> build · muse-spark-1.3-contributor
++[0m→ [0mRead README.md 
++[0m→ [0mRead findings/daily/2026-10-29.md 
++[0m$ [0mgit branch --show-current; git log --oneline -5; git status --short | head -20; date -u
++research/vps-2026-10-29
++04edbdd Cycle 9: Track 2 encrypt-null trailer (12 probes, ORIGINAL 0/12, PDFium opens null-trailer vs refuses t_none)
++f342f2b Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
++bfffec9 Cycle 7: Track 4 Ghostscript verify - XMP-plaintext O-2026-005 (metadata-only, 0 page leaks)
++3e4f816 Cycle 6 closeout: note concurrent-session collision, all Track 4 work verified intact
++ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
++ M findings/24-7.log
++ M findings/writer_plaintext.csv
++ M findings/writer_plaintext.md
++ M ghostscript_writer.py
++?? findings/crashes/
++?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
++?? findings/poc/O-2026-004-source.ps
++?? findings/poc/gs_xmp_plaintext_repro.py
++?? findings/poc/o004_gs_encrypted.pdf
++?? findings/poc/o004_src.pdf
++?? findings/writer_rawscan.csv
++Thu Oct 29 21:29:37 UTC 2026
++> build · muse-spark-1.3-contributor
+===
+M	ghostscript_writer.py
+Your branch is up to date with 'origin/research/vps-2026-10-29'.
+[2026-10-29T21:29:33Z] cycle 1 start branch=research/vps-2026-10-29
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the baseline and probing a track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead README.md 
+[0m→ [0mRead findings/daily/2026-10-29.md 
+[0m$ [0mgit branch --show-current; git log --oneline -5; git status --short | head -20; date -u
+research/vps-2026-10-29
+04edbdd Cycle 9: Track 2 encrypt-null trailer (12 probes, ORIGINAL 0/12, PDFium opens null-trailer vs refuses t_none)
+f342f2b Cycle 8: Track 2 shadow-encrypt-obj targeted re-verify (12 probes, ORIGINAL 0/12, matches O-2026-002)
+bfffec9 Cycle 7: Track 4 Ghostscript verify - XMP-plaintext O-2026-005 (metadata-only, 0 page leaks)
+3e4f816 Cycle 6 closeout: note concurrent-session collision, all Track 4 work verified intact
+ed961e9 log: cycle summary - baseline 0 leaks, Track 2 prevchain 0/306 original content
+ M findings/24-7.log
+ M findings/writer_plaintext.csv
+ M findings/writer_plaintext.md
+ M ghostscript_writer.py
+?? findings/crashes/
+?? findings/poc/O-2026-004-gs-plaintext-xmp.pdf
+?? findings/poc/O-2026-004-source.ps
+?? findings/poc/gs_xmp_plaintext_repro.py
+?? findings/poc/o004_gs_encrypted.pdf
+?? findings/poc/o004_src.pdf
+?? findings/writer_rawscan.csv
+Thu Oct 29 21:29:37 UTC 2026
+> build · muse-spark-1.3-contributor
+===
+- Actual: obj 11 `/Type /Metadata /Subtype /XML` stored plaintext —
+  `<dc:title>Synthetic research sample control_plain</dc:title>` and
+  `<dc:description>META-CANARY control_plain</dc:description>` readable with
+  `strings`/raw read, no password. Same on all 3 variants.
+- What is NOT affected: page content streams properly encrypted (0 raw page
+  hits); `/Info` strings encrypted on disk; all 18 no-password engine probes
+  (6 engines x 3 files) BLOCKED. Trailer `/Info 2 0 R` is dangling (no obj 2
+  in file; readers tolerate, metadata served from XMP after auth).
+- Cross-engine (no password): pypdf BLOCKED (FileNotDecryptedError), pdfminer
+  BLOCKED, pymupdf BLOCKED (ValueError: document closed or encrypted),
+  pypdfium2 BLOCKED (Incorrect password), pikepdf BLOCKED (PasswordError),
+  pdfjs BLOCKED (PasswordException). With password: auth ok, 2 pages render;
+  `get_text()` empty (pdfwrite re-distills/vectorizes text — extraction is not
+  a valid survival check here).
+- Notes: `EncryptMetadata` string exists in `libgs.so.10.06` but pdfwrite
+  output never sets the key. Open question for upstream: intentional
+  (documented?) vs missing feature. Corrects the harness's overstated
+  "Content readable: YES" line in `findings/writer_plaintext.md` (see its
+  verification addendum) — page content is NOT readable.
+- Engine versions: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pikepdf 10.17.0 |
+  pdfminer.six 20260107 | pdfjs-dist 6.4.299 | Ghostscript 10.06.0.
+
+---
+
+## Template
+
+```
+### F-YYYY-NNN - <one-line title>
+- Status: candidate | confirmed | reported (YYYY-MM-DD) | fixed (PR link) | published
+- Severity (self-assessed):
+- Affected: <project> <version> / <engine> <version>
+- Bug class: encryption-skipped-on-path | malformed-encrypt-fallback | crypto-divergence | crash-dos | malleability | exfiltration
+- Reproduction: `python triage.py` + exact file id from corpus/manifest.json
+- Minimal PoC file: findings/poc/F-....pdf (synthetic, generated by this repo)
+- Expected behavior (per ISO 32000-2 §7.6):
+- Actual behavior:
+- Impact: content behind a user password recoverable without it / crash / DoS
+- Disclosure: contact used, dates, CVE id
+- Notes:
+```
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead run-research.sh 
+[0m$ [0mgit diff ghostscript_writer.py | head -80; echo ===CSV===; git diff findings/writer_plaintext.csv | head -40; echo ===MD-DIFF-STAT===; git diff findings/writer_plaintext.md | head -100
+diff --git a/ghostscript_writer.py b/ghostscript_writer.py
+index a2d0665..06a188d 100644
+--- a/ghostscript_writer.py
++++ b/ghostscript_writer.py
+@@ -1,20 +1,25 @@
+ """
+ Track 4 - writer diversity: Ghostscript.
+ 
+-Question: does a real-world producer (Ghostscript's `pdfwrite`, used by print
+-pipelines, CUPS filters, `ps2pdf`, and many "flatten/repair this PDF" tools)
+-ever emit an encrypted PDF with content left in plaintext?  A user believes
+-such a file is locked; if the text is readable without the password that is a
+-writer-side confidentiality bug (scope table: "writer ... so the file is not
+-actually protected").
++Question: does a real-world producer (Ghostscript's `pdfwrite`, used by
++print pipelines, CUPS filters, `ps2pdf`, and many "flatten/repair this PDF"
++tools) ever emit an encrypted PDF with content left in plaintext?  A user
++believes such a file is locked; if the page text is readable without the
++password that is a writer-side confidentiality bug (scope table: "writer ...
++so the file is not actually protected").
+ 
+-This harness produces synthetic encrypted PDFs with the gs CLI from the repo's
+-own plaintext canary document, then tests them two independent ways:
++Input is PostScript written by this script, so Ghostscript produces the
++document itself (the real ps2pdf path) instead of re-rendering a foreign
++writer's PDF.  Canaries live in the page text and in the Info dictionary
++(title/subject/author), which Ghostscript copies into the XMP packet.
++
++Two independent tests per file:
+ 
+   1. RAW scan - the exact bytes of the file, and every stream that inflates
+-     (FlateDecode) WITHOUT any decryption, are searched for the page and
+-     metadata canaries.  A hit is plaintext content in a file that claims to
+-     be encrypted: engine-independent proof, no viewer needed.
++     (FlateDecode) WITHOUT any decryption, are searched for the canaries.  A
++     page-canary hit is engine-independent proof of content left unencrypted.
++     A plaintext control (same PostScript, no encryption) proves the detector
++     actually fires.
+   2. ENGINE differential - the six triage engines get the file with no
+      password.  LEAK means content came out of a user-password file.
+ 
+@@ -37,22 +42,16 @@ from pathlib import Path
+ ROOT = Path(__file__).resolve().parent
+ CORPUS = ROOT / "corpus"
+ WRITERS = CORPUS / "writers"
+-SOURCE = CORPUS / "base" / "control_plain.pdf"
++SOURCE = WRITERS / "gs_source.ps"
+ MANIFEST = CORPUS / "manifest.json"
+ FINDINGS = ROOT / "findings"
+ 
+ USER_PW = "Us3r-Passw0rd!"
+ OWNER_PW = "0wner-Passw0rd!"
+-DOC_ID = "control_plain"
+-CANARIES = [f"CANARY {DOC_ID} ALPHA", f"CANARY {DOC_ID} BRAVO"]
++DOC_ID = "gs"
++PAGE_CANARIES = [f"CANARY {DOC_ID} ALPHA", f"CANARY {DOC_ID} BRAVO"]
+ META_CANARY = f"META-CANARY {DOC_ID}"
+-# Text that appears in the page content but is not a canary: still a leak if
+-# it survives in plaintext.
+-EXTRA_NEEDLES = [
+-    "Synthetic research sample",
+-    "Page two secret payload",
+-    "Document id:",
+-]
++BODY_LINE = "Synthetic research sample - contains no real data."
+ 
+ GSROOT = Path(os.environ.get("PDF_GS_ROOT", Path.home() / ".local" / "gs"))
+ GS_BIN = Path(os.environ.get("PDF_GS", GSROOT / "usr/bin/gs"))
+@@ -62,7 +61,7 @@ GS_SHARE = GSROOT / "usr/share/ghostscript"
+ VARIANTS = [
+     ("r2_k40", 2, 40),    # RC4-40,  /V 1
+     ("r3_k40", 3, 40),    # RC4-40,  /V 2
+-    ("r3_k128", 3, 128),  # RC4-128, /V 2 (gs default for "strong" output)
++    ("r3_k128", 3, 128),  # RC4-128, /V 2
+ ]
+ 
+ 
+@@ -78,25 +77,47 @@ def gs_env() -> dict:
+     return env
+ 
+===CSV===
+diff --git a/findings/writer_plaintext.csv b/findings/writer_plaintext.csv
+index 2eab89f..6a6b7db 100644
+--- a/findings/writer_plaintext.csv
++++ b/findings/writer_plaintext.csv
+@@ -1,4 +1,4 @@
+-variant,R,keylen,file,bytes,streams,inflated,plaintext_hits,page_plaintext,meta_plaintext,auth_with_pw,needs_pass,pages_with_pw,page_canaries_with_pw,meta_canary_with_pw,engines
+-r2_k40,2,40,gs_r2_k40.pdf,3322,10,1,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),-,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),2,1,2,0,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
+-r3_k40,3,40,gs_r3_k40.pdf,3321,10,1,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),-,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),2,1,2,0,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
+-r3_k128,3,128,gs_r3_k128.pdf,3324,10,1,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),-,META-CANARY control_plain @ obj 11 (stream); Synthetic research sample @ obj 11 (stream),2,1,2,0,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
++variant,R,keylen,file,bytes,streams,inflated,plaintext_hits,page_plaintext,meta_plaintext,auth_with_pw,needs_pass,pages_with_pw,page_canaries_with_pw,meta_canary_with_pw,sample_valid,engines
++r2_k40,2,40,gs_r2_k40.pdf,3895,12,1,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),2,1,2,2,True,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
++r3_k40,3,40,gs_r3_k40.pdf,3895,12,1,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),2,1,2,2,True,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
++r3_k128,3,128,gs_r3_k128.pdf,3899,12,1,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),-,META-CANARY gs @ obj 15 (stream); META-CANARY gs @ obj 15 (stream),2,1,2,2,True,True,"pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED"
+===MD-DIFF-STAT===
+diff --git a/findings/writer_plaintext.md b/findings/writer_plaintext.md
+index ba69b2a..65d8aaa 100644
+--- a/findings/writer_plaintext.md
++++ b/findings/writer_plaintext.md
+@@ -1,20 +1,28 @@
+ # Track 4 - writer diversity: Ghostscript `pdfwrite`
+ 
+-Produced with GPL Ghostscript 10.06.0 (`-sDEVICE=pdfwrite`), because no
+-system-wide gs/libreoffice/chrome exists on this VPS; gs 10.06.0 was
+-unpacked from the Ubuntu package into `~/.local/gs` (userspace, no root).
+-
+-`raw plaintext hits` = a canary was found verbatim in the file bytes, or
+-inside a stream that inflates **without decryption**. That is
+-engine-independent proof of content left unencrypted. Only a *page*
+-canary (`CANARY ... ALPHA/BRAVO`) counts as a content leak; the metadata
+-canary is reported separately (scope: metadata only, at most INFO).
++Produced with GPL Ghostscript 10.06.0 (`-sDEVICE=pdfwrite`) from
++PostScript written by `ghostscript_writer.py` (the real `ps2pdf` path:
++Ghostscript produces the document, no foreign producer's PDF is
++re-rendered). No system-wide gs/libreoffice/chrome exists on this VPS;
++gs 10.06.0 was unpacked from the Ubuntu package into `~/.local/gs`
++(userspace, no root; the URW base-35 fonts and ICC profiles are needed
++or gs cannot render text / open a device).
++
++`page plaintext` = a page canary (`CANARY gs ALPHA/BRAVO`) was found
++verbatim in the file bytes, or inside a stream that inflates **without
++decryption**. That is engine-independent proof of page content left
++unencrypted. The metadata canary is reported separately (metadata only,
++at most INFO per the scope rules).
++
++Sensitivity control, same PostScript without encryption:
++**2/2 page canaries found in raw bytes** -
++the scanner fires on plaintext, so a clean encrypted result is meaningful.
+ 
+ | variant | R | key | bytes | streams | inflate-no-key | page plaintext | pw auth | canaries w/ pw | no-password engines |
+ |---|---|---|---|---|---|---|---|---|---|
+-| r2_k40 | 2 | 40 | 3322 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+-| r3_k40 | 3 | 40 | 3321 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+-| r3_k128 | 3 | 128 | 3324 | 10 | 1 | - | 2 | 0/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r2_k40 | 2 | 40 | 3895 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r3_k40 | 3 | 40 | 3895 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
++| r3_k128 | 3 | 128 | 3899 | 12 | 1 | - | 2 | 2/2 | pypdf=BLOCKED, pdfminer=BLOCKED, pymupdf=BLOCKED, pypdfium2=BLOCKED, pikepdf=BLOCKED, pdfjs=BLOCKED |
+ 
+ **Page content readable without the password: no** (0 leak signal(s) across 3 files).
+ 
+@@ -24,18 +32,20 @@ Non-zero is expected only for xref streams (never encrypted, ISO 32000-2
+ 
+ ## Metadata left in plaintext (gs)
+ 
+-All three variants carry the XMP packet unencrypted:
+-- `gs_r2_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
+-- `gs_r3_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
+-- `gs_r3_k128.pdf`: 2 plaintext hit(s), e.g. `META-CANARY control_plain @ obj 11 (stream)`
++Every variant carries the XMP packet unencrypted:
++- `gs_r2_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
++- `gs_r3_k40.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
++- `gs_r3_k128.pdf`: 2 plaintext hit(s), e.g. `META-CANARY gs @ obj 15 (stream)`
+ 
+ The gs `/Encrypt` dictionary is V1/V2 (R2/R3), where there is no
+-`/EncryptMetadata` escape hatch: every stream except the xref stream must
+-be encrypted (ISO 32000-2 7.6.2, 7.5.8). gs writes the `/Metadata` XMP
+-stream in the clear, so the document title/author/description are
+-readable with `strings` on a locked file. No engine surfaces it without
+-the password (all six BLOCKED), and it is metadata only - observation
+-`O-2026-004`, not a confidentiality break of page content.
++`/EncryptMetadata` escape hatch: every stream except the xref stream
++must be encrypted (ISO 32000-2 7.6.2, 7.5.8; PDF 1.7 7.5.7 defaults
++EncryptMetadata to true). gs writes the `/Metadata` XMP stream in the
++clear, so the document title/author/subject are readable with `strings`
++on a locked file. Same revision, different writer: the qpdf V2/R3
++samples (`corpus/base/rc4_128_r3__plain.pdf`) encrypt their XMP stream.
++No engine surfaces it without the password (all six BLOCKED), and it is
++metadata only - observation `O-2026-004`, not a page-content leak.
+ 
+ ## With-password control
+ 
+@@ -43,11 +53,11 @@ Every file was reopened with the correct user password: `auth` is the
+ PyMuPDF authenticate() result (2 = user password accepted), `pages` and
+ `canaries` prove the document really contains the canary text.
+ 
+-| variant | auth | pages | canaries |
+-|---|---|---|---|
+-| r2_k40 | 2 | 2 | 0/2 |
+-| r3_k40 | 2 | 2 | 0/2 |
+-| r3_k128 | 2 | 2 | 0/2 |
++| variant | auth | pages | canaries | meta canary |
++|---|---|---|---|---|
++| r2_k40 | 2 | 2 | 2/2 | True |
++| r3_k40 | 2 | 2 | 2/2 | True |
++| r3_k128 | 2 | 2 | 2/2 | True |
+ 
+ ## Engine differential (no password)
+ 
+@@ -113,9 +123,9 @@ non-`-` would be a content leak; `meta plaintext` is only a finding when
+ | corpus/writers/pymupdf_rc4128.pdf | pymupdf | rc4128 | True | - | - |
+ | corpus/writers/pymupdf_aes128.pdf | pymupdf | aes128 | True | - | - |
+ | corpus/writers/pymupdf_aes256.pdf | pymupdf | aes256 | True | - | - |
+-| corpus/writers/gs_r2_k40.pdf | ghostscript | r2_k40 | True | - | META-CANARY control_plain @ obj 11 (stream) |
+-| corpus/writers/gs_r3_k40.pdf | ghostscript | r3_k40 | True | - | META-CANARY control_plain @ obj 11 (stream) |
+-| corpus/writers/gs_r3_k128.pdf | ghostscript | r3_k128 | True | - | META-CANARY control_plain @ obj 11 (stream) |
+> build · muse-spark-1.3-contributor
+[0m$ [0mps aux | grep -E 'opencode|python|gs|node' | grep -v grep | head -20; echo ===; tmux ls 2>/dev/null; echo ===; ls -la --time-style=full-iso findings/ ghostscript_writer.py findings/poc/ 2>/dev/null | head -50; echo ===; grep -n "O-2026-004" findings/LOG.md | head; echo ===; ls findings/crashes/ 2>/dev/null | head
+root        1024  0.0  0.0  47104 28780 ?        Ss   Oct28   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root        1110  0.0  0.0 126472 31092 ?        Ssl  Oct28   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
+sarthak     2587  0.0  0.0 182632 23312 ?        Ssl  Oct28   0:12 /usr/bin/python3 /usr/local/bin/desk-upload
+desk-di+    2720  0.0  0.0 404256 27828 ?        Ssl  Oct28   0:14 /usr/bin/python3 -I /usr/local/lib/desk/desk_direct.py
+sarthak    14964  8.0  0.8 1809596 295600 ?      Ssl  Oct28 152:21 /opt/selkies/bin/python3 /usr/bin/selkies --web-root=/opt/desk-web --addr=0.0.0.0 --port=8082 --enable-https=false --basic-auth-user=sarthak --enable-resize=true --encoder=h264enc --use-cpu=true --mode=webrtc --keyframe-interval=5 --webrtc-udp-mux-port=8083 --webrtc-public-ip=187.126.125.50 --run-after-connect=/usr/local/bin/desk-after-connect --video-max-qp=35 --force-aligned-resolution=true
+sarthak   460449  0.0  0.3 1518482820 108660 ?   Sl   Oct28   0:00 /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --app-path=/usr/lib/claude-desktop/resources/app.asar --enable-sandbox --blink-settings=dnsPrefetchingEnabled=false --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=23258842839 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version
+sarthak   460599  1.9  2.8 1528473808 932404 ?   Sl   Oct28  29:07 /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --app-path=/usr/lib/claude-desktop/resources/app.asar --enable-sandbox --blink-settings=dnsPrefetchingEnabled=false --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=8 --launch-time-ticks=23259067064 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version
+root      537508  0.0  0.0   2792  2324 ?        Ss   Oct28   0:00 fusermount3 -o rw,nosuid,nodev,fsname=portal,auto_unmount,subtype=portal -- /run/user/1000/doc
+sarthak  1149988  0.5  1.8 12745624 596760 ?     Ssl  05:50   4:50 /home/sarthak/.opencode/bin/opencode serve --service
+sarthak  1481675  0.0  0.3 1518236584 125760 ?   Sl   10:10   0:02 /usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=7,i,17598151853964350696,8591620658603170531,4 --trace-process-track-uuid=3190709001304541078 --disable-logging
+sarthak  1498148  0.0  0.4 1518252976 132736 ?   Sl   10:22   0:16 /usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=7,i,17598151853964350696,8591620658603170531,4 --trace-process-track-uuid=3190709015360168813 --disable-logging
+sarthak  1511043  0.0  0.0  10968  1812 ?        Ssl  10:32   0:00 /usr/lib/claude-desktop/resources/disclaimer --pgroup -- /home/sarthak/.config/Claude/claude-code/2.1.309/e52289b95def/claude --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__scheduled-tasks__list_task_runs,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__mcp-registry__search_mcp_registry,mcp__mcp-registry__suggest_connectors,mcp__mcp-registry__list_connectors,mcp__ccd_connectors__session_connectors_status,mcp__ccd_connectors__reconnect_session_connector,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --await-initialize --thinking-display omitted --replay-user-messages --settings {"fastMode":false,"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}]}
+sarthak  1511044  1.5  1.2 5660152 424228 ?      Sl   10:32   9:54 /home/sarthak/.config/Claude/claude-code/2.1.309/e52289b95def/claude --output-format stream-json --verbose --input-format stream-json --effort=medium --model=claude-opus-5-5 --permission-prompt-tool=stdio --allowedTools=mcp__computer-use,mcp__ccd_session__spawn_task,mcp__ccd_session__dismiss_task,mcp__ccd_session__mark_chapter,mcp__ccd_session_mgmt__list_sessions,mcp__ccd_session_mgmt__get_session,mcp__ccd_session_mgmt__get_usage,mcp__ccd_host__get_storage_usage,mcp__ccd_session_mgmt__set_session_title,mcp__ccd_session_mgmt__send_message,mcp__ccd_session_mgmt__detach_session,mcp__ccd_sidebar__list_groups,mcp__ccd_sidebar__create_group,mcp__ccd_sidebar__set_view,mcp__ccd_sidebar__list_sections,mcp__ccd_sidebar__create_section,mcp__ccd_turn__wrap_up,mcp__ccd_turn__update_plan,mcp__ccd_session_mgmt__search_session_transcripts,mcp__ccd_session_mgmt__list_events,mcp__ccd_session_mgmt__export_transcript,mcp__scheduled-tasks__list_task_runs,mcp__ccd_session__read_widget_context,mcp__ccd_session__list_start_targets,mcp__ccd_view__show_pane,mcp__ccd_view__close_pane,mcp__ccd_view__get_layout,mcp__ccd_view__set_transcript_view,mcp__ccd_settings__get_settings,mcp__mcp-registry__search_mcp_registry,mcp__mcp-registry__suggest_connectors,mcp__mcp-registry__list_connectors,mcp__ccd_connectors__session_connectors_status,mcp__ccd_connectors__reconnect_session_connector,mcp__ccd_pr__get_status,mcp__ccd_window__open_session_in,mcp__ccd_window__close_split,mcp__ccd_window__set_sidebar_collapsed,mcp__ccd_window__get_window_layout --disallowedTools=SubscribePR --setting-sources=user,project,local --permission-mode=auto --include-partial-messages --await-initialize --thinking-display omitted --replay-user-messages --settings {"fastMode":false,"deniedMcpServers":[{"serverName":"Claude Browser"},{"serverName":"Claude Code Android Emulator"},{"serverName":"Claude Code iOS Simulator"},{"serverName":"Claude Preview"},{"serverName":"Claude_Browser"},{"serverName":"Claude_Code_Android_Emulator"},{"serverName":"Claude_Code_iOS_Simulator"},{"serverName":"Claude_Preview"},{"serverName":"Claude_for_Chrome"},{"serverName":"Framebuffer"},{"serverName":"Window Halo"},{"serverName":"Window_Halo"},{"serverName":"ccd_connectors"},{"serverName":"ccd_directory"},{"serverName":"ccd_host"},{"serverName":"ccd_pr"},{"serverName":"ccd_session"},{"serverName":"ccd_session_mgmt"},{"serverName":"ccd_settings"},{"serverName":"ccd_sidebar"},{"serverName":"ccd_turn"},{"serverName":"ccd_view"},{"serverName":"ccd_window"},{"serverName":"claude-in-chrome"},{"serverName":"claude_browser"},{"serverName":"claude_code_android_emulator"},{"serverName":"claude_code_ios_simulator"},{"serverName":"claude_for_chrome"},{"serverName":"claude_in_chrome"},{"serverName":"claude_preview"},{"serverName":"computer-use"},{"serverName":"computer_use"},{"serverName":"cowork"},{"serverName":"cowork-onboarding"},{"serverName":"cowork_onboarding"},{"serverName":"dev-debug"},{"serverName":"dev_debug"},{"serverName":"dispatch"},{"serverName":"framebuffer"},{"serverName":"mcp-registry"},{"serverName":"mcp_registry"},{"serverName":"plugins"},{"serverName":"remote-devices"},{"serverName":"remote_devices"},{"serverName":"scheduled-tasks"},{"serverName":"scheduled_tasks"},{"serverName":"session_info"},{"serverName":"skills"},{"serverName":"window_halo"}]}
+sarthak  1511121  0.0  0.3 1518231164 107160 ?   Sl   10:32   0:01 /usr/lib/claude-desktop/claude-desktop --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-version --pseudonymization-salt-handle=7,i,17598151853964350696,8591620658603170531,4 --trace-process-track-uuid=3190709016297210662 --disable-logging
+sarthak  1523218  0.0  0.3 1518483336 120976 ?   Sl   10:41   0:00 /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --app-path=/usr/lib/claude-desktop/resources/app.asar --enable-sandbox --blink-settings=dnsPrefetchingEnabled=false --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=34 --launch-time-ticks=75546134156 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-versio
+sarthak  1523250  0.0  0.3 1518485008 110532 ?   Sl   10:41   0:00 /usr/lib/claude-desktop/claude-desktop --type=renderer --crashpad-handler-pid=460332 --enable-crash-reporter=c92ae26b-2179-4232-a566-c0b402941293,no_channel --user-data-dir=/home/sarthak/.config/Claude --standard-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app --secure-schemes=cowork-artifact,cowork-file,claude-media,claude-simulator,app,sentry-ipc --bypasscsp-schemes=claude-media,claude-simulator,sentry-ipc --cors-schemes=claude-simulator,sentry-ipc --fetch-schemes=cowork-artifact,cowork-file,claude-simulator,app,sentry-ipc --service-worker-schemes=app --streaming-schemes=cowork-file,claude-media,claude-simulator --app-path=/usr/lib/claude-desktop/resources/app.asar --enable-sandbox --blink-settings=dnsPrefetchingEnabled=false --ozone-platform=x11 --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=35 --launch-time-ticks=75547146902 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,9588879951257379222,1523726748004551694,262144 --enable-features=DocumentPolicyIncludeJSCallStacksInCrashReports,GlobalShortcutsPortal,GlobalShortcutsPortalPreferredTrigger,IsolatesPriorityUseProcessPriority,PdfUseShowSaveFilePicker --disable-features=ConnectionAllowlists,DropInputEventsWhilePaintHolding,LocalNetworkAccessChecks,ScreenAIOCREnabled,SpareRendererForSitePerProcess,TraceSiteInstanceGetProcessCreation --variations-seed-versio
+sarthak  2628782  0.1  0.2 9995124 83660 ?       Sl   21:26   0:00 node /home/sarthak/8x/8x-csp-wt-299/node_modules/.bin/../next/dist/bin/next dev --port 3299
+sarthak  2628859  0.0  0.1 1409692 52088 ?       Sl   21:26   0:00 node /home/sarthak/8x/8x-csp-wt-299/.next/dev/build/chunks/pool_entry-[turbopack-node]_transforms_webpack-loaders_ts_21971j8nic2qx._.js 34639
+sarthak  2628866  0.0  0.1 1409956 52100 ?       Sl   21:26   0:00 node /home/sarthak/8x/8x-csp-wt-299/.next/dev/build/chunks/pool_entry-[turbopack-node]_transforms_webpack-loaders_ts_21971j8nic2qx._.js 35809
+sarthak  2629115  0.9  0.5 1801132 167308 ?      Sl   21:26   0:01 node ./node_modules/.bin/../@playwright/test/cli.js test e2e/save-as-knowledge.local.spec.ts e2e/knowledge-sync.local.spec.ts
+===
+claude: 1 windows (created Thu Oct 29 04:57:30 2026)
+gh-login: 1 windows (created Wed Oct 28 21:13:14 2026)
+main: 1 windows (created Thu Oct 29 05:46:32 2026)
+research: 1 windows (created Thu Oct 29 21:29:32 2026)
+setup: 1 windows (created Wed Oct 28 21:20:41 2026)
+===
+-rw-rw-r-- 1 sarthak sarthak 21076 2026-10-29 21:29:43.174946574 +0000 ghostscript_writer.py
+
+findings/:
+total 968
+drwxrwxr-x 6 sarthak sarthak   4096 2026-10-29 21:29:32.748918091 +0000 .
+drwxrwxr-x 9 sarthak sarthak   4096 2026-10-29 21:29:32.748918091 +0000 ..
+-rw-rw-r-- 1 sarthak sarthak 244880 2026-10-29 21:29:43.068946284 +0000 24-7.log
+-rw-rw-r-- 1 sarthak sarthak  17869 2026-10-29 21:29:32.730918042 +0000 LOG.md
+-rw-rw-r-- 1 sarthak sarthak 144985 2026-10-29 21:29:32.730918042 +0000 authmatrix.csv
+-rw-rw-r-- 1 sarthak sarthak    673 2026-10-29 21:29:32.730918042 +0000 authmatrix.md
+drwxrwxr-x 2 sarthak sarthak   4096 2026-10-29 21:04:35.024829411 +0000 crashes
+drwxrwxr-x 2 sarthak sarthak   4096 2026-10-29 21:29:32.730918042 +0000 daily
+-rw-rw-r-- 1 sarthak sarthak   2098 2026-10-29 21:29:32.731918045 +0000 incremental.csv
+-rw-rw-r-- 1 sarthak sarthak   2501 2026-10-29 21:05:05.212275397 +0000 incremental.md
+-rw-rw-r-- 1 sarthak sarthak   4124 2026-10-29 21:29:32.731918045 +0000 pdfex_static.csv
+-rw-rw-r-- 1 sarthak sarthak   6101 2026-10-29 21:29:32.731918045 +0000 pdfex_static.md
+drwxrwxr-x 2 sarthak sarthak   4096 2026-10-29 21:29:32.731918045 +0000 poc
+-rw-rw-r-- 1 sarthak sarthak  28986 2026-10-29 21:29:32.731918045 +0000 prevchain.csv
+-rw-rw-r-- 1 sarthak sarthak  36050 2026-10-29 21:29:32.731918045 +0000 prevchain.md
+-rw-rw-r-- 1 sarthak sarthak 425539 2026-10-29 21:29:32.732918048 +0000 report.csv
+-rw-rw-r-- 1 sarthak sarthak   1203 2026-10-29 21:29:32.732918048 +0000 report.md
+drwxrwxr-x 2 sarthak sarthak   4096 2026-10-29 21:29:32.732918048 +0000 reports
+-rw-rw-r-- 1 sarthak sarthak   2583 2026-10-29 21:29:32.732918048 +0000 writer_audit.md
+-rw-rw-r-- 1 sarthak sarthak   1074 2026-10-29 21:29:32.748918091 +0000 writer_plaintext.csv
+-rw-rw-r-- 1 sarthak sarthak   8841 2026-10-29 21:29:32.748918091 +0000 writer_plaintext.md
+-rw-rw-r-- 1 sarthak sarthak   2995 2026-10-29 21:27:00.057750854 +0000 writer_rawscan.csv
+
+findings/poc/:
+total 72
+drwxrwxr-x 2 sarthak sarthak 4096 2026-10-29 21:29:32.731918045 +0000 .
+drwxrwxr-x 6 sarthak sarthak 4096 2026-10-29 21:29:32.748918091 +0000 ..
+-rw-rw-r-- 1 sarthak sarthak 2209 2026-10-29 20:44:52.199618570 +0000 F-2026-001-control-encrypted-plain-refuses.pdf
+-rw-rw-r-- 1 sarthak sarthak 1608 2026-10-29 20:44:52.200075772 +0000 F-2026-001-encrypted-objstm-no-password-error.pdf
+-rw-rw-r-- 1 sarthak sarthak 4264 2026-10-29 21:29:32.731918045 +0000 O-2026-002-shadow-encrypt-obj.pdf
+-rw-rw-r-- 1 sarthak sarthak 4419 2026-10-29 21:29:32.731918045 +0000 O-2026-003-pdfex-form-ref.pdf
+-rw-rw-r-- 1 sarthak sarthak 3548 2026-10-29 21:27:13.172136873 +0000 O-2026-004-gs-plaintext-xmp.pdf
+-rw-rw-r-- 1 sarthak sarthak  259 2026-10-29 21:27:13.121135884 +0000 O-2026-004-source.ps
+-rw-rw-r-- 1 sarthak sarthak 3322 2026-10-29 21:29:32.731918045 +0000 O-2026-005-gs-xmp-plaintext.pdf
+-rw-rw-r-- 1 sarthak sarthak 1972 2026-10-29 21:27:09.568526942 +0000 gs_xmp_plaintext_repro.py
+-rw-rw-r-- 1 sarthak sarthak 3028 2026-10-29 21:24:12.947150823 +0000 o004_gs_encrypted.pdf
+-rw-rw-r-- 1 sarthak sarthak 1418 2026-10-29 21:24:12.892044304 +0000 o004_src.pdf
+-rw-rw-r-- 1 sarthak sarthak 3714 2026-10-29 20:44:52.200075772 +0000 reportlab_s256_fixed.pdf
+-rw-rw-r-- 1 sarthak sarthak 4018 2026-10-29 20:44:52.200075772 +0000 reportlab_s256_nonconforming.pdf
+-rw-rw-r-- 1 sarthak sarthak 4555 2026-10-29 20:44:52.200075772 +0000 validate_reportlab_fix.py
+===
+206:### O-2026-004 - Track 4 scoping: writer-diversity audit on available writers, no objects left unencrypted
+===
+index.jsonl
+[2026-10-29T21:30:07Z] boot 2h/day window 2:00 UTC +120min: 2139d08
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:07Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70207s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:08Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70208s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:09Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70209s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:10Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70210s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:11Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70211s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:12Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70212s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:13Z] window done, next  2:00 UTC, sleep -70213s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:14Z] window done, next  2:00 UTC, sleep -70214s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:15Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70215s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:16Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70216s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:17Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70217s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:18Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70218s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:30:19Z] window done, next  2:00 UTC, sleep -70219s
+[2026-10-29T21:35Z] cycle 10 (Track 2, t_encrypt_dangling): appended-revision trailer with dangling /Encrypt 9999 0 R, 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, INJECTED 8/12, CRASH/TIMEOUT 0. pypdf clean PdfReadError refuses; pdfminer BLOCKED (refuses dangling, rendered null in cycle 9 — new nuance); pymupdf/pypdfium2/pikepdf/pdfjs render injected-only. Integrity-only, LOG.md O-2026-002 extended. Builder /tmp/opencode/cycle10_dangling.py (untracked). No repo PoC (negative). Concurrent-session note: uncommitted Track 4 gs rewrite (O-2026-004 naming, ghostscript_writer.py mtime 21:29:43) left untouched — foreign live writer suspected, avoided Track 4 this cycle.
