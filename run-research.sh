@@ -12,7 +12,7 @@ CYCLE=0
 while true; do
   CYCLE=$((CYCLE+1))
   echo "[$(date -u +%FT%TZ)] cycle $CYCLE start" >> findings/24-7.log
-  opencode run --model opencode-go/deepseek-v4.1-flash "$(cat VPS_BRIEF.md; echo; echo 'Work one track for this cycle only, smallest verifiable step. Append results to findings/24-7.log and findings/LOG.md. Change nothing else without a PoC.')" >> findings/24-7.log 2>&1
+  opencode run --model opencode-go/muse-spark-1.3-contributor "$(cat VPS_BRIEF.md; echo; echo 'Work one track for this cycle only, smallest verifiable step. Append results to findings/24-7.log and findings/LOG.md. Change nothing else without a PoC.')" >> findings/24-7.log 2>&1
   echo "[$(date -u +%FT%TZ)] cycle $CYCLE exit=$? — sleeping 120s" >> findings/24-7.log
   sleep 120
 done
