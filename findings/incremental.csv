@@ -1,0 +1,31 @@
+seed,encrypted,engine,status,injected_shown,original_shown,detail
+control_plain.pdf,False,pypdf,OK,True,False,
+aes256_r6__plain.pdf,True,pypdf,BLOCKED,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r6__objstm.pdf,True,pypdf,BLOCKED,False,False,FileNotDecryptedError: File has not been decrypted
+aes256_r5__plain.pdf,True,pypdf,BLOCKED,False,False,FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf,True,pypdf,BLOCKED,False,False,FileNotDecryptedError: File has not been decrypted
+control_plain.pdf,False,pdfminer,OK,True,False,
+aes256_r6__plain.pdf,True,pdfminer,OK,True,False,
+aes256_r6__objstm.pdf,True,pdfminer,OK,True,False,
+aes256_r5__plain.pdf,True,pdfminer,OK,True,False,
+rc4_128_r4__plain.pdf,True,pdfminer,OK,True,False,
+control_plain.pdf,False,pymupdf,OK,True,False,
+aes256_r6__plain.pdf,True,pymupdf,OK,True,False,
+aes256_r6__objstm.pdf,True,pymupdf,OK,True,False,
+aes256_r5__plain.pdf,True,pymupdf,OK,True,False,
+rc4_128_r4__plain.pdf,True,pymupdf,OK,True,False,
+control_plain.pdf,False,pypdfium2,OK,True,False,
+aes256_r6__plain.pdf,True,pypdfium2,BLOCKED,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__objstm.pdf,True,pypdfium2,BLOCKED,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r5__plain.pdf,True,pypdfium2,BLOCKED,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf,True,pypdfium2,BLOCKED,False,False,PdfiumError: Failed to load document (PDFium: Incorrect password error).
+control_plain.pdf,False,pikepdf,OK,True,False,
+aes256_r6__plain.pdf,True,pikepdf,OK,True,False,
+aes256_r6__objstm.pdf,True,pikepdf,OK,True,False,
+aes256_r5__plain.pdf,True,pikepdf,OK,True,False,
+rc4_128_r4__plain.pdf,True,pikepdf,OK,True,False,
+control_plain.pdf,False,pdfjs,OK,True,False,
+aes256_r6__plain.pdf,True,pdfjs,OK,True,False,
+aes256_r6__objstm.pdf,True,pdfjs,OK,True,False,
+aes256_r5__plain.pdf,True,pdfjs,OK,True,False,
+rc4_128_r4__plain.pdf,True,pdfjs,OK,True,False,

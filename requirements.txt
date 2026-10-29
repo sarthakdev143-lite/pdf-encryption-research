@@ -1,0 +1,6 @@
+pikepdf>=8.0
+pypdf>=4.0
+pdfplumber>=0.11
+pymupdf>=1.24
+pypdfium2>=4.0
+reportlab>=4.0

@@ -1,0 +1,16 @@
+{
+  "name": "pdf-encryption-research",
+  "version": "1.0.0",
+  "description": "Goal: find **implementation bugs** in open-source PDF software where content that is encrypted behind a **user password** (the password required to *open* the file) can be read, extracted, or recovered **without that password** — then disclose responsibly, land a fix upstream, and publish a write-up.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "pdfjs-dist": "^6.4.299"
+  }
+}
