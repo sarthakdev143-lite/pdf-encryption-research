@@ -603,6 +603,27 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   (cycles 17/18). Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 21, Track 2): new variant
+  `root_old_encrypt` (empty update, NO new objects: appended classic trailer
+  `/Encrypt <orig-ref> /Root <orig-catalog> /Prev <orig>` - repoints Root at
+  the ORIGINAL catalog while KEEPING the original `/Encrypt` ref. Minimal
+  delta vs the prevchain `root_old` variant, which drops `/Encrypt`. Same 2
+  seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle21_root_old_encrypt.py`, raw results
+  `/tmp/opencode/cycle21_rootoldenc/results.json`, structure verified:
+  orig+1 startxrefs, final trailer carries `/Encrypt` + `/Root` + `/Prev`) -
+  ORIGINAL canary 0/12, no injected page by construction (empty update): ALL
+  six engines refuse (pypdf `FileNotDecryptedError`; pdfminer
+  `PDFPasswordIncorrect`/empty `PdfminerException`; pymupdf `ValueError:
+  document closed or encrypted`; pypdfium2 `Incorrect password error`;
+  pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No
+  password given`), 0 crashes. Verdict profile IDENTICAL to `t_encrypt_ref`
+  (new-Root + Encrypt kept): Root old-vs-new changes nothing when `/Encrypt`
+  is kept - the kept `/Encrypt` alone decides refuse on all six, mirroring
+  the final-trailer-wins rule settled in the chain matrix (cycles 14-16).
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:

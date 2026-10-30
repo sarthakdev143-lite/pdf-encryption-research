@@ -10314,3 +10314,588 @@ c.py` (report: `findings/pdfex_static.md`, data:
  M findings/daily/2026-10-30.md
 ?? findings/crashes/
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/LOG.md findings/daily/2026-10-30.md findings/24-7.log && git commit -m "Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)" && git push -u origin research/vps-2026-10-30 2>&1 | tail -n 3; git log --oneline -2; git status --short
+[research/vps-2026-10-30 8bd62a6] Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+ 3 files changed, 666 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   8be4dd9..8bd62a6  research/vps-2026-10-30 -> research/vps-2026-10-30
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+8bd62a6 Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+8be4dd9 Cycle 19: Track 2 both-encrypted cross-format classic-encrypt/xs-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 20 done — one Track 2 micro-step, committed and pushed to `research/vps-2026-10-30` only.
+
+**Variant:** `chain_xsEncrypt_classicEncrypt` — mirror both-encrypted hybrid cross-format 2-revision chain (rev A xref-stream restoring `/Encrypt`, rev B classic trailer keeping it, `/Prev` → rev A). Tests whether the final revision's container format matters when final is encrypted (mirror of cycle 19).
+
+**Result (2 seeds × 6 engines = 12 no-password probes):** ORIGINAL 0/12, injected 0/12 — all six engines refuse, 0 crashes. Verdict profile identical to the cycle-19 mirror.
+
+**Interpretation:** Completes the cross-format matrix in both directions — none-final either container → 4/6 open (cycles 17/18); encrypted-final either container → 0/6 unanimous (cycle 19 + this). No stack treats xref-stream `/Encrypt` as weaker. Integrity-only, negative result, no PoC.
+
+**Files:** builder + raw results in `/tmp/opencode/cycle20_xsens_classic(.py)` (untracked by design); updated `findings/LOG.md` (O-2026-002 extension), `findings/daily/2026-10-30.md` (Cycle 20 + next step), `findings/24-7.log`. Commit `8bd62a6`, pushed to origin.
+[2026-10-30T03:16:39Z] cycle 20 exit=0 branch=research/vps-2026-10-30 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+Already on 'research/vps-2026-10-30'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-30'.
+[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and probing incremental updates.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short | head -n 50; git log --oneline -5; cat findings/daily/2026-10-30.md 2>/dev/null || echo "NO DAILY FILE"; echo "---24-7 tail---"; tail -n 30 findings/24-7.log 2>/dev/null || echo "no log"
+research/vps-2026-10-30
+ M findings/24-7.log
+?? findings/crashes/
+8bd62a6 Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+8be4dd9 Cycle 19: Track 2 both-encrypted cross-format classic-encrypt/xs-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+c45b289 Cycle 18: Track 2 mirror cross-format classic-encrypt/xs-none chain (12 probes, ORIGINAL 0/12, final container format changes nothing)
+0aa1cc6 Cycle 17: Track 2 hybrid cross-format xs-encrypt/classic-none chain (12 probes, ORIGINAL 0/12, format boundary changes nothing)
+521c122 Cycle 16: Track 2 3-revision encrypt-encrypt-none Prev-chain (12 probes, ORIGINAL 0/12, prefix depth changes nothing)
+# 2026-10-30 — research/vps-2026-10-30
+
+- branch: `research/vps-2026-10-30`
+- cycles run: 20 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2 Standard-filter-no-keys micro-step; cycle 6: Track 2 Standard-filter-V1 micro-step; cycle 7: Track 2 Standard-filter-V2 micro-step; cycle 8: Track 2 Standard-filter-V4R4 micro-step; cycle 9: Track 2 Standard-filter-V4R4P micro-step; cycle 10: Track 2 Standard-filter-V4R4P-OU-zeroed micro-step; cycle 11: Track 2 Standard-filter-V4R4P-OU-zeroed-Length micro-step; cycle 12: Track 2 Standard-filter-V4R4P-OU-zeroed-Length-CF micro-step; cycle 13: Track 2 shadow-Encrypt-object-with-full-V4-dict micro-step; cycle 14: Track 2 3-revision none-encrypt-none /Prev-chain micro-step; cycle 15: Track 2 3-revision encrypt-none-encrypt /Prev-chain micro-step; cycle 16: Track 2 3-revision encrypt-encrypt-none /Prev-chain micro-step; cycle 17: Track 2 hybrid cross-format xs-encrypt/classic-none chain micro-step; cycle 18: Track 2 hybrid cross-format classic-encrypt/xs-none chain micro-step; cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step; cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain micro-step)
+- files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/incremental 5
+
+## Probe counts
+
+- triage: 325 files x 6 engines = 1950 no-password probes → LEAK 0, CRASH/TIMEOUT 0, INFO 15
+- authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes → AUTH-BYPASS 0, FAIL-CONTROL 0
+- fuzz: fuzz.py 1200 → ~3600 ciphertext probes → crashes/timeouts 0
+- incremental: 5 files x 6 engines = 30 probes → original shown 0
+- prevchain (Track 2): 51 files x 6 engines = 306 probes → ORIGINAL 0, injected 50
+- t_encrypt_emptydict (Track 2, this cycle): NEW variant (appended revision, trailer `/Encrypt <<>>` empty dict, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse (unanimous). Strictest of the four trailer confusions: absent opens 4/6, null opens 5/6, dangling opens 4/6, empty-dict opens 0/6. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle1_emptydict.py`, `/tmp/opencode/cycle1_emptydict/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Leaks / crashes
+
+- leaks: 0. No user-password content recoverable without password on any surface tested.
+- crashes: 0.
+- PoCs on file (observations, not leaks): `findings/poc/O-2026-003-pdfex-form-ref.pdf`, `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (+ reportlab-source predecessor).
+
+## New files (this cycle)
+
+- No new repo files (negative result, no PoC). Builder + raw results live in `/tmp/opencode/cycle1_emptydict(.py)` (git-untracked by location); LOG.md O-2026-002 gained an empty-dict extension note.
+- Pipeline re-run regenerated `findings/report.csv`, `findings/prevchain.{csv,md}`, `findings/incremental.*`, `findings/authmatrix.*`; repaired two harness overwrites before commit (see note below).
+
+## Harness note (repeat of 2026-10-29 cycle-9 accident)
+
+- `triage.py` rewrites `findings/report.md` and drops the track3static + track4writer blocks it doesn't know about; restored from HEAD (`git show HEAD:findings/report.md`), verified `git diff findings/report.md` empty at commit time. Same for the `authmatrix.md` pyaes note (re-added; only a trailing-newline diff remains).
+- `prevchain.py` `t_encrypt_empty` pypdf OK-vs-ERROR flip run to run is the known-stable non-security flake already documented in LOG.md O-2026-002; security columns (ORIGINAL=False everywhere) stable.
+
+## Cycle 2 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_string` (appended revision, trailer `/Encrypt (bogus)` direct string, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Wrong-typed `/Encrypt` splits the field: strict stacks refuse, lenient stacks treat as no-encryption — mirrors dangling-ref (4/6 open), not empty-dict unanimity (0/6). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle2_encrypt_string.py`, `/tmp/opencode/cycle2_encrypt_string/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Next step
+
+- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4>>` — V/R/P present but still missing O/U/Length/OE/UE — to test whether supplying /P moves any stack past the cycle-8 `/P missing` gate toward key-computation), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 3 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 4 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 5 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdfilter` (appended revision, trailer `/Encrypt <</Filter/Standard>>` — present, dict-typed, Standard filter but no other keys, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: Encryption V=0 NOT supported`; pdfminer BLOCKED `Unknown algorithm: param={'Filter': /'Standard'}` — "algorithm" branch, distinct from the empty-dict/bogus-filter "Unknown filter" branch; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError: ... some encryption dicti...`; pdfjs `UnknownErrorException: unsupported encryption algorithm`), 0 crashes. Third unanimous-refuse variant alongside empty-dict and bogus-filter: any dict-typed `/Encrypt` is refused by all six, while wrong-typed string/int opens on 3/6. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle5_encrypt_stdfilter.py`, `/tmp/opencode/cycle5_encrypt_stdfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 6 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV1` (appended revision, trailer `/Encrypt <</Filter/Standard /V 1>>` — present, dict-typed, Standard filter with explicit V=1 but still missing O/U/P/R/Length, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `PdfReadError: /R entry of the encryption dictionary is missing` — one validation step past the cycle-5 `V=0 NOT supported`; pdfminer BLOCKED `PdfminerException: 'R'` KeyError — distinct from the cycle-5 "Unknown algorithm" branch; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError` encryption-dictionary; pdfjs `UnknownErrorException: Invalid argument for stringToBytes` — distinct from the cycle-5 "unsupported encryption algorithm"), 0 crashes. Fourth unanimous-refuse dict-typed variant: adding an explicit V does not move any stack from refuse to open; the dict-typed vs wrong-typed split holds. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle6_encrypt_stdV1.py`, `/tmp/opencode/cycle6_stdV1/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 7 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV2` (appended revision, trailer `/Encrypt <</Filter/Standard /V 2>>` — present, dict-typed, Standard filter with explicit V=2 but still missing O/U/P/R/Length, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `PdfReadError: /R entry of the encryption dictionary is missing` — identical verdict to V=1; pdfminer BLOCKED `PdfminerException: 'R'` KeyError; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError` encryption-dictionary; pdfjs `UnknownErrorException: Invalid argument for stringToBytes`), 0 crashes. Fifth unanimous-refuse dict-typed variant (empty-dict, bogus-filter, stdfilter-no-keys, stdfilter-V1, stdfilter-V2): bumping V 1→2 changes no verdict — missing R/O/U is fatal before any V-specific path. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle7_encrypt_stdV2.py`, `/tmp/opencode/cycle7_stdV2/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 8 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV4R4` (appended revision, trailer `/Encrypt <</Filter/Standard /V 4 /R 4>>` — present, dict-typed, Standard filter with V AND R present but still missing O/U/P/Length/OE/UE/Perms/CF/StmF/StrF, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `PdfReadError: /P entry of the encryption dictionary is missing` — one step past the V1/V2 `/R ... missing`; pdfminer BLOCKED `PdfminerException: 'P'` KeyError — likewise past `'R'`; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError` encryption-dictionary; pdfjs `UnknownErrorException: invalid key length` — distinct from the V1/V2 `stringToBytes` error), 0 crashes. Sixth unanimous-refuse dict-typed variant: supplying V+R moves pypdf/pdfminer/pdfjs one validation step further (error strings change) but refuse->open is unchanged on all six. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle8_encrypt_stdV4R4.py`, `/tmp/opencode/cycle8_stdV4R4/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 9 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV4R4P` (appended revision, trailer `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4>>` — present, dict-typed, Standard filter with V+R+P present but still missing O/U/Length/OE/UE/Perms/CF/StmF/StrF, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `PdfReadError: /O entry of the encryption dictionary is missing` — one step past the cycle-8 `/P ... missing`; pdfminer BLOCKED `PdfminerException: 'O'` KeyError — likewise past `'P'`; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError` encryption-dictionary; pdfjs `UnknownErrorException: invalid key length` — same as cycle 8, its gate now lags pypdf/pdfminer by one key), 0 crashes. Seventh unanimous-refuse dict-typed variant: supplying V+R+P moves pypdf/pdfminer one validation step further but refuse->open is unchanged on all six. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle9_encrypt_stdV4R4P.py`, `/tmp/opencode/cycle9_stdV4R4P/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 10 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV4R4POU` (appended revision, trailer `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4 /O <32 zero bytes> /U <32 zero bytes>>>` — present, dict-typed, Standard filter with V+R+P+O+U present (O/U zeroed hex) but still missing Length/OE/UE/Perms/CF/StmF/StrF, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes. Eighth unanimous-refuse dict-typed variant — but the closest approach yet to key-computation on a hostile trailer: pypdf moves from `/O ... missing` (cycle 9) to `FileNotDecryptedError: File has not been decrypted` (dict shape accepted, auth attempted against zeroed O/U); pdfminer moves from `'O'` KeyError to `'StmF'` KeyError (V=4 crypt-filter lookup); pymupdf/pypdfium2/pikepdf refuse with unchanged password errors; pdfjs stays at `invalid key length`, now lagging two keys behind. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle10_encrypt_stdV4R4POU.py`, `/tmp/opencode/cycle10_stdV4R4POU/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Next step (updated cycle 11)
+
+- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4 /O <32 zero bytes> /U <32 zero bytes> /Length 128 /CF <</Default <</AuthEvent /DocOpen /CFM /AESV2 /Length 16>>>> /StmF /Default /StrF /Default>>` — adding a minimal CF/StmF/StrF to test whether supplying the crypt-filter moves pdfminer past the cycle-10/11 `'StmF'` gate toward actual key derivation), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 11 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV4R4POULen` (appended revision, trailer `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4 /O <32 zero bytes> /U <32 zero bytes> /Length 128>>` — cycle-10 dict plus `/Length 128`, still missing OE/UE/Perms/CF/StmF/StrF, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes. Ninth unanimous-refuse dict-typed variant. Validation-step movement is on pdfjs this time: `invalid key length` (cycles 8-10) → clean `PasswordException: No password given` (dict shape accepted far enough to demand a password). pypdf stays at `FileNotDecryptedError`, pdfminer stays at `'StmF'` KeyError — /Length moved neither past its cycle-10 gate (V=4 crypt-filter lookup needs CF/StmF, not Length); pymupdf/pypdfium2/pikepdf refuse with unchanged password errors. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle11_encrypt_stdV4R4POULen.py`, `/tmp/opencode/cycle11_stdV4R4POULen/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Cycle 12 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_stdV4R4POULenCF` (appended revision, trailer `/Encrypt <</Filter/Standard /V 4 /R 4 /P -4 /O <32 zero bytes> /U <32 zero bytes> /Length 128 /CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF>>` — cycle-11 dict plus a minimal crypt-filter triple mirroring real qpdf V4 output, still missing OE/UE/Perms/EncryptMetadata, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes. Tenth unanimous-refuse dict-typed variant. Validation-step movement is on pdfminer: `'StmF'` KeyError (cycles 10-11) → `PDFPasswordIncorrect` (harness shows `PdfminerException: ` with empty message; direct traceback confirms `pdfdocument.py init_key` raising `PDFPasswordIncorrect`) — dict shape now fully accepted, key derivation attempted against zeroed O/U and correctly rejected. pypdf stays at `FileNotDecryptedError`, pdfjs stays at `PasswordException: No password given`; pymupdf/pypdfium2/pikepdf refuse with unchanged password errors. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle12_encrypt_stdV4R4POULenCF.py`, `/tmp/opencode/cycle12_stdV4R4POULenCF/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 12)
+
+- The V4 hostile-trailer ladder is exhausted through CF/StmF/StrF: all six stacks now either demand a password or attempt-and-reject auth against zeroed O/U. Next smallest Track 2 step is a different axis — e.g. append the cycle-12 CF/StmF/StrF dict but with the ORIGINAL `/Encrypt` object number shadowed (`shadow_encrypt_obj` + full dict), or trail off the trailer ladder and test `/Prev`-chain depth (3-revision `chain_none_encrypt_none`); OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 13 (Track 2, this cycle)
+
+- NEW variant `t_shadow_fulldict` (appended revision REDEFINES the original `/Encrypt` object number with the full cycle-12 V4 hostile dict — `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/Length 128`, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF` — and the appended trailer points `/Encrypt` at that shadow object; shadow obj 11 on both seeds; minimal delta vs cycle 12 direct-in-trailer dict AND vs prevchain `shadow_encrypt_obj` placeholder-shadow, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes. Eleventh unanimous-refuse dict-typed variant, verdict profile IDENTICAL to cycle 12 on every stack (pypdf `FileNotDecryptedError`, pdfminer `PDFPasswordIncorrect` via direct traceback, pdfjs `PasswordException: No password given`, pymupdf/pypdfium2/pikepdf unchanged password errors). No engine falls back to the original-via-`/Prev` dict; pypdf auth-attempts the shadow dict instead of raising the old placeholder-shadow `NotImplementedError`, confirming engines resolve the shadowed indirect object. Direct-vs-indirect placement of identical hostile bytes changes nothing observable. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle13_shadow_fulldict.py`, `/tmp/opencode/cycle13_shadow_fulldict/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 13)
+
+- The shadow axis is now exhausted too (placeholder-shadow drops /Encrypt; full-dict-shadow is resolved-and-refused identically to direct-trailer dict). Next smallest Track 2 step moves off the trailer ladder: `/Prev`-chain depth — a 3-revision chain (`chain_none_encrypt_none`: rev1 drops /Encrypt, rev2 restores original /Encrypt ref, rev3 drops again) testing whether any engine's Prev-walk stops at an intermediate revision; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 14 (Track 2, this cycle)
+
+- NEW variant `chain_none_encrypt_none` (3-revision chain: rev A appends the injected plaintext page, trailer WITHOUT `/Encrypt`; rev B appends an empty update whose trailer RESTORES the original `/Encrypt` ref; rev C appends an empty update whose trailer drops `/Encrypt` again — object set fixed after rev A, only trailer `/Encrypt` flips none->ref->none; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to the 2-revision `chain_encrypt_none` baseline (final rev also none): the intermediate encrypted rev changes nothing — engines that scan the whole `/Prev` chain for any `/Encrypt` (pypdf, pypdfium2) refuse regardless of chain depth, latest-trailer-only stacks (the other four) open. No engine stops at intermediate rev B on either seed. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle14_chain_nen.py`, `/tmp/opencode/cycle14_chain_nen/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 14)
+
+- The none-encrypt-none axis is now exhausted (intermediate encrypted rev changes nothing vs the 2-rev baseline). Next smallest Track 2 step is the mirror 3-revision chain (`chain_encrypt_none_encrypt`: rev1 restores /Encrypt, rev2 drops, rev3 restores — final rev encrypted) testing whether any latest-trailer-only stack is pulled back to open by the intermediate plaintext rev; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 15 (Track 2, this cycle)
+
+- NEW variant `chain_encrypt_none_encrypt` (3-revision chain: rev A appends the injected plaintext page with a trailer that RESTORES the original `/Encrypt` ref, rev B appends an empty update whose trailer DROPS `/Encrypt`, rev C appends an empty update whose trailer RESTORES the original `/Encrypt` ref again — object set fixed after rev A, only trailer `/Encrypt` flips ref->none->ref with the FINAL rev encrypted; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` via direct traceback, harness shows empty `PdfminerException: `; pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No password given`). The intermediate plaintext rev B pulls NO latest-trailer-only stack back to open — final-trailer-wins holds on all four lenient stacks, and the two full-chain scanners (pypdf, pypdfium2) refuse as before. Mirror-image of cycle 14 (final rev none → 4/6 open): the final trailer alone decides open-vs-refuse, chain depth and middle-rev content change nothing. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle15_chain_ene.py`, `/tmp/opencode/cycle15_chain_ene/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 15)
+
+- The 3-revision opposite-final pair (NEN cycle 14, ENE cycle 15) is now exhausted: final trailer alone decides open-vs-refuse on every stack. Next smallest Track 2 step completes the remaining 3-rev corner (`chain_encrypt_encrypt_none`: revs A+B both restore /Encrypt, rev C drops — final none with a double-encrypted prefix) testing whether prefix depth moves the 4-open/2-refuse split; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 16 (Track 2, this cycle)
+
+- NEW variant `chain_encrypt_encrypt_none` (3-revision chain: rev A appends the injected plaintext page with a trailer that RESTORES the original `/Encrypt` ref, rev B appends an empty update whose trailer RESTORES the original `/Encrypt` ref again, rev C appends an empty update whose trailer DROPS `/Encrypt` — object set fixed after rev A, only trailer `/Encrypt` flips ref->ref->none with the FINAL rev none and a double-encrypted prefix; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to cycle-14 NEN and the 2-revision `chain_encrypt_none` baseline: the double-encrypted prefix changes nothing — same two full-chain scanners refuse, same four latest-trailer-only stacks open. With NEN/ENE/EEN all tested, final-trailer-wins is settled on every stack regardless of prefix depth. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle16_chain_een.py`, `/tmp/opencode/cycle16_chain_een/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 16)
+
+- The 3-revision matrix is now complete (NEN cycle 14, ENE cycle 15, EEN cycle 16, plus the 2-revision baselines): final-trailer-wins holds on every stack regardless of prefix depth. Next smallest Track 2 step moves to a new axis — e.g. hybrid-xref `/XRefStm` + `/Prev` disagreement (appended xref-stream revisions carrying conflicting `/Encrypt`), or `/Root`-repoint + `/Encrypt`-drop combinations; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 17 (Track 2, this cycle)
+
+- NEW variant `chain_xsEncrypt_classicNone` (hybrid CROSS-FORMAT 2-revision chain: rev A appends the injected plaintext page via an xref-STREAM update whose dict RESTORES the original `/Encrypt` ref; rev B appends a CLASSIC trailer that DROPS `/Encrypt` with `/Prev` pointing at the rev-A xref-stream offset — object set fixed after rev A, only container format + `/Encrypt` presence flip xs+ref->classic+none; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to cycle-14 NEN, cycle-16 EEN, and the classic-only 2-revision `chain_encrypt_none` baseline: crossing the xref-stream/classic boundary changes nothing — same two full-chain scanners refuse, same four latest-trailer-only stacks open. First cross-format data point extends final-trailer-wins across container formats. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle17_xschain.py`, `/tmp/opencode/cycle17_xschain/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 17)
+
+- The xs-encrypt/classic-none direction is now tested (final classic none → 4/6 open). Next smallest Track 2 step is the mirror cross-format chain (`chain_classicEncrypt_xsNone`: rev A classic trailer restoring `/Encrypt`, rev B xref-stream update dropping it) testing whether the container format of the FINAL revision matters; OR `/Root`-repoint + `/Encrypt`-drop combinations; OR advance Track 3/4.
+
+## Cycle 18 (Track 2, this cycle)
+
+- NEW variant `chain_classicEncrypt_xsNone` (mirror hybrid CROSS-FORMAT 2-revision chain: rev A appends the injected plaintext page via a CLASSIC xref update whose trailer RESTORES the original `/Encrypt` ref; rev B appends an xref-STREAM update whose dict DROPS `/Encrypt` with `/Prev` pointing at the rev-A classic offset and `startxref` pointing at the xref stream — object set fixed after rev A, only container format + `/Encrypt` presence flip classic+ref->xs+none; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes. Structure verified: 3 startxrefs (orig, rev-A classic, rev-B xs), final offset is the `/Type /XRef` object, `/Prev` chain intact, `/Encrypt 11 0 R` present in rev A but absent from the final xs dict. Verdict profile IDENTICAL to the cycle-17 mirror direction and every classic-only none-final baseline: the FINAL revision's container format changes nothing — final-trailer-wins holds across container formats in both directions. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle18_classic_xsnone.py`, `/tmp/opencode/cycle18_classicxsnone/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 18)
+
+- Both cross-format directions are now tested (xs-final-none cycle 17 and classic-final-none baselines → 4/6 open; xs-final-none this cycle → identical 4/6 open). Next smallest Track 2 step is the both-ENCRYPTED cross-format chain (`chain_classicEncrypt_xsEncrypt`: rev A classic restoring /Encrypt, rev B xref-stream keeping it — final encrypted) testing whether any latest-trailer-only stack stumbles on an xref-stream /Encrypt; OR `/Root`-repoint + `/Encrypt`-drop combinations; OR advance Track 3/4.
+
+## Cycle 19 (Track 2, this cycle)
+
+- NEW variant `chain_classicEncrypt_xsEncrypt` (both-ENCRYPTED hybrid CROSS-FORMAT 2-revision chain: rev A appends the injected plaintext page via a CLASSIC xref update with a trailer that RESTORES the original `/Encrypt` ref, rev B appends an xref-STREAM update whose dict KEEPS the original `/Encrypt` ref with `/Prev` pointing at the rev-A classic offset and `startxref` pointing at the xref stream — object set fixed after rev A, only container format flips classic+ref->xs+ref with the FINAL revision encrypted; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`; pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No password given`). Structure verified: 3 startxrefs, final offset is the `/Type /XRef` object, `/Prev` chain intact, `/Encrypt` present in final xs dict. Completes the cross-format matrix: none-final in either container (cycles 17/18) → 4/6 open; encrypted-final in either container (this cycle + all classic-only encrypted-final baselines) → 0/6 open. No stack treats an xref-stream `/Encrypt` as weaker than a classic-trailer one. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle19_classic_xsens.py`, `/tmp/opencode/cycle19_classicxsenc/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 19)
+
+- The cross-format matrix is now complete (none-final both directions → 4/6 open; encrypted-final classic→xs → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, hybrid `/XRefStm` + `/Prev` disagreement with conflicting `/Encrypt` values, or the mirror both-encrypted chain (xs+ref→classic+ref); OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 20 (Track 2, this cycle)
+
+- NEW variant `chain_xsEncrypt_classicEncrypt` (mirror both-ENCRYPTED hybrid CROSS-FORMAT 2-revision chain: rev A xref-stream update restoring original `/Encrypt` ref, rev B CLASSIC trailer keeping it with `/Prev` pointing at the rev-A xref-stream offset and `startxref` pointing at the rev-B classic table — object set fixed after rev A, only container format flips xs+ref->classic+ref with the FINAL revision encrypted; mirror of cycle 19, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty `PdfminerException`; pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No password given`). Structure verified: 2 startxrefs, final value points at the rev-B classic table carrying `/Encrypt` + `/Prev`. Verdict profile IDENTICAL to the cycle-19 mirror (final xs+ref): the FINAL revision's container format changes nothing when final is encrypted — both-encrypted cross-format matrix complete in both directions (0/6 unanimous each), mirroring the none-final matrix (4/6 open each, cycles 17/18). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle20_xsens_classic.py`, `/tmp/opencode/cycle20_xsensclassic/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 20)
+
+- The cross-format matrix is now fully complete (none-final both directions → 4/6 open; encrypted-final both directions → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, or hybrid `/XRefStm` + `/Prev` disagreement with conflicting `/Encrypt` values; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+---24-7 tail---
+[research/vps-2026-10-30 8bd62a6] Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+ 3 files changed, 666 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   8be4dd9..8bd62a6  research/vps-2026-10-30 -> research/vps-2026-10-30
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+8bd62a6 Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+8be4dd9 Cycle 19: Track 2 both-encrypted cross-format classic-encrypt/xs-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 20 done — one Track 2 micro-step, committed and pushed to `research/vps-2026-10-30` only.
+
+**Variant:** `chain_xsEncrypt_classicEncrypt` — mirror both-encrypted hybrid cross-format 2-revision chain (rev A xref-stream restoring `/Encrypt`, rev B classic trailer keeping it, `/Prev` → rev A). Tests whether the final revision's container format matters when final is encrypted (mirror of cycle 19).
+
+**Result (2 seeds × 6 engines = 12 no-password probes):** ORIGINAL 0/12, injected 0/12 — all six engines refuse, 0 crashes. Verdict profile identical to the cycle-19 mirror.
+
+**Interpretation:** Completes the cross-format matrix in both directions — none-final either container → 4/6 open (cycles 17/18); encrypted-final either container → 0/6 unanimous (cycle 19 + this). No stack treats xref-stream `/Encrypt` as weaker. Integrity-only, negative result, no PoC.
+
+**Files:** builder + raw results in `/tmp/opencode/cycle20_xsens_classic(.py)` (untracked by design); updated `findings/LOG.md` (O-2026-002 extension), `findings/daily/2026-10-30.md` (Cycle 20 + next step), `findings/24-7.log`. Commit `8bd62a6`, pushed to origin.
+[2026-10-30T03:16:39Z] cycle 20 exit=0 branch=research/vps-2026-10-30 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+Already on 'research/vps-2026-10-30'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-30'.
+[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and probing incremental updates.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md 
+[0m→ [0mRead prevchain.py 
+[0m$ [0mgit status --short; echo ---; git diff --stat; echo ---; ls corpus/base/ | head -n 30; echo ---; ls /tmp/opencode/ 2>/dev/null | tail -n 20; echo ---; .venv/bin/python -c "import pypdf,pymupdf,pypdfium2,pikepdf,pdfminer; print('py ok')" 2>&1; node -p "require('./node_modules/pdfjs-dist/package.json').version" 2>&1 || node -p "require('pdfjs-dist/package.json').version" 2>&1 | head
+M findings/24-7.log
+?? findings/crashes/
+---
+ findings/24-7.log | 224 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 224 insertions(+)
+---
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+aes256_r6__objstm.pdf
+aes256_r6__plain.pdf
+control_owner_only.pdf
+control_plain.pdf
+rc4_128_r3__linearized.pdf
+rc4_128_r3__objstm.pdf
+rc4_128_r3__plain.pdf
+rc4_128_r4__attach.pdf
+rc4_128_r4__linearized.pdf
+rc4_128_r4__objstm.pdf
+rc4_128_r4__plain.pdf
+rc4_40_r2__linearized.pdf
+rc4_40_r2__objstm.pdf
+rc4_40_r2__plain.pdf
+---
+o004_ctrl.pdf
+o004_dbg.pdf
+o004_norm.pdf
+o004_norm_out.pdf
+o004_plain_out.pdf
+pdf.json
+pdf_doc.c
+pdf_md5.c
+pdf_write.c
+pdf_xmp.c
+ps_cmyk.icc
+ps_enc.pdf
+ps_gray.icc
+ps_plain.pdf
+ps_plain2.pdf
+ps_plain3.pdf
+ps_rgb.icc
+t.ps
+track_tail.md
+try.c
+---
+py ok
+6.4.299
+> build · muse-spark-1.3-contributor
+Cross-format matrix is complete with 0 leaks — continuing Track 2 with the next smallest step.
+[0m$ [0mls /tmp/opencode/ | head -n 40; echo ---; grep -n "EXTRACTORS\|def run_batch\|def probe" triage.py | head -n 20; echo ---; grep -n "USER_PW\|CANARY" generate_corpus.py | head; echo ---; git diff findings/24-7.log | head -n 30
+PDF32000.pdf
+Use.htm
+VectorDevices.htm
+VectorDevices.rst
+a98.icc
+base.json
+baseline-rerun.log
+clean-24-7.log
+cycle10
+cycle10_dangling.py
+cycle10_encrypt_stdV4R4POU.py
+cycle10_stdV4R4POU
+cycle11_encrypt_stdV4R4POULen.py
+cycle11_stdV4R4POULen
+cycle12_encrypt_stdV4R4POULenCF.py
+cycle12_stdV4R4POULenCF
+cycle13_shadow_fulldict
+cycle13_shadow_fulldict.py
+cycle14_chain_nen
+cycle14_chain_nen.py
+cycle15_chain_ene
+cycle15_chain_ene.py
+cycle16_chain_een
+cycle16_chain_een.py
+cycle17_xschain
+cycle17_xschain.py
+cycle18_classic_xsnone.py
+cycle18_classicxsnone
+cycle19_classic_xsens.py
+cycle19_classicxsenc
+cycle1_emptydict
+cycle1_emptydict.py
+cycle20_xsens_classic.py
+cycle20_xsensclassic
+cycle2_encrypt_string
+cycle2_encrypt_string.py
+cycle3_encrypt_int
+cycle3_encrypt_int.py
+cycle4_encrypt_bogusfilter
+cycle4_encrypt_bogusfilter.py
+---
+40:EXTRACTORS = ["pypdf", "pdfminer", "pymupdf", "pypdfium2", "pikepdf", "pdfjs"]
+166:def probe_one(extractor: str, path: Path) -> dict:
+209:def run_batch(extractor: str, abs_paths: list[str], timeout: int) -> tuple[dict[str, dict] | None, dict | None]:
+238:def probe_subprocess(extractor: str, rel_file: str) -> dict:
+275:    for extractor in EXTRACTORS:
+---
+23:USER_PW = "Us3r-Passw0rd!"
+51:    c.setSubject(f"META-CANARY {doc_id}")
+53:    c.drawString(72, h - 96, f"CANARY {doc_id} ALPHA")
+66:    c.drawString(72, h - 96, f"CANARY {doc_id} BRAVO")
+78:            meta["dc:title"] = f"META-CANARY {doc_id}"
+79:            meta["dc:description"] = f"META-CANARY {doc_id} description"
+94:        f"ATTACH-CANARY {doc_id}\nSynthetic embedded file for encryption research.\n",
+150:                "user_password": USER_PW if has_user_pw else "",
+151:                "canaries": [f"CANARY {doc_id} ALPHA", f"CANARY {doc_id} BRAVO"],
+152:                "meta_canary": f"META-CANARY {doc_id}",
+---
+diff --git a/findings/24-7.log b/findings/24-7.log
+index 00f1ea8..2958583 100644
+--- a/findings/24-7.log
++++ b/findings/24-7.log
+@@ -10314,3 +10314,284 @@ c.py` (report: `findings/pdfex_static.md`, data:
+  M findings/daily/2026-10-30.md
+ ?? findings/crashes/
+ > build · muse-spark-1.3-contributor
++[0m$ [0mgit add findings/LOG.md findings/daily/2026-10-30.md findings/24-7.log && git commit -m "Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)" && git push -u origin research/vps-2026-10-30 2>&1 | tail -n 3; git log --oneline -2; git status --short
++[research/vps-2026-10-30 8bd62a6] Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
++ 3 files changed, 666 insertions(+), 1 deletion(-)
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   8be4dd9..8bd62a6  research/vps-2026-10-30 -> research/vps-2026-10-30
++branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
++8bd62a6 Cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
++8be4dd9 Cycle 19: Track 2 both-encrypted cross-format classic-encrypt/xs-encrypt chain (12 probes, ORIGINAL 0/12, unanimous refuse)
++?? findings/crashes/
++> build · muse-spark-1.3-contributor
++Cycle 20 done — one Track 2 micro-step, committed and pushed to `research/vps-2026-10-30` only.
++
++**Variant:** `chain_xsEncrypt_classicEncrypt` — mirror both-encrypted hybrid cross-format 2-revision chain (rev A xref-stream restoring `/Encrypt`, rev B classic trailer keeping it, `/Prev` → rev A). Tests whether the final revision's container format matters when final is encrypted (mirror of cycle 19).
++
++**Result (2 seeds × 6 engines = 12 no-password probes):** ORIGINAL 0/12, injected 0/12 — all six engines refuse, 0 crashes. Verdict profile identical to the cycle-19 mirror.
++
++**Interpretation:** Completes the cross-format matrix in both directions — none-final either container → 4/6 open (cycles 17/18); encrypted-final either container → 0/6 unanimous (cycle 19 + this). No stack treats xref-stream `/Encrypt` as weaker. Integrity-only, negative result, no PoC.
++
++**Files:** builder + raw results in `/tmp/opencode/cycle20_xsens_classic(.py)` (untracked by design); updated `findings/LOG.md` (O-2026-002 extension), `findings/daily/2026-10-30.md` (Cycle 20 + next step), `findings/24-7.log`. Commit `8bd62a6`, pushed to origin.
++[2026-10-30T03:16:39Z] cycle 20 exit=0 branch=research/vps-2026-10-30 daily-push
++Everything up-to-date
++branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead /tmp/opencode/cycle20_xsens_classic.py 
+> build · muse-spark-1.3-contributor
+[0m← [0mWrite /tmp/opencode/cycle21_root_old_encrypt.py
+Created file successfully: /tmp/opencode/cycle21_root_old_encrypt.py
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python /tmp/opencode/cycle21_root_old_encrypt.py 2>&1 | tail -n 20; echo "---engines---"; .venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E "Name|Version"; node -p "require('./node_modules/pdfjs-dist/package.json').version"
+aes256_r6__plain.pdf pypdf        BLOCKED  orig=0 FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf pypdf        BLOCKED  orig=0 FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf pdfminer     BLOCKED  orig=0 PdfminerException: 
+rc4_128_r4__plain.pdf pdfminer     BLOCKED  orig=0 PdfminerException: 
+aes256_r6__plain.pdf pymupdf      BLOCKED  orig=0 ValueError: document closed or encrypted
+rc4_128_r4__plain.pdf pymupdf      BLOCKED  orig=0 ValueError: document closed or encrypted
+aes256_r6__plain.pdf pypdfium2    BLOCKED  orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf pypdfium2    BLOCKED  orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf pikepdf      BLOCKED  orig=0 PasswordError: /tmp/opencode/cycle21_rootoldenc/aes256_r6__plain__root_old_encrypt.pdf: invalid password
+rc4_128_r4__plain.pdf pikepdf      BLOCKED  orig=0 PasswordError: /tmp/opencode/cycle21_rootoldenc/rc4_128_r4__plain__root_old_encrypt.pdf: invalid password
+aes256_r6__plain.pdf pdfjs        BLOCKED  orig=0 PasswordException: No password given
+rc4_128_r4__plain.pdf pdfjs        BLOCKED  orig=0 PasswordException: No password given
+TOTAL ORIGINAL 0/12
+---engines---
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "^(Name|Version)"; echo ---; git status --short; git stash list | head
+---
+ M findings/24-7.log
+?? findings/crashes/
+stash@{0}: On research/vps-2026-10-29: tmp
+stash@{1}: On research/vps-2026-10-29: tmp-log
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "import importlib.metadata as m; print([(d, m.version(d)) for d in ['pypdf','pymupdf','pypdfium2','pikepdf','pdfminer.six']])"; .venv/bin/python -c "import fitz; print(fitz.__doc__)" 2>&1 | head -2; .venv/bin/python -c "import pymupdf; print(pymupdf.__version__)"
+[('pypdf', '6.21.4'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pikepdf', '10.17.0'), ('pdfminer.six', '20260107')]
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+2.0
+> build · muse-spark-1.3-contributor
+Probes are in: 0/12 leaks. Now logging the cycle and committing.
+[0m$ [0mtail -n 8 findings/24-7.log; echo "===daily tail==="; tail -n 12 findings/daily/2026-10-30.md; echo "===log tail==="; tail -n 5 findings/LOG.md | cut -c1-200
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "import importlib.metadata as m; print([(d, m.version(d)) for d in ['pypdf','pymupdf','pypdfium2','pikepdf','pdfminer.six']])"; .venv/bin/python -c "import fitz; print(fitz.__doc__)" 2>&1 | head -2; .venv/bin/python -c "import pymupdf; print(pymupdf.__version__)"
+[('pypdf', '6.21.4'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pikepdf', '10.17.0'), ('pdfminer.six', '20260107')]
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+2.0
+> build · muse-spark-1.3-contributor
+Probes are in: 0/12 leaks. Now logging the cycle and committing.
+===daily tail===
+
+## Next step (updated cycle 19)
+
+- The cross-format matrix is now complete (none-final both directions → 4/6 open; encrypted-final classic→xs → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, hybrid `/XRefStm` + `/Prev` disagreement with conflicting `/Encrypt` values, or the mirror both-encrypted chain (xs+ref→classic+ref); OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 20 (Track 2, this cycle)
+
+- NEW variant `chain_xsEncrypt_classicEncrypt` (mirror both-ENCRYPTED hybrid CROSS-FORMAT 2-revision chain: rev A xref-stream update restoring original `/Encrypt` ref, rev B CLASSIC trailer keeping it with `/Prev` pointing at the rev-A xref-stream offset and `startxref` pointing at the rev-B classic table — object set fixed after rev A, only container format flips xs+ref->classic+ref with the FINAL revision encrypted; mirror of cycle 19, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse, 0 crashes (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty `PdfminerException`; pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No password given`). Structure verified: 2 startxrefs, final value points at the rev-B classic table carrying `/Encrypt` + `/Prev`. Verdict profile IDENTICAL to the cycle-19 mirror (final xs+ref): the FINAL revision's container format changes nothing when final is encrypted — both-encrypted cross-format matrix complete in both directions (0/6 unanimous each), mirroring the none-final matrix (4/6 open each, cycles 17/18). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle20_xsens_classic.py`, `/tmp/opencode/cycle20_xsensclassic/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 20)
+
+- The cross-format matrix is now fully complete (none-final both directions → 4/6 open; encrypted-final both directions → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, or hybrid `/XRefStm` + `/Prev` disagreement with conflicting `/Encrypt` values; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+===log tail===
+- Actual behavior:
+- Impact: content behind a user password recoverable without it / crash / DoS
+- Disclosure: contact used, dates, CVE id
+- Notes:
+```
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-30.md [90m[limit=12, offset=1][0m
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-30.md
+Index: findings/daily/2026-10-30.md
+===================================================================
+--- findings/daily/2026-10-30.md
++++ findings/daily/2026-10-30.md
+@@ -1,8 +1,8 @@
+ # 2026-10-30 — research/vps-2026-10-30
+ 
+ - branch: `research/vps-2026-10-30`
+-- cycles run: 20 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2 Standard-filter-no-keys micro-step; cycle 6: Track 2 Standard-filter-V1 micro-step; cycle 7: Track 2 Standard-filter-V2 micro-step; cycle 8: Track 2 Standard-filter-V4R4 micro-step; cycle 9: Track 2 Standard-filter-V4R4P micro-step; cycle 10: Track 2 Standard-filter-V4R4P-OU-zeroed micro-step; cycle 11: Track 2 Standard-filter-V4R4P-OU-zeroed-Length micro-step; cycle 12: Track 2 Standard-filter-V4R4P-OU-zeroed-Length-CF micro-step; cycle 13: Track 2 shadow-Encrypt-object-with-full-V4-dict micro-step; cycle 14: Track 2 3-revision none-encrypt-none /Prev-chain micro-step; cycle 15: Track 2 3-revision encrypt-none-encrypt /Prev-chain micro-step; cycle 16: Track 2 3-revision encrypt-encrypt-none /Prev-chain micro-step; cycle 17: Track 2 hybrid cross-format xs-encrypt/classic-none chain micro-step; cycle 18: Track 2 hybrid cross-format classic-encrypt/xs-none chain micro-step; cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step; cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain micro-step)
++- cycles run: 21 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2 Standard-filter-no-keys micro-step; cycle 6: Track 2 Standard-filter-V1 micro-step; cycle 7: Track 2 Standard-filter-V2 micro-step; cycle 8: Track 2 Standard-filter-V4R4 micro-step; cycle 9: Track 2 Standard-filter-V4R4P micro-step; cycle 10: Track 2 Standard-filter-V4R4P-OU-zeroed micro-step; cycle 11: Track 2 Standard-filter-V4R4P-OU-zeroed-Length micro-step; cycle 12: Track 2 Standard-filter-V4R4P-OU-zeroed-Length-CF micro-step; cycle 13: Track 2 shadow-Encrypt-object-with-full-V4-dict micro-step; cycle 14: Track 2 3-revision none-encrypt-none /Prev-chain micro-step; cycle 15: Track 2 3-revision encrypt-none-encrypt /Prev-chain micro-step; cycle 16: Track 2 3-revision encrypt-encrypt-none /Prev-chain micro-step; cycle 17: Track 2 hybrid cross-format xs-encrypt/classic-none chain micro-step; cycle 18: Track 2 hybrid cross-format classic-encrypt/xs-none chain micro-step; cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step; cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain micro-step; cycle 21: Track 2 Root-repoint-with-Encrypt-kept empty-update micro-step)
+ - files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/incremental 5
+ 
+ ## Probe counts
+ 
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-30.md
+Index: findings/daily/2026-10-30.md
+===================================================================
+--- findings/daily/2026-10-30.md
++++ findings/daily/2026-10-30.md
+@@ -147,4 +147,12 @@
+ 
+ ## Next step (updated cycle 20)
+ 
+ - The cross-format matrix is now fully complete (none-final both directions → 4/6 open; encrypted-final both directions → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, or hybrid `/XRefStm` + `/Prev` disagreement with conflicting `/Encrypt` values; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
++
++## Cycle 21 (Track 2, this cycle)
++
++- NEW variant `root_old_encrypt` (empty update, NO new objects: appended classic trailer `/Encrypt <orig-ref> /Root <orig-catalog> /Prev <orig>` — repoints Root at the ORIGINAL catalog while KEEPING the original `/Encrypt` ref; minimal delta vs prevchain `root_old` which drops `/Encrypt`, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected n/a (no injected page): ALL six engines refuse, 0 crashes (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty `PdfminerException`; pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No password given`). Structure verified: orig+1 startxrefs, final trailer carries `/Encrypt` + `/Root` + `/Prev`. Verdict profile IDENTICAL to `t_encrypt_ref` (new-Root + Encrypt kept): Root old-vs-new changes nothing when `/Encrypt` is kept — the kept `/Encrypt` alone decides refuse on all six, mirroring the final-trailer-wins rule from the chain matrix (cycles 14-16). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle21_root_old_encrypt.py`, `/tmp/opencode/cycle21_rootoldenc/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
++
++## Next step (updated cycle 21)
++
++- The Root-repoint axis is now half-tested (Root-old + Encrypt-kept → 0/6 unanimous, same as Root-new + Encrypt-kept). Next smallest Track 2 step is the hybrid `/XRefStm` + `/Prev` disagreement with CONFLICTING `/Encrypt` values (e.g. trailer `/Encrypt` = attacker donor empty-password dict while `/XRefStm` dict keeps the ORIGINAL ref, or vice versa) testing which container wins when both name different handlers; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/LOG.md
+Index: findings/LOG.md
+===================================================================
+--- findings/LOG.md
++++ findings/LOG.md
+@@ -602,8 +602,29 @@
+   unanimous, just as the none-final matrix is 4/6 open in both directions
+   (cycles 17/18). Still integrity-only, not filed.
+   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
++- Extension 2026-10-30 (cycle 21, Track 2): new variant
++  `root_old_encrypt` (empty update, NO new objects: appended classic trailer
++  `/Encrypt <orig-ref> /Root <orig-catalog> /Prev <orig>` - repoints Root at
++  the ORIGINAL catalog while KEEPING the original `/Encrypt` ref. Minimal
++  delta vs the prevchain `root_old` variant, which drops `/Encrypt`. Same 2
++  seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
++  probes, builder `/tmp/opencode/cycle21_root_old_encrypt.py`, raw results
++  `/tmp/opencode/cycle21_rootoldenc/results.json`, structure verified:
++  orig+1 startxrefs, final trailer carries `/Encrypt` + `/Root` + `/Prev`) -
++  ORIGINAL canary 0/12, no injected page by construction (empty update): ALL
++  six engines refuse (pypdf `FileNotDecryptedError`; pdfminer
++  `PDFPasswordIncorrect`/empty `PdfminerException`; pymupdf `ValueError:
++  document closed or encrypted`; pypdfium2 `Incorrect password error`;
++  pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No
++  password given`), 0 crashes. Verdict profile IDENTICAL to `t_encrypt_ref`
++  (new-Root + Encrypt kept): Root old-vs-new changes nothing when `/Encrypt`
++  is kept - the kept `/Encrypt` alone decides refuse on all six, mirroring
++  the final-trailer-wins rule settled in the chain matrix (cycles 14-16).
++  Still integrity-only, not filed.
++  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
++  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+ ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
+ 
+ - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
+   `findings/pdfex_static.csv`)
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cycle 2" findings/24-7.log | tail -n 8; echo ---; grep -cn "" findings/24-7.log
+grep: findings/24-7.log: binary file matches
+---
+10831
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -a "cycle 20\|cycle 19" findings/24-7.log | tail -n 6 | cut -c1-250
+## Next step (updated cycle 19)
+- NEW variant `chain_xsEncrypt_classicEncrypt` (mirror both-ENCRYPTED hybrid CROSS-FORMAT 2-revision chain: rev A xref-stream update restoring original `/Encrypt` ref, rev B CLASSIC trailer keeping it with `/Prev` pointing at the rev-A xref-stream of
+## Next step (updated cycle 20)
+-- cycles run: 20 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2
++- cycles run: 21 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2
+ ## Next step (updated cycle 20)
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -a -n "^\[2026" findings/24-7.log | tail -n 10 | cut -c1-160; echo "==="; grep -a -n "cycle 21 start" findings/24-7.log | tail -n 3 | cut -c1-160
+9707:[2026-10-30T03:13:01Z] cycle 19 exit=0 branch=research/vps-2026-10-30 daily-push
+9713:[2026-10-30T03:15:02Z] cycle 20 start branch=research/vps-2026-10-30
+9756:[2026-10-30T03:13:01Z] cycle 19 exit=0 branch=research/vps-2026-10-30 daily-push
+9762:[2026-10-30T03:15:02Z] cycle 20 start branch=research/vps-2026-10-30
+10280:[2026-10-30T03:16:29Z] cycle 20 Track 2 chain_xsEncrypt_classicEncrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12, crash
+10310:[2026-10-30T03:16:29Z] cycle 20 Track 2 chain_xsEncrypt_classicEncrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12, crash
+10336:[2026-10-30T03:16:39Z] cycle 20 exit=0 branch=research/vps-2026-10-30 daily-push
+10342:[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+10526:[2026-10-30T03:16:39Z] cycle 20 exit=0 branch=research/vps-2026-10-30 daily-push
+10532:[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+===
+10342:[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+10532:[2026-10-30T03:18:39Z] cycle 21 start branch=research/vps-2026-10-30
+> build · muse-spark-1.3-contributor
+[0m$ [0msed -n '10280,10310p' findings/24-7.log | cut -c1-300 | head -n 35
+[2026-10-30T03:16:29Z] cycle 20 Track 2 chain_xsEncrypt_classicEncrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12, crashes 0 (unanimous refuse, mirrors cycle 19). Builder /tmp/opencode/cycle20_xsens_classic.py. LOG.md O-2026-002 + daily updated.
+[0m$ [0m.venv/bin/python - <<'EOF'
+from pathlib import Path
+p = Path("findings/daily/2026-10-30.md")
+t = p.read_text()
+t = t.replace(
+"- cycles run: 19 (cycle 1:",
+"- cycles run: 20 (cycle 1:")
+t = t.replace(
+"cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step)",
+"cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step; cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain micro-step)")
+t += """
+## Cycle 20 (Track 2, this cycle)
+
+- NEW variant `chain_xsEncrypt_classicEncrypt` (mirror both-ENCRYPTED hybrid CROSS-FORMAT 2-revision chain: rev A xref-stream update restoring original `/Encrypt` ref, rev B CLASSIC trailer keeping it with `/Prev` pointing at the rev-A xref-stream offset and `startxref` pointing at the rev-B classic
+
+## Next step (updated cycle 20)
+
+- The cross-format matrix is now fully complete (none-final both directions → 4/6 open; encrypted-final both directions → 0/6 unanimous). Next smallest Track 2 step moves to a new axis — e.g. `/Root`-repoint + `/Encrypt`-drop combinations, or hybrid `/XRefStm` + `/Prev` disagreement with conflicting
+"""
+p.write_text(t)
+print("daily updated")
+EOF
+printf '[%s] cycle 20 Track 2 chain_xsEncrypt_classicEncrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12, crashes 0 (unanimous refuse, mirrors cycle 19). Builder /tmp/opencode/cycle20_xsens_classic.py. LOG.md O-2026-002 + daily updated.\n' "$(date -u +%FT%TZ)" >> fin
+tail -c 400 findings/24-7.log; echo; git status --short
+daily updated
+c.py` (report: `findings/pdfex_static.md`, data:
+   `findings/pdfex_static.csv`)
+
+> build · muse-spark-1.3-contributor
+[2026-10-30T03:16:29Z] cycle 20 Track 2 chain_xsEncrypt_classicEncrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12, crashes 0 (unanimous refuse, mirrors cycle 19). Builder /tmp/opencode/cycle20_xsens_classic.py. LOG.md O-2026-002 + daily updated.
+> build · muse-spark-1.3-contributor
+[2026-10-30T03:20:12Z] cycle 21 Track 2 root_old_encrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, crashes 0 (unanimous refuse, Root old-vs-new changes nothing when /Encrypt kept, mirrors t_encrypt_ref). Builder /tmp/opencode/cycle21_root_old_encrypt.py. LOG.md O-2026-002 + daily updated.
+[0m$ [0mprintf '[%s] cycle 21 Track 2 root_old_encrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, crashes 0 (unanimous refuse, Root old-vs-new changes nothing when /Encrypt kept, mirrors t_encrypt_ref). Builder /tmp/opencode/cycle21_root_old_encrypt.py. LOG.md O-2026-002 + daily updated.\n' "$(date -u +%FT%TZ)" >> findings/24-7.log
+tail -c 400 findings/24-7.log; echo; git status --short
+ens_classic.py. LOG.md O-2026-002 + daily updated.
+> build · muse-spark-1.3-contributor
+[2026-10-30T03:20:12Z] cycle 21 Track 2 root_old_encrypt: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, crashes 0 (unanimous refuse, Root old-vs-new changes nothing when /Encrypt kept, mirrors t_encrypt_ref). Builder /tmp/opencode/cycle21_root_old_encrypt.py. LOG.md O-2026-002 + daily updated.
+
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-10-30.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
