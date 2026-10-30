@@ -757,6 +757,32 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   lenient stacks, original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 27, Track 2): new variant `t_size_grow_encrypt`
+  (mirror of cycle 26, completing the 2x2 Size matrix: appended injected
+  plaintext page exactly like prevchain `t_encrypt_ref` — new Catalog/Pages/
+  Page/Contents n..n+3, trailer `/Encrypt <orig-ref> /Root N 0 R /Prev <orig>`
+  KEEPING the original handler — but the appended trailer declares `/Size` =
+  seed.size + 100, i.e. GROWN far beyond the highest appended object n+3
+  instead of the correct n+12; xref subsection still lists only the 4 new
+  objects; pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle27_size_grow_enc.py`, raw results
+  `/tmp/opencode/cycle27_size_grow_enc/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty
+  `PdfminerException`; pymupdf `ValueError: document closed or encrypted`;
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`). Verdict profile
+  IDENTICAL to the `t_encrypt_ref` baseline: inflated `/Size` changes NOTHING
+  when `/Encrypt` is kept — the kept `/Encrypt` alone decides refuse on all
+  six. Full 2x2 Size matrix now settled: shrink+drop (cycle 24) 3/6 open
+  (pymupdf flipped to refuse); shrink+keep (cycle 25) 0/6 refuse;
+  grow+drop (cycle 26) 4/6 open = `t_none`; grow+keep (this cycle) 0/6
+  refuse = `t_encrypt_ref`. Rule: `/Size` matters only in the drop-`/Encrypt`
+  direction (MuPDF honors it as a lower bound); with `/Encrypt` kept, Size is
+  irrelevant on every stack. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
