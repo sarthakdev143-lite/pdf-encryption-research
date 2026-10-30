@@ -9120,19 +9120,12 @@ Index: findings/daily/2026-10-30.md
 [2026-10-30T02:35:13Z] cycle 10 exit=0 branch=research/vps-2026-10-30 track2=t_encrypt_stdV4R4POU probes=12 original=0 injected=0 crashes=0
 [2026-10-30T02:37:36Z] cycle 11 start branch=research/vps-2026-10-30
 [2026-10-30T02:38:28Z] cycle 11 exit=0 branch=research/vps-2026-10-30 track2=t_encrypt_stdV4R4POULen probes=12 original=0 injected=0 crashes=0
-[0m$ [0mgit show HEAD:findings/24-7.log > findings/24-7.log
-echo "[2026-10-30T02:37:36Z] cycle 11 start branch=research/vps-2026-10-30" >> findings/24-7.log
-echo "[$(date -u +%FT%TZ)] cycle 11 exit=0 branch=research/vps-2026-10-30 track2=t_encrypt_stdV4R4POULen probes=12 original=0 injected=0 crashes=0" >> findings/24-7.log
-echo "--- verify ---"
-.venv/bin/python -c "import json; r=json.load(open('/tmp/opencode/cycle11_stdV4R4POULen/results.json')); o=sum(1 for k,v in r.items() if v.get('original')); i=sum(1 for k,v in r.items() if v.get('injected')); print('ORIGINAL',o,'injected',i,'n=',len(r))"
-grep -c "t_encrypt_stdV4R4POULen" findings/LOG.md findings/daily/2026-10-30.md
-git diff --stat
---- verify ---
-ORIGINAL 0 injected 0 n= 12
-findings/LOG.md:1
-findings/daily/2026-10-30.md:1
- findings/24-7.log            |  2 ++
- findings/LOG.md              | 19 +++++++++++++++++++
- findings/daily/2026-10-30.md | 10 +++++++---
- 3 files changed, 28 insertions(+), 3 deletions(-)
+[0m$ [0mhead -n 9122 findings/24-7.log > /tmp/opencode/clean-24-7.log && cp /tmp/opencode/clean-24-7.log findings/24-7.log
+tail -n 3 findings/24-7.log | cut -c1-120; echo "---"; git diff --stat
+[2026-10-30T02:35:13Z] cycle 10 exit=0 branch=research/vps-2026-10-30 track2=t_encrypt_stdV4R4POU probes=12 original=0 i
+[2026-10-30T02:37:36Z] cycle 11 start branch=research/vps-2026-10-30
+[2026-10-30T02:38:28Z] cycle 11 exit=0 branch=research/vps-2026-10-30 track2=t_encrypt_stdV4R4POULen probes=12 original=
+---
+ findings/24-7.log | 16 ----------------
+ 1 file changed, 16 deletions(-)
 > build · muse-spark-1.3-contributor
