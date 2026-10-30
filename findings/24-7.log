@@ -6735,3 +6735,562 @@ Index: findings/daily/2026-10-30.md
 
 > build · muse-spark-1.3-contributor
 [2026-10-30T02:13:58Z] cycle 4 Track2 t_encrypt_bogusfilter: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12 (ALL six refuse: pypdf NotImplementedError; pdfminer BLOCKED Unknown filter; pymupdf FileDataError; pypdfium2 Unsupported security scheme; pikepdf unsupported filter; pdfjs unknown encryption method), 0 crashes. Dict-typed-but-unknown == empty-dict unanimity, unlike wrong-typed string/int split. Integrity-only, LOG.md O-2026-002 extended. builder /tmp/opencode/cycle4_encrypt_bogusfilter.py, no new repo files, no PoC.
+[0m$ [0mprintf '[%s] cycle 4 Track2 t_encrypt_bogusfilter: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12 (ALL six refuse: pypdf NotImplementedError; pdfminer BLOCKED Unknown filter; pymupdf FileDataError; pypdfium2 Unsupported security scheme; pikepdf unsupported filter; pdfjs unknown encryption method), 0 crashes. Dict-typed-but-unknown == empty-dict unanimity, unlike wrong-typed string/int split. Integrity-only, LOG.md O-2026-002 extended. builder /tmp/opencode/cycle4_encrypt_bogusfilter.py, no new repo files, no PoC.\n' "$(date -u +%FT%TZ)" >> findings/24-7.log
+git add findings/LOG.md findings/daily/2026-10-30.md findings/24-7.log
+git status --short
+git commit -m "Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)"
+git push -u origin research/vps-2026-10-30 2>&1 | tail -5
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-10-30.md
+?? findings/crashes/
+[research/vps-2026-10-30 4065e5e] Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)
+ 3 files changed, 547 insertions(+), 2 deletions(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   486797a..4065e5e  research/vps-2026-10-30 -> research/vps-2026-10-30
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+> build · muse-spark-1.3-contributor
+Cycle 4 done — one Track 2 micro-step, committed and pushed to `research/vps-2026-10-30` (4065e5e).
+
+**Step:** new trailer-confusion variant `t_encrypt_bogusfilter` — appended revision with plaintext page, trailer `/Encrypt <</Filter/Bogus>>` (present, dict-typed, unknown filter). 2 seeds (aes256_r6__plain, rc4_128_r4__plain) × 6 engines = 12 no-password probes, builder in `/tmp/opencode/` (git-untracked).
+
+**Result:** ORIGINAL 0/12, injected 0/12 — all six engines refuse (pypdf `NotImplementedError`; pdfminer BLOCKED; pymupdf `FileDataError`; pypdfium2 unsupported-scheme; pikepdf unsupported-filter; pdfjs unknown-method), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous refuse), not like wrong-typed string/int (3/6 render) — the type check, not the filter check, splits lenient vs strict stacks. Integrity-only, no PoC (negative result).
+
+**Recorded:** `findings/LOG.md` O-2026-002 extension, `findings/daily/2026-10-30.md` Cycle 4 section, `findings/24-7.log` result line. Next: `/Encrypt <</Filter/Standard>>` (Standard filter, missing keys) same matrix.
+[2026-10-30T02:14:06Z] cycle 4 exit=0 branch=research/vps-2026-10-30 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+Already on 'research/vps-2026-10-30'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-30'.
+[2026-10-30T02:16:07Z] cycle 5 start branch=research/vps-2026-10-30
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-verifying baseline and probing the next lead.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short | head -n 50; git log --oneline -5; date -u; cat findings/daily/2026-10-30.md 2>/dev/null || echo "NO DAILY FILE"; ls findings/ findings/daily/ 2>&1 | head -n 40
+research/vps-2026-10-30
+ M findings/24-7.log
+?? findings/crashes/
+4065e5e Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)
+486797a Cycle 3: Track 2 integer-Encrypt trailer (12 probes, ORIGINAL 0/12, 3/6 render injected, same split as string)
+69deef9 Cycle 2: Track 2 wrong-type Encrypt trailer (12 probes, ORIGINAL 0/12, 3/6 render injected)
+4462460 Cycle 1: baseline 0 leaks + Track 2 empty-dict trailer (12 probes, unanimous refuse, ORIGINAL 0/12)
+fc86a74 chore: drop VPS docs from repo, keep corpus+VPS ignored
+Fri Oct 30 02:16:11 UTC 2026
+# 2026-10-30 — research/vps-2026-10-30
+
+- branch: `research/vps-2026-10-30`
+- cycles run: 4 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step)
+- files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/incremental 5
+
+## Probe counts
+
+- triage: 325 files x 6 engines = 1950 no-password probes → LEAK 0, CRASH/TIMEOUT 0, INFO 15
+- authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes → AUTH-BYPASS 0, FAIL-CONTROL 0
+- fuzz: fuzz.py 1200 → ~3600 ciphertext probes → crashes/timeouts 0
+- incremental: 5 files x 6 engines = 30 probes → original shown 0
+- prevchain (Track 2): 51 files x 6 engines = 306 probes → ORIGINAL 0, injected 50
+- t_encrypt_emptydict (Track 2, this cycle): NEW variant (appended revision, trailer `/Encrypt <<>>` empty dict, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse (unanimous). Strictest of the four trailer confusions: absent opens 4/6, null opens 5/6, dangling opens 4/6, empty-dict opens 0/6. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle1_emptydict.py`, `/tmp/opencode/cycle1_emptydict/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Leaks / crashes
+
+- leaks: 0. No user-password content recoverable without password on any surface tested.
+- crashes: 0.
+- PoCs on file (observations, not leaks): `findings/poc/O-2026-003-pdfex-form-ref.pdf`, `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (+ reportlab-source predecessor).
+
+## New files (this cycle)
+
+- No new repo files (negative result, no PoC). Builder + raw results live in `/tmp/opencode/cycle1_emptydict(.py)` (git-untracked by location); LOG.md O-2026-002 gained an empty-dict extension note.
+- Pipeline re-run regenerated `findings/report.csv`, `findings/prevchain.{csv,md}`, `findings/incremental.*`, `findings/authmatrix.*`; repaired two harness overwrites before commit (see note below).
+
+## Harness note (repeat of 2026-10-29 cycle-9 accident)
+
+- `triage.py` rewrites `findings/report.md` and drops the track3static + track4writer blocks it doesn't know about; restored from HEAD (`git show HEAD:findings/report.md`), verified `git diff findings/report.md` empty at commit time. Same for the `authmatrix.md` pyaes note (re-added; only a trailing-newline diff remains).
+- `prevchain.py` `t_encrypt_empty` pypdf OK-vs-ERROR flip run to run is the known-stable non-security flake already documented in LOG.md O-2026-002; security columns (ORIGINAL=False everywhere) stable.
+
+## Cycle 2 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_string` (appended revision, trailer `/Encrypt (bogus)` direct string, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Wrong-typed `/Encrypt` splits the field: strict stacks refuse, lenient stacks treat as no-encryption — mirrors dangling-ref (4/6 open), not empty-dict unanimity (0/6). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle2_encrypt_string.py`, `/tmp/opencode/cycle2_encrypt_string/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Next step
+
+- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard>>` — dict-typed, Standard filter, missing keys — to test missing-key handling vs unknown-filter unanimity), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+## Cycle 3 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Cycle 4 (Track 2, this cycle)
+
+- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+findings/:
+24-7.log
+LOG.md
+authmatrix.csv
+authmatrix.md
+crashes
+daily
+incremental.csv
+incremental.md
+pdfex_static.csv
+pdfex_static.md
+poc
+prevchain.csv
+prevchain.md
+report.csv
+report.md
+reports
+writer_audit.md
+writer_plaintext.csv
+writer_plaintext.md
+writer_rawscan.csv
+
+findings/daily/:
+2026-10-29.md
+2026-10-30.md
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md 
+[0m$ [0mgit diff --stat; cat findings/24-7.log | tail -n 30
+findings/24-7.log | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
+- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+findings/:
+24-7.log
+LOG.md
+authmatrix.csv
+authmatrix.md
+crashes
+daily
+incremental.csv
+incremental.md
+pdfex_static.csv
+pdfex_static.md
+poc
+prevchain.csv
+prevchain.md
+report.csv
+report.md
+reports
+writer_audit.md
+writer_plaintext.csv
+writer_plaintext.md
+writer_rawscan.csv
+
+findings/daily/:
+2026-10-29.md
+2026-10-30.md
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff findings/24-7.log | head -n 140
+echo "---LOG TAIL---"
+tail -n 40 findings/24-7.log
+echo "---UNTRACKED---"
+ls /tmp/opencode/ 2>&1 | head -n 20
+diff --git a/findings/24-7.log b/findings/24-7.log
+index c2faa46..0daae03 100644
+--- a/findings/24-7.log
++++ b/findings/24-7.log
+@@ -6735,3 +6735,156 @@ Index: findings/daily/2026-10-30.md
+ 
+ > build · muse-spark-1.3-contributor
+ [2026-10-30T02:13:58Z] cycle 4 Track2 t_encrypt_bogusfilter: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12 (ALL six refuse: pypdf NotImplementedError; pdfminer BLOCKED Unknown filter; pymupdf FileDataError; pypdfium2 Unsupported security scheme; pikepdf unsupported filter; pdfjs unknown encryption method), 0 crashes. Dict-typed-but-unknown == empty-dict unanimity, unlike wrong-typed string/int split. Integrity-only, LOG.md O-2026-002 extended. builder /tmp/opencode/cycle4_encrypt_bogusfilter.py, no new repo files, no PoC.
++[0m$ [0mprintf '[%s] cycle 4 Track2 t_encrypt_bogusfilter: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12 (ALL six refuse: pypdf NotImplementedError; pdfminer BLOCKED Unknown filter; pymupdf FileDataError; pypdfium2 Unsupported security scheme; pikepdf unsupported filter; pdfjs unknown encryption method), 0 crashes. Dict-typed-but-unknown == empty-dict unanimity, unlike wrong-typed string/int split. Integrity-only, LOG.md O-2026-002 extended. builder /tmp/opencode/cycle4_encrypt_bogusfilter.py, no new repo files, no PoC.\n' "$(date -u +%FT%TZ)" >> findings/24-7.log
++git add findings/LOG.md findings/daily/2026-10-30.md findings/24-7.log
++git status --short
++git commit -m "Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)"
++git push -u origin research/vps-2026-10-30 2>&1 | tail -5
++M  findings/24-7.log
++M  findings/LOG.md
++M  findings/daily/2026-10-30.md
++?? findings/crashes/
++[research/vps-2026-10-30 4065e5e] Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)
++ 3 files changed, 547 insertions(+), 2 deletions(-)
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   486797a..4065e5e  research/vps-2026-10-30 -> research/vps-2026-10-30
++branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
++> build · muse-spark-1.3-contributor
++Cycle 4 done — one Track 2 micro-step, committed and pushed to `research/vps-2026-10-30` (4065e5e).
++
++**Step:** new trailer-confusion variant `t_encrypt_bogusfilter` — appended revision with plaintext page, trailer `/Encrypt <</Filter/Bogus>>` (present, dict-typed, unknown filter). 2 seeds (aes256_r6__plain, rc4_128_r4__plain) × 6 engines = 12 no-password probes, builder in `/tmp/opencode/` (git-untracked).
++
++**Result:** ORIGINAL 0/12, injected 0/12 — all six engines refuse (pypdf `NotImplementedError`; pdfminer BLOCKED; pymupdf `FileDataError`; pypdfium2 unsupported-scheme; pikepdf unsupported-filter; pdfjs unknown-method), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous refuse), not like wrong-typed string/int (3/6 render) — the type check, not the filter check, splits lenient vs strict stacks. Integrity-only, no PoC (negative result).
++
++**Recorded:** `findings/LOG.md` O-2026-002 extension, `findings/daily/2026-10-30.md` Cycle 4 section, `findings/24-7.log` result line. Next: `/Encrypt <</Filter/Standard>>` (Standard filter, missing keys) same matrix.
++[2026-10-30T02:14:06Z] cycle 4 exit=0 branch=research/vps-2026-10-30 daily-push
++Everything up-to-date
++branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
++Already on 'research/vps-2026-10-30'
++M	findings/24-7.log
++Your branch is up to date with 'origin/research/vps-2026-10-30'.
++[2026-10-30T02:16:07Z] cycle 5 start branch=research/vps-2026-10-30
++[0m
++> build · muse-spark-1.3-contributor
++Doing one research cycle — re-verifying baseline and probing the next lead.
++[0m→ [0mRead . 
++> build · muse-spark-1.3-contributor
++[0m$ [0mgit branch --show-current; git status --short | head -n 50; git log --oneline -5; date -u; cat findings/daily/2026-10-30.md 2>/dev/null || echo "NO DAILY FILE"; ls findings/ findings/daily/ 2>&1 | head -n 40
++research/vps-2026-10-30
++ M findings/24-7.log
++?? findings/crashes/
++4065e5e Cycle 4: Track 2 bogus-Filter Encrypt trailer (12 probes, ORIGINAL 0/12, unanimous refuse like empty-dict)
++486797a Cycle 3: Track 2 integer-Encrypt trailer (12 probes, ORIGINAL 0/12, 3/6 render injected, same split as string)
++69deef9 Cycle 2: Track 2 wrong-type Encrypt trailer (12 probes, ORIGINAL 0/12, 3/6 render injected)
++4462460 Cycle 1: baseline 0 leaks + Track 2 empty-dict trailer (12 probes, unanimous refuse, ORIGINAL 0/12)
++fc86a74 chore: drop VPS docs from repo, keep corpus+VPS ignored
++Fri Oct 30 02:16:11 UTC 2026
++# 2026-10-30 — research/vps-2026-10-30
++
++- branch: `research/vps-2026-10-30`
++- cycles run: 4 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step)
++- files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/incremental 5
++
++## Probe counts
++
++- triage: 325 files x 6 engines = 1950 no-password probes → LEAK 0, CRASH/TIMEOUT 0, INFO 15
++- authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes → AUTH-BYPASS 0, FAIL-CONTROL 0
++- fuzz: fuzz.py 1200 → ~3600 ciphertext probes → crashes/timeouts 0
++- incremental: 5 files x 6 engines = 30 probes → original shown 0
++- prevchain (Track 2): 51 files x 6 engines = 306 probes → ORIGINAL 0, injected 50
++- t_encrypt_emptydict (Track 2, this cycle): NEW variant (appended revision, trailer `/Encrypt <<>>` empty dict, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse (unanimous). Strictest of the four trailer confusions: absent opens 4/6, null opens 5/6, dangling opens 4/6, empty-dict opens 0/6. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle1_emptydict.py`, `/tmp/opencode/cycle1_emptydict/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
++## Leaks / crashes
++
++- leaks: 0. No user-password content recoverable without password on any surface tested.
++- crashes: 0.
++- PoCs on file (observations, not leaks): `findings/poc/O-2026-003-pdfex-form-ref.pdf`, `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (+ reportlab-source predecessor).
++
++## New files (this cycle)
++
++- No new repo files (negative result, no PoC). Builder + raw results live in `/tmp/opencode/cycle1_emptydict(.py)` (git-untracked by location); LOG.md O-2026-002 gained an empty-dict extension note.
++- Pipeline re-run regenerated `findings/report.csv`, `findings/prevchain.{csv,md}`, `findings/incremental.*`, `findings/authmatrix.*`; repaired two harness overwrites before commit (see note below).
++
++## Harness note (repeat of 2026-10-29 cycle-9 accident)
++
++- `triage.py` rewrites `findings/report.md` and drops the track3static + track4writer blocks it doesn't know about; restored from HEAD (`git show HEAD:findings/report.md`), verified `git diff findings/report.md` empty at commit time. Same for the `authmatrix.md` pyaes note (re-added; only a trailing-newline diff remains).
++- `prevchain.py` `t_encrypt_empty` pypdf OK-vs-ERROR flip run to run is the known-stable non-security flake already documented in LOG.md O-2026-002; security columns (ORIGINAL=False everywhere) stable.
++
++## Cycle 2 (Track 2, this cycle)
++
++- NEW variant `t_encrypt_string` (appended revision, trailer `/Encrypt (bogus)` direct string, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Wrong-typed `/Encrypt` splits the field: strict stacks refuse, lenient stacks treat as no-encryption — mirrors dangling-ref (4/6 open), not empty-dict unanimity (0/6). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle2_encrypt_string.py`, `/tmp/opencode/cycle2_encrypt_string/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
++## Next step
++
++- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard>>` — dict-typed, Standard filter, missing keys — to test missing-key handling vs unknown-filter unanimity), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
++
++## Cycle 3 (Track 2, this cycle)
++
++- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
++## Cycle 4 (Track 2, this cycle)
++
++- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
++- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++findings/:
++24-7.log
++LOG.md
++authmatrix.csv
++authmatrix.md
++crashes
++daily
++incremental.csv
++incremental.md
++pdfex_static.csv
++pdfex_static.md
++poc
++prevchain.csv
++prevchain.md
++report.csv
++report.md
++reports
++writer_audit.md
++writer_plaintext.csv
++writer_plaintext.md
++writer_rawscan.csv
++
++findings/daily/:
++2026-10-29.md
++2026-10-30.md
++> build · muse-spark-1.3-contributor
++[0m→ [0mRead findings/LOG.md 
++[0m$ [0mgit diff --stat; cat findings/24-7.log | tail -n 30
++findings/24-7.log | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
++ 1 file changed, 119 insertions(+)
++- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
++- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++findings/:
++24-7.log
++LOG.md
++authmatrix.csv
++authmatrix.md
++crashes
++daily
+---LOG TAIL---
+
+findings/daily/:
+2026-10-29.md
+2026-10-30.md
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md 
+[0m$ [0mgit diff --stat; cat findings/24-7.log | tail -n 30
+findings/24-7.log | 119 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 119 insertions(+)
+- NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+findings/:
+24-7.log
+LOG.md
+authmatrix.csv
+authmatrix.md
+crashes
+daily
+incremental.csv
+incremental.md
+pdfex_static.csv
+pdfex_static.md
+poc
+prevchain.csv
+prevchain.md
+report.csv
+report.md
+reports
+writer_audit.md
+writer_plaintext.csv
+writer_plaintext.md
+writer_rawscan.csv
+
+findings/daily/:
+2026-10-29.md
+2026-10-30.md
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md
+> build · muse-spark-1.3-contributor
+---UNTRACKED---
+PDF32000.pdf
+Use.htm
+VectorDevices.htm
+VectorDevices.rst
+a98.icc
+base.json
+baseline-rerun.log
+cycle10
+cycle10_dangling.py
+cycle1_emptydict
+cycle1_emptydict.py
+cycle2_encrypt_string
+cycle2_encrypt_string.py
+cycle3_encrypt_int
+cycle3_encrypt_int.py
+cycle4_encrypt_bogusfilter
+cycle4_encrypt_bogusfilter.py
+cycle9
+cycle9.stderr
+cycle9_encrypt_null.py
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead /tmp/opencode/cycle4_encrypt_bogusfilter.py 
+> build · muse-spark-1.3-contributor
+Cycle 5 continues the trailer-confusion sweep — next variant is Standard filter with missing keys.
+[0m$ [0msed 's|/Filter/Bogus|/Filter/Standard|; s|t_encrypt_bogusfilter|t_encrypt_stdfilter|g; s|cycle4_encrypt_bogusfilter|cycle5_encrypt_stdfilter|g; s|Cycle 4 (2026-10-30), Track 2 micro-step: trailer `/Encrypt << /Filter /Bogus >>`.|Cycle 5 (2026-10-30), Track 2 micro-step: trailer `/Encrypt << /Filter /Standard >>`.|; s|Appended revision with a plaintext page; trailer carries a present, dict-typed|Appended revision with a plaintext page; trailer carries a present, dict-typed\n Standard-filter but keyless|' /tmp/opencode/cycle4_encrypt_bogusfilter.py > /tmp/opencode/cycle5_encrypt_stdfilter.py
+grep -n "Filter\|VARIANT\|OUT =" /tmp/opencode/cycle5_encrypt_stdfilter.py | head
+.venv/bin/python /tmp/opencode/cycle5_encrypt_stdfilter.py 2>&1 | tail -n 20
+1:"""Cycle 5 (2026-10-30), Track 2 micro-step: trailer `/Encrypt << /Filter /Standard >>`.
+5:/Encrypt with an unknown /Filter — distinct from absent (t_none), null,
+26:OUT = Path("/tmp/opencode/cycle5_encrypt_stdfilter")
+30:VARIANT = "t_encrypt_stdfilter"
+35:    canary = f"INJECTED {seed.stem} {VARIANT} ALPHA"
+41:    extra = b"/Encrypt <</Filter/Standard>> /Root %d 0 R /Prev %d" % (n, prev)
+43:    out = OUT / f"{seed.stem}__{VARIANT}.pdf"
+[ok] rc4_128_r4__plain__t_encrypt_stdfilter.pdf
+pypdf: 2 files probed
+pdfminer: 2 files probed
+pymupdf: 2 files probed
+pypdfium2: 2 files probed
+pikepdf: 2 files probed
+pdfjs: 2 files probed
+ORIGINAL shown: 0/12  injected shown: 0/12
+aes256_r6__p pypdf      ERROR    inj=0 ORIG=0 NotImplementedError: Encryption V=0 NOT supported
+rc4_128_r4__ pypdf      ERROR    inj=0 ORIG=0 NotImplementedError: Encryption V=0 NOT supported
+aes256_r6__p pdfminer   BLOCKED  inj=0 ORIG=0 PdfminerException: Unknown algorithm: param={'Filter': /'Standard'}
+rc4_128_r4__ pdfminer   BLOCKED  inj=0 ORIG=0 PdfminerException: Unknown algorithm: param={'Filter': /'Standard'}
+aes256_r6__p pymupdf    ERROR    inj=0 ORIG=0 FileDataError: Failed to open file '/tmp/opencode/cycle5_encrypt_stdfilter/aes25
+rc4_128_r4__ pymupdf    ERROR    inj=0 ORIG=0 FileDataError: Failed to open file '/tmp/opencode/cycle5_encrypt_stdfilter/rc4_1
+aes256_r6__p pypdfium2  BLOCKED  inj=0 ORIG=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__ pypdfium2  BLOCKED  inj=0 ORIG=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__p pikepdf    ERROR    inj=0 ORIG=0 PdfError: /tmp/opencode/cycle5_encrypt_stdfilter/aes256_r6__plain__t_encrypt_std
+rc4_128_r4__ pikepdf    ERROR    inj=0 ORIG=0 PdfError: /tmp/opencode/cycle5_encrypt_stdfilter/rc4_128_r4__plain__t_encrypt_st
+aes256_r6__p pdfjs      ERROR    inj=0 ORIG=0 UnknownErrorException: unsupported encryption algorithm
+rc4_128_r4__ pdfjs      ERROR    inj=0 ORIG=0 UnknownErrorException: unsupported encryption algorithm
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "
+import json
+rows=json.load(open('/tmp/opencode/cycle5_encrypt_stdfilter/results.json'))
+for r in rows: print(r['engine'],'|',r['status'],'|',r['detail'][:150])
+"
+.venv/bin/python -c "import pypdf, pymupdf, pypdfium2, pikepdf, pdfminer; print(pypdf.__version__)" 2>&1
+.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E 'Name|Version'
+node -p "require('pdfjs-dist/package.json').version" 2>&1
+pypdf | ERROR | NotImplementedError: Encryption V=0 NOT supported
+pypdf | ERROR | NotImplementedError: Encryption V=0 NOT supported
+pdfminer | BLOCKED | PdfminerException: Unknown algorithm: param={'Filter': /'Standard'}
+pdfminer | BLOCKED | PdfminerException: Unknown algorithm: param={'Filter': /'Standard'}
+pymupdf | ERROR | FileDataError: Failed to open file '/tmp/opencode/cycle5_encrypt_stdfilter/aes256_r6__plain__t_encrypt_stdfilter.pdf' as type pdf.
+pymupdf | ERROR | FileDataError: Failed to open file '/tmp/opencode/cycle5_encrypt_stdfilter/rc4_128_r4__plain__t_encrypt_stdfilter.pdf' as type pdf.
+pypdfium2 | BLOCKED | PdfiumError: Failed to load document (PDFium: Incorrect password error).
+pypdfium2 | BLOCKED | PdfiumError: Failed to load document (PDFium: Incorrect password error).
+pikepdf | ERROR | PdfError: /tmp/opencode/cycle5_encrypt_stdfilter/aes256_r6__plain__t_encrypt_stdfilter.pdf (encryption dictionary, offset 3443): some encryption dicti
+pikepdf | ERROR | PdfError: /tmp/opencode/cycle5_encrypt_stdfilter/rc4_128_r4__plain__t_encrypt_stdfilter.pdf (encryption dictionary, offset 2941): some encryption dict
+pdfjs | ERROR | UnknownErrorException: unsupported encryption algorithm
+pdfjs | ERROR | UnknownErrorException: unsupported encryption algorithm
+6.21.4
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E '^(Name|Version)' | head -n 20
+(no output)
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -m pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E 'Name|Version'
+(no output)
+> build · muse-spark-1.3-contributor
+[0m$ [0mls .venv/bin/ | head -n 20; .venv/bin/python -c "import importlib.metadata as m; print([(d.metadata['Name'],d.version) for d in m.distributions() if (d.metadata['Name'] or '').lower() in ('pypdf','pymupdf','pypdfium2','pikepdf','pdfminer.six')])"
+activate
+activate.bat
+activate.csh
+activate.fish
+activate.nu
+activate.ps1
+activate.xsh
+activate_this.py
+cffi-gen-src
+deactivate.bat
+dumppdf.py
+f2py
+normalizer
+numpy-config
+onnxruntime_test
+pdf2txt.py
+pdfplumber
+pydoc.bat
+pymupdf
+pymupdf-config
+[('pypdf', '6.21.4'), ('pikepdf', '10.17.0'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pdfminer.six', '20260107')]
+> build · muse-spark-1.3-contributor
+Unanimous refuse again (0/12 original, 0/12 injected) — recording the result.
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mFound 3 matches for oldString, but expected exactly one. Add more surrounding context to make oldString unique, or set replaceAll to true to replace every occurrence.
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mCould not find oldString in /home/sarthak/pdf-encryption-research/findings/LOG.md. It must match exactly, including whitespace and indentation.
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=25, offset=237][0m
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/LOG.md
+Index: findings/LOG.md
+===================================================================
+--- findings/LOG.md
++++ findings/LOG.md
+@@ -250,8 +250,27 @@
+   the filter check, is what splits lenient vs strict stacks. Still
+   integrity-only, not filed.
+   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
++- Extension 2026-10-30 (cycle 5, Track 2): new variant `t_encrypt_stdfilter`
++  (appended plaintext page, trailer `/Encrypt <</Filter/Standard>>` —
++  present, dict-typed, Standard filter but NO other keys, no /V /R /O /U —
++  `/Root N 0 R /Prev <orig>`, same 2 seeds x 6 engines = 12 no-password
++  probes, builder `/tmp/opencode/cycle5_encrypt_stdfilter.py`, raw results
++  `/tmp/opencode/cycle5_encrypt_stdfilter/results.json`) — ORIGINAL canary
++  0/12, injected rendered 0/12: ALL six engines refuse (pypdf
++  `NotImplementedError: Encryption V=0 NOT supported` — Standard recognized,
++  missing /V defaults to 0; pdfminer BLOCKED `Unknown algorithm:
++  param={'Filter': /'Standard'}` — "algorithm" branch, distinct from the
++  empty-dict/bogus-filter "Unknown filter" branch; pymupdf `FileDataError`;
++  pypdfium2 `Incorrect password error`; pikepdf `PdfError: ... some
++  encryption dicti...`; pdfjs `UnknownErrorException: unsupported encryption
++  algorithm`), 0 crashes. Third unanimous-refuse variant alongside
++  empty-dict and bogus-filter: any dict-typed /Encrypt (empty, unknown
++  filter, or Standard-without-keys) is refused by all six, while wrong-typed
++  string/int opens on 3/6. Still integrity-only, not filed.
++  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
++  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+ 
+ ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
+ 
+ - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "^## " findings/daily/2026-10-30.md; wc -l findings/daily/2026-10-30.md
+7:## Probe counts
+16:## Leaks / crashes
+22:## New files (this cycle)
+27:## Harness note (repeat of 2026-10-29 cycle-9 accident)
+32:## Cycle 2 (Track 2, this cycle)
+36:## Next step
+40:## Cycle 3 (Track 2, this cycle)
+44:## Cycle 4 (Track 2, this cycle)
+48 findings/daily/2026-10-30.md
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-30.md [90m[limit=10, offset=40][0m
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-30.md
+Index: findings/daily/2026-10-30.md
+===================================================================
+--- findings/daily/2026-10-30.md
++++ findings/daily/2026-10-30.md
+@@ -1,8 +1,8 @@
+ # 2026-10-30 — research/vps-2026-10-30
+ 
+ - branch: `research/vps-2026-10-30`
+-- cycles run: 4 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step)
++- cycles run: 5 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2 Standard-filter-no-keys micro-step)
+ - files tested: corpus/base 24, corpus/writers 10 (reportlab_s256 skipped, no pyaes on VPS), corpus/mutants 291, corpus/prevchain 51, corpus/incremental 5
+ 
+ ## Probe counts
+ 
+
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/daily/2026-10-30.md failed
+[91m[1mError: [0mFound 2 matches for oldString, but expected exactly one. Add more surrounding context to make oldString unique, or set replaceAll to true to replace every occurrence.
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-30.md
+Index: findings/daily/2026-10-30.md
+===================================================================
+--- findings/daily/2026-10-30.md
++++ findings/daily/2026-10-30.md
+@@ -44,5 +44,7 @@
+ ## Cycle 4 (Track 2, this cycle)
+ 
+ - NEW variant `t_encrypt_bogusfilter` (appended revision, trailer `/Encrypt <</Filter/Bogus>>` — present, dict-typed, unknown filter, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: only Standard PDF encryption handler is available`; pdfminer BLOCKED `Unknown filter: param={'Filter': /'Bogus'}`; pymupdf `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption filter`; pdfjs `unknown encryption method`), 0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous 0/6 open), not like wrong-typed string/int (3/6 open): the type check, not the filter check, is what splits lenient vs strict stacks. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, `/tmp/opencode/cycle4_encrypt_bogusfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
+-- NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++## Cycle 5 (Track 2, this cycle)
++
++- NEW variant `t_encrypt_stdfilter` (appended revision, trailer `/Encrypt <</Filter/Standard>>` — present, dict-typed, Standard filter but no other keys, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12: ALL six engines refuse (pypdf `NotImplementedError: Encryption V=0 NOT supported`; pdfminer BLOCKED `Unknown algorithm: param={'Filter': /'Standard'}` — "algorithm" branch, distinct from the empty-dict/bogus-filter "Unknown filter" branch; pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf `PdfError: ... some encryption dicti...`; pdfjs `UnknownErrorException: unsupported encryption algorithm`), 0 crashes. Third unanimous-refuse variant alongside empty-dict and bogus-filter: any dict-typed `/Encrypt` is refused by all six, while wrong-typed string/int opens on 3/6. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle5_encrypt_stdfilter.py`, `/tmp/opencode/cycle5_encrypt_stdfilter/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-30.md
+Index: findings/daily/2026-10-30.md
+===================================================================
+--- findings/daily/2026-10-30.md
++++ findings/daily/2026-10-30.md
+@@ -34,9 +34,9 @@
+ - NEW variant `t_encrypt_string` (appended revision, trailer `/Encrypt (bogus)` direct string, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Wrong-typed `/Encrypt` splits the field: strict stacks refuse, lenient stacks treat as no-encryption — mirrors dangling-ref (4/6 open), not empty-dict unanimity (0/6). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle2_encrypt_string.py`, `/tmp/opencode/cycle2_encrypt_string/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
+ ## Next step
+ 
+-- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard>>` — dict-typed, Standard filter, missing keys — to test missing-key handling vs unknown-filter unanimity), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
++- Continue Track 2 trailer-confusion sweep with the next smallest variant (e.g. `/Encrypt <</Filter/Standard /V 1>>` — Standard filter with an explicit V but still missing O/U/P keys — to test whether an explicit V changes the unanimous-refuse verdict vs the keyless V=0 default), same 2-seed x 6-engine matrix in `/tmp/opencode/`; OR advance Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+ 
+ ## Cycle 3 (Track 2, this cycle)
+ 
+ - NEW variant `t_encrypt_int` (appended revision, trailer `/Encrypt 0` direct integer, not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 6/12 (pymupdf/pypdfium2/pdfjs OK-render both seeds; pypdf ERROR `/Encrypt entry of the trailer is not a dictionary`; pdfminer BLOCKED `Unknown filter`; pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`), 0 crashes. Identical split to cycle-2 string variant: wrong-typed `/Encrypt` (string vs integer) treated the same by every stack — strict stacks refuse, lenient stacks treat as no-encryption. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle3_encrypt_int.py`, `/tmp/opencode/cycle3_encrypt_int/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+> build · muse-spark-1.3-contributor
+[2026-10-30T02:17:30Z] cycle 5 Track2 t_encrypt_stdfilter: 2 seeds x 6 engines = 12 no-password probes -> ORIGINAL 0/12, injected 0/12 (ALL six refuse: pypdf NotImplementedError V=0; pdfminer BLOCKED Unknown algorithm; pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PdfError encrypt-dict; pdfjs unsupported algorithm), 0 crashes. Third unanimous-refuse dict-typed variant (empty-dict, bogus-filter, stdfilter-nokeys) vs wrong-typed string/int 3/6 split. Integrity-only, LOG.md O-2026-002 extended. builder /tmp/opencode/cycle5_encrypt_stdfilter.py, no new repo files, no PoC.

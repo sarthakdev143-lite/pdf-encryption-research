@@ -251,6 +251,25 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 5, Track 2): new variant `t_encrypt_stdfilter`
+  (appended plaintext page, trailer `/Encrypt <</Filter/Standard>>` —
+  present, dict-typed, Standard filter but NO other keys, no /V /R /O /U —
+  `/Root N 0 R /Prev <orig>`, same 2 seeds x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle5_encrypt_stdfilter.py`, raw results
+  `/tmp/opencode/cycle5_encrypt_stdfilter/results.json`) — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse (pypdf
+  `NotImplementedError: Encryption V=0 NOT supported` — Standard recognized,
+  missing /V defaults to 0; pdfminer BLOCKED `Unknown algorithm:
+  param={'Filter': /'Standard'}` — "algorithm" branch, distinct from the
+  empty-dict/bogus-filter "Unknown filter" branch; pymupdf `FileDataError`;
+  pypdfium2 `Incorrect password error`; pikepdf `PdfError: ... some
+  encryption dicti...`; pdfjs `UnknownErrorException: unsupported encryption
+  algorithm`), 0 crashes. Third unanimous-refuse variant alongside
+  empty-dict and bogus-filter: any dict-typed /Encrypt (empty, unknown
+  filter, or Standard-without-keys) is refused by all six, while wrong-typed
+  string/int opens on 3/6. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
