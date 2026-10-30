@@ -13,7 +13,7 @@ stream being dumped, not a rendered page.
 |---|---|---|---|---|---|---|
 | aes256_r6__plain.pdf | t_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | aes256_r6__plain.pdf | t_encrypt_ref | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
-| aes256_r6__plain.pdf | t_encrypt_empty | pypdf | OK | False | **False** |  |
+| aes256_r6__plain.pdf | t_encrypt_empty | pypdf | ERROR | False | **False** | PdfReadError: Invalid Elementary Object starting with b')' @0: b')\xa3\xf4\xe2\x07\xbe\xd6\x84;2\xed\x85\x12$W\xc8t\xc1u[\xea5P\xce\xc0\xdcEh\xa6Q\xd5B"{2x' |
 | aes256_r6__plain.pdf | alias_plain | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | aes256_r6__plain.pdf | alias_encrypt | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | aes256_r6__plain.pdf | root_old | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
@@ -26,7 +26,7 @@ stream being dumped, not a rendered page.
 | aes256_r6__plain.pdf | xs_pure_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | rc4_128_r4__plain.pdf | t_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | rc4_128_r4__plain.pdf | t_encrypt_ref | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
-| rc4_128_r4__plain.pdf | t_encrypt_empty | pypdf | ERROR | False | **False** | PdfReadError: Invalid Elementary Object starting with b'\x9f' @0: b'\x9f\x8c\x18\x12\xe3/\xadgK8\xd9\x106\xaa/\xf7\x1f\xce\x9f\x86\xae\x1f.\x89\x01\xf6\xe8\x83\ |
+| rc4_128_r4__plain.pdf | t_encrypt_empty | pypdf | OK | False | **False** |  |
 | rc4_128_r4__plain.pdf | alias_plain | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | rc4_128_r4__plain.pdf | alias_encrypt | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | rc4_128_r4__plain.pdf | root_old | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
@@ -52,7 +52,7 @@ stream being dumped, not a rendered page.
 | aes256_r6__objstm.pdf | xs_pure_none | pypdf | BLOCKED | False | **False** | FileNotDecryptedError: File has not been decrypted |
 | control_plain.pdf | t_none | pypdf | OK | True | **False** |  |
 | control_plain.pdf | t_encrypt_ref | pypdf | OK | True | **False** |  |
-| control_plain.pdf | t_encrypt_empty | pypdf | OK | False | **False** |  |
+| control_plain.pdf | t_encrypt_empty | pypdf | ERROR | False | **False** | PdfReadError: Invalid Elementary Object starting with b'\x96' @0: b'\x96\x1d\x84\x1e{M\xf9{\x85w\\H^[\x91`R' |
 | control_plain.pdf | alias_plain | pypdf | OK | False | **True** |  |
 | control_plain.pdf | alias_encrypt | pypdf | OK | False | **True** |  |
 | control_plain.pdf | root_old | pypdf | OK | False | **True** |  |
@@ -268,7 +268,7 @@ stream being dumped, not a rendered page.
 | control_plain.pdf | xs_pure_none | pikepdf | OK | False | **True** |  |
 | aes256_r6__plain.pdf | t_none | pdfjs | OK | True | **False** |  |
 | aes256_r6__plain.pdf | t_encrypt_ref | pdfjs | BLOCKED | False | **False** | PasswordException: No password given |
-| aes256_r6__plain.pdf | t_encrypt_empty | pdfjs | OK | False | **False** |  |
+| aes256_r6__plain.pdf | t_encrypt_empty | pdfjs | ERROR | False | **False** | UnknownErrorException: Illegal character: 41 |
 | aes256_r6__plain.pdf | alias_plain | pdfjs | OK | False | **False** |  |
 | aes256_r6__plain.pdf | alias_encrypt | pdfjs | BLOCKED | False | **False** | PasswordException: No password given |
 | aes256_r6__plain.pdf | root_old | pdfjs | OK | False | **False** |  |
@@ -329,7 +329,7 @@ Encrypted cases with injected plaintext shown: 50
 |---|---|---|---|
 | t_none | pdfminer, pymupdf, pikepdf, pdfjs | - | pypdf, pypdfium2 |
 | t_encrypt_ref | - | - | pypdf, pdfminer, pymupdf, pypdfium2, pikepdf, pdfjs |
-| t_encrypt_empty | - | pdfminer, pymupdf, pypdfium2, pikepdf, pdfjs | pypdf |
+| t_encrypt_empty | - | pdfminer, pymupdf, pypdfium2, pikepdf | pypdf, pdfjs |
 | alias_plain | pikepdf | pdfminer, pymupdf, pdfjs | pypdf, pypdfium2 |
 | alias_encrypt | - | - | pypdf, pdfminer, pymupdf, pypdfium2, pikepdf, pdfjs |
 | root_old | - | pdfminer, pymupdf | pypdf, pypdfium2, pikepdf, pdfjs |

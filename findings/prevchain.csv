@@ -1,7 +1,7 @@
 seed,variant,engine,status,encrypted,injected_shown,original_shown,detail
 aes256_r6__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 aes256_r6__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
-aes256_r6__plain.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
+aes256_r6__plain.pdf,t_encrypt_empty,pypdf,ERROR,True,False,False,"PdfReadError: Invalid Elementary Object starting with b')' @0: b')\xa3\xf4\xe2\x07\xbe\xd6\x84;2\xed\x85\x12$W\xc8t\xc1u[\xea5P\xce\xc0\xdcEh\xa6Q\xd5B""{2x'"
 aes256_r6__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 aes256_r6__plain.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 aes256_r6__plain.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
@@ -14,7 +14,7 @@ aes256_r6__plain.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecry
 aes256_r6__plain.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 rc4_128_r4__plain.pdf,t_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 rc4_128_r4__plain.pdf,t_encrypt_ref,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
-rc4_128_r4__plain.pdf,t_encrypt_empty,pypdf,ERROR,True,False,False,PdfReadError: Invalid Elementary Object starting with b'\x9f' @0: b'\x9f\x8c\x18\x12\xe3/\xadgK8\xd9\x106\xaa/\xf7\x1f\xce\x9f\x86\xae\x1f.\x89\x01\xf6\xe8\x83\
+rc4_128_r4__plain.pdf,t_encrypt_empty,pypdf,OK,True,False,False,
 rc4_128_r4__plain.pdf,alias_plain,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 rc4_128_r4__plain.pdf,alias_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 rc4_128_r4__plain.pdf,root_old,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
@@ -40,7 +40,7 @@ aes256_r6__objstm.pdf,xs_pure_encrypt,pypdf,BLOCKED,True,False,False,FileNotDecr
 aes256_r6__objstm.pdf,xs_pure_none,pypdf,BLOCKED,True,False,False,FileNotDecryptedError: File has not been decrypted
 control_plain.pdf,t_none,pypdf,OK,False,True,False,
 control_plain.pdf,t_encrypt_ref,pypdf,OK,False,True,False,
-control_plain.pdf,t_encrypt_empty,pypdf,OK,False,False,False,
+control_plain.pdf,t_encrypt_empty,pypdf,ERROR,False,False,False,PdfReadError: Invalid Elementary Object starting with b'\x96' @0: b'\x96\x1d\x84\x1e{M\xf9{\x85w\\H^[\x91`R'
 control_plain.pdf,alias_plain,pypdf,OK,False,False,True,
 control_plain.pdf,alias_encrypt,pypdf,OK,False,False,True,
 control_plain.pdf,root_old,pypdf,OK,False,False,True,
@@ -256,7 +256,7 @@ control_plain.pdf,xs_pure_encrypt,pikepdf,OK,False,True,True,
 control_plain.pdf,xs_pure_none,pikepdf,OK,False,False,True,
 aes256_r6__plain.pdf,t_none,pdfjs,OK,True,True,False,
 aes256_r6__plain.pdf,t_encrypt_ref,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
-aes256_r6__plain.pdf,t_encrypt_empty,pdfjs,OK,True,False,False,
+aes256_r6__plain.pdf,t_encrypt_empty,pdfjs,ERROR,True,False,False,UnknownErrorException: Illegal character: 41
 aes256_r6__plain.pdf,alias_plain,pdfjs,OK,True,False,False,
 aes256_r6__plain.pdf,alias_encrypt,pdfjs,BLOCKED,True,False,False,PasswordException: No password given
 aes256_r6__plain.pdf,root_old,pdfjs,OK,True,False,False,

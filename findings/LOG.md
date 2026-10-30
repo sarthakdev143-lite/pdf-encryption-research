@@ -185,6 +185,21 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   pdfminer where an explicit null is accepted. Still integrity-only, not
   filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2
   5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 1, Track 2): new variant `t_encrypt_emptydict`
+  (appended plaintext page, trailer `/Encrypt <<>>` — present but empty dict,
+  no `/Filter` — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6 engines
+  = 12 no-password probes, builder `/tmp/opencode/cycle1_emptydict.py`,
+  raw results `/tmp/opencode/cycle1_emptydict/results.json`) — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse (pypdf
+  `NotImplementedError: only Standard PDF encryption handler is available`;
+  pdfminer `Unknown filter: param={}` BLOCKED; pymupdf `FileDataError`;
+  pypdfium2 `Unsupported security scheme`; pikepdf `unsupported encryption
+  filter`; pdfjs `unknown encryption method`), 0 crashes. Nuance vs prior
+  trailer confusions: absent (`t_none`) opens on 4/6, explicit null opens on
+  5/6, dangling ref opens on 4/6 — but a present-but-empty dict is unanimously
+  treated as an unknown/unsupported scheme. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
