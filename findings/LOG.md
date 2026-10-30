@@ -784,6 +784,28 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-30 (cycle 28, Track 2): new variant `t_rootold_orphan`
+  (FIRST `/Root`-repoint + `/Encrypt`-DROP orphan probe: appended injected
+  page objects n..n+3 byte-identical to prevchain `t_none`, BUT the appended
+  trailer points `/Root` at the ORIGINAL catalog (seed.root) with NO
+  `/Encrypt` and `/Prev <orig>` — the 4 injected objects exist in the file
+  but are unreachable from Root; pure-append verified; not in prevchain
+  VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder `/tmp/opencode/cycle28_rootold_orphan.py`,
+  raw results `/tmp/opencode/cycle28_rootold_orphan/results.json` —
+  ORIGINAL canary 0/12, injected rendered 2/12 (pikepdf OK-dump both seeds
+  only; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect
+  password error`; pdfminer/pymupdf/pdfjs OK-open-but-empty both seeds), 0
+  crashes. Verdict = `root_old` baseline exactly (open-empty on the 4 lenient
+  stacks, refuse on pypdf/PDFium): NO renderer follows the orphan — the
+  injected page renders nowhere, confirming reachability-from-Root, not
+  mere presence, decides rendering. The 2 pikepdf hits are its documented
+  structural-dump behavior (dumps every stream object, referenced or not —
+  cf. prevchain.py header and the `alias_plain` note), not a rendered leak.
+  Still integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
