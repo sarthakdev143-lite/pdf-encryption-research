@@ -366,6 +366,25 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   pypdf/pdfminer. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 11, Track 2): new variant
+  `t_encrypt_stdV4R4POULen` (appended plaintext page, trailer `/Encrypt
+  <</Filter/Standard /V 4 /R 4 /P -4 /O <32 zero bytes> /U <32 zero
+  bytes> /Length 128>>` — cycle-10 dict plus `/Length 128`, still missing
+  OE/UE/Perms/CF/StmF/StrF — same 2 seeds x 6 engines = 12
+  no-password probes, builder
+  `/tmp/opencode/cycle11_encrypt_stdV4R4POULen.py`, raw results
+  `/tmp/opencode/cycle11_stdV4R4POULen/results.json`) — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes. Ninth
+  unanimous-refuse dict-typed variant. The validation-step movement this
+  time is on pdfjs, which goes from `invalid key length` (cycles 8-10) to a
+  clean `PasswordException: No password given` — the dict shape is now
+  accepted far enough to demand a password. pypdf stays at
+  `FileNotDecryptedError` and pdfminer stays at `'StmF'` KeyError:
+  supplying `/Length` did NOT move either past its cycle-10 gate (the V=4
+  crypt-filter lookup needs CF/StmF, not Length). pymupdf/pypdfium2/pikepdf
+  refuse with unchanged password errors. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
