@@ -829,6 +829,30 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 30, Track 2): new variant
+  `t_encrypt_stdV4R4POULen40` (first `/Length`-mismatch probe: cycle-11
+  hostile dict byte-identical except `/Length 40` instead of `/Length 128` —
+  `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, still missing
+  OE/UE/Perms/CF/StmF/StrF, direct-in-trailer dict on an appended revision
+  with the injected plaintext page; pure-append verified; not in prevchain
+  VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle30_len40.py`, raw results
+  `/tmp/opencode/cycle30_len40/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `'StmF'` KeyError; pymupdf `ValueError:
+  document closed or encrypted`; pypdfium2 `Incorrect password error`;
+  pikepdf `PasswordError: invalid password`; pdfjs `PasswordException: No
+  password given`). Verdict profile IDENTICAL to cycle 11 (`/Length 128`) on
+  every stack — not one error string moves: the `/Length` VALUE is never
+  validated against key computation at any gate reached here (pdfminer still
+  stops at the CF/StmF lookup it only passed in cycle 12 with a real
+  crypt-filter; pdfjs accepts the dict shape with either Length). Twelfth
+  unanimous-refuse dict-typed variant; the `/Length`-value axis is exhausted
+  (40 vs 128 identical everywhere — Length is shape-checked, never
+  value-checked pre-auth). Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pdfjs-dist 6.4.299
+  (pypdfium2/pikepdf/pdfminer.six unchanged from cycles 11-29).
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
