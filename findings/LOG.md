@@ -200,6 +200,24 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   treated as an unknown/unsupported scheme. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 2, Track 2): new variant `t_encrypt_string`
+  (appended plaintext page, trailer `/Encrypt (bogus)` — a direct string, not
+  a dict or indirect ref — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle2_encrypt_string.py`, raw results
+  `/tmp/opencode/cycle2_encrypt_string/results.json`) — ORIGINAL canary 0/12,
+  injected rendered 6/12 (pymupdf OK, pypdfium2 OK, pdfjs OK on both seeds;
+  pypdf ERROR `PdfReadError: /Encrypt entry of the trailer is not a
+  dictionary`; pdfminer BLOCKED `PdfminerException: Unknown filter`;
+  pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`),
+  0 crashes. Nuance vs prior trailer confusions: a wrong-typed `/Encrypt`
+  splits the field — strict strictly-typed stacks (pypdf/pdfminer/qpdf)
+  refuse, lenient stacks (MuPDF/PDFium/pdf.js) treat it as no-encryption and
+  render the injected page. Mirrors the dangling-ref split (4/6 open) rather
+  than the empty-dict unanimity (0/6 open). Still integrity-only (injected
+  content only, original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
