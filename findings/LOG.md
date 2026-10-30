@@ -805,6 +805,30 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Still integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 29, Track 2): new variant `t_rootold_orphan_encrypt`
+  (mirror of cycle 28: appended injected page objects n..n+3 byte-identical to
+  prevchain `t_none`, BUT the appended trailer points `/Root` at the ORIGINAL
+  catalog (seed.root) while KEEPING `/Encrypt <orig-ref>` with `/Prev <orig>`
+  and correct `/Size` n+12 — the 4 injected objects exist in the file but are
+  unreachable from Root; pure-append verified (truncation == original bytes);
+  not in prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x
+  6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle29_rootold_orphan_enc.py`, raw results
+  `/tmp/opencode/cycle29_rootold_orphan_enc/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty
+  `PdfminerException`; pymupdf `ValueError: document closed or encrypted`;
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`). Verdict profile =
+  `root_old_encrypt`/`t_encrypt_ref` unanimous-refuse, NOT the cycle-28
+  `t_rootold_orphan` profile: keeping `/Encrypt` suppresses even pikepdf's
+  structural dump (it refuses without a password, so the orphan is invisible
+  everywhere). Rule: kept `/Encrypt` alone decides refuse on all six
+  regardless of Root old-vs-new or object reachability; reachability only
+  matters in the drop-`/Encrypt` direction (cycle 28). Still integrity-only
+  (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
