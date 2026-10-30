@@ -528,6 +528,28 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 18, Track 2): new variant
+  `chain_classicEncrypt_xsNone` (mirror hybrid CROSS-FORMAT 2-revision
+  chain: rev A appends the injected plaintext page via a CLASSIC xref update
+  whose trailer RESTORES the original `/Encrypt` ref, rev B appends an
+  xref-STREAM update whose dict DROPS `/Encrypt` with `/Prev` pointing at
+  the rev-A classic offset and `startxref` pointing at the xref stream;
+  object set fixed after rev A, only container format and `/Encrypt`
+  presence flip classic+ref->xs+none. Tests whether the FINAL revision's
+  container format matters. Same 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle18_classic_xsnone.py`, raw results
+  `/tmp/opencode/cycle18_classicxsnone/results.json`) - ORIGINAL canary
+  0/12, injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdf.js OK-render
+  both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED
+  `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to the
+  cycle-17 mirror direction and every classic-only none-final baseline: the
+  final revision's container format changes nothing - the same two
+  full-chain scanners refuse, the same four latest-trailer-only stacks open.
+  Final-trailer-wins now holds across container formats in BOTH directions.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
