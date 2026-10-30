@@ -733,6 +733,31 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-30 (cycle 26, Track 2): new variant `t_size_grow`
+  (FIRST `/Size`-GROW probe, drop-`/Encrypt` direction: appended injected
+  plaintext page exactly like prevchain `t_none` \u2014 new Catalog/Pages/Page/
+  Contents n..n+3, trailer `/Root N 0 R /Prev <orig>`, NO `/Encrypt` \u2014 but
+  the appended trailer declares `/Size` = seed.size + 100, i.e. GROWN far
+  beyond the highest appended object n+3 instead of the correct n+12; xref
+  subsection still lists only the 4 new objects; pure-append verified; not
+  in prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle26_size_grow.py`, raw results
+  `/tmp/opencode/cycle26_size_grow/results.json` \u2014 ORIGINAL canary 0/12,
+  injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both
+  seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect
+  password error`), 0 crashes. Verdict profile IDENTICAL to the `t_none`
+  baseline (4/6 open): inflated `/Size` changes NOTHING on any stack \u2014
+  contrast with the cycle-24 `/Size`-shrink probe (3/6 open, pymupdf flipped
+  to refuse): MuPDF honors `/Size` only as a lower bound (shrunk Size hides
+  the new Root n >= Size \u2192 falls back to the encrypted revision and
+  refuses; grown Size is harmless and the injected page renders).
+  pypdf/PDFium refuse either way (their `/Prev`-chain `/Encrypt` scan is
+  `/Size`-independent). Still integrity-only (injected content only on the 4
+  lenient stacks, original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext

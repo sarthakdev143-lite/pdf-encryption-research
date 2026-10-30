@@ -13615,3 +13615,342 @@ index 6942f16..bec9e3d 100644
 +
 +- The `/Size`-shrink pair is now complete in both directions (drop-`/Encrypt` → 3/6 open with pymupdf flipped to refuse, cycle 24; keep-`/Encrypt` → 0/6 unanimous, this cycle = `t_encrypt_ref` baseli
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/24-7.log findings/LOG.md findings/daily/2026-10-30.md && git commit -m "Cycle 25: Track 2 /Size-shrink + Encrypt-kept mirror (12 probes, ORIGINAL 0/12, unanimous refuse)" && git push -u origin research/vps-2026-10-30 2>&1 | tail -5; git log --oneline -2; git status --short
+[research/vps-2026-10-30 c1a7d04] Cycle 25: Track 2 /Size-shrink + Encrypt-kept mirror (12 probes, ORIGINAL 0/12, unanimous refuse)
+ 3 files changed, 814 insertions(+), 1 deletion(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   23f8d20..c1a7d04  research/vps-2026-10-30 -> research/vps-2026-10-30
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+c1a7d04 Cycle 25: Track 2 /Size-shrink + Encrypt-kept mirror (12 probes, ORIGINAL 0/12, unanimous refuse)
+23f8d20 Cycle 24: Track 2 /Size-shrink truncation (12 probes, ORIGINAL 0/12, pymupdf flipped to refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 25 done, committed (`c1a7d04`) and pushed to `research/vps-2026-10-30`. Main untouched.
+
+**This cycle — Track 2, `/Size`-shrink + `/Encrypt`-kept mirror (`t_size_shrink_encrypt`):**
+- Appended revision identical to `t_encrypt_ref` (injected page, `/Encrypt <orig-ref> /Root N 0 R /Prev`, pure-append verified) but trailer `/Size` shrunk to original size, excluding the 4 new objects. 2 seeds × 6 engines = 12 no-password probes.
+- Result: **ORIGINAL 0/12, injected 0/12 — unanimous refuse on all six**, 0 crashes. Verdict identical to the `t_encrypt_ref` baseline: shrunk `/Size` changes nothing when `/Encrypt` is kept. Isolates the cycle-24 MuPDF `/Size` effect to the drop-`/Encrypt` direction only.
+- Still integrity-only, not a leak. Logged as LOG.md O-2026-002 extension; builder + results in `/tmp/opencode/cycle25_size_shrink_enc(.py)` (git-untracked, per convention); no PoC (negative result).
+
+**Next step** (in `findings/daily/2026-10-30.md`): `/Size`-GROW axis (inflated `/Size`, drop and keep directions), or hybrid `/XRefStm`-absent/`/Prev`-into-xs chains, or Track 3/4.
+
+Note: baseline from cycle 1 still stands (1950 triage probes LEAK 0, 1344 authmatrix AUTH-BYPASS 0); this cycle ran only the 12-probe micro-step per the one-track-per-cycle rule. `findings/crashes/` untracked dir predates this cycle, left alone.
+[2026-10-30T03:37:27Z] cycle 25 exit=0 branch=research/vps-2026-10-30 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+Already on 'research/vps-2026-10-30'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-30'.
+[2026-10-30T03:39:28Z] cycle 26 start branch=research/vps-2026-10-30
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and pushing a track forward.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings 
+[0m$ [0mgit status -sb; git branch --show-current; date -u; ls findings/daily/ 2>/dev/null; cat findings/24-7.log 2>/dev/null | tail -30
+## research/vps-2026-10-30...origin/research/vps-2026-10-30
+ M findings/24-7.log
+?? findings/crashes/
+research/vps-2026-10-30
+Fri Oct 30 03:39:33 UTC 2026
+2026-10-29.md
+2026-10-30.md
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   23f8d20..c1a7d04  research/vps-2026-10-30 -> research/vps-2026-10-30
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+c1a7d04 Cycle 25: Track 2 /Size-shrink + Encrypt-kept mirror (12 probes, ORIGINAL 0/12, unanimous refuse)
+23f8d20 Cycle 24: Track 2 /Size-shrink truncation (12 probes, ORIGINAL 0/12, pymupdf flipped to refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 25 done, committed (`c1a7d04`) and pushed to `research/vps-2026-10-30`. Main untouched.
+
+**This cycle — Track 2, `/Size`-shrink + `/Encrypt`-kept mirror (`t_size_shrink_encrypt`):**
+- Appended revision identical to `t_encrypt_ref` (injected page, `/Encrypt <orig-ref> /Root N 0 R /Prev`, pure-append verified) but trailer `/Size` shrunk to original size, excluding the 4 new objects. 2 seeds × 6 engines = 12 no-password probes.
+- Result: **ORIGINAL 0/12, injected 0/12 — unanimous refuse on all six**, 0 crashes. Verdict identical to the `t_encrypt_ref` baseline: shrunk `/Size` changes nothing when `/Encrypt` is kept. Isolates the cycle-24 MuPDF `/Size` effect to the drop-`/Encrypt` direction only.
+- Still integrity-only, not a leak. Logged as LOG.md O-2026-002 extension; builder + results in `/tmp/opencode/cycle25_size_shrink_enc(.py)` (git-untracked, per convention); no PoC (negative result).
+
+**Next step** (in `findings/daily/2026-10-30.md`): `/Size`-GROW axis (inflated `/Size`, drop and keep directions), or hybrid `/XRefStm`-absent/`/Prev`-into-xs chains, or Track 3/4.
+
+Note: baseline from cycle 1 still stands (1950 triage probes LEAK 0, 1344 authmatrix AUTH-BYPASS 0); this cycle ran only the 12-probe micro-step per the one-track-per-cycle rule. `findings/crashes/` untracked dir predates this cycle, left alone.
+[2026-10-30T03:37:27Z] cycle 25 exit=0 branch=research/vps-2026-10-30 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-30' set up to track 'origin/research/vps-2026-10-30'.
+Already on 'research/vps-2026-10-30'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-30'.
+[2026-10-30T03:39:28Z] cycle 26 start branch=research/vps-2026-10-30
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and pushing a track forward.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-30.md 
+[0m→ [0mRead findings/LOG.md 
+> build · muse-spark-1.3-contributor
+[0m$ [0mls /tmp/opencode/ 2>/dev/null | head -30; echo ---; git log --oneline -5; echo ---; cat findings/24-7.log | tail -5
+PDF32000.pdf
+Use.htm
+VectorDevices.htm
+VectorDevices.rst
+a98.icc
+base.json
+baseline-rerun.log
+clean-24-7.log
+cycle10
+cycle10_dangling.py
+cycle10_encrypt_stdV4R4POU.py
+cycle10_stdV4R4POU
+cycle11_encrypt_stdV4R4POULen.py
+cycle11_stdV4R4POULen
+cycle12_encrypt_stdV4R4POULenCF.py
+cycle12_stdV4R4POULenCF
+cycle13_shadow_fulldict
+cycle13_shadow_fulldict.py
+cycle14_chain_nen
+cycle14_chain_nen.py
+cycle15_chain_ene
+cycle15_chain_ene.py
+cycle16_chain_een
+cycle16_chain_een.py
+cycle17_xschain
+cycle17_xschain.py
+cycle18_classic_xsnone.py
+cycle18_classicxsnone
+cycle19_classic_xsens.py
+cycle19_classicxsenc
+---
+c1a7d04 Cycle 25: Track 2 /Size-shrink + Encrypt-kept mirror (12 probes, ORIGINAL 0/12, unanimous refuse)
+23f8d20 Cycle 24: Track 2 /Size-shrink truncation (12 probes, ORIGINAL 0/12, pymupdf flipped to refuse)
+c1f5118 Cycle 23: Track 2 mirror hybrid XRefStm-vs-trailer conflicting-Encrypt (12 probes, ORIGINAL 0/12, trailer donor honored open-empty)
+a284265 Cycle 22: Track 2 hybrid XRefStm-vs-trailer conflicting-Encrypt (12 probes, ORIGINAL 0/12, trailer wins unanimous)
+b103367 Cycle 21: Track 2 Root-repoint with Encrypt kept empty-update (12 probes, ORIGINAL 0/12, unanimous refuse)
+---
+[0m→ [0mRead findings
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-30.md 
+[0m→ [0mRead findings/LOG.md 
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m$ [0mls /tmp/opencode/cycle24* /tmp/opencode/cycle25* 2>/dev/null; echo ---; ls corpus/base/ | head -30
+/tmp/opencode/cycle24_size_shrink.py
+/tmp/opencode/cycle25_size_shrink_enc.py
+
+/tmp/opencode/cycle24_size_shrink:
+aes256_r6__plain__CONTROL_correct_size.pdf
+aes256_r6__plain__t_size_shrink.pdf
+rc4_128_r4__plain__CONTROL_correct_size.pdf
+rc4_128_r4__plain__t_size_shrink.pdf
+results.json
+
+/tmp/opencode/cycle25_size_shrink_enc:
+aes256_r6__plain__t_size_shrink_encrypt.pdf
+rc4_128_r4__plain__t_size_shrink_encrypt.pdf
+results.json
+---
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+aes256_r6__objstm.pdf
+aes256_r6__plain.pdf
+control_owner_only.pdf
+control_plain.pdf
+rc4_128_r3__linearized.pdf
+rc4_128_r3__objstm.pdf
+rc4_128_r3__plain.pdf
+rc4_128_r4__attach.pdf
+rc4_128_r4__linearized.pdf
+rc4_128_r4__objstm.pdf
+rc4_128_r4__plain.pdf
+rc4_40_r2__linearized.pdf
+rc4_40_r2__objstm.pdf
+rc4_40_r2__plain.pdf
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead /tmp/opencode/cycle25_size_shrink_enc.py 
+> build · muse-spark-1.3-contributor
+Baseline context loaded (25 cycles, still 0 leaks). Running the next micro-step: inflated `/Size` with `/Encrypt` dropped.
+[0m$ [0mgrep -n "def add_classic_xref" -A 20 prevchain.py | head -30
+90:def add_classic_xref(
+91-    buf: bytearray, offsets: dict[int, int], trailer_extra: bytes, size: int
+92-) -> int:
+93-    """Append a classic xref section + trailer; returns the xref offset."""
+94-    pad_newline(buf)
+95-    xref_off = len(buf)
+96-    nums = sorted(offsets)
+97-    buf += b"xref\n0 1\n0000000000 65535 f \n"
+98-    if nums:
+99-        buf += b"%d %d\n" % (nums[0], len(nums))
+100-        for num in nums:
+101-            buf += b"%010d 00000 n \n" % offsets[num]
+102-    buf += b"trailer\n<< /Size %d " % size + trailer_extra + b" >>\n"
+103-    buf += b"startxref\n%d\n%%%%EOF\n" % xref_off
+104-    return xref_off
+105-
+106-
+107-def add_xref_stream(
+108-    buf: bytearray,
+109-    offsets: dict[int, int],
+110-    xref_num: int,
+> build · muse-spark-1.3-contributor
+[0m← [0mWrite /tmp/opencode/cycle26_size_grow.py
+Created file successfully: /tmp/opencode/cycle26_size_grow.py
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python /tmp/opencode/cycle26_size_grow.py 2>&1 | tail -20
+aes256_r6__plain.pdf pypdf        BLOCKED  inj=0 orig=0 FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plain.pdf pypdf        BLOCKED  inj=0 orig=0 FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain.pdf pdfminer     OK       inj=1 orig=0 
+rc4_128_r4__plain.pdf pdfminer     OK       inj=1 orig=0 
+aes256_r6__plain.pdf pymupdf      OK       inj=1 orig=0 
+rc4_128_r4__plain.pdf pymupdf      OK       inj=1 orig=0 
+aes256_r6__plain.pdf pypdfium2    BLOCKED  inj=0 orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plain.pdf pypdfium2    BLOCKED  inj=0 orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain.pdf pikepdf      OK       inj=1 orig=0 
+rc4_128_r4__plain.pdf pikepdf      OK       inj=1 orig=0 
+aes256_r6__plain.pdf pdfjs        OK       inj=1 orig=0 
+rc4_128_r4__plain.pdf pdfjs        OK       inj=1 orig=0 
+TOTAL INJECTED 8/12 ORIGINAL 0/12
+> build · muse-spark-1.3-contributor
+Result is in: inflated `/Size` changes nothing (8/12 injected, same as baseline). Logging and committing.
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E "Name|Version"; node -p "require('pdfjs-dist/package.json').version" 2>/dev/null; .venv/bin/python -c "import fitz; print('mupdf', fitz.mupdf_version)" 2>/dev/null || .venv/bin/python -c "import pymupdf; print(pymupdf.__doc__)" 2>/dev/null | head -2; ls -la /tmp/opencode/cycle26_size_grow/
+6.4.299
+mupdf 1.28.5
+total 16
+drwxrwxr-x  2 sarthak sarthak  100 Oct 30 03:40 .
+drwxrwxr-x 32 sarthak sarthak 2080 Oct 30 03:39 ..
+-rw-rw-r--  1 sarthak sarthak 4191 Oct 30 03:39 aes256_r6__plain__t_size_grow.pdf
+-rw-rw-r--  1 sarthak sarthak 3690 Oct 30 03:39 rc4_128_r4__plain__t_size_grow.pdf
+-rw-rw-r--  1 sarthak sarthak 1930 Oct 30 03:40 results.json
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "^(Name|Version)"
+(no output)
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf 2>&1 | head -5; .venv/bin/python -c "import pypdf, pymupdf, pypdfium2, pikepdf, pdfminer; print(pypdf.__version__, pymupdf.__version__, pypdfium2.__version__, pikepdf.__version__)"
+/bin/bash: line 1: .venv/bin/pip: No such file or directory
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import pypdf, pymupdf, pypdfium2, pikepdf, pdfminer; print(pypdf.__version__, pymupdf.__version__, pypdfium2.__version__, pikepdf.__version__)
+                                                                                                       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'pypdfium2' has no attribute '__version__'
+> build · muse-spark-1.3-contributor
+[0m$ [0mls .venv/bin/ | head; which uv; .venv/bin/python -c "import pypdf, pymupdf, pikepdf; from importlib.metadata import version; print('pypdf',version('pypdf')); print('pymupdf',version('pymupdf')); print('pypdfium2',version('pypdfium2')); print('pikepdf',version('pikepdf')); print('pdfminer.six',version('pdfminer.six'))"
+activate
+activate.bat
+activate.csh
+activate.fish
+activate.nu
+activate.ps1
+activate.xsh
+activate_this.py
+cffi-gen-src
+deactivate.bat
+/home/sarthak/.local/bin/uv
+pypdf 6.21.4
+pymupdf 2.0
+pypdfium2 5.14.0
+pikepdf 10.17.0
+pdfminer.six 20260107
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mCould not find oldString in /home/sarthak/pdf-encryption-research/findings/LOG.md. It must match exactly, including whitespace and indentation.
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=15, offset=722][0m
+> build · muse-spark-1.3-contributor
+[0m✗ [0mEdit findings/LOG.md failed
+[91m[1mError: [0mCould not find oldString in /home/sarthak/pdf-encryption-research/findings/LOG.md. It must match exactly, including whitespace and indentation.
+> build · muse-spark-1.3-contributor
+[0m$ [0msed -n '728,736p' findings/LOG.md | cat -A | head -12
+IDENTICAL to the `t_encrypt_ref` baseline (correct-Size + Encrypt kept):$
+  the shrunk `/Size` changes nothing when `/Encrypt` is kept M-bM-^@M-^T the kept$
+  `/Encrypt` alone decides refuse on all six, isolating the cycle-24$
+  pymupdf Size effect to the drop-`/Encrypt` direction only. Still$
+  integrity-only (original ciphertext never disclosed), not filed.$
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |$
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.$
+$
+- Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:$
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python - <<'EOF'
+from pathlib import Path
+p = Path("findings/LOG.md")
+t = p.read_text()
+anchor = "- Experiment: `python pdfex_static.py`"
+assert t.count(anchor) == 1, t.count(anchor)
+ext = """- Extension 2026-10-30 (cycle 26, Track 2): new variant `t_size_grow`
+  (FIRST `/Size`-GROW probe, drop-`/Encrypt` direction: appended injected
+  plaintext page exactly like prevchain `t_none` \\u2014 new Catalog/Pages/Page/
+  Contents n..n+3, trailer `/Root N 0 R /Prev <orig>`, NO `/Encrypt` \\u2014 but
+  the appended trailer declares `/Size` = seed.size + 100, i.e. GROWN far
+  beyond the highest appended object n+3 instead of the correct n+12; xref
+  subsection still lists only the 4 new objects; pure-append verified; not
+  in prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle26_size_grow.py`, raw results
+  `/tmp/opencode/cycle26_size_grow/results.json` \\u2014 ORIGINAL canary 0/12,
+  injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both
+  seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect
+  password error`), 0 crashes. Verdict profile IDENTICAL to the `t_none`
+  baseline (4/6 open): inflated `/Size` changes NOTHING on any stack \\u2014
+  contrast with the cycle-24 `/Size`-shrink probe (3/6 open, pymupdf flipped
+  to refuse): MuPDF honors `/Size` only as a lower bound (shrunk Size hides
+  the new Root n >= Size \\u2192 falls back to the encrypted revision and
+  refuses; grown Size is harmless and the injected page renders).
+  pypdf/PDFium refuse either way (their `/Prev`-chain `/Encrypt` scan is
+  `/Size`-independent). Still integrity-only (injected content only on the 4
+  lenient stacks, original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+"""
+t = t.replace(anchor, ext + anchor)
+p.write_text(t)
+print("ok")
+EOF
+ok
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python - <<'EOF'
+from pathlib import Path
+p = Path("findings/daily/2026-10-30.md")
+t = p.read_text()
+old = "- cycles run: 25 (cycle 1:"
+assert old in t
+t = t.replace(old, "- cycles run: 26 (cycle 1:", 1)
+old2 = """## Next step (updated cycle 25)
+
+- The `/Size`-shrink pair is now complete in both directions (drop-`/Encrypt` → 3/6 open with pymupdf flipped to refuse, cycle 24; keep-`/Encrypt` → 0/6 unanimous, this cycle = `t_encrypt_ref` baseline). Next smallest Track 2 step is the `/Size`-GROW axis (inflated `/Size` beyond the highest object — do strict stacks refuse a too-large table, does any lenient stack walk off the end?) in both drop and keep directions; OR hybrid `/XRefStm`-absent-but-trailer-`/Prev`-into-xs chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available."""
+assert old2 in t, "next-step anchor missing"
+new2 = """## Cycle 26 (Track 2, this cycle)
+
+- NEW variant `t_size_grow` (FIRST `/Size`-GROW probe, drop-`/Encrypt` direction: appended injected plaintext page exactly like prevchain `t_none` — new Catalog/Pages/Page/Contents n..n+3, trailer `/Root N 0 R /Prev <orig>`, NO `/Encrypt` — but appended trailer declares `/Size` = seed.size + 100, GROWN far beyond the highest appended object n+3 instead of correct n+12; xref subsection still lists only the 4 new objects; pure-append verified; not in prevchain VARIANTS) x 2 seeds (aes256_r6__plain, rc4_128_r4__plain) x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 (pdfminer/pymupdf/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to the `t_none` baseline (4/6 open): inflated `/Size` changes nothing on any stack — contrast with cycle-24 `/Size`-shrink (3/6 open, pymupdf flipped to refuse): MuPDF honors `/Size` only as a lower bound (shrunk hides new Root → refuse; grown is harmless → render). pypdf/PDFium refuse either way (`/Prev`-scan is `/Size`-independent). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle26_size_grow.py`, `/tmp/opencode/cycle26_size_grow/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result). Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+## Next step (updated cycle 26)
+
+- The `/Size`-GROW axis is now half-tested (drop-`/Encrypt` → 4/6 open = `t_none` baseline, this cycle). Next smallest Track 2 step is the mirror (`/Size`-GROW + `/Encrypt` KEPT: does any stack stumble when the kept handler coexists with an inflated table?) completing the 2x2 Size matrix (shrink×grow × drop×keep); OR hybrid `/XRefStm`-absent-but-trailer-`/Prev`-into-xs chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available."""
+t = t.replace(old2, new2, 1)
+p.write_text(t)
+print("ok")
+EOF
+tail -3 findings/24-7.log
+ok
+EOF
+ok
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cycles run" findings/daily/2026-10-30.md; grep -n "Cycle 26" findings/daily/2026-10-30.md | head; git status -sb
+4:- cycles run: 26 (cycle 1: full-pipeline baseline re-run + Track 2 empty-dict trailer micro-step; cycle 2: Track 2 wrong-type trailer micro-step; cycle 3: Track 2 integer-Encrypt micro-step; cycle 4: Track 2 bogus-Filter micro-step; cycle 5: Track 2 Standard-filter-no-keys micro-step; cycle 6: Track 2 Standard-filter-V1 micro-step; cycle 7: Track 2 Standard-filter-V2 micro-step; cycle 8: Track 2 Standard-filter-V4R4 micro-step; cycle 9: Track 2 Standard-filter-V4R4P micro-step; cycle 10: Track 2 Standard-filter-V4R4P-OU-zeroed micro-step; cycle 11: Track 2 Standard-filter-V4R4P-OU-zeroed-Length micro-step; cycle 12: Track 2 Standard-filter-V4R4P-OU-zeroed-Length-CF micro-step; cycle 13: Track 2 shadow-Encrypt-object-with-full-V4-dict micro-step; cycle 14: Track 2 3-revision none-encrypt-none /Prev-chain micro-step; cycle 15: Track 2 3-revision encrypt-none-encrypt /Prev-chain micro-step; cycle 16: Track 2 3-revision encrypt-encrypt-none /Prev-chain micro-step; cycle 17: Track 2 hybrid cross-format xs-encrypt/classic-none chain micro-step; cycle 18: Track 2 hybrid cross-format classic-encrypt/xs-none chain micro-step; cycle 19: Track 2 hybrid cross-format classic-encrypt/xs-encrypt chain micro-step; cycle 20: Track 2 mirror both-encrypted cross-format xs-encrypt/classic-encrypt chain micro-step; cycle 21: Track 2 Root-repoint-with-Encrypt-kept empty-update micro-step; cycle 22: Track 2 hybrid XRefStm-vs-trailer conflicting-Encrypt micro-step; cycle 23: Track 2 mirror hybrid XRefStm-vs-trailer conflicting-Encrypt micro-step; cycle 24: Track 2 /Size-shrink truncation micro-step; cycle 25: Track 2 /Size-shrink + /Encrypt-kept mirror micro-step)
+188:## Cycle 26 (Track 2, this cycle)
+## research/vps-2026-10-30...origin/research/vps-2026-10-30
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-10-30.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[2026-10-30T03:40:55Z] cycle 26 exit=0 branch=research/vps-2026-10-30 t_size_grow 2seedsx6eng=12 ORIGINAL 0/12 injected 8/12 (=t_none baseline; grown Size ignored, contrasts cycle-24 shrink pymupdf flip) crashes=0
