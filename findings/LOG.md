@@ -438,6 +438,24 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   engines resolve the shadowed indirect object rather than type-checking it
   away. Direct-vs-indirect placement of the same hostile bytes changes
   nothing observable. Still integrity-only, not filed.
+- Extension 2026-10-30 (cycle 14, Track 2): new variant
+  `chain_none_encrypt_none` (3-revision chain: rev A appends the injected
+  plaintext page with a trailer WITHOUT `/Encrypt`, rev B appends an
+  empty update whose trailer RESTORES the original `/Encrypt` ref, rev C
+  appends an empty update whose trailer drops `/Encrypt` again; object set
+  fixed after rev A, only trailer `/Encrypt` flips none->ref->none. Tests
+  whether any engine's `/Prev`-walk stops at the intermediate encrypted rev
+  B. Same 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle14_chain_nen.py`, raw
+  results `/tmp/opencode/cycle14_chain_nen/results.json`) - ORIGINAL canary
+  0/12, injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdf.js OK-render
+  both seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED
+  `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to the
+  2-revision `chain_encrypt_none` baseline (final rev also none): the
+  intermediate encrypted rev changes nothing - engines that scan the whole
+  `/Prev` chain for any `/Encrypt` (pypdf, pypdfium2) refuse regardless of
+  chain depth, latest-trailer-only stacks (the other four) open. No engine
+  stops at rev B, on either seed. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
