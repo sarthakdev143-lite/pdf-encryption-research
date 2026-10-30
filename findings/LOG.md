@@ -218,6 +218,22 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   content only, original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 3, Track 2): new variant `t_encrypt_int`
+  (appended plaintext page, trailer `/Encrypt 0` — a direct integer, not
+  a dict or indirect ref — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle3_encrypt_int.py`, raw results
+  `/tmp/opencode/cycle3_encrypt_int/results.json`) — ORIGINAL canary 0/12,
+  injected rendered 6/12 (pymupdf OK, pypdfium2 OK, pdfjs OK on both seeds;
+  pypdf ERROR `PdfReadError: /Encrypt entry of the trailer is not a
+  dictionary`; pdfminer BLOCKED `PdfminerException: Unknown filter`;
+  pikepdf ERROR `/Encrypt in trailer dictionary is not a dictionary`),
+  0 crashes. Identical split to the string variant (cycle 2): wrong-typed
+  `/Encrypt` (string vs integer) is treated the same by every stack —
+  strict stacks (pypdf/pdfminer/qpdf) refuse, lenient stacks
+  (MuPDF/PDFium/pdf.js) treat as no-encryption. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
