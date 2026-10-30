@@ -234,6 +234,23 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   (MuPDF/PDFium/pdf.js) treat as no-encryption. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 4, Track 2): new variant `t_encrypt_bogusfilter`
+  (appended plaintext page, trailer `/Encrypt <</Filter/Bogus>>` — present,
+  dict-typed, unknown filter — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle4_encrypt_bogusfilter.py`, raw results
+  `/tmp/opencode/cycle4_encrypt_bogusfilter/results.json`) — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse (pypdf
+  `NotImplementedError: only Standard PDF encryption handler is available`;
+  pdfminer `Unknown filter: param={'Filter': /'Bogus'}` BLOCKED; pymupdf
+  `FileDataError`; pypdfium2 `Unsupported security scheme`; pikepdf
+  `unsupported encryption filter`; pdfjs `unknown encryption method`),
+  0 crashes. Dict-typed-but-unknown behaves like the empty dict (unanimous
+  refuse), not like wrong-typed string/int (3/6 render): the type check, not
+  the filter check, is what splits lenient vs strict stacks. Still
+  integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
