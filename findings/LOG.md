@@ -409,6 +409,37 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-30 (cycle 13, Track 2): new variant
+  `t_shadow_fulldict` (appended plaintext page; the appended revision
+  REDEFINES the original `/Encrypt` object number with the full cycle-12 V4
+  hostile dict - `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes,
+  `/Length 128`, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length
+  16>>>> /StmF /StdCF /StrF /StdCF` - and the appended trailer points
+  `/Encrypt` at that shadow object (`/Encrypt <orig-enc-obj> 0 R /Root N 0
+  R /Prev <orig>`; shadow obj 11 on both seeds). Minimal delta vs cycle 12
+  (identical dict bytes, moved from direct-in-trailer to indirect-via-
+  shadowed-objnum) and vs the prevchain `shadow_encrypt_obj` variant (same
+  objnum-shadow mechanics, but that one dropped `/Encrypt` and used a
+  `<< /Type /NotAnEncryptDict >>` placeholder). Same 2 seeds x 6 engines =
+  12 no-password probes, builder `/tmp/opencode/cycle13_shadow_fulldict.py`,
+  raw results `/tmp/opencode/cycle13_shadow_fulldict/results.json`) -
+  ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse, 0
+  crashes. Eleventh unanimous-refuse dict-typed variant, and the verdict
+  profile is IDENTICAL to cycle 12 on every stack (pypdf
+  `FileNotDecryptedError`, pdfminer `PDFPasswordIncorrect` - confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` - pdfjs
+  `PasswordException: No password given`, pymupdf/pypdfium2/pikepdf unchanged
+  password errors). Two findings: (1) no engine falls back to the
+  original-via-`/Prev` dict either - the appended trailer's `/Encrypt` ref
+  wins object-number resolution on all six, and the shadow dict's shape is
+  accepted far enough to attempt auth against zeroed O/U and refuse; (2)
+  pypdf attempts auth against the shadow dict instead of raising the
+  `NotImplementedError` the old placeholder-shadow produced, confirming
+  engines resolve the shadowed indirect object rather than type-checking it
+  away. Direct-vs-indirect placement of the same hostile bytes changes
+  nothing observable. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
