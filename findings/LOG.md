@@ -506,6 +506,28 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   and middle-rev content change nothing. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 17, Track 2): new variant
+  `chain_xsEncrypt_classicNone` (hybrid CROSS-FORMAT 2-revision chain: rev A
+  appends the injected plaintext page via an xref-STREAM update whose dict
+  RESTORES the original `/Encrypt` ref, rev B appends a CLASSIC trailer that
+  DROPS `/Encrypt` with `/Prev` pointing at the rev-A xref-stream offset;
+  object set fixed after rev A, only container format and `/Encrypt`
+  presence flip xs+ref->classic+none. Tests whether any engine's `/Prev`
+  walk stumbles crossing the xref-stream/classic boundary. Same 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle17_xschain.py`, raw results
+  `/tmp/opencode/cycle17_xschain/results.json`) - ORIGINAL canary 0/12,
+  injected rendered 8/12 (pdfminer/pymupdf/pikepdf/pdf.js OK-render both
+  seeds; pypdf BLOCKED `FileNotDecryptedError`; pypdfium2 BLOCKED
+  `Incorrect password error`), 0 crashes. Verdict profile IDENTICAL to the
+  cycle-14 NEN chain, cycle-16 EEN chain, and the classic-only 2-revision
+  `chain_encrypt_none` baseline: crossing the xref-stream/classic boundary
+  changes nothing - the same two full-chain scanners refuse, the same four
+  latest-trailer-only stacks open. First cross-format data point extends
+  final-trailer-wins across container formats. Still integrity-only, not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
