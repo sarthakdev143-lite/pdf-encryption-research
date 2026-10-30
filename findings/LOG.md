@@ -624,6 +624,33 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 22, Track 2): new variant
+  `h_conflict_trailerOrig_xsDonor` (hybrid revision with CONFLICTING
+  `/Encrypt` values: appended injected plaintext page; xref-stream dict
+  carries a DONOR empty-password `/Encrypt` (attacker dict, obj n+4) while
+  the classic trailer KEEPS the original `/Encrypt` ref, plus `/Root N 0 R
+  /Prev <orig> /XRefStm <xs_off>`. Minimal delta vs prevchain
+  `h_refstm_encrypt` (xs=orig-ref, trailer absent) and `h_trailer_encrypt`
+  (trailer=orig-ref, xs absent): here BOTH containers name `/Encrypt` with
+  DIFFERENT values, testing which container wins. Same 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle22_xrefstm_conflict.py`, raw results
+  `/tmp/opencode/cycle22_xrefstm_conflict/results.json`, structure verified:
+  `/XRefStm` present, trailer keeps orig ref, donor ref present in file) -
+  ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse
+  (pypdf `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` -
+  confirmed via direct traceback, harness shows empty `PdfminerException: ` -
+  pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect
+  password error`; pikepdf `PasswordError: invalid password`; pdfjs
+  `PasswordException: No password given`), 0 crashes. Verdict profile
+  IDENTICAL to `h_trailer_encrypt` (0/6 unanimous): the classic trailer's
+  original ref wins everywhere and the conflicting xref-stream donor changes
+  nothing - no stack prefers `/XRefStm` over the trailer, and none falls
+  back to the donor's trivially-satisfiable empty password. Contrasts with
+  `h_refstm_encrypt` (trailer absent -> 4/6 open): presence of the trailer
+  `/Encrypt` alone decides refuse. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
