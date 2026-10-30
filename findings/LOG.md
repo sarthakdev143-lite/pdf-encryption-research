@@ -458,6 +458,31 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   stops at rev B, on either seed. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 15, Track 2): new variant
+  `chain_encrypt_none_encrypt` (3-revision chain: rev A appends the injected
+  plaintext page with a trailer that RESTORES the original `/Encrypt` ref,
+  rev B appends an empty update whose trailer DROPS `/Encrypt`, rev C
+  appends an empty update whose trailer RESTORES the original `/Encrypt`
+  ref again; object set fixed after rev A, only trailer `/Encrypt` flips
+  ref->none->ref with the FINAL rev encrypted. Tests whether the
+  intermediate plaintext rev B pulls any latest-trailer-only stack back to
+  open. Same 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle15_chain_ene.py`, raw
+  results `/tmp/opencode/cycle15_chain_ene/results.json`) - ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` - confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` - pymupdf
+  `ValueError: document closed or encrypted`; pypdfium2 `Incorrect password
+  error`; pikepdf `PasswordError: invalid password`; pdfjs
+  `PasswordException: No password given`). The intermediate plaintext rev
+  pulls NOBODY back to open - final-trailer-wins holds on all four lenient
+  stacks, and the two full-chain scanners (pypdf, pypdfium2) refuse as
+  before. Mirror-image of the cycle-14 NEN chain (final rev none -> 4/6
+  open): the final trailer alone decides open-vs-refuse; chain depth and
+  middle-rev content change nothing on any stack. Still integrity-only, not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
