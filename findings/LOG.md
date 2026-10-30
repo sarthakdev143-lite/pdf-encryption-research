@@ -327,6 +327,25 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 9, Track 2): new variant `t_encrypt_stdV4R4P`
+  (appended plaintext page, trailer `/Encrypt <</Filter/Standard /V 4 /R 4
+  /P -4>>` — present, dict-typed, Standard filter with V+R+P present but
+  still missing O/U/Length/OE/UE/Perms/CF/StmF/StrF — `/Root N 0 R /Prev
+  <orig>`, same 2 seeds x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle9_encrypt_stdV4R4P.py`, raw results
+  `/tmp/opencode/cycle9_stdV4R4P/results.json`) — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse (pypdf `PdfReadError: /O
+  entry of the encryption dictionary is missing` — one validation step past
+  the cycle-8 `/P ... missing`; pdfminer BLOCKED `PdfminerException: 'O'`
+  KeyError — likewise past `'P'`; pymupdf `FileDataError`; pypdfium2
+  `Incorrect password error`; pikepdf `PdfError` encryption-dictionary;
+  pdfjs `UnknownErrorException: invalid key length` — same as cycle 8, its
+  gate now lags pypdf/pdfminer by one key), 0 crashes. Seventh
+  unanimous-refuse dict-typed variant: supplying V+R+P moves pypdf/pdfminer
+  one validation step further but refuse->open is unchanged on all six.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
