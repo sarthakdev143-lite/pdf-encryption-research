@@ -853,6 +853,29 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pdfjs-dist 6.4.299
   (pypdfium2/pikepdf/pdfminer.six unchanged from cycles 11-29).
+- Extension 2026-10-30 (cycle 31, Track 2): new variant
+  `t_encrypt_stdV4R4POUshort` (first `/O`-`/U`-length truncation probe:
+  cycle-10 hostile dict shape — `/Filter/Standard /V 4 /R 4 /P -4` — but O/U
+  TRUNCATED to 8 zero bytes each instead of 32, still missing Length/OE/UE/
+  Perms/CF/StmF/StrF, direct-in-trailer dict on an appended revision with
+  the injected plaintext page; pure-append verified; not in prevchain
+  VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle31_oushort.py`, raw results
+  `/tmp/opencode/cycle31_oushort/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `'StmF'` KeyError; pymupdf
+  `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PasswordError: invalid password`; pdfjs `UnknownErrorException: invalid
+  key length`). Verdict profile IDENTICAL to cycle 10 (O/U 32 zero bytes) on
+  every stack — not one error string moves: no stack reads past a short O/U
+  buffer, pads it into a working key, or falls back to plaintext; the O/U
+  VALUE/LENGTH is never reached because pdfminer still stops at the CF/StmF
+  lookup and pdfjs at key-length validation. Thirteenth unanimous-refuse
+  dict-typed variant; the O/U-shortening direction is exhausted (8 vs 32
+  identical everywhere). Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
