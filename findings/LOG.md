@@ -651,7 +651,40 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   `/Encrypt` alone decides refuse. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
-### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
+- Extension 2026-10-30 (cycle 23, Track 2): new variant
+  `h_conflict_trailerDonor_xsOrig` (mirror of cycle 22: appended injected
+  plaintext page; xref-stream dict KEEPS the original `/Encrypt` ref while
+  the classic trailer points at a DONOR empty-password dict (obj n+4), plus
+  `/Root N 0 R /Prev <orig> /XRefStm <xs_off>`; shadow mechanics none, pure
+  trailer-vs-xs conflict with the trivially-satisfiable handler in the
+  trailer) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle23_xrefstm_conflict_mirror.py`,
+  raw results `/tmp/opencode/cycle23_xrefstm_conflict_mirror/results.json`,
+  structure verified (trailer points at donor + `/XRefStm`, orig ref present
+  in xs dict, pure append confirmed by truncation re-open with USER_PW) -
+  ORIGINAL canary 0/12, injected rendered 0/12, 0 crashes — but the
+  disposition is the MIRROR IMAGE of cycle 22, not a repeat: 11/12 probes
+  report OK-empty (pymupdf `needs_pass=0`, 1 page, empty text; pdfminer/
+  pypdfium2/pikepdf/pdfjs likewise open-but-empty on both seeds; pypdf
+  OK-empty on the rc4 seed) and 1/12 (pypdf on the aes256 seed) raises
+  `PdfReadError: Invalid Elementary Object` (ciphertext parsed as objects
+  after decryption with the donor-derived key — a wrong-key garbage error,
+  not a password refuse and not a crash). NO engine refuses via the
+  xref-stream's original ref or via a `/Prev`-chain scan: the trailer's donor
+  dict is honored everywhere, its empty user password trivially satisfied,
+  and the original objects then decrypt to garbage/empty under the wrong
+  key. Rule refinement now supported by the full conflict pair: the LATEST
+  trailer's `/Encrypt`, when PRESENT, is authoritative on all six stacks
+  (orig-ref -> unanimous refuse, cycle 22; donor-ref -> unanimous
+  open-empty, this cycle); the `/Prev` walk only matters when the latest
+  trailer DROPS `/Encrypt` — and then only pypdf/PDFium walk back (all
+  none-final chains -> 4/6 open, 2/6 refuse). The `/XRefStm` stream-dict
+  `/Encrypt` is never consulted when a classic trailer is present, in either
+  direction. Still integrity-only (injected page itself does not even
+  render — the donor key breaks its own revision's readability — and
+  original ciphertext never discloses), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
