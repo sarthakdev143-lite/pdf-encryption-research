@@ -576,6 +576,33 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 20, Track 2): new variant
+  `chain_xsEncrypt_classicEncrypt` (mirror both-ENCRYPTED hybrid CROSS-FORMAT
+  2-revision chain: rev A appends the injected plaintext page via an
+  xref-STREAM update whose dict RESTORES the original `/Encrypt` ref, rev B
+  appends a CLASSIC xref update whose trailer KEEPS the original `/Encrypt`
+  ref with `/Prev` pointing at the rev-A xref-stream offset and `startxref`
+  pointing at the rev-B classic table; object set fixed after rev A, only
+  container format flips xs+ref->classic+ref with the FINAL revision
+  encrypted. Mirror of the cycle-19 classic->xs both-encrypted chain. Same 2
+  seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle20_xsens_classic.py`, raw results
+  `/tmp/opencode/cycle20_xsensclassic/results.json`, structure verified: 2
+  startxrefs with the final value pointing at the rev-B classic table, whose
+  trailer carries `/Encrypt` + `/Prev` and no `/XRef`) - ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect`/empty
+  `PdfminerException`; pymupdf `ValueError: document closed or encrypted`;
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`), 0 crashes.
+  Verdict profile IDENTICAL to the cycle-19 mirror (final xs+ref): the FINAL
+  revision's container format changes nothing when the final revision is
+  encrypted - the both-encrypted cross-format matrix is now complete in both
+  directions (xs->classic this cycle, classic->xs cycle 19), both 0/6
+  unanimous, just as the none-final matrix is 4/6 open in both directions
+  (cycles 17/18). Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
