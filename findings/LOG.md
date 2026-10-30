@@ -270,6 +270,25 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   string/int opens on 3/6. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 6, Track 2): new variant `t_encrypt_stdV1`
+  (appended plaintext page, trailer `/Encrypt <</Filter/Standard /V 1>>` —
+  present, dict-typed, Standard filter with explicit V=1 but still missing
+  O/U/P/R/Length — `/Root N 0 R /Prev <orig>`, same 2 seeds x 6 engines
+  = 12 no-password probes, builder `/tmp/opencode/cycle6_encrypt_stdV1.py`,
+  raw results `/tmp/opencode/cycle6_stdV1/results.json`) — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse (pypdf `PdfReadError:
+  /R entry of the encryption dictionary is missing` — one validation step
+  past the cycle-5 `V=0 NOT supported`; pdfminer BLOCKED `PdfminerException:
+  'R'` KeyError — distinct from the cycle-5 "Unknown algorithm" branch;
+  pymupdf `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PdfError` encryption-dictionary; pdfjs `UnknownErrorException: Invalid
+  argument for stringToBytes` — distinct from the cycle-5 "unsupported
+  encryption algorithm"), 0 crashes. Fourth unanimous-refuse dict-typed
+  variant (empty-dict, bogus-filter, stdfilter-no-keys, stdfilter-V1):
+  adding an explicit V does not move any stack from refuse to open; the
+  dict-typed vs wrong-typed split holds. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 ### O-2026-003 - PDFex-style scaffolding (static): appended form/XObject/embedded-file refs to original ciphertext, no-password leak 0
 
