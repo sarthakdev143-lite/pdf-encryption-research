@@ -685,6 +685,31 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   original ciphertext never discloses), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-30 (cycle 24, Track 2): new variant `t_size_shrink`
+  (FIRST `/Size`-axis probe: appended injected plaintext page exactly like
+  `t_none` — new Catalog/Pages/Page/Contents n..n+3, trailer `/Root N 0 R
+  /Prev <orig>`, NO `/Encrypt` — but the appended trailer declares `/Size`
+  = seed.size, i.e. SHRUNK to exclude the 4 appended objects instead of the
+  correct n+12; xref subsection still lists the new objects; not in prevchain
+  VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle24_size_shrink.py`, raw
+  results `/tmp/opencode/cycle24_size_shrink/results.json` (plus
+  `CONTROL_correct_size` twins) — ORIGINAL canary 0/12, injected rendered
+  6/12 (pdfminer/pikepdf/pdfjs OK-render both seeds; pypdf BLOCKED
+  `FileNotDecryptedError`; pymupdf BLOCKED `ValueError: document closed or
+  encrypted`; pypdfium2 BLOCKED `Incorrect password error`), 0 crashes.
+  Nuance vs the `t_none` baseline (4/6 open incl. pymupdf): the shrunk `/Size`
+  flips PYMUPDF from open to refuse — MuPDF honors `/Size` for object-table
+  sizing (new Root n >= Size unreachable, falls back to the encrypted revision
+  and refuses), while pdfminer/pikepdf/pdfjs ignore `/Size` and render.
+  Causal isolation: byte-identical CONTROL twins with correct `/Size` =
+  n+12 render the injected page on pymupdf on BOTH seeds (OK, injected text
+  present) — the `/Size` value alone decides MuPDF's verdict. pypdf/PDFium
+  refuse either way (their `/Prev`-chain `/Encrypt` scan is unaffected by
+  `/Size`). Still integrity-only (injected content only on the 3 lenient
+  stacks, original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
