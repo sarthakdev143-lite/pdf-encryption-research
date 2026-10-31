@@ -1821,3 +1821,23 @@ empty-page caveat above.**
   never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 60, Track 2): new variant
+  `t_encrypt_stdV5cfLen16` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but inner
+  DefaultCryptFilter `/Length 32` -> `/Length 16`, top-level `/Length 256`
+  kept — crypt-filter key-length mismatch; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder `/tmp/opencode/cycle60_cflen16.py`, raw
+  results `/tmp/opencode/cycle60_cflen16/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  FileNotDecryptedError; pdfminer BLOCKED PDFPasswordIncorrect
+  empty-message, direct-traceback-confirmed derivation attempted with NO
+  new gate and NO retreat; pymupdf FileDataError; pypdfium2 Incorrect
+  password; pikepdf/qpdf PasswordError; pdfjs PasswordException/No
+  password given). Verdict profile IDENTICAL to the cycle-33 baseline on
+  every stack — CF Length never validated pre-auth, no downgrade to
+  shorter-key crypto, no plaintext fallback. Forty-second unanimous-refuse
+  dict-typed variant. Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
