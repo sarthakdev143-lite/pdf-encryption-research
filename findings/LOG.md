@@ -1557,3 +1557,31 @@ empty-page caveat above.**
   integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 51, Track 2): new variant
+  `t_encrypt_stdV5filterbogus` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but top-level
+  `/Filter /Standard` -> `/Filter /Bogus` — Filter-value mismatch; fresh axis:
+  Filter name; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle51_filterbogus.py`, raw results
+  `/tmp/opencode/cycle51_filterbogus/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `NotImplementedError: only Standard PDF encryption handler is available` —
+  FIRST explicit Filter gate on the pypdf path, replacing the cycle-33
+  FileNotDecryptedError; pdfminer BLOCKED `Unknown filter` with the full
+  mistyped param echoed — distinct from the cycles-39/40/50 `Unknown crypt
+  filter method` CFM gate, Filter checked before CFM; pymupdf `FileDataError`
+  identical; pypdfium2 `PdfiumError: Failed to load document (PDFium:
+  Unsupported security scheme error)` — FIRST security-scheme verdict on the
+  pdfium path (vs `Incorrect password error` in cycles 33-50); pikepdf/qpdf
+  ERROR `unsupported encryption filter` at the encryption-dictionary offset —
+  FIRST parse-time Filter gate on the qpdf path (vs PasswordError in
+  cycle 33, vs the cycle-39 V5/CF consistency error); pdfjs ERROR
+  `UnknownErrorException: unknown encryption method` — FIRST unknown-method
+  verdict on the pdfjs path (vs PasswordException in cycle 33)). Thirty-third
+  unanimous-refuse dict-typed variant; Filter axis first point mapped — every
+  stack validates the Filter name before attempting key derivation and none
+  falls back to plaintext. Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
