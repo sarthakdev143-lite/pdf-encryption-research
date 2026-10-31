@@ -1093,6 +1093,36 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-31 (cycle 40, Track 2): new variant
+  `t_encrypt_stdV5R6cfmnone` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, OE/UE 32 zero bytes, `/Perms` 16 zero bytes — but
+  DefaultCryptFilter `/CFM /AESV3` -> `/CFM /None`; fresh axis: None crypt
+  filter on a V5 dict — does any engine treat None as no-encryption, skip
+  decryption, or fall back to plaintext? appended revision with the injected
+  plaintext page; pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle40_cfmnone.py`, raw results
+  `/tmp/opencode/cycle40_cfmnone/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `NotImplementedError: StmF Method /None NOT supported!` — FIRST explicit
+  CFM gate on the pypdf path, vs `FileNotDecryptedError` in cycles 33/39;
+  pdfminer BLOCKED `PdfminerException: Unknown crypt filter method` — same
+  explicit CFM validation as cycle 39; pymupdf `FileDataError` identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf/qpdf ERROR `some
+  V=5 encryption dictionary parameters are missing or the wrong type` — same
+  parse-time V5/CF consistency gate as cycle 39; pdfjs
+  `UnknownErrorException: Invalid argument for stringToBytes` — same retreat
+  as cycles 34/38/39). Twenty-second unanimous-refuse dict-typed variant.
+  CFM axis now mapped at three points (AESV3 cycle 33 / V2 cycle 39 / None
+  this cycle): all three unanimous-refuse, with pypdf gating only on None,
+  pdfminer gating on both mismatches, qpdf gating on both mismatches at
+  parse time. No stack treats CFM/None as no-encryption or falls back to
+  plaintext. Still integrity-only (original ciphertext never disclosed), not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext

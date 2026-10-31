@@ -22009,3 +22009,698 @@ Index: findings/daily/2026-10-31.md
 
 > build · muse-spark-1.3-contributor
 [2026-10-31T02:27:21Z] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-stringToBytes
+[0m$ [0mgit branch --show-current
+printf '[%s] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-stringToBytes\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> findings/24-7.log
+tail -n 2 findings/24-7.log | cut -c1-220
+git add findings/LOG.md findings/daily/2026-10-31.md findings/24-7.log
+git status --short
+git commit -m "Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)" -q
+git push -u origin research/vps-2026-10-31 2>&1 | tail -n 3
+git log --oneline -2; git status --short
+research/vps-2026-10-31
+> build · muse-spark-1.3-contributor
+[2026-10-31T02:27:21Z] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-s
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-10-31.md
+?? findings/crashes/
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   d74c96a..f2fca6c  research/vps-2026-10-31 -> research/vps-2026-10-31
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+f2fca6c Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)
+d74c96a Cycle 38: Track 2 V5-Perms-absent-only (12 probes, ORIGINAL 0/12, pdfjs retreats / pdfminer does not)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 39 done on `research/vps-2026-10-31`, committed as `f2fca6c` and pushed.
+
+**Track 2 micro-step: `t_encrypt_stdV5R6cfmv2`** — hostile appended-revision trailer `/Encrypt` direct dict, identical to cycle-33 zeroed V5/R6 shape but `/CFM /AESV3` → `/CFM /V2`. Fresh axis: crypt-filter/method mismatch on V5.
+- 2 seeds (aes256_r6__plain, rc4_128_r4__plain) × 6 engines = 12 no-password probes
+- **ORIGINAL 0/12, injected 0/12, 0 crashes** — unanimous refuse (21st dict-typed variant)
+- New gates: pdfminer first explicit `Unknown crypt filter method` on V5 path; qpdf `some V=5 encryption dictionary parameters are missing or the wrong type` (parse-time, vs PasswordError in cycle 33); pdfjs retreats to stringToBytes as in absent-key cycles. pypdf/MuPDF/PDFium identical to cycle 33. No downgrade, no plaintext fallback.
+- Pure-append verified; builder + results in `/tmp/opencode/cycle39_cfmv2*` (git-untracked); no PoC (negative result).
+
+**Files:** `findings/LOG.md` (O-2026-002 cycle-39 extension), `findings/daily/2026-10-31.md` (8 cycles, 16 files, next-step updated), `findings/24-7.log` (exit line). `findings/crashes/` untouched (untracked, pre-existing).
+
+Suggested next: CFM/None on V5, EncryptMetadata-false on V5, or hybrid XRefStm/Prev chains.
+[2026-10-31T02:27:25Z] cycle 39 exit=0 branch=research/vps-2026-10-31 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+Already on 'research/vps-2026-10-31'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-31'.
+[2026-10-31T02:29:25Z] cycle 40 start branch=research/vps-2026-10-31
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — confirming baseline and probing one track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short | head -n 50; git log --oneline -5; cat findings/daily/2026-10-31.md 2>/dev/null || echo "NO DAILY YET"; echo "---LOG TAIL---"; tail -n 30 findings/24-7.log 2>/dev/null || echo "no 24-7.log"
+research/vps-2026-10-31
+ M findings/24-7.log
+?? findings/crashes/
+f2fca6c Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)
+d74c96a Cycle 38: Track 2 V5-Perms-absent-only (12 probes, ORIGINAL 0/12, pdfjs retreats / pdfminer does not)
+32d6984 Cycle 37: Track 2 V5-garbage-typed-O/U (12 probes, ORIGINAL 0/12, verdict-identical to cycle-33 zeroed)
+47d8a09 Cycle 36: Track 2 V5-garbage-typed-OE/UE (12 probes, ORIGINAL 0/12, verdict-identical to cycle-33 zeroed)
+cbd87bc Cycle 35: Track 2 V5-truncated-OE/UE (12 probes, ORIGINAL 0/12, verdict-identical to cycle-33 zeroed)
+# 2026-10-31 — research/vps-2026-10-31
+
+- branch: `research/vps-2026-10-31`
+- cycles run: 8 (cycle 32: Track 2 O/U-empty micro-step; cycle 33: Track 2 V5-zeroed-OE/UE micro-step; cycle 34: Track 2 V5-missing-OE/UE micro-step; cycle 35: Track 2 V5-truncated-OE/UE micro-step; cycle 36: Track 2 V5-garbage-typed-OE/UE micro-step; cycle 37: Track 2 V5-garbage-typed-O/U micro-step; cycle 38: Track 2 V5-Perms-absent micro-step; cycle 39: Track 2 V5-CFM-V2-mismatch micro-step)
+- files tested: 16 synthetic appended-revision PDFs total this day (2 per cycle: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile trailer `/Encrypt` direct dict), no-password probes only
+
+## Probe counts
+
+- t_encrypt_stdV4R4POUempty (Track 2, cycle 32): NEW variant (appended revision, trailer `/Encrypt` direct dict with EMPTY O/U hex strings, not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile identical to cycle 10 (O/U 32 zero bytes) and cycle 31 (O/U 8 zero bytes) on every stack. Fourteenth unanimous-refuse dict-typed variant; O/U-length axis exhausted (32 vs 8 vs 0 identical). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle32_ouempty.py`, `/tmp/opencode/cycle32_ouempty/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV5R6zeroed (Track 2, cycle 33): NEW variant, fresh axis (appended revision, trailer `/Encrypt` direct dict `/Filter/Standard /V 5 /R 6 /Length 256 /P -4` with 32-zero-byte `/O /U /OE /UE`, 16-zero-byte `/Perms`, `/CF <</DefaultCryptFilter <</AuthEvent/DocOpen /CFM/AESV3 /Length 32>>>> /StmF/StrF /DefaultCryptFilter`, not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect; pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Profile matches the V4-hostile-dict family (cycles 10/31/32) — zeroed OE/UE/CF adds no new disagreement; no stack parses V5 fields into a plaintext fallback. Fifteenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle33_v5zeroed.py`, `/tmp/opencode/cycle33_v5zeroed/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV5R6missing (Track 2, cycle 34): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict MINUS `/OE /UE /Perms` — absent, not zeroed; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer `'OE'` KeyError (retreats from cycle-33 PDFPasswordIncorrect — explicit OE lookup before derivation, the V5 analogue of the cycles-10-12 `'StmF'` gate); pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs `Invalid argument for stringToBytes` (retreats from cycle-33 PasswordException — attempts byte-convert of absent OE/UE). No stack treats absent V5 keys as no-encryption. Sixteenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle34_v5missing.py`, `/tmp/opencode/cycle34_v5missing/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV5R6trunc (Track 2, cycle 35): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but `/OE /UE` TRUNCATED to 16 zero bytes each — half of the required 32, short-but-present; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (confirmed via direct traceback, harness shows empty `PdfminerException: ` — derivation attempted, NO retreat to the cycle-34 `'OE'` KeyError); pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given (NO retreat to the cycle-34 stringToBytes error). Verdict profile IDENTICAL to cycle 33 on every stack — short-but-present OE/UE is treated exactly like full-length zeroed OE/UE: no length gate, no absent-key fallback, no plaintext fallback. V5 length axis now mapped at three points (32 zeroed / 16 truncated / absent), all three unanimous-refuse. Seventeenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle35_v5trunc.py`, `/tmp/opencode/cycle35_v5trunc/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV5R6garbage (Track 2, cycle 36): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but `/OE /UE` as WRONG-TYPED literal paren strings `(GARBAGEBLOB1234567890GARBAGEBLOB1234)` instead of hex strings — present-but-mistyped; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (confirmed via direct traceback — derivation attempted, NO retreat to the cycle-34 `'OE'` KeyError: presence, not hex-type, is what the OE lookup checks); pymupdf FileDataError (harness status ERROR, clean open failure, no content); pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given (NO retreat to the cycle-34 stringToBytes error). Verdict profile IDENTICAL to cycle 33 on every stack — no stack type-checks OE/UE hex-vs-string or falls back to plaintext. V5 OE/UE axis now mapped at four points (32 zeroed hex / 16 truncated hex / absent / present-wrong-typed), all unanimous-refuse — type axis exhausted alongside length axis. Eighteenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle36_v5garbage.py`, `/tmp/opencode/cycle36_v5garbage/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV5R6garbageOU (Track 2, cycle 37): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but `/O /U` as WRONG-TYPED literal paren strings `(GARBAGE-O-1111111111111111111111)` / `(GARBAGE-U-2222222222222222222222)` instead of 32-zero-byte hex; OE/UE/Perms/CF kept zeroed-valid, isolating the wrong-typing to O/U; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (confirmed via direct traceback, derivation attempted — mirrors the cycle-36 OE/UE wrong-typing result); pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Verdict profile IDENTICAL to cycle 33 on every stack — no stack type-checks O/U hex-vs-string or falls back to plaintext. V5 O/U axis now mapped at four points (32 zeroed hex cycles 10/33 / 8 truncated cycle 31 / empty cycle 32 / present-wrong-typed this cycle), all unanimous-refuse — completing the V5 type-axis pair started in cycle 36 (OE/UE). Nineteenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle37_v5garbageOU.py`, `/tmp/opencode/cycle37_v5garbageOU/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV5R6noperms (Track 2, cycle 38): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but `/Perms` REMOVED, not zeroed; O/U/OE/UE/CF kept zeroed-valid to isolate the Perms-presence gate that cycle 34, which removed OE/UE/Perms together, could not separate; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (confirmed via direct traceback — derivation attempted exactly as in cycle 33, NO retreat to a 'Perms' KeyError); pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs `Invalid argument for stringToBytes` (RETREATS from the cycle-33 PasswordException — byte-converts the absent Perms exactly as it did for absent OE/UE in cycle 34). Asymmetric gate finding: pdfminer checks OE presence (cycle-34 'OE' KeyError) but NOT Perms presence; pdfjs byte-converts all three V5 blobs (OE/UE/Perms) and retreats on any absence. Twentieth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle38_v5noperms.py`, `/tmp/opencode/cycle38_v5noperms/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV5R6cfmv2 (Track 2, cycle 39): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but DefaultCryptFilter `/CFM /AESV3` -> `/CFM /V2`; fresh axis: crypt-filter/method mismatch on a V5 dict; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycle 33); pdfminer BLOCKED `Unknown crypt filter method` — FIRST explicit CFM validation on the V5 path (vs PDFPasswordIncorrect in cycles 33/35-38); pymupdf FileDataError (identical); pypdfium2 Incorrect password (identical); pikepdf/qpdf ERROR `some V=5 encryption dictionary parameters are missing or the wrong type` — NEW parse-time V5/CF consistency gate (vs PasswordError in cycle 33); pdfjs `Invalid argument for stringToBytes` (retreats from cycle-33 PasswordException, same retreat as absent-key cycles 34/38). Twenty-first unanimous-refuse dict-typed variant; no stack downgrades to V2 crypto or falls back to plaintext. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle39_cfmv2.py`, `/tmp/opencode/cycle39_cfmv2/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Leaks / crashes
+
+- leaks: 0. No user-password content recoverable without password on any surface tested.
+- crashes: 0.
+- PoCs on file (observations, not leaks): unchanged from 2026-10-30.
+
+## Next step
+
+- V5-hostile-dict axis mapped (cycles 33-39): zeroed OE/UE/Perms/CF → unanimous refuse with pdfminer/pdfjs past their V5 gates; MISSING OE/UE/Perms → unanimous refuse with both stacks retreating one gate (explicit OE lookup); TRUNCATED 16-byte OE/UE → verdict-identical to zeroed-32 (no length gate, derivation attempted); WRONG-TYPED (paren-string) OE/UE → verdict-identical to zeroed-32 (no type gate, derivation attempted); Perms-ABSENT-only (cycle 38) → unanimous refuse with pdfjs retreating one gate (byte-converts absent Perms) but pdfminer NOT retreating (no Perms lookup pre-auth — asymmetric gate); CFM-V2-on-V5 (cycle 39) → unanimous refuse with pdfminer raising its FIRST explicit `Unknown crypt filter method` and qpdf retreating parse-time to `some V=5 encryption dictionary parameters are missing or the wrong type` (vs PasswordError in cycle 33), pdfjs retreating to stringToBytes as in absent-key cycles. Next smallest Track 2 step is another fresh axis — e.g. CFM/None on a V5 dict, EncryptMetadata-false on V5, or hybrid XRefStm/Prev chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+---LOG TAIL---
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   d74c96a..f2fca6c  research/vps-2026-10-31 -> research/vps-2026-10-31
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+f2fca6c Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)
+d74c96a Cycle 38: Track 2 V5-Perms-absent-only (12 probes, ORIGINAL 0/12, pdfjs retreats / pdfminer does not)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 39 done on `research/vps-2026-10-31`, committed as `f2fca6c` and pushed.
+
+**Track 2 micro-step: `t_encrypt_stdV5R6cfmv2`** — hostile appended-revision trailer `/Encrypt` direct dict, identical to cycle-33 zeroed V5/R6 shape but `/CFM /AESV3` → `/CFM /V2`. Fresh axis: crypt-filter/method mismatch on V5.
+- 2 seeds (aes256_r6__plain, rc4_128_r4__plain) × 6 engines = 12 no-password probes
+- **ORIGINAL 0/12, injected 0/12, 0 crashes** — unanimous refuse (21st dict-typed variant)
+- New gates: pdfminer first explicit `Unknown crypt filter method` on V5 path; qpdf `some V=5 encryption dictionary parameters are missing or the wrong type` (parse-time, vs PasswordError in cycle 33); pdfjs retreats to stringToBytes as in absent-key cycles. pypdf/MuPDF/PDFium identical to cycle 33. No downgrade, no plaintext fallback.
+- Pure-append verified; builder + results in `/tmp/opencode/cycle39_cfmv2*` (git-untracked); no PoC (negative result).
+
+**Files:** `findings/LOG.md` (O-2026-002 cycle-39 extension), `findings/daily/2026-10-31.md` (8 cycles, 16 files, next-step updated), `findings/24-7.log` (exit line). `findings/crashes/` untouched (untracked, pre-existing).
+
+Suggested next: CFM/None on V5, EncryptMetadata-false on V5, or hybrid XRefStm/Prev chains.
+[2026-10-31T02:27:25Z] cycle 39 exit=0 branch=research/vps-2026-10-31 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+Already on 'research/vps-2026-10-31'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-10-31'.
+[2026-10-31T02:29:25Z] cycle 40 start branch=research/vps-2026-10-31
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — confirming baseline and probing one track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m$ [0mls /tmp/opencode/ 2>/dev/null | tail -n 20; echo "---"; ls corpus/ | head; echo "---"; tail -n 60 findings/LOG.md; echo "---VERSIONS---"; .venv/bin/python -c "import pypdf,pdfminer,pymupdf,pdfium,pikepdf" 2>&1 | head; .venv/bin/pip show pypdf pdfminer.six pymupdf pypdfium2 pikepdf 2>/dev/null | grep -E "Name|Version"; node -p "require('./package.json').dependencies" 2>/dev/null; echo "---CRASHES---"; ls -R findings/crashes/ 2>&1 | head -n 20
+o004_ctrl.pdf
+o004_dbg.pdf
+o004_norm.pdf
+o004_norm_out.pdf
+o004_plain_out.pdf
+pdf.json
+pdf_doc.c
+pdf_md5.c
+pdf_write.c
+pdf_xmp.c
+ps_cmyk.icc
+ps_enc.pdf
+ps_gray.icc
+ps_plain.pdf
+ps_plain2.pdf
+ps_plain3.pdf
+ps_rgb.icc
+t.ps
+track_tail.md
+try.c
+---
+base
+fuzz
+incremental
+manifest.json
+mutants
+pdfex_static
+prevchain
+writers
+---
+empty-page caveat above.**
+
+- The cycle-7 note "get_text() empty (pdfwrite re-distills/vectorizes text)"
+  was a harness artifact, not a property of the output. gs was failing to
+  render the reportlab source (`error executing PDF token`) and wrote EMPTY
+  pages, so the with-password extraction check was vacuous. The "vectorizes
+  text" explanation is withdrawn.
+- Rebuilt with PostScript input written by this repo - the real `ps2pdf`
+  path, with gs producing the document itself. `ghostscript_writer.py` now
+  writes `corpus/writers/gs_source.ps` (page canaries + `/DOCINFO`
+  title/subject/author) and feeds it to gs.
+  - Correct user password: `auth=2`, 2/2 page canaries recovered, 2 pages.
+  - Unencrypted control from the same `.ps`: 2/2 page canaries found in raw
+    bytes, so the raw scanner is proven sensitive.
+  - All 3 encrypted variants: 0 page canaries in the file bytes or in streams
+    that inflate without a key. The only unencrypted, inflatable stream is the
+    xref stream (required to be unencrypted, ISO 32000 7.5.8).
+- Still true and now on valid samples: the XMP `/Metadata` stream is
+  plaintext, so title/subject/author are readable without the password.
+  Metadata-only; page content stays encrypted.
+- Cross-writer: qpdf's V2/R3 output
+  (`corpus/base/rc4_128_r3__plain.pdf`) encrypts its XMP stream -> the
+  behaviour is Ghostscript-specific, not a property of revision 3. Raw scan
+  of all 35 user-password writer samples in the repo (qpdf, reportlab, pypdf,
+  PyMuPDF, gs): 0 with page-content plaintext.
+- Spec anchor: ISO 32000-1 7.6.1 (ISO 32000-2 7.6.2) - "Encryption applies
+  to all strings and streams ... with the following exceptions: the values
+  for the ID entry in the trailer; any strings in an Encrypt dictionary; any
+  strings that are inside streams ...". `EncryptMetadata` is "meaningful only
+  when the value of V is 4" with "Default value: true" (Table 20); gs writes
+  `/V 2`, so no metadata exemption applies.
+- PoC for this re-verification:
+  `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (synthetic; user password
+  `user`), source `findings/poc/O-2026-005-source.ps`, repro
+  `findings/poc/gs_xmp_plaintext_repro.py`. The earlier PoC
+  `O-2026-005-gs-xmp-plaintext.pdf` (reportlab-sourced, empty pages) remains
+  as-is; this one supersedes it for the content/encryption control.
+- Environment note: gs only works here after unpacking ICC profiles
+  (`default_*.icc`, etc.) and the URW base-35 fonts; without them the device
+  refuses to open or every page renders empty. Repro recipe is in
+  `findings/writer_plaintext.md`.
+
+---
+
+## Template
+
+```
+### F-YYYY-NNN - <one-line title>
+- Status: candidate | confirmed | reported (YYYY-MM-DD) | fixed (PR link) | published
+- Severity (self-assessed):
+- Affected: <project> <version> / <engine> <version>
+- Bug class: encryption-skipped-on-path | malformed-encrypt-fallback | crypto-divergence | crash-dos | malleability | exfiltration
+- Reproduction: `python triage.py` + exact file id from corpus/manifest.json
+- Minimal PoC file: findings/poc/F-....pdf (synthetic, generated by this repo)
+- Expected behavior (per ISO 32000-2 §7.6):
+- Actual behavior:
+- Impact: content behind a user password recoverable without it / crash / DoS
+- Disclosure: contact used, dates, CVE id
+- Notes:
+```
+---VERSIONS---
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+    import pypdf,pdfminer,pymupdf,pdfium,pikepdf
+ModuleNotFoundError: No module named 'pdfium'
+{ 'pdfjs-dist': '^6.4.299' }
+---CRASHES---
+findings/crashes/:
+index.jsonl
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pdfminer.six pymupdf pypdfium2 pikepdf qpdf 2>/dev/null | grep -E "Name|Version|Location"; echo "---"; ls /tmp/opencode/cycle3* 2>/dev/null; ls /tmp/opencode/*.py 2>/dev/null | tail; echo "---prevchain variants---"; grep -n "VARIANTS\|t_encrypt" prevchain.py | head -n 30
+---
+/tmp/opencode/cycle30_len40.py
+/tmp/opencode/cycle31_oushort.py
+/tmp/opencode/cycle32_ouempty.py
+/tmp/opencode/cycle33_v5zeroed.py
+/tmp/opencode/cycle34_v5missing.py
+/tmp/opencode/cycle35_v5trunc.py
+/tmp/opencode/cycle36_v5garbage.py
+/tmp/opencode/cycle37_v5garbageOU.py
+/tmp/opencode/cycle38_v5noperms.py
+/tmp/opencode/cycle39_cfmv2.py
+/tmp/opencode/cycle3_encrypt_int.py
+
+/tmp/opencode/cycle30_len40:
+aes256_r6__plain__t_len40.pdf
+rc4_128_r4__plain__t_len40.pdf
+results.json
+
+/tmp/opencode/cycle31_oushort:
+aes256_r6__plain__t_oushort.pdf
+rc4_128_r4__plain__t_oushort.pdf
+results.json
+
+/tmp/opencode/cycle32_ouempty:
+aes256_r6__plain__t_ouempty.pdf
+rc4_128_r4__plain__t_ouempty.pdf
+results.json
+
+/tmp/opencode/cycle33_v5zeroed:
+aes256_r6__plain__t_v5zeroed.pdf
+rc4_128_r4__plain__t_v5zeroed.pdf
+results.json
+
+/tmp/opencode/cycle34_v5missing:
+aes256_r6__plain__t_v5missing.pdf
+rc4_128_r4__plain__t_v5missing.pdf
+results.json
+
+/tmp/opencode/cycle35_v5trunc:
+aes256_r6__plain__t_v5trunc.pdf
+rc4_128_r4__plain__t_v5trunc.pdf
+results.json
+
+/tmp/opencode/cycle36_v5garbage:
+aes256_r6__plain__t_encrypt_stdV5R6garbage.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6garbage.pdf
+results.json
+
+/tmp/opencode/cycle37_v5garbageOU:
+aes256_r6__plain__t_encrypt_stdV5R6garbageOU.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6garbageOU.pdf
+results.json
+
+/tmp/opencode/cycle38_v5noperms:
+aes256_r6__plain__t_encrypt_stdV5R6noperms.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6noperms.pdf
+results.json
+
+/tmp/opencode/cycle39_cfmv2:
+aes256_r6__plain__t_encrypt_stdV5R6cfmv2.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6cfmv2.pdf
+results.json
+
+/tmp/opencode/cycle3_encrypt_int:
+aes256_r6__plain__t_encrypt_int.pdf
+rc4_128_r4__plain__t_encrypt_int.pdf
+results.json
+/tmp/opencode/cycle38_v5noperms.py
+/tmp/opencode/cycle39_cfmv2.py
+/tmp/opencode/cycle3_encrypt_int.py
+/tmp/opencode/cycle4_encrypt_bogusfilter.py
+/tmp/opencode/cycle5_encrypt_stdfilter.py
+/tmp/opencode/cycle6_encrypt_stdV1.py
+/tmp/opencode/cycle7_encrypt_stdV2.py
+/tmp/opencode/cycle8_encrypt_stdV4R4.py
+/tmp/opencode/cycle9_encrypt_null.py
+/tmp/opencode/cycle9_encrypt_stdV4R4P.py
+---prevchain variants---
+16:  t_encrypt_ref        classic trailer, /Encrypt -> original encrypt object
+17:  t_encrypt_empty      classic trailer, /Encrypt -> fresh empty-user-pw R6 dict
+200:    if variant in ("t_none", "t_encrypt_ref", "t_encrypt_empty"):
+205:        elif variant == "t_encrypt_ref":
+289:VARIANTS = [
+291:    "t_encrypt_ref",
+292:    "t_encrypt_empty",
+318:        "aes256_r6__plain__t_encrypt_ref.pdf",
+363:        for variant in VARIANTS:
+451:    for variant in VARIANTS:
+507:    for variant in VARIANTS:
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py 
+[0m→ [0mRead /tmp/opencode/cycle39_cfmv2.py 
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip list 2>/dev/null | grep -i -E "pypdf|pdfminer|mupdf|pdfium|pike|qpdf"; echo "---"; .venv/bin/python -c "import importlib.metadata as m; print([(d.metadata['Name'], d.version) for d in m.distributions() if 'pdf' in d.metadata['Name'].lower() or 'mupdf' in d.metadata['Name'].lower() or 'pike' in d.metadata['Name'].lower()])"; node -p "require('pdfjs-dist/package.json').version" 2>&1
+---
+[('pymupdf4llm', '2.0'), ('pdfplumber', '0.11.10'), ('pypdf', '6.21.4'), ('pikepdf', '10.17.0'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pdfminer.six', '20260107'), ('pymupdf_layout', '2.0')]
+6.4.299
+> build · muse-spark-1.3-contributor
+Baseline mapped — now probing the next V5 variant.
+[0m$ [0msed 's|/CFM /V2|/CFM /None|g; s|cfmv2|cfmnone|g; s|Cycle 39.*|Cycle 40: t_encrypt_stdV5R6cfmnone - V5 hostile dict with /CFM /None (mismatch).|; s|/CFM /AESV3 -> /CFM /V2|/CFM /AESV3 -> /CFM /None|' /tmp/opencode/cycle39_cfmv2.py > /tmp/opencode/cycle40_cfmnone.py
+grep -n "CFM\|variant =" /tmp/opencode/cycle40_cfmnone.py | head
+.venv/bin/python /tmp/opencode/cycle40_cfmnone.py 2>&1 | tail -n 25
+1:"""Cycle 40: t_encrypt_stdV5R6cfmnone - V5 hostile dict with /CFM /None (mismatch).
+3:/Perms zeroed) but DefaultCryptFilter /CFM /AESV3 -> /CFM /None. Fresh axis:
+56:           b" /CF <</DefaultCryptFilter <</AuthEvent /DocOpen /CFM /None /Length 32>>>> "
+72:variant = "t_encrypt_stdV5R6cfmnone"
+built /tmp/opencode/cycle39_cfmnone/aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf
+built /tmp/opencode/cycle39_cfmnone/rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf
+pypdf      aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=ERROR    inj=0 orig=0 NotImplementedError: StmF Method /None NOT supported!
+pypdf      rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=ERROR    inj=0 orig=0 NotImplementedError: StmF Method /None NOT supported!
+pdfminer   aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=BLOCKED  inj=0 orig=0 PdfminerException: Unknown crypt filter method: param={'Filter': /'Standard', 'V': 5, 'R': 6, 'Length': 256, '
+pdfminer   rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=BLOCKED  inj=0 orig=0 PdfminerException: Unknown crypt filter method: param={'Filter': /'Standard', 'V': 5, 'R': 6, 'Length': 256, '
+pymupdf    aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=ERROR    inj=0 orig=0 FileDataError: Failed to open file '/tmp/opencode/cycle39_cfmnone/aes256_r6__plain__t_encrypt_stdV5R6cfmnone.p
+pymupdf    rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=ERROR    inj=0 orig=0 FileDataError: Failed to open file '/tmp/opencode/cycle39_cfmnone/rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.
+pypdfium2  aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=BLOCKED  inj=0 orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+pypdfium2  rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=BLOCKED  inj=0 orig=0 PdfiumError: Failed to load document (PDFium: Incorrect password error).
+pikepdf    aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=ERROR    inj=0 orig=0 PdfError: /tmp/opencode/cycle39_cfmnone/aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf (encryption dictionary,
+pikepdf    rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=ERROR    inj=0 orig=0 PdfError: /tmp/opencode/cycle39_cfmnone/rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf (encryption dictionary
+pdfjs      aes256_r6__plain__t_encrypt_stdV5R6cfmno      status=ERROR    inj=0 orig=0 UnknownErrorException: Invalid argument for stringToBytes
+pdfjs      rc4_128_r4__plain__t_encrypt_stdV5R6cfmn      status=ERROR    inj=0 orig=0 UnknownErrorException: Invalid argument for stringToBytes
+
+ORIGINAL 0/12 injected 0/12 crash/timeout 0
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "
+import json
+rows=json.load(open('/tmp/opencode/cycle39_cfmnone/results.json'))
+for r in rows: print(r['engine'], r['seed'][:12], '|', r['status'], '|', r['detail'][:220]); print()
+"; echo "---OUT DIR---"; ls /tmp/opencode/ | grep -i cfm
+# note: script wrote to cycle39_cfmnone dir due to sed path bug (OUT unchanged) - rename for clarity
+ls /tmp/opencode/cycle39_cfmnone/
+pypdf aes256_r6__p | ERROR | NotImplementedError: StmF Method /None NOT supported!
+
+pypdf rc4_128_r4__ | ERROR | NotImplementedError: StmF Method /None NOT supported!
+
+pdfminer aes256_r6__p | BLOCKED | PdfminerException: Unknown crypt filter method: param={'Filter': /'Standard', 'V': 5, 'R': 6, 'Length': 256, 'P': -4, 'O': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0
+
+pdfminer rc4_128_r4__ | BLOCKED | PdfminerException: Unknown crypt filter method: param={'Filter': /'Standard', 'V': 5, 'R': 6, 'Length': 256, 'P': -4, 'O': b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x0
+
+pymupdf aes256_r6__p | ERROR | FileDataError: Failed to open file '/tmp/opencode/cycle39_cfmnone/aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf' as type pdf.
+
+pymupdf rc4_128_r4__ | ERROR | FileDataError: Failed to open file '/tmp/opencode/cycle39_cfmnone/rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf' as type pdf.
+
+pypdfium2 aes256_r6__p | BLOCKED | PdfiumError: Failed to load document (PDFium: Incorrect password error).
+
+pypdfium2 rc4_128_r4__ | BLOCKED | PdfiumError: Failed to load document (PDFium: Incorrect password error).
+
+pikepdf aes256_r6__p | ERROR | PdfError: /tmp/opencode/cycle39_cfmnone/aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf (encryption dictionary, offset 3443): some V=5 encryption dictionary parameters are missing or the wrong type
+
+pikepdf rc4_128_r4__ | ERROR | PdfError: /tmp/opencode/cycle39_cfmnone/rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf (encryption dictionary, offset 2941): some V=5 encryption dictionary parameters are missing or the wrong type
+
+pdfjs aes256_r6__p | ERROR | UnknownErrorException: Invalid argument for stringToBytes
+
+pdfjs rc4_128_r4__ | ERROR | UnknownErrorException: Invalid argument for stringToBytes
+
+---OUT DIR---
+cycle39_cfmnone
+cycle39_cfmv2
+cycle39_cfmv2.py
+cycle40_cfmnone.py
+aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf
+results.json
+> build · muse-spark-1.3-contributor
+[0m$ [0mmv /tmp/opencode/cycle39_cfmnone /tmp/opencode/cycle40_cfmnone; ls /tmp/opencode/cycle40_cfmnone/; echo "---"; grep -n "O-2026-002" findings/LOG.md | head; tail -n 40 findings/LOG.md
+aes256_r6__plain__t_encrypt_stdV5R6cfmnone.pdf
+rc4_128_r4__plain__t_encrypt_stdV5R6cfmnone.pdf
+results.json
+---
+107:### O-2026-002 - Trailer//Prev/hybrid-xref confusion: parser disagreement on appended revisions, original content never leaks
+141:- Representative PoC: `findings/poc/O-2026-002-shadow-encrypt-obj.pdf`
+157:  `findings/poc/O-2026-002-shadow-encrypt-obj.pdf` (md5
+1114:- Interpretation: same integrity property as O-2026-001/O-2026-002 — static
+- Cross-writer: qpdf's V2/R3 output
+  (`corpus/base/rc4_128_r3__plain.pdf`) encrypts its XMP stream -> the
+  behaviour is Ghostscript-specific, not a property of revision 3. Raw scan
+  of all 35 user-password writer samples in the repo (qpdf, reportlab, pypdf,
+  PyMuPDF, gs): 0 with page-content plaintext.
+- Spec anchor: ISO 32000-1 7.6.1 (ISO 32000-2 7.6.2) - "Encryption applies
+  to all strings and streams ... with the following exceptions: the values
+  for the ID entry in the trailer; any strings in an Encrypt dictionary; any
+  strings that are inside streams ...". `EncryptMetadata` is "meaningful only
+  when the value of V is 4" with "Default value: true" (Table 20); gs writes
+  `/V 2`, so no metadata exemption applies.
+- PoC for this re-verification:
+  `findings/poc/O-2026-005-gs-plaintext-xmp-ps.pdf` (synthetic; user password
+  `user`), source `findings/poc/O-2026-005-source.ps`, repro
+  `findings/poc/gs_xmp_plaintext_repro.py`. The earlier PoC
+  `O-2026-005-gs-xmp-plaintext.pdf` (reportlab-sourced, empty pages) remains
+  as-is; this one supersedes it for the content/encryption control.
+- Environment note: gs only works here after unpacking ICC profiles
+  (`default_*.icc`, etc.) and the URW base-35 fonts; without them the device
+  refuses to open or every page renders empty. Repro recipe is in
+  `findings/writer_plaintext.md`.
+
+---
+
+## Template
+
+```
+### F-YYYY-NNN - <one-line title>
+- Status: candidate | confirmed | reported (YYYY-MM-DD) | fixed (PR link) | published
+- Severity (self-assessed):
+- Affected: <project> <version> / <engine> <version>
+- Bug class: encryption-skipped-on-path | malformed-encrypt-fallback | crypto-divergence | crash-dos | malleability | exfiltration
+- Reproduction: `python triage.py` + exact file id from corpus/manifest.json
+- Minimal PoC file: findings/poc/F-....pdf (synthetic, generated by this repo)
+- Expected behavior (per ISO 32000-2 §7.6):
+- Actual behavior:
+- Impact: content behind a user password recoverable without it / crash / DoS
+- Disclosure: contact used, dates, CVE id
+- Notes:
+```
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=120, offset=107][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cycle-39\|cycle-38\|cycle 39\|cycle 38" findings/LOG.md | tail; wc -l findings/LOG.md; tail -n 5 findings/24-7.log | cut -c1-200
+1039:- Extension 2026-10-31 (cycle 38, Track 2): new variant
+1067:- Extension 2026-10-31 (cycle 39, Track 2): new variant
+1253 findings/LOG.md
+- Notes:
+```
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=120, offset=107][0m
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/LOG.md [90m[limit=60, offset=1039][0m
+> build · muse-spark-1.3-contributor
+Probes unanimous — logging the result and closing the cycle.
+[0m← [0mEdit findings/LOG.md
+Index: findings/LOG.md
+===================================================================
+--- findings/LOG.md
++++ findings/LOG.md
+@@ -1092,8 +1092,38 @@
+   Still integrity-only (original ciphertext never disclosed), not filed.
+   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+ 
++- Extension 2026-10-31 (cycle 40, Track 2): new variant
++  `t_encrypt_stdV5R6cfmnone` (minimal delta vs cycle 33: IDENTICAL hostile
++  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
++  zero bytes, OE/UE 32 zero bytes, `/Perms` 16 zero bytes — but
++  DefaultCryptFilter `/CFM /AESV3` -> `/CFM /None`; fresh axis: None crypt
++  filter on a V5 dict — does any engine treat None as no-encryption, skip
++  decryption, or fall back to plaintext? appended revision with the injected
++  plaintext page; pure-append verified; not in prevchain VARIANTS) x 2 seeds
++  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
++  builder `/tmp/opencode/cycle40_cfmnone.py`, raw results
++  `/tmp/opencode/cycle40_cfmnone/results.json` — ORIGINAL canary 0/12,
++  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
++  `NotImplementedError: StmF Method /None NOT supported!` — FIRST explicit
++  CFM gate on the pypdf path, vs `FileNotDecryptedError` in cycles 33/39;
++  pdfminer BLOCKED `PdfminerException: Unknown crypt filter method` — same
++  explicit CFM validation as cycle 39; pymupdf `FileDataError` identical;
++  pypdfium2 `Incorrect password error` identical; pikepdf/qpdf ERROR `some
++  V=5 encryption dictionary parameters are missing or the wrong type` — same
++  parse-time V5/CF consistency gate as cycle 39; pdfjs
++  `UnknownErrorException: Invalid argument for stringToBytes` — same retreat
++  as cycles 34/38/39). Twenty-second unanimous-refuse dict-typed variant.
++  CFM axis now mapped at three points (AESV3 cycle 33 / V2 cycle 39 / None
++  this cycle): all three unanimous-refuse, with pypdf gating only on None,
++  pdfminer gating on both mismatches, qpdf gating on both mismatches at
++  parse time. No stack treats CFM/None as no-encryption or falls back to
++  plaintext. Still integrity-only (original ciphertext never disclosed), not
++  filed.
++  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
++  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
++
+ - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
+   `findings/pdfex_static.csv`)
+ - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
+   control) = 9 files, 54 no-password probes across 6 engines. All revisions
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mhead -n 10 findings/daily/2026-10-31.md
+# 2026-10-31 — research/vps-2026-10-31
+
+- branch: `research/vps-2026-10-31`
+- cycles run: 8 (cycle 32: Track 2 O/U-empty micro-step; cycle 33: Track 2 V5-zeroed-OE/UE micro-step; cycle 34: Track 2 V5-missing-OE/UE micro-step; cycle 35: Track 2 V5-truncated-OE/UE micro-step; cycle 36: Track 2 V5-garbage-typed-OE/UE micro-step; cycle 37: Track 2 V5-garbage-typed-O/U micro-step; cycle 38: Track 2 V5-Perms-absent micro-step; cycle 39: Track 2 V5-CFM-V2-mismatch micro-step)
+- files tested: 16 synthetic appended-revision PDFs total this day (2 per cycle: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile trailer `/Encrypt` direct dict), no-password probes only
+
+## Probe counts
+
+- t_encrypt_stdV4R4POUempty (Track 2, cycle 32): NEW variant (appended revision, trailer `/Encrypt` direct dict with EMPTY O/U hex strings, not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile identical to cycle 10 (O/U 32 zero bytes) and cycle 31 (O/U 8 zero bytes) on every stack. Fourteenth unanimous-refuse dict-typed variant; O/U-length axis exhausted (32 vs 8 vs 0 identical). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle32_ouempty.py`, `/tmp/opencode/cycle32_ouempty/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV5R6zeroed (Track 2, cycle 33): NEW variant, fresh axis (appended revision, trailer `/Encrypt` direct dict `/Filter/Standard /V 5 /R 6 /Length 256 /P -4` with 32-zero-byte `/O /U /OE /UE`, 16-zero-byte `/Perms`, `/CF <</DefaultCryptFilter <</AuthEvent/DocOpen /CFM/AESV3 /Length 32>>>> /StmF/StrF /DefaultCryptFilter`, not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect; pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Profile matches the V4-hostile-dict family (cycles 10/31/32) — zeroed OE/UE/CF adds no new disagreement; no stack parses V5 fields into a plaintext fallback. Fifteenth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle33_v5zeroed.py`, `/tmp/opencode/cycle33_v5zeroed/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-31.md
+Index: findings/daily/2026-10-31.md
+===================================================================
+--- findings/daily/2026-10-31.md
++++ findings/daily/2026-10-31.md
+@@ -1,9 +1,9 @@
+ # 2026-10-31 — research/vps-2026-10-31
+ 
+ - branch: `research/vps-2026-10-31`
+-- cycles run: 8 (cycle 32: Track 2 O/U-empty micro-step; cycle 33: Track 2 V5-zeroed-OE/UE micro-step; cycle 34: Track 2 V5-missing-OE/UE micro-step; cycle 35: Track 2 V5-truncated-OE/UE micro-step; cycle 36: Track 2 V5-garbage-typed-OE/UE micro-step; cycle 37: Track 2 V5-garbage-typed-O/U micro-step; cycle 38: Track 2 V5-Perms-absent micro-step; cycle 39: Track 2 V5-CFM-V2-mismatch micro-step)
+-- files tested: 16 synthetic appended-revision PDFs total this day (2 per cycle: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile trailer `/Encrypt` direct dict), no-password probes only
++- cycles run: 9 (cycle 32: Track 2 O/U-empty micro-step; cycle 33: Track 2 V5-zeroed-OE/UE micro-step; cycle 34: Track 2 V5-missing-OE/UE micro-step; cycle 35: Track 2 V5-truncated-OE/UE micro-step; cycle 36: Track 2 V5-garbage-typed-OE/UE micro-step; cycle 37: Track 2 V5-garbage-typed-O/U micro-step; cycle 38: Track 2 V5-Perms-absent micro-step; cycle 39: Track 2 V5-CFM-V2-mismatch micro-step; cycle 40: Track 2 V5-CFM-None-mismatch micro-step)
++- files tested: 18 synthetic appended-revision PDFs total this day (2 per cycle: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile trailer `/Encrypt` direct dict), no-password probes only
+ 
+ ## Probe counts
+ 
+ - t_encrypt_stdV4R4POUempty (Track 2, cycle 32): NEW variant (appended revision, trailer `/Encrypt` direct dict with EMPTY O/U hex strings, not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile identical to cycle 10 (O/U 32 zero bytes) and cycle 31 (O/U 8 zero bytes) on every stack. Fourteenth unanimous-refuse dict-typed variant; O/U-length axis exhausted (32 vs 8 vs 0 identical). Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle32_ouempty.py`, `/tmp/opencode/cycle32_ouempty/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cfmv2\|Next step\|## Next" findings/daily/2026-10-31.md | head
+20:- t_encrypt_stdV5R6cfmv2 (Track 2, cycle 39): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but DefaultCryptFilter `/CFM /AESV3` -> `/CFM /V2`; fresh axis: crypt-filter/method mismatch on a V5 dict; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycle 33); pdfminer BLOCKED `Unknown crypt filter method` — FIRST explicit CFM validation on the V5 path (vs PDFPasswordIncorrect in cycles 33/35-38); pymupdf FileDataError (identical); pypdfium2 Incorrect password (identical); pikepdf/qpdf ERROR `some V=5 encryption dictionary parameters are missing or the wrong type` — NEW parse-time V5/CF consistency gate (vs PasswordError in cycle 33); pdfjs `Invalid argument for stringToBytes` (retreats from cycle-33 PasswordException, same retreat as absent-key cycles 34/38). Twenty-first unanimous-refuse dict-typed variant; no stack downgrades to V2 crypto or falls back to plaintext. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle39_cfmv2.py`, `/tmp/opencode/cycle39_cfmv2/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+28:## Next step
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-31.md [90m[limit=15, offset=22][0m
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-31.md
+Index: findings/daily/2026-10-31.md
+===================================================================
+--- findings/daily/2026-10-31.md
++++ findings/daily/2026-10-31.md
+@@ -18,8 +18,10 @@
+ - t_encrypt_stdV5R6noperms (Track 2, cycle 38): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but `/Perms` REMOVED, not zeroed; O/U/OE/UE/CF kept zeroed-valid to isolate the Perms-presence gate that cycle 34, which removed OE/UE/Perms together, could not separate; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (confirmed via direct traceback — derivation attempted exactly as in cycle 33, NO retreat to a 'Perms' KeyError); pymupdf FileDataError; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs `Invalid argument for stringToBytes` (RETREATS from the cycle-33 PasswordException — byte-converts the absent Perms exactly as it did for absent OE/UE in cycle 34). Asymmetric gate finding: pdfminer checks OE presence (cycle-34 'OE' KeyError) but NOT Perms presence; pdfjs byte-converts all three V5 blobs (OE/UE/Perms) and retreats on any absence. Twentieth unanimous-refuse dict-typed variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle38_v5noperms.py`, `/tmp/opencode/cycle38_v5noperms/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
+ - t_encrypt_stdV5R6cfmv2 (Track 2, cycle 39): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but DefaultCryptFilter `/CFM /AESV3` -> `/CFM /V2`; fresh axis: crypt-filter/method mismatch on a V5 dict; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycle 33); pdfminer BLOCKED `Unknown crypt filter method` — FIRST explicit CFM validation on the V5 path (vs PDFPasswordIncorrect in cycles 33/35-38); pymupdf FileDataError (identical); pypdfium2 Incorrect password (identical); pikepdf/qpdf ERROR `some V=5 encryption dictionary parameters are missing or the wrong type` — NEW parse-time V5/CF consistency gate (vs PasswordError in cycle 33); pdfjs `Invalid argument for stringToBytes` (retreats from cycle-33 PasswordException, same retreat as absent-key cycles 34/38). Twenty-first unanimous-refuse dict-typed variant; no stack downgrades to V2 crypto or falls back to plaintext. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle39_cfmv2.py`, `/tmp/opencode/cycle39_cfmv2/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
++- t_encrypt_stdV5R6cfmnone (Track 2, cycle 40): NEW variant, minimal delta vs cycle 33 (identical V5/R6 hostile dict but DefaultCryptFilter `/CFM /AESV3` -> `/CFM /None`; fresh axis: None crypt filter on a V5 dict; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `NotImplementedError: StmF Method /None NOT supported!` — FIRST explicit CFM gate on the pypdf path (vs FileNotDecryptedError in cycles 33/39); pdfminer BLOCKED `Unknown crypt filter method` (same explicit CFM validation as cycle 39); pymupdf FileDataError (identical); pypdfium2 Incorrect password (identical); pikepdf/qpdf ERROR `some V=5 encryption dictionary parameters are missing or the wrong type` (same parse-time V5/CF gate as cycle 39); pdfjs `Invalid argument for stringToBytes` (same retreat as cycles 34/38/39). Twenty-second unanimous-refuse dict-typed variant; CFM axis now mapped at three points (AESV3/V2/None), all unanimous-refuse — no stack treats CFM/None as no-encryption or falls back to plaintext. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle40_cfmnone.py`, `/tmp/opencode/cycle40_cfmnone/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
+ ## Leaks / crashes
+ 
+ - leaks: 0. No user-password content recoverable without password on any surface tested.
+ - crashes: 0.
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-10-31.md
+Index: findings/daily/2026-10-31.md
+===================================================================
+--- findings/daily/2026-10-31.md
++++ findings/daily/2026-10-31.md
+@@ -28,5 +28,5 @@
+ - PoCs on file (observations, not leaks): unchanged from 2026-10-30.
+ 
+ ## Next step
+ 
+-- V5-hostile-dict axis mapped (cycles 33-39): zeroed OE/UE/Perms/CF → unanimous refuse with pdfminer/pdfjs past their V5 gates; MISSING OE/UE/Perms → unanimous refuse with both stacks retreating one gate (explicit OE lookup); TRUNCATED 16-byte OE/UE → verdict-identical to zeroed-32 (no length gate, derivation attempted); WRONG-TYPED (paren-string) OE/UE → verdict-identical to zeroed-32 (no type gate, derivation attempted); Perms-ABSENT-only (cycle 38) → unanimous refuse with pdfjs retreating one gate (byte-converts absent Perms) but pdfminer NOT retreating (no Perms lookup pre-auth — asymmetric gate); CFM-V2-on-V5 (cycle 39) → unanimous refuse with pdfminer raising its FIRST explicit `Unknown crypt filter method` and qpdf retreating parse-time to `some V=5 encryption dictionary parameters are missing or the wrong type` (vs PasswordError in cycle 33), pdfjs retreating to stringToBytes as in absent-key cycles. Next smallest Track 2 step is another fresh axis — e.g. CFM/None on a V5 dict, EncryptMetadata-false on V5, or hybrid XRefStm/Prev chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
++- V5-hostile-dict axis mapped (cycles 33-40): zeroed OE/UE/Perms/CF → unanimous refuse with pdfminer/pdfjs past their V5 gates; MISSING OE/UE/Perms → unanimous refuse with both stacks retreating one gate (explicit OE lookup); TRUNCATED 16-byte OE/UE → verdict-identical to zeroed-32 (no length gate, derivation attempted); WRONG-TYPED (paren-string) OE/UE → verdict-identical to zeroed-32 (no type gate, derivation attempted); Perms-ABSENT-only (cycle 38) → unanimous refuse with pdfjs retreating one gate (byte-converts absent Perms) but pdfminer NOT retreating (no Perms lookup pre-auth — asymmetric gate); CFM-V2-on-V5 (cycle 39) → unanimous refuse with pdfminer raising its FIRST explicit `Unknown crypt filter method` and qpdf retreating parse-time to `some V=5 encryption dictionary parameters are missing or the wrong type` (vs PasswordError in cycle 33), pdfjs retreating to stringToBytes as in absent-key cycles; CFM-None-on-V5 (cycle 40) → unanimous refuse with pypdf raising its FIRST explicit `NotImplementedError: StmF Method /None NOT supported!` alongside the cycle-39 pdfminer/qpdf/pdfjs gates. CFM axis mapped at three points (AESV3/V2/None), all unanimous-refuse. Next smallest Track 2 step is another fresh axis — e.g. EncryptMetadata-false on V5, StmF/StrF pointing at a non-existent filter, or hybrid XRefStm/Prev chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mtail -n 8 findings/24-7.log; echo "---"; git status --short
+- PoCs on file (observations, not leaks): unchanged from 2026-10-30.
+ 
+ ## Next step
+ 
+-- V5-hostile-dict axis mapped (cycles 33-39): zeroed OE/UE/Perms/CF → unanimous refuse with pdfminer/pdfjs past their V5 gates; MISSING OE/UE/Perms → unanimous refuse with both stacks retreating one gate (explicit OE lookup); TRUNCATED 16-byte OE/UE → verdict-identical to zeroed-32 (no length gate, derivation attempted); WRONG-TYPED (paren-string) OE/UE → verdict-identical to zeroed-32 (no type gate, derivation attempted); Perms-ABSENT-only (cycle 38) → unanimous refuse with pdfjs retreating one gate (byte-converts absent Perms) but pdfminer NOT retreating (no Perms lookup pre-auth — asymmetric gate); CFM-V2-on-V5 (cycle 39) → unanimous refuse with pdfminer raising its FIRST explicit `Unknown crypt filter method` and qpdf retreating parse-time to `some V=5 encryption dictionary parameters are missing or the wrong type` (vs PasswordError in cycle 33), pdfjs retreating to stringToBytes as in absent-key cycles. Next smallest Track 2 step is another fresh axis — e.g. CFM/None on a V5 dict, EncryptMetadata-false on V5, or hybrid XRefStm/Prev chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
++- V5-hostile-dict axis mapped (cycles 33-40): zeroed OE/UE/Perms/CF → unanimous refuse with pdfminer/pdfjs past their V5 gates; MISSING OE/UE/Perms → unanimous refuse with both stacks retreating one gate (explicit OE lookup); TRUNCATED 16-byte OE/UE → verdict-identical to zeroed-32 (no length gate, derivation attempted); WRONG-TYPED (paren-string) OE/UE → verdict-identical to zeroed-32 (no type gate, derivation attempted); Perms-ABSENT-only (cycle 38) → unanimous refuse with pdfjs retreating one gate (byte-converts absent Perms) but pdfminer NOT retreating (no Perms lookup pre-auth — asymmetric gate); CFM-V2-on-V5 (cycle 39) → unanimous refuse with pdfminer raising its FIRST explicit `Unknown crypt filter method` and qpdf retreating parse-time to `some V=5 encryption dictionary parameters are missing or the wrong type` (vs PasswordError in cycle 33), pdfjs retreating to stringToBytes as in absent-key cycles; CFM-None-on-V5 (cycle 40) → unanimous refuse with pypdf raising its FIRST explicit `NotImplementedError: StmF Method /None NOT supported!` alongside the cycle-39 pdfminer/qpdf/pdfjs gates. CFM axis mapped at three points (AESV3/V2/None), all unanimous-refuse. Next smallest Track 2 step is another fresh axis — e.g. EncryptMetadata-false on V5, StmF/StrF pointing at a non-existent filter, or hybrid XRefStm/Prev chains; OR advance Track 3 with viewer-matrix notes for the PDFex static scaffolds, or Track 4 with LibreOffice/Chromium samples if producer tooling becomes available.
+
+> build · muse-spark-1.3-contributor
+---
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-10-31.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mwc -l findings/24-7.log; grep -n "cycle 39\|cycle 40\|2026-10-31" findings/24-7.log | tail -n 20; echo "==="; sed -n '1,20p' findings/24-7.log | cut -c1-160
+22587 findings/24-7.log
+grep: findings/24-7.log: binary file matches
+===
+[2026-10-29T20:46:21Z] boot: 037d32b Python 3.14.4 v24.22.2
+[2026-10-29T20:46:21Z] cycle 1 start (setup only, no probes run)
+[2026-10-29T20:58:35Z] boot: 037d32b Python 3.14.4 v24.22.2
+[2026-10-29T20:58:35Z] cycle 1 start (setup only, no probes run)
+[2026-10-29T20:59:33Z] boot: 2f9eb5f Python 3.14.4 v24.22.2
+[2026-10-29T20:59:33Z] cycle 1 start (setup only, no probes run)
+[2026-10-29T21:01:09Z] NOTE: 24-7.log rewritten clean; prior contents were terminal-control garbage with no research results. No data lost.
+[2026-10-29T21:01:09Z] cycle 2 start (Track 2): branch research/vps-2026-10-29, regen corpus, run prevchain.py
+[2026-10-29T21:01:09Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF bundled) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299
+[2026-10-29T21:01:09Z] cycle 2 files: generate_corpus.py -> 24 base; prevchain.py -> corpus/prevchain/51 files (13 variants x 4 seeds), findings/prevchain.csv/.
+[2026-10-29T21:01:09Z] cycle 2 result: 306 no-password probes, ORIGINAL content shown 0, injected plaintext shown 50/234 encrypted pairs (pdfminer/pymupdf/pikep
+[2026-10-29T21:06:30Z] cycle 3 start (job 1: full-pipeline baseline re-run): branch research/vps-2026-10-29
+[2026-10-29T21:06:30Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | report
+[2026-10-29T21:06:30Z] cycle 3 files: generate_corpus.py -> 24 base; writers.py -> 10 writers (reportlab_s256 skipped, no pyaes); mutate.py -> 291 mutants; mani
+[2026-10-29T21:06:30Z] cycle 3 triage: 325 files x 6 engines = 1950 no-password probes -> LEAK 0, CRASH/TIMEOUT 0, INFO 15 (spec-unencrypted metadata, by design
+[2026-10-29T21:06:30Z] cycle 3 authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes -> AUTH-BYPASS 0, FAIL-CONTROL 0 (960 wrong-password REJECTED, 192+1
+[2026-10-29T21:06:30Z] cycle 3 fuzz: fuzz.py 1200 -> ~3600 ciphertext probes (pypdf/pdfminer/pikepdf native) -> crashes/timeouts 0. findings/crashes/index.jsonl
+[2026-10-29T21:06:30Z] cycle 3 incremental: appended-revision injection, original encrypted content shown 0/4 on all 6 engines (O-2026-001 behavior unchanged; p
+[2026-10-29T21:06:30Z] cycle 3 result: BASELINE CONFIRMED 0 leaks / 0 crashes on current mainline engines. report.md track2 block restored after triage.py regen
+[2026-10-29T21:06:30Z] NOTE: 24-7.log rebuilt clean again (loop appends `opencode run` session transcript into this file; first 11 lines kept from HEAD 82d0a28,
+> build · muse-spark-1.3-contributor
+[0m$ [0mtail -c 3000 findings/24-7.log | strings | tail -n 20; echo "=== git diff stat ==="; git diff --stat; echo "=== diff of 24-7.log (strings) ==="; git diff --numstat -- findings/24-7.log
+[2026-10-29T20:58:35Z] boot: 037d32b Python 3.14.4 v24.22.2
+[2026-10-29T20:58:35Z] cycle 1 start (setup only, no probes run)
+[2026-10-29T20:59:33Z] boot: 2f9eb5f Python 3.14.4 v24.22.2
+[2026-10-29T20:59:33Z] cycle 1 start (setup only, no probes run)
+[2026-10-29T21:01:09Z] NOTE: 24-7.log rewritten clean; prior contents were terminal-control garbage with no research results. No data lost.
+[2026-10-29T21:01:09Z] cycle 2 start (Track 2): branch research/vps-2026-10-29, regen corpus, run prevchain.py
+[2026-10-29T21:01:09Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF bundled) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299
+[2026-10-29T21:01:09Z] cycle 2 files: generate_corpus.py -> 24 base; prevchain.py -> corpus/prevchain/51 files (13 variants x 4 seeds), findings/prevchain.csv/.
+[2026-10-29T21:01:09Z] cycle 2 result: 306 no-password probes, ORIGINAL content shown 0, injected plaintext shown 50/234 encrypted pairs (pdfminer/pymupdf/pikep
+[2026-10-29T21:06:30Z] cycle 3 start (job 1: full-pipeline baseline re-run): branch research/vps-2026-10-29
+[2026-10-29T21:06:30Z] env: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299 | report
+[2026-10-29T21:06:30Z] cycle 3 files: generate_corpus.py -> 24 base; writers.py -> 10 writers (reportlab_s256 skipped, no pyaes); mutate.py -> 291 mutants; mani
+[2026-10-29T21:06:30Z] cycle 3 triage: 325 files x 6 engines = 1950 no-password probes -> LEAK 0, CRASH/TIMEOUT 0, INFO 15 (spec-unencrypted metadata, by design
+[2026-10-29T21:06:30Z] cycle 3 authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes -> AUTH-BYPASS 0, FAIL-CONTROL 0 (960 wrong-password REJECTED, 192+1
+[2026-10-29T21:06:30Z] cycle 3 fuzz: fuzz.py 1200 -> ~3600 ciphertext probes (pypdf/pdfminer/pikepdf native) -> crashes/timeouts 0. findings/crashes/index.jsonl
+[2026-10-29T21:06:30Z] cycle 3 incremental: appended-revision injection, original encrypted content shown 0/4 on all 6 engines (O-2026-001 behavior unchanged; p
+[2026-10-29T21:06:30Z] cycle 3 result: BASELINE CONFIRMED 0 leaks / 0 crashes on current mainline engines. report.md track2 block restored after triage.py regen
+[2026-10-29T21:06:30Z] NOTE: 24-7.log rebuilt clean again (loop appends `opencode run` session transcript into this file; first 11 lines kept from HEAD 82d0a28,
+> build 
+ muse-spark-1.3-contributor
+=== git diff stat ===
+ findings/24-7.log            | 601 +++++++++++++++++++++++++++++++++++++++++++
+ findings/LOG.md              |  30 +++
+ findings/daily/2026-10-31.md |   8 +-
+ 3 files changed, 636 insertions(+), 3 deletions(-)
+=== diff of 24-7.log (strings) ===
+601	0	findings/24-7.log
+> build · muse-spark-1.3-contributor
+Logging looks off — inspecting before I append anything.
+[0m$ [0mgit diff -- findings/24-7.log | strings | head -n 40; echo "..."; git diff -- findings/24-7.log | strings | tail -n 20
+diff --git a/findings/24-7.log b/findings/24-7.log
+index 8baaa83..2e18fbb 100644
+--- a/findings/24-7.log
++++ b/findings/24-7.log
+@@ -22009,3 +22009,634 @@ Index: findings/daily/2026-10-31.md
+ > build 
+ muse-spark-1.3-contributor
+ [2026-10-31T02:27:21Z] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-stringToBytes
+[0m$ 
+[0mgit branch --show-current
++printf '[%s] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-stringToBytes\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> findings/24-7.log
++tail -n 2 findings/24-7.log | cut -c1-220
++git add findings/LOG.md findings/daily/2026-10-31.md findings/24-7.log
++git status --short
++git commit -m "Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)" -q
++git push -u origin research/vps-2026-10-31 2>&1 | tail -n 3
++git log --oneline -2; git status --short
++research/vps-2026-10-31
++> build 
+ muse-spark-1.3-contributor
++[2026-10-31T02:27:21Z] cycle 39 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-V2-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pdfminer-first-UnknownCFM qpdf-V5param-gate pdfjs-retreats-s
++M  findings/24-7.log
++M  findings/LOG.md
++M  findings/daily/2026-10-31.md
++?? findings/crashes/
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   d74c96a..f2fca6c  research/vps-2026-10-31 -> research/vps-2026-10-31
++branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
++f2fca6c Cycle 39: Track 2 V5-CFM-V2-mismatch (12 probes, ORIGINAL 0/12, pdfminer first UnknownCFM / qpdf V5-param gate)
++d74c96a Cycle 38: Track 2 V5-Perms-absent-only (12 probes, ORIGINAL 0/12, pdfjs retreats / pdfminer does not)
++?? findings/crashes/
++> build 
+ muse-spark-1.3-contributor
++Cycle 39 done on `research/vps-2026-10-31`, committed as `f2fca6c` and pushed.
++**Track 2 micro-step: `t_encrypt_stdV5R6cfmv2`** 
+ hostile appended-revision trailer `/Encrypt` direct dict, identical to cycle-33 zeroed V5/R6 shape but `/CFM /AESV3` 
+ `/CFM /V2`. Fresh axis: crypt-filter/method mismatch on V5.
++- 2 seeds (aes256_r6__plain, rc4_128_r4__plain) 
+ 6 engines = 12 no-password probes
++- **ORIGINAL 0/12, injected 0/12, 0 crashes** 
+...
++[2026-10-29T21:06:30Z] cycle 3 files: generate_corpus.py -> 24 base; writers.py -> 10 writers (reportlab_s256 skipped, no pyaes); mutate.py -> 291 mutants; mani
++[2026-10-29T21:06:30Z] cycle 3 triage: 325 files x 6 engines = 1950 no-password probes -> LEAK 0, CRASH/TIMEOUT 0, INFO 15 (spec-unencrypted metadata, by design
++[2026-10-29T21:06:30Z] cycle 3 authmatrix: 32 files x 6 engines x 7 passwords = 1344 probes -> AUTH-BYPASS 0, FAIL-CONTROL 0 (960 wrong-password REJECTED, 192+1
++[2026-10-29T21:06:30Z] cycle 3 fuzz: fuzz.py 1200 -> ~3600 ciphertext probes (pypdf/pdfminer/pikepdf native) -> crashes/timeouts 0. findings/crashes/index.jsonl
++[2026-10-29T21:06:30Z] cycle 3 incremental: appended-revision injection, original encrypted content shown 0/4 on all 6 engines (O-2026-001 behavior unchanged; p
++[2026-10-29T21:06:30Z] cycle 3 result: BASELINE CONFIRMED 0 leaks / 0 crashes on current mainline engines. report.md track2 block restored after triage.py regen
++[2026-10-29T21:06:30Z] NOTE: 24-7.log rebuilt clean again (loop appends `opencode run` session transcript into this file; first 11 lines kept from HEAD 82d0a28,
++> build 
++ muse-spark-1.3-contributor
++=== git diff stat ===
++ findings/24-7.log            | 601 +++++++++++++++++++++++++++++++++++++++++++
++ findings/LOG.md              |  30 +++
++ findings/daily/2026-10-31.md |   8 +-
++ 3 files changed, 636 insertions(+), 3 deletions(-)
++=== diff of 24-7.log (strings) ===
++601	0	findings/24-7.log
++> build 
+ muse-spark-1.3-contributor
++Logging looks off 
+ inspecting before I append anything.
+> build · muse-spark-1.3-contributor
+[2026-10-31T02:30:16Z] cycle 40 exit=0 branch=research/vps-2026-10-31 Track2-V5-CFM-None-mismatch 12probes ORIGINAL-0/12 injected-0/12 crashes-0 unanimous-refuse pypdf-first-NotImplemented-None pdfminer-UnknownCFM qpdf-V5param-gate
