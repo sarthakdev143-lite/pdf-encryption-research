@@ -900,6 +900,31 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Still integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 33, Track 2): new variant
+  `t_encrypt_stdV5R6zeroed` (fresh V5 axis: hostile trailer `/Encrypt`
+  direct dict `/Filter/Standard /V 5 /R 6 /Length 256 /P -4` with 32-zero-
+  byte `/O /U /OE /UE`, 16-zero-byte `/Perms`, and `/CF
+  <</DefaultCryptFilter <</AuthEvent/DocOpen /CFM/AESV3 /Length 32>>>>`
+  `/StmF /DefaultCryptFilter /StrF /DefaultCryptFilter` on an appended
+  revision with the injected plaintext page; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle33_v5zeroed.py`, raw results
+  `/tmp/opencode/cycle33_v5zeroed/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PasswordError: invalid password`; pdfjs `PasswordException: No password
+  given`). Fifteenth unanimous-refuse dict-typed variant. Nuance vs the
+  cycle-12 V4+CF dict: pdfminer reaches the same `PDFPasswordIncorrect`
+  gate (the CF/StmF triple is what moves it past the `'StmF'` KeyError,
+  V4-vs-V5 changes nothing); all other stacks refuse with their unchanged
+  password errors. No stack parses zeroed V5 OE/UE into a plaintext
+  fallback. Still integrity-only (original ciphertext never disclosed),
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
