@@ -876,6 +876,30 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 32, Track 2): new variant
+  `t_encrypt_stdV4R4POUempty` (second `/O`-`/U`-length probe, EMPTY strings:
+  cycle-10 hostile dict shape — `/Filter/Standard /V 4 /R 4 /P -4` — but
+  `/O <> /U <>` (zero-length hex) instead of 32 zero bytes, still missing
+  Length/OE/UE/Perms/CF/StmF/StrF, direct-in-trailer dict on an appended
+  revision with the injected plaintext page; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle32_ouempty.py`, raw results
+  `/tmp/opencode/cycle32_ouempty/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `'StmF'` KeyError; pymupdf
+  `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PasswordError: invalid password`; pdfjs `UnknownErrorException: invalid
+  key length`). Verdict profile IDENTICAL to cycle 10 (O/U 32 zero bytes)
+  and cycle 31 (O/U 8 zero bytes) on every stack — not one error string
+  moves: no stack treats empty O/U as absent, divides by zero-length, or
+  falls back to plaintext; the O/U VALUE/LENGTH is never reached because
+  pdfminer still stops at the CF/StmF lookup and pdfjs at key-length
+  validation. Fourteenth unanimous-refuse dict-typed variant; the
+  O/U-length axis is now exhausted (32 vs 8 vs 0 identical everywhere).
+  Still integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
