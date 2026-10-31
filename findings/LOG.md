@@ -1123,6 +1123,38 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-31 (cycle 41, Track 2): new variant
+  `t_encrypt_stdV5R6stmfdangle` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, OE/UE 32 zero bytes, `/Perms` 16 zero bytes,
+  `/CF <</DefaultCryptFilter <</AuthEvent /DocOpen /CFM /AESV3 /Length 32>>>>`
+  kept valid — but `/StmF /StrF /DefaultCryptFilter` ->
+  `/StmF /NoSuchFilter /StrF /NoSuchFilter`; fresh axis: StmF/StrF filter-name
+  resolution on a V5 dict — does any engine ignore the dangling name, fall back
+  to the default filter, or fall back to plaintext? appended revision with the
+  injected plaintext page; pure-append verified; not in prevchain VARIANTS) x 2
+  seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle41_stmfdangle.py`, raw results
+  `/tmp/opencode/cycle41_stmfdangle/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `PdfReadError: Crypt filter /NoSuchFilter is missing from /CF or not a
+  dictionary` — FIRST explicit StmF-resolution gate on the pypdf path, vs
+  `FileNotDecryptedError` in cycles 33/39 and `NotImplementedError` in cycle
+  40; pdfminer BLOCKED `PdfminerException: Undefined crypt filter` — NEW
+  explicit filter-name resolution gate on the V5 path, distinct from the
+  `Unknown crypt filter method` CFM validation of cycles 39/40; pymupdf
+  `FileDataError` identical; pypdfium2 `Incorrect password error` identical;
+  pikepdf `PasswordError` identical; pdfjs `PasswordException: No password
+  given` — returns to the cycle-33 verdict, NO retreat to stringToBytes).
+  Twenty-third unanimous-refuse dict-typed variant. StmF/StrF axis finding:
+  pypdf and pdfminer both validate that StmF/StrF names resolve inside /CF
+  (one at dict parse, one at derivation) while the other four stacks refuse
+  identically either way; no stack ignores the dangling name or falls back to
+  plaintext. Still integrity-only (original ciphertext never disclosed), not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
