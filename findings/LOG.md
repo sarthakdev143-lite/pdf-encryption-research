@@ -1184,6 +1184,38 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 43, Track 2): new variant
+  `t_encrypt_stdV5R6stmfmirror` (minimal delta vs cycles 33/41/42: IDENTICAL
+  hostile V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`,
+  O/U/OE/UE zeroed, `/Perms` zeroed,
+  `/CF <</DefaultCryptFilter <</AuthEvent /DocOpen /CFM /AESV3 /Length 32>>>>`
+  kept valid — but `/StmF /NoSuchFilter` (dangling) `/StrF /DefaultCryptFilter`
+  (valid); mirror-split axis: StmF-dangling + StrF-valid, the mirror of cycle
+  42 (StmF-valid + StrF-dangling) — does the dangling-StmF gate differ from
+  the dangling-StrF gate? appended revision with the injected plaintext page;
+  pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle43_stmfmirror.py`, raw results
+  `/tmp/opencode/cycle43_stmfmirror/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `PdfReadError: Crypt filter /NoSuchFilter is missing from /CF or not a
+  dictionary` — IDENTICAL StmF-resolution gate as cycles 41/42, still one
+  gate for either dangling name; pdfminer BLOCKED `PdfminerException:
+  Unsupported crypt filter` — IDENTICAL to cycle 42 (full-error compare
+  confirmed across both seeds): the two mirror splits resolve through the
+  SAME gate, so pdfminer distinguishes both-dangling (`Undefined crypt
+  filter`, cycle 41) from exactly-one-dangling (`Unsupported crypt filter`,
+  cycles 42/43) but NOT StmF-dangling from StrF-dangling; pymupdf
+  `FileDataError` identical; pypdfium2 `Incorrect password error` identical;
+  pikepdf `PasswordError` identical; pdfjs `PasswordException: No password
+  given` identical, NO retreat). Twenty-fifth unanimous-refuse dict-typed
+  variant. StmF/StrF axis now mapped at all four points (valid-valid cycle 33
+  / dangling-dangling cycle 41 / valid-dangling cycle 42 / dangling-valid this
+  cycle), all unanimous-refuse — no stack honors the one valid name, falls
+  back to the default filter, or falls back to plaintext. Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
