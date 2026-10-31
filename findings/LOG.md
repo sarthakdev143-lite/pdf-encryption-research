@@ -1007,6 +1007,35 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-31 (cycle 37, Track 2): new variant
+  `t_encrypt_stdV5R6garbageOU` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict, but with `/O /U` as WRONG-TYPED literal paren strings
+  (`(GARBAGE-O-1111111111111111111111)` / `(GARBAGE-U-2222222222222222222222)`)
+  instead of 32-zero-byte hex strings; OE/UE/Perms/CF kept zeroed-valid, so
+  the wrong-typing is isolated to O/U; appended revision with the injected
+  plaintext page; pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle37_v5garbageOU.py`, raw results
+  `/tmp/opencode/cycle37_v5garbageOU/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError` (harness status ERROR, clean open failure, no content);
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`). Verdict profile
+  IDENTICAL to cycle 33 (zeroed V5) on every stack — NO validation-step
+  movement: pdfminer attempts derivation against the mistyped O/U rather
+  than stopping at a missing-key gate, mirroring the cycle-36 OE/UE
+  wrong-typing result. No stack type-checks O/U hex-vs-string or falls back
+  to plaintext. The V5 O/U axis is now mapped at four points (32 zeroed hex
+  cycles 10/33 / 8 truncated cycle 31 / empty cycle 32 / present-wrong-typed
+  this cycle), all unanimous-refuse — completing the V5 type-axis pair
+  started in cycle 36 (OE/UE) and closing the O/U type question alongside
+  the V4 length axis. Nineteenth unanimous-refuse dict-typed variant. Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
