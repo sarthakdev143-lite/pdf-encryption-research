@@ -1868,3 +1868,30 @@ empty-page caveat above.**
   disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 62, Track 2): new variant
+  `t_encrypt_stdV5indirect` (appended plaintext page exactly like the cycle-33
+  baseline — new Catalog/Pages/Page/Contents n..n+3 — but the IDENTICAL V5/R6
+  hostile dict bytes (zeroed O/U/OE/UE/Perms, AESV3 DefaultCryptFilter,
+  StmF/StrF valid) placed as an INDIRECT object (n+4) with the trailer
+  pointing `/Encrypt n+4 0 R /Root N 0 R /Prev <orig>` instead of a direct
+  inline dict; fresh axis: direct-vs-indirect placement; the V4 analogue was
+  cycle 13 shadow_fulldict, verdict-identical to its cycle-12 direct
+  baseline; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle62_indirect.py`, raw results
+  `/tmp/opencode/cycle62_indirect/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PasswordError: invalid password`; pdfjs `PasswordException: No password
+  given`). Verdict profile IDENTICAL to the cycle-33 direct baseline on
+  every stack: indirect placement changes nothing observable — no engine
+  falls back to the original-via-`/Prev` dict, type-checks the indirect ref
+  away, or treats it as no-encryption; the shadow dict's shape is accepted
+  far enough to attempt auth against zeroed O/U and refuse. Mirrors the
+  cycle-13 V4 direct-vs-indirect finding, now confirmed for V5/R6.
+  Forty-fourth unanimous-refuse dict-typed variant. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
