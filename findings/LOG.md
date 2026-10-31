@@ -57,7 +57,8 @@ One entry per candidate. Keep everything reproducible from self-generated files.
 
 - Status: **confirmed + fix validated** - report drafted at
   `findings/reports/reportlab-aes256.md`; filed publicly as
-  [reportlab-mirror#11](https://github.com/MrBitBucket/reportlab-mirror/issues/11) on 2026-11-01 (interop bug, no confidentiality impact, so public filing; patch offered in the issue)
+  [reportlab-mirror#11](https://github.com/MrBitBucket/reportlab-mirror/issues/11) on 2026-11-01 (interop bug, no confidentiality impact, so public filing); fix PR opened as
+  [reportlab-mirror#12](https://github.com/MrBitBucket/reportlab-mirror/pull/12) on 2026-11-01
 - Severity (self-assessed): Medium (interoperability; no confidentiality impact)
 - Affected: reportlab 5.1.0, `StandardEncryption(strength=256)` (AES-256, R5)
 - Bug class: writer-side encryption conformance bug
