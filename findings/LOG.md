@@ -1695,3 +1695,38 @@ empty-page caveat above.**
   integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 56, Track 2): new variant
+  `t_encrypt_stdV5noU` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/U`
+  REMOVED — U-absent on an otherwise-V5 dict (`/Filter/Standard /V 5 /R 6
+  /Length 256 /P -4`, O/OE/UE zeroed, Perms zeroed, AESV3 CF + StmF/StrF
+  valid); fresh axis: U-presence, mirror of the cycle-55 O-absent step;
+  not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle56_noU.py`, raw results
+  `/tmp/opencode/cycle56_noU/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `PdfReadError: /U entry of the encryption dictionary is missing` — FIRST
+  explicit U-presence gate on the pypdf path, mirroring the cycle-55 `/O`
+  and cycle-54 `/R` gates (vs `FileNotDecryptedError` in cycle 33);
+  pdfminer BLOCKED `'U'` KeyError — retreats from the cycle-33
+  `PDFPasswordIncorrect` (confirmed via direct traceback:
+  `pdfdocument.py` `init_params` line 364 `str_value(self.param["U"])`,
+  the U analogue of the cycle-55 `'O'`, cycle-54 `'R'`, cycle-34 `'OE'`
+  and cycle-45 `'StmF'` KeyError retreats: U is looked up before
+  derivation); pymupdf `FileDataError` identical to cycle 33; pypdfium2
+  `Incorrect password` identical; pikepdf/qpdf ERROR `some encryption
+  dictionary parameters are missing or the wrong type` at the
+  encryption-dictionary offset — the cycle-39 parse-time gate, retreating
+  from the cycle-33 `PasswordError`; pdfjs ERROR `Invalid argument for
+  stringToBytes` — RETREATS from the cycle-33 `PasswordException`
+  (byte-converts absent U exactly as for absent O in cycle 55, absent
+  OE/UE in cycle 34 and absent Perms in cycle 38), unlike the cycle-54
+  R-absent and cycle-45 CF-absent cases where pdfjs does NOT retreat.
+  Thirty-eighth unanimous-refuse dict-typed variant; U-presence axis first
+  point mapped and O/U-presence pair now complete (both O-absent and
+  U-absent refuse one gate earlier on pypdf/pdfminer/qpdf/pdfjs; only
+  pymupdf/pypdfium2 verdict-identical to baseline on both). Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
