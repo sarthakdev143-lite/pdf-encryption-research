@@ -1606,3 +1606,34 @@ empty-page caveat above.**
   Still integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 53, Track 2): new variant
+  `t_encrypt_stdV5nov` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/V 5`
+  REMOVED — V-absent on an otherwise-V5 dict (`/Filter/Standard /R 6 /Length
+  256 /P -4`, O/U/OE/UE zeroed, Perms zeroed, AESV3 CF + StmF/StrF valid);
+  fresh axis: V-presence; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle53_vabsent.py`, raw results
+  `/tmp/opencode/cycle53_vabsent/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `NotImplementedError: Encryption V=0 NOT supported` — missing V defaults
+  to V=0 on the pypdf path, IDENTICAL to the cycle-5 stdfilter-no-keys
+  verdict, retreating from the cycle-33 `FileNotDecryptedError`; pdfminer
+  BLOCKED `Unknown algorithm` with the mistyped param echoed — the cycle-5
+  algorithm branch, NOT the V4/V5 CFM/CF gates: without V, pdfminer never
+  selects a handler class (`SECURITY_HANDLERS` keyed by V) so R=6/CFM-AESV3
+  are never validated; pymupdf `ValueError: document closed or encrypted`
+  (vs `FileDataError` in cycle 33 — same refuse, thinner message; the only
+  stack whose string moves without a new gate); pypdfium2 `Incorrect
+  password error` identical; pikepdf/qpdf ERROR `some encryption dictionary
+  parameters are missing or the wrong type` at the encryption-dictionary
+  offset — the cycle-39 parse-time V5/CF consistency gate, retreating from
+  the cycle-33 `PasswordError`; pdfjs ERROR `unsupported encryption
+  algorithm` — IDENTICAL to cycle 5, retreating from the cycle-33
+  `PasswordException`). Thirty-fifth unanimous-refuse dict-typed variant.
+  V-presence axis first point mapped: absent-V drops every V5-field gate
+  and refuses at the earliest shape check on all six — no stack infers V
+  from R/CF, defaults to V5 crypto, or falls back to plaintext. Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
