@@ -1637,3 +1637,31 @@ empty-page caveat above.**
   integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 54, Track 2): new variant
+  `t_encrypt_stdV5nor` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/R 6`
+  REMOVED — R-absent on an otherwise-V5 dict (`/Filter/Standard /V 5 /Length
+  256 /P -4`, O/U/OE/UE zeroed, Perms zeroed, AESV3 CF + StmF/StrF valid);
+  fresh axis: R-presence; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle54_rabsent.py`, raw results
+  `/tmp/opencode/cycle54_rabsent/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `PdfReadError: /R entry of the encryption dictionary is missing` — FIRST
+  explicit R-presence gate on the pypdf path (vs `FileNotDecryptedError` in
+  cycle 33); pdfminer BLOCKED `'R'` KeyError — retreats from the cycle-33
+  `PDFPasswordIncorrect` (the R analogue of the cycle-34 `'OE'` and cycle-45
+  `'StmF'` KeyError retreats: R is looked up before derivation); pymupdf
+  `FileDataError` identical to cycle 33; pypdfium2 `Incorrect password`
+  identical; pikepdf/qpdf ERROR `some encryption dictionary parameters are
+  missing or the wrong type` at the encryption-dictionary offset — the
+  cycle-39 parse-time gate, retreating from the cycle-33 `PasswordError`;
+  pdfjs `PasswordException: No password given` — NO retreat (accepts the V5
+  dict shape without R but still demands the password, mirroring the
+  cycle-45 CF-absent asymmetry where pdfjs does not retreat). Thirty-sixth
+  unanimous-refuse dict-typed variant; R-presence axis first point mapped
+  (R5-on-V5 value-mismatch in cycle 48 was verdict-identical to baseline;
+  R-absent refuses one gate earlier on pypdf/pdfminer/qpdf). Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
