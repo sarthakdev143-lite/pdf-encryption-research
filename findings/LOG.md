@@ -951,6 +951,33 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 35, Track 2): new variant
+  `t_encrypt_stdV5R6trunc` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, 16-zero-byte `/Perms`, AESV3 `/CF <</DefaultCryptFilter ...>>` +
+  StmF/StrF triple — but with `/OE /UE` TRUNCATED to 16 zero bytes each
+  (half of the required 32) instead of zeroed-full-length; short-but-present
+  V5 blobs on an appended revision with the injected plaintext page;
+  pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle35_v5trunc.py`, raw results
+  `/tmp/opencode/cycle35_v5trunc/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes. Seventeenth
+  unanimous-refuse dict-typed variant. NO validation-step movement vs cycle
+  33 on any stack: pdfminer raises `PDFPasswordIncorrect` (confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — derivation
+  attempted against the short OE/UE, exactly as with full-length zeroed
+  blobs) rather than retreating to the cycle-34 `'OE'` KeyError; pdfjs stays
+  at `PasswordException: No password given` rather than retreating to the
+  cycle-34 `stringToBytes` error; pypdf stays at `FileNotDecryptedError` and
+  pymupdf/pypdfium2/pikepdf refuse with unchanged password errors.
+  Short-but-present OE/UE is treated EXACTLY like full-length zeroed OE/UE —
+  no length gate, no absent-key fallback, no plaintext fallback. The V5
+  length axis is now mapped at three points (32 zeroed / 16 truncated /
+  absent) and all three refuse unanimously. Still integrity-only (original
+  ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
