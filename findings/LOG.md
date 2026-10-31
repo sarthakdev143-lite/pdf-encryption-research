@@ -1217,6 +1217,30 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 44, Track 2): new variant
+  `t_encrypt_stdV5R6encmetafalse` (minimal delta vs cycle 33: IDENTICAL
+  hostile V5/R6 trailer dict, zeroed O/U/OE/UE/Perms, valid AESV3 CF with
+  StmF/StrF valid, PLUS `/EncryptMetadata false`; fresh axis: does any stack
+  treat EncryptMetadata-false as a plaintext/metadata fallback? appended
+  revision with the injected plaintext page; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle44_encmeta.py`, raw results
+  `/tmp/opencode/cycle44_encmeta/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer BLOCKED
+  `PDFPasswordIncorrect` confirmed via direct traceback, derivation attempted,
+  NO new gate and NO retreat; pymupdf `FileDataError` identical; pypdfium2
+  `Incorrect password error` identical; pikepdf `PasswordError` identical;
+  pdfjs `PasswordException: No password given` identical, NO retreat).
+  Twenty-sixth unanimous-refuse dict-typed variant; verdict profile IDENTICAL
+  to cycle 33 on every stack — no stack reads EncryptMetadata as a
+  no-encryption signal or falls back to plaintext. Still integrity-only
+  (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
