@@ -1841,3 +1841,30 @@ empty-page caveat above.**
   disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 61, Track 2): new variant
+  `t_encrypt_stdV5permsGarbage` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but `/Perms` as a
+  WRONG-TYPED literal paren string `(GARBAGE-PERMS-12)` instead of
+  16-zero-byte hex — completing the wrong-typed family at three points
+  (OE/UE cycle 36, O/U cycle 37, Perms this cycle); not in prevchain
+  VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder `/tmp/opencode/cycle61_permsgarbage.py`,
+  raw results `/tmp/opencode/cycle61_permsgarbage/results.json` —
+  ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse,
+  0 crashes (pypdf BLOCKED `FileNotDecryptedError: File has not been
+  decrypted` — IDENTICAL to cycles 33/58/59, still NO Perms-presence gate,
+  confirming pypdf gates R/O/U/P presence only; pdfminer BLOCKED
+  PDFPasswordIncorrect, direct-traceback-confirmed derivation attempted
+  from `init_key` line 370 with NO retreat and NO new gate — presence, not
+  hex-type, is what the lookups check; pymupdf FileDataError; pypdfium2
+  Incorrect password; pikepdf/qpdf PasswordError; pdfjs
+  PasswordException/No password given — NO retreat, unlike the cycle-38
+  Perms-ABSENT stringToBytes retreat). Verdict profile IDENTICAL to the
+  cycle-33 baseline on every stack. Type axis now exhausted at three
+  value-points per key (zeroed hex / truncated hex / paren-string) plus
+  absent: wrong-typed never retreats, absent always retreats on pdfminer
+  (OE/UE) or pdfjs (OE/UE/Perms/O/U). Forty-third unanimous-refuse
+  dict-typed variant. Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
