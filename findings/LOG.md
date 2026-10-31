@@ -1504,3 +1504,27 @@ empty-page caveat above.**
   ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 49, Track 2): new variant
+  `t_encrypt_stdV5R6nolength` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but top-level
+  `/Length 256` REMOVED — Length-absent on a V5 dict; fresh axis:
+  Length-presence; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle49_nolength.py`, raw results
+  `/tmp/opencode/cycle49_nolength/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError: File has not been decrypted` identical to cycle 33;
+  pdfminer `PDFPasswordIncorrect` — confirmed via direct traceback from
+  `pdfdocument.py _initialize_password` line 761 -> `init` line 357 ->
+  `init_key` line 370, derivation attempted, NO retreat, NO new gate: Length
+  is never presence-gated pre-auth; pymupdf `FileDataError` identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf `PasswordError:
+  invalid password` identical; pdfjs `PasswordException: No password given`
+  identical, NO retreat). Thirty-first unanimous-refuse dict-typed variant.
+  Top-level Length axis second point mapped (128 in cycle 47, absent here,
+  both verdict-identical to the 256 baseline: no stack validates Length
+  against V, treats absent Length as no-encryption, or falls back to
+  plaintext). Still integrity-only (original ciphertext never disclosed),
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
