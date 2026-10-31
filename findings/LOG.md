@@ -1794,3 +1794,30 @@ empty-page caveat above.**
   never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 59, Track 2): new variant
+  `t_encrypt_stdV5noUE` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/UE`
+  REMOVED only — OE/Perms/CF/StmF/StrF kept zeroed-valid, mirror split of
+  the cycle-58 OE-absent-only step; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle59_noUE.py`, raw results
+  `/tmp/opencode/cycle59_noUE/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  FileNotDecryptedError — IDENTICAL to cycles 33 and 58, still NO explicit
+  OE/UE-presence gate: pypdf gates R/O/U/P presence (cycles 54-57) but NOT
+  OE/UE/Perms; pdfminer BLOCKED `'UE'` KeyError — retreats from the
+  cycle-33 PDFPasswordIncorrect exactly as cycle 58 retreated to `'OE'`,
+  direct-traceback-confirmed on both seeds: with OE present the lookup
+  advances to UE, proving pdfminer checks the V5 blobs in order OE-then-UE;
+  pymupdf FileDataError identical to cycle 33; pypdfium2 Incorrect password
+  identical; pikepdf/qpdf ERROR `some V=5 encryption dictionary parameters
+  are missing or the wrong type` (cycle-39 parse-time gate, retreating from
+  cycle-33 PasswordError); pdfjs ERROR `Invalid argument for stringToBytes`
+  — RETREATS from cycle-33 PasswordException (byte-converts absent UE
+  exactly as for absent O/U/OE/Perms in cycles 34/38/55/56/58, unlike the
+  R/CF/P-absent no-retreat asymmetries of cycles 45/54/57). Forty-first
+  unanimous-refuse dict-typed variant; UE-presence axis first point mapped,
+  OE/UE-presence pair complete. Still integrity-only (original ciphertext
+  never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
