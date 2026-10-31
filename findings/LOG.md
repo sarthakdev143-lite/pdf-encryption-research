@@ -1665,3 +1665,33 @@ empty-page caveat above.**
   integrity-only (original ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 55, Track 2): new variant
+  `t_encrypt_stdV5noO` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/O`
+  REMOVED — O-absent on an otherwise-V5 dict (`/Filter/Standard /V 5 /R 6
+  /Length 256 /P -4`, U/OE/UE zeroed, Perms zeroed, AESV3 CF + StmF/StrF
+  valid); fresh axis: O-presence; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle55_noO.py`, raw results
+  `/tmp/opencode/cycle55_noO/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf ERROR
+  `PdfReadError: /O entry of the encryption dictionary is missing` — FIRST
+  explicit O-presence gate on the pypdf path (vs `/R entry ... is missing`
+  in cycle 54, `FileNotDecryptedError` in cycle 33); pdfminer BLOCKED `'O'`
+  KeyError — retreats from the cycle-33 `PDFPasswordIncorrect` (the O
+  analogue of the cycle-54 `'R'`, cycle-34 `'OE'` and cycle-45 `'StmF'`
+  KeyError retreats: O is looked up before derivation); pymupdf
+  `FileDataError` identical to cycle 33; pypdfium2 `Incorrect password`
+  identical; pikepdf/qpdf ERROR `some encryption dictionary parameters are
+  missing or the wrong type` at the encryption-dictionary offset — the
+  cycle-39 parse-time gate, retreating from the cycle-33 `PasswordError`;
+  pdfjs ERROR `Invalid argument for stringToBytes` — RETREATS from the
+  cycle-33 `PasswordException` (byte-converts absent O exactly as for absent
+  OE/UE in cycle 34 and absent Perms in cycle 38), unlike the cycle-54
+  R-absent and cycle-45 CF-absent cases where pdfjs does NOT retreat.
+  Thirty-seventh unanimous-refuse dict-typed variant; O-presence axis first
+  point mapped (O-absent refuses one gate earlier on pypdf/pdfminer/qpdf/
+  pdfjs; only pymupdf/pypdfium2 verdict-identical to baseline). Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
