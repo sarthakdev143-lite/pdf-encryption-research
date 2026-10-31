@@ -1895,3 +1895,32 @@ empty-page caveat above.**
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-10-31, Track 2 cycle 63 (t_hybrid_hostileXS_origTrailer): NEW variant,
+  fresh axis — hybrid-xref /Encrypt DISAGREEMENT with a hostile dict. XRefStm
+  dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE,
+  16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the
+  classic trailer carries the ORIGINAL /Encrypt indirect ref (same appended
+  plaintext page n..n+3, /Root n, /Prev orig; mirrors prevchain
+  h_refstm_encrypt construction with the XRefStm original-ref swapped for the
+  hostile dict; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle63_hybrid_hostile_xs.py`, raw results
+  `/tmp/opencode/cycle63_hybridhostile/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical to
+  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError` identical; pdfjs `PasswordException: No password given`
+  identical; pymupdf `ValueError: document closed or encrypted` — RETREATS
+  from the cycle-33 `FileDataError` to the cycle-53 V-absent verdict,
+  suggesting MuPDF resolves the hybrid /Encrypt differently than a lone
+  hostile trailer dict, but still refuses). No engine honors one dict for
+  auth while rendering through the other, falls back to the original-via-
+  `/Prev` dict as plaintext, or treats the disagreement as no-encryption.
+  With-password control (PyMuPDF, correct user password): both files open
+  (needs_pass=1, 1 page) — the trailer's ORIGINAL ref governs for MuPDF,
+  the XRefStm hostile dict is ignored once authenticated. Forty-fifth
+  unanimous-refuse dict-typed variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
