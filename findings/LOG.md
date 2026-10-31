@@ -1528,3 +1528,32 @@ empty-page caveat above.**
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 50, Track 2): new variant
+  `t_encrypt_stdV4R6cross` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but top-level
+  `/V 5` -> `/V 4`, `/R 6` kept — V/R cross-mismatch; fresh axis:
+  V-vs-R consistency; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle50_v4r6.py`, raw results
+  `/tmp/opencode/cycle50_v4r6/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError: File has not been decrypted` identical to
+  cycle 33; pdfminer BLOCKED `Unknown crypt filter method` — RETREATS from
+  the cycle-33 `PDFPasswordIncorrect`: V selects the handler class
+  (`SECURITY_HANDLERS` keyed by V in `pdfdocument.py`: V4 ->
+  `PDFStandardSecurityHandlerV4`, whose `get_cfm` knows only V2/AESV2, so
+  CFM/AESV3 fails — confirmed in source, `get_cfm` V4 lines 500-506 vs V5
+  lines 563-567 where only AESV3 is known; the CFM gate preempts the
+  `supported_revisions=(4,)` R check, so V4+R6 never reaches `Unsupported
+  revision`; this is the same explicit CFM gate as cycle 39, now triggered
+  by the V downgrade rather than the CFM change; pymupdf `FileDataError`
+  identical; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError: invalid password` identical; pdfjs `PasswordException:
+  No password given` identical, NO retreat). Thirty-second unanimous-refuse
+  dict-typed variant. V/R cross axis first point mapped (R5-on-V5 in
+  cycle 48 was verdict-identical to baseline; V4-on-R6 diverges only on the
+  pdfminer handler-dispatch gate, still refuse — no stack downgrades to V4
+  crypto, ignores the mismatch, or falls back to plaintext). Still
+  integrity-only (original ciphertext never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
