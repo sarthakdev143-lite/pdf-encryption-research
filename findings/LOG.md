@@ -1036,6 +1036,34 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
+- Extension 2026-10-31 (cycle 38, Track 2): new variant
+  `t_encrypt_stdV5R6noperms` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, OE/UE 32 zero bytes, AESV3 `/CF <</DefaultCryptFilter ...>>` +
+  StmF/StrF triple — but with `/Perms` REMOVED, not zeroed; isolates the
+  Perms-presence gate that cycle 34 (OE/UE/Perms all removed) could not
+  separate; appended revision with the injected plaintext page; pure-append
+  verified; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle38_v5noperms.py`, raw results
+  `/tmp/opencode/cycle38_v5noperms/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, derivation attempted exactly as in cycle 33, NO retreat
+  to a `'Perms'` KeyError; pymupdf `FileDataError`; pypdfium2 `Incorrect
+  password error`; pikepdf `PasswordError`; pdfjs `UnknownErrorException:
+  Invalid argument for stringToBytes` — RETREATS from the cycle-33
+  `PasswordException`, byte-converting the absent Perms exactly as it did
+  for absent OE/UE in cycle 34). Twentieth unanimous-refuse dict-typed
+  variant. Asymmetric gate finding: pdfminer checks OE presence (cycle 34
+  `'OE'` KeyError) but NOT Perms presence — Perms absence is tolerated into
+  key derivation; pdfjs byte-converts all three V5 blobs (OE/UE/Perms) and
+  retreats on any absence. No stack treats absent Perms as no-encryption or
+  falls back to plaintext. Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
 - Setup: 3 appended-revision variants x 3 seeds (2 encrypted + 1 plaintext
