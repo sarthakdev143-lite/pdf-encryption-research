@@ -978,6 +978,34 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 36, Track 2): new variant
+  `t_encrypt_stdV5R6garbage` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict, but with `/OE /UE` as WRONG-TYPED literal paren strings
+  (`(GARBAGEBLOB1234567890GARBAGEBLOB1234)`, 38 ASCII chars) instead of hex
+  strings; present-but-mistyped V5 blobs on an appended revision with the
+  injected plaintext page; pure-append verified; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle36_v5garbage.py`, raw
+  results `/tmp/opencode/cycle36_v5garbage/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError` (harness status ERROR, clean open failure, no content);
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`). Verdict profile
+  IDENTICAL to cycle 33 (zeroed-32 hex) on every stack — NO validation-step
+  movement: pdfminer attempts derivation against the mistyped blobs rather
+  than retreating to the cycle-34 `'OE'` KeyError (presence, not hex-type,
+  is what its OE lookup checks); pdfjs stays at `PasswordException` rather
+  than retreating to the cycle-34 `stringToBytes` error. No stack
+  type-checks OE/UE hex-vs-string or falls back to plaintext. The V5 OE/UE
+  axis is now mapped at four points (32 zeroed hex / 16 truncated hex /
+  absent / present-wrong-typed), all unanimous-refuse — the type axis is
+  exhausted alongside the length axis. Eighteenth unanimous-refuse
+  dict-typed variant. Still integrity-only (original ciphertext never
+  disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
