@@ -925,6 +925,32 @@ One entry per candidate. Keep everything reproducible from self-generated files.
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 34, Track 2): new variant
+  `t_encrypt_stdV5R6missing` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, AESV3 `/CF <</DefaultCryptFilter ...>>` + StmF/StrF triple —
+  but with `/OE /UE /Perms` REMOVED, not zeroed; V5-required keys absent on
+  an appended revision with the injected plaintext page; pure-append
+  verified; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle34_v5missing.py`, raw results
+  `/tmp/opencode/cycle34_v5missing/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes. Sixteenth
+  unanimous-refuse dict-typed variant. Validation-step movement vs cycle 33
+  on exactly the two stacks that consume V5 fields: pdfminer retreats from
+  `PDFPasswordIncorrect` (cycle 33, zeroed OE accepted into key derivation)
+  to `'OE'` KeyError (missing OE stops it before derivation — an explicit
+  OE lookup, the V5 analogue of the cycles 10-12 `'StmF'` CF gate); pdfjs
+  retreats from `PasswordException: No password given` (cycle 33) to
+  `UnknownErrorException: Invalid argument for stringToBytes` (it attempts
+  to byte-convert the absent OE/UE). pypdf (`FileNotDecryptedError`) and
+  pymupdf/pypdfium2/pikepdf (unchanged password errors) never reach a
+  V5-field gate. No stack treats absent OE/UE as no-encryption or falls
+  back to plaintext — absence is handled strictly everywhere it is
+  reached. Still integrity-only (original ciphertext never disclosed), not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
 
 - Experiment: `python pdfex_static.py` (report: `findings/pdfex_static.md`, data:
   `findings/pdfex_static.csv`)
