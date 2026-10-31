@@ -1765,3 +1765,32 @@ empty-page caveat above.**
   ciphertext never disclosed), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 58, Track 2): new variant
+  `t_encrypt_stdV5noOE` (appended plaintext page, trailer `/Encrypt` direct
+  dict identical to the cycle-33 V5/R6 hostile dict but top-level `/OE`
+  REMOVED only — UE/Perms/CF/StmF/StrF kept zeroed-valid, isolating the
+  OE-presence gate that cycle 34, which removed OE/UE/Perms together, could
+  not separate; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle58_noOE.py`, raw results
+  `/tmp/opencode/cycle58_noOE/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  FileNotDecryptedError — IDENTICAL to cycle 33, NO explicit OE-presence
+  gate: pypdf gates R/O/U/P presence (cycles 54-57) but NOT OE/UE/Perms;
+  pdfminer BLOCKED `'OE'` KeyError — retreats from the cycle-33
+  PDFPasswordIncorrect, traceback-confirmed via the pdfplumber wrapper
+  (identical to the cycle-34 retreat: OE-absent alone reproduces it, so OE
+  — not UE or Perms — is what the cycle-34 lookup checked first, causally
+  isolated); pymupdf FileDataError identical to cycle 33; pypdfium2
+  Incorrect password identical; pikepdf/qpdf ERROR `some V=5 encryption
+  dictionary parameters are missing or the wrong type` (cycle-39
+  parse-time gate, retreating from cycle-33 PasswordError); pdfjs ERROR
+  `Invalid argument for stringToBytes` — RETREATS from cycle-33
+  PasswordException (byte-converts absent OE exactly as for absent
+  O/U/OE/UE/Perms in cycles 34/38/55/56, unlike the R/CF/P-absent
+  no-retreat asymmetries of cycles 45/54/57). Fortieth unanimous-refuse
+  dict-typed variant; OE-presence axis first point mapped, OE isolated as
+  the first V5-blob lookup. Still integrity-only (original ciphertext
+  never disclosed), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
