@@ -2,6 +2,11 @@
 
 **Project:** reportlab
 **Version:** 5.1.0 (Python 3.12.1, Windows 11)
+**Re-verified (static):** frozen PoC `findings/poc/reportlab_s256_nonconforming.pdf`
+on VPS 2026-10-29 still carries `/UE` 48 bytes, `/OE` 48 bytes, `/Perms`
+32 bytes (hex lengths 96/96/64) — non-conforming sizes unchanged. Live
+`strength=256` generation skipped on this VPS (`pyaes` not installed), so the
+writer-side re-test stays with the frozen PoC.
 **Severity:** Medium (interoperability / availability; no confidentiality impact observed)
 **Status:** ready to file privately
 
@@ -92,6 +97,17 @@ Validation with the patch applied: `/O` 48, `/U` 48, `/OE` 32, `/UE` 32,
 `/Perms` 16; the resulting file opens in MuPDF (`authenticate()` → user
 password, 2 pages, text extracted) and pypdf (`decrypt()` → 1, text extracted).
 Validation script: `findings/poc/validate_reportlab_fix.py` in this repo.
+
+## Disclosure
+
+- Where: reportlab maintainers (project tracker / GitHub mirror
+  `MrBitBucket/reportlab-mirror`). Private report only, with the
+  one-line `padding=pyaes.PADDING_NONE` patch offered as a PR.
+- Status (2026-10-29): **not yet sent**.
+- Proposed 90-day window: starts on send date; no publication of the PoC or
+  this report before the window closes or a fix ships, whichever is first.
+- Note: `strength=256` needs the optional `pyaes` package, so reporters must
+  state the `pyaes` version alongside reportlab 5.1.0 when filing.
 
 ## Notes
 

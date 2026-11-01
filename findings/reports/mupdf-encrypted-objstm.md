@@ -1,6 +1,10 @@
 # Encrypted PDFs using object streams are not refused as password-protected by MuPDF; unauthenticated ciphertext is parsed and the document appears empty
 
 **Project:** MuPDF (observed via PyMuPDF 1.27.2.2; engine-level behavior)
+**Re-verified:** PyMuPDF 2.0 (bundled MuPDF 1.28.5) on VPS 2026-10-29 —
+`needs_pass=1, is_encrypted=True, page_count=0`, page access raises
+`IndexError: page 0 not in document`; correct password authenticates (2) and
+yields 2 pages. Behavior unchanged from the original report.
 **Severity:** Low (no content disclosure; inconsistent error surface / data-loss risk)
 **Status:** ready to file privately
 
@@ -59,6 +63,16 @@ Reproduced on all encryption revisions R2–R6, including qpdf 12 output.
 An encrypted document without the supplied user password should be refused
 uniformly (as it already is when no object streams are present), and ciphertext
 must not be parsed by the normal page/xref path before authentication.
+
+## Disclosure
+
+- Where: MuPDF bug tracker (Artifex), cc PyMuPDF if the wrapper surface
+  matters. Private report only — never a public issue.
+- Status (2026-10-29): **not yet sent**.
+- Proposed 90-day window: starts on send date; no publication of the PoC or
+  this report before the window closes or a fix ships, whichever is first.
+- Ask: uniform password-required refusal for encrypted files regardless of
+  object streams; no unauthenticated parse of ciphertext on the page/xref path.
 
 ## Notes
 

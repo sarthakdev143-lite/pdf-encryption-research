@@ -1,18 +1,18 @@
 # Authentication matrix
 
-- files: 33   engines: 6   probes: 1386
-- **AUTH-BYPASS: 0**   FAIL-CONTROL: 3
-
-## FAIL-CONTROL (correct password rejected / no content)
-
-- corpus/writers/reportlab_s256.pdf | pypdf | ValueError: Invalid key size (384) for AES.
-- corpus/writers/reportlab_s256.pdf | pdfminer | PdfminerException: Invalid key size (384) for AES.
-- corpus/writers/reportlab_s256.pdf | pymupdf | FileDataError: Failed to open file 'D:\\Sarthak\\Coding\\Work\\KWTC\\NavinData\\Systango\\pdf-encryption-research\\corpus\\writers\\reportlab_s256.pdf'.
+- files: 32   engines: 6   probes: 1344
+- **AUTH-BYPASS: 0**   FAIL-CONTROL: 0
 
 ## Summary by verdict
 
-- ACCEPTED-CONTROL: 195
-- ACCEPTED-OWNER: 195
-- ERROR: 1
-- FAIL-CONTROL: 3
-- REJECTED: 992
+- ACCEPTED-CONTROL: 192
+- ACCEPTED-OWNER: 192
+- REJECTED: 960
+
+> Note (2026-10-29, VPS): `corpus/writers/reportlab_s256.pdf` is absent from
+> this run — `pyaes` is not installed in `.venv`, so reportlab refuses
+> `strength=256` and `writers.py` skips it (10 writers, 32 files here vs 33
+> on the original box). Hence FAIL-CONTROL is 0 here, not 3; the three
+> F-2026-002 rows are unchanged and still reproducible from the frozen PoC
+> `findings/poc/reportlab_s256_nonconforming.pdf`. See `findings/LOG.md`
+> F-2026-002 and `findings/24-7.log`.
