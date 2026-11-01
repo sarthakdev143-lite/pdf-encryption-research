@@ -2342,3 +2342,46 @@ empty-page caveat above.**
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-11-01 (cycle 76, Track 2): new variant
+  `t_encrypt_stdV4R4innerLen32` (inner-CF-Length OVERSHOOT, mirror of the
+  cycle-75 short-side probe: trailer `/Encrypt` direct dict identical to the
+  cycle-12 V4/R4 dict -- `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero
+  bytes, top-level `/Length 128`, `/CF <</StdCF <</AuthEvent /DocOpen /CFM
+  /V2 /Length 32>>>>` `/StmF /StdCF /StrF /StdCF` -- with the SINGLE-token
+  delta inner CF `/Length 16` -> `/Length 32` (top `/Length 128` kept, CFM
+  stays /V2 to isolate inner-Length validation); same appended plaintext
+  page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle76_innerLen32.py`, raw results
+  `/tmp/opencode/cycle76_innerLen32/results.json` -- ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` -- identical to cycles 12/75, no Length gate on
+  that path; pdfminer `PDFPasswordIncorrect` -- confirmed via direct
+  PDFDocument traceback on both files, harness shows empty
+  `PdfminerException: ` -- i.e. derivation ATTEMPTED against zeroed O/U
+  even with inner Length 32, NOT an inner-Length gate; pymupdf
+  `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time
+  refuse) -- RETREATS from the cycle-12/75 `ValueError: document closed or
+  encrypted`: FIRST MuPDF inner-Length gate, overshoot-only, exactly
+  mirroring the top-Length asymmetry of cycles 73/74 (top-40 tolerated,
+  top-256 gated by MuPDF alone); pypdfium2 `Incorrect password error`
+  (identical); pikepdf/qpdf `PasswordError: invalid password` -- still NO
+  parse-time escalation on V4 even at inner-32, confirming the V4-vs-V5
+  parse-validation asymmetry; pdfjs `PasswordException: No password given`
+  (identical, no Length validation)). With-password controls refuse too
+  (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot
+  even open to authenticate -- pre-auth `FileDataError`) -- no fallback to
+  the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the
+  aes256 file (md5 109994fd65ee), 2 in the rc4 file (md5 59fbf4155d35) --
+  seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design,
+  INFO, not a leak). Baseline re-verified this cycle: 2 unmodified seeds x
+  6 engines = 12/12 BLOCKED without password. Fifty-eighth variant overall.
+  V4 Length-tolerance picture now COMPLETE on all four corners (top-40
+  cycle 73 tolerated everywhere, top-256 cycle 74 MuPDF-only gate, inner-5
+  cycle 75 tolerated everywhere, inner-32 this cycle MuPDF-only gate):
+  inner and top Length behave identically -- shortfalls tolerated on all
+  six stacks, overshoots gated only by MuPDF's open-time check, auth-layer
+  refuse everywhere else. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
