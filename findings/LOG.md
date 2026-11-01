@@ -1504,6 +1504,27 @@ empty-page caveat above.**
   confirmed): the `>0` boundary is the whole story — 1 takes the pass-through
   branch, 0 takes the `+2**32` branch. `uint_value` source re-verified
   (pdftypes.py:178 `if xi > 0`). No new PoC (negative control).
+- Extension 2026-11-01 (cycle 86, Track 2): large-positive control
+  `t_encrypt_stdV4R4permMax` (same construction, `/P 2147483647`
+  i.e. max int32 instead of `/P 0`/`/P 1`) x 2 seeds x 6 engines = 12
+  no-password probes → ORIGINAL 0/12, injected 0/12, 0 crashes.
+  pdfminer back to clean `PDFPasswordIncorrect` with and without password
+  (direct-traceback confirmed on both files — derivation attempted, NOT a
+  Length/P gate); all other five stacks refuse with unchanged password
+  errors (pypdf FileNotDecryptedError; pymupdf ValueError: document closed
+  or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError;
+  pdfjs No password given). With-password controls refuse too (qpdf WITH
+  correct password, PyMuPDF authenticate 0 with needs_pass=1) — no
+  fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5
+  44408a237d3b) / 2 (rc4, md5 28151271f28b, seed XMP META-CANARY INFO).
+  Baseline re-verified 12/12 BLOCKED. Sixty-eighth variant overall,
+  /P-value axis at four points (-4 baseline, 0 outlier, 1 boundary,
+  max-int32): only exactly 0 trips the `uint_value` `+2**32` overflow;
+  the /P VALUE is never validated anywhere pre-auth. Still
+  integrity-only, not filed. Builder + raw results:
+  `/tmp/opencode/cycle86_permMax.py`, `/tmp/opencode/cycle86_permMax/`
+  (2 PDFs + results.json + baseline.json, git-untracked); no new repo
+  files, no PoC (negative control).
 
 ---
 
