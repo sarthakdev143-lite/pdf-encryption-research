@@ -2194,3 +2194,42 @@ empty-page caveat above.**
   filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-11-01 (cycle 72, Track 2): new variant
+  `t_encrypt_stdV4R4cfmNone` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-12 V4/R4 dict --
+  `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/Length 128`,
+  `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF
+  /StrF /StdCF` -- with the single-token delta `/CFM /V2` -> `/CFM /None`,
+  inner `/Length 16` kept to isolate CFM validation; pure-append verified;
+  not in prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle72_cfmNone.py`, raw results
+  `/tmp/opencode/cycle72_cfmNone/results.json` -- ORIGINAL canary 0/12,
+  injected rendered 0/12: no engine discloses content, 0 crashes. Verdicts:
+  pypdf ERROR `NotImplementedError: StmF Method /None NOT supported!`
+  (harness ERROR = clean exception without password-hint text, manually
+  triaged as refuse -- FIRST pypdf CFM gate on the V4 axis: cycles 12/70/71
+  all gave FileNotDecryptedError with no CFM validation on that path, so
+  /None is refused pre-derivation while /V2, /AESV2 and even /AESV3 pass
+  pypdf silently); pdfminer BLOCKED `Unknown crypt filter method`
+  (identical gate to cycle 70 /AESV3 -- /None likewise outside the V4
+  handler's {V2, AESV2} allowlist, refused pre-derivation); pymupdf
+  `ValueError: document closed or encrypted` (identical to cycles 12/70/71);
+  pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf
+  `PasswordError: invalid password` (identical -- still no parse-time
+  escalation on V4, confirming the V4-vs-V5 parse-validation asymmetry from
+  cycles 39/40/70); pdfjs `PasswordException: No password given`
+  (identical, no CFM validation). With-password controls refuse too
+  (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF
+  `authenticate` 0 with needs_pass=1, pypdf `decrypt` raises the same
+  NotImplementedError even WITH the password), so no fallback to the
+  original-via-`/Prev` dict on any path; raw `CANARY` bytes: 0 in the
+  aes256 file (md5 fa54d3ea77a610fbea295e94f6b37080), 2 in the rc4 file
+  (md5 d02a37a7f3c94b115735c716ca88f48a) -- both are the seed's own
+  plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO).
+  Baseline re-verified this cycle: 2 unmodified seeds x 6 engines = 12/12
+  BLOCKED without password. Fifty-fourth variant overall. V4 CFM axis now
+  COMPLETE at four points (V2 baseline / AESV3 / AESV2 / None). Still
+  integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
