@@ -2055,3 +2055,33 @@ empty-page caveat above.**
   Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- 2026-11-01, Track 2 cycle 68 (t_trailerAbsent_XSabsent): NEW variant,
+  trailer-absent + XS-absent control closing the cycle-67 mechanism
+  question. Classic trailer carries NO /Encrypt at all (only /Root n,
+  /Prev orig, /XRefStm ptr) AND the XRefStm dict carries NO /Encrypt
+  either (only /Root n; same appended plaintext page n..n+3; pure-append
+  verified; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle68_trailerabsent_xsabsent.py`, raw results
+  `/tmp/opencode/cycle68_trailerabsent_xsabsent/results.json` — ORIGINAL
+  canary 0/12, injected rendered 8/12: SAME SPLIT as cycle 67 on every
+  stack (pypdf `FileNotDecryptedError` + pypdfium2 `Incorrect password
+  error` REFUSE both seeds; pdfminer/pymupdf/pikepdf/pdfjs render ONLY
+  the appended plaintext page), 0 crashes. Decisive: with NO hostile
+  dict anywhere in the update, pypdf/pypdfium2 still refuse — so their
+  cycle-67 refusal came from walking /Prev to the ORIGINAL trailer's
+  /Encrypt ref, not from honoring the XS hostile dict. Trailer-silence
+  is treated as no-encryption by 4/6 engines (integrity property) and
+  as still-encrypted-via-/Prev by 2/6 (fail-closed); no engine on either
+  side discloses ORIGINAL page content (raw file contains no original
+  canary bytes; only the seeds' own plaintext XMP META-CANARY,
+  EncryptMetadata false by design, INFO). With-password controls
+  (correct user password): PyMuPDF `authenticate` returns 1 with
+  `needs_pass=0`, pages=1, injected-only text; pikepdf/qpdf opens WITH
+  and WITHOUT the password (`password was provided, but no password
+  was needed`), confirming trailer-alone resolution on the qpdf path.
+  Baseline re-verified this cycle: unmodified seeds BLOCKED on all 6
+  engines without password (12/12). Fiftieth variant overall, hybrid
+  axis complete at 6 points. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
