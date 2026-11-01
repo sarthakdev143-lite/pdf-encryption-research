@@ -1525,6 +1525,24 @@ empty-page caveat above.**
   `/tmp/opencode/cycle86_permMax.py`, `/tmp/opencode/cycle86_permMax/`
   (2 PDFs + results.json + baseline.json, git-untracked); no new repo
   files, no PoC (negative control).
+- Extension 2026-11-01 (cycle 87, Track 2): pre-report re-verification of
+  both filed PoCs on all six engines, no-password: pypdf BLOCKED
+  `FileNotDecryptedError`; pymupdf BLOCKED `ValueError: document closed or
+  encrypted`; pypdfium2 BLOCKED `Incorrect password error`; pikepdf/qpdf
+  BLOCKED `PasswordError`; pdfjs BLOCKED `PasswordException: No password
+  given`; pdfminer raises `struct.error: 'L' format requires 0 <= number
+  <= 4294967295` on BOTH files (harness surfaces it as PdfminerException
+  with the struct message), with AND without the correct user password
+  (direct-traceback confirmed) — outlier reproduces exactly, no content
+  shown to any engine. Fix-hypothesis simulation (`uint_value` current
+  `if xi > 0` vs `if xi >= 0` + `struct.pack("<L")` for P in
+  {-4, 0, 1, 2147483647}): only P=0 overflows under current code
+  (4294967296), and the `>=` fix packs 0 cleanly while leaving -4/1/max
+  results byte-identical — one-line fix confirmed in isolation, ready to
+  file upstream as a pdfminer.six issue. Still integrity-only, not filed.
+  Repro + raw results: `/tmp/opencode/cycle87_p0reverify.py`,
+  `/tmp/opencode/cycle87_p0reverify/results.json` (git-untracked); no new
+  repo files, no new PoC (re-verification only).
 
 ---
 
