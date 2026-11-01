@@ -2085,3 +2085,42 @@ empty-page caveat above.**
   axis complete at 6 points. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- 2026-11-01, Track 2 cycle 69 (t_encrypt_stdV5R6noperms_nocf): NEW variant,
+  double-absent interaction completing the /Perms-zeroed-CF-absent split
+  left over from cycles 59/61. Appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-33 V5/R6 hostile dict but with BOTH
+  `/Perms` REMOVED (cf. cycle 38 Perms-absent-only) AND `/CF /StmF /StrF`
+  REMOVED (cf. cycle 45 CF-absent-only) — O/U/OE/UE zeroed, `/V 5 /R 6
+  /Length 256 /P -4` kept; pure-append verified; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder
+  `/tmp/opencode/cycle69_noperms_nocf.py`, raw results
+  `/tmp/opencode/cycle69_noperms_nocf/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes. Interaction
+  resolved per stack: pypdf `FileNotDecryptedError` identical to cycles
+  33/38/45 (no Perms/CF presence gate on that path — still R/O/U/P-only);
+  pdfminer BLOCKED `'StmF'` KeyError identical to cycle 45 (the CF-absence
+  gate preempts: StmF is looked up before any Perms check, so Perms-absence
+  adds nothing when CF is already absent — cf. cycle 38 where Perms-absence
+  alone did NOT retreat); pymupdf `ValueError: document closed or
+  encrypted` identical to cycle 45 (NOT the cycle-33/38 `FileDataError` —
+  CF-absence, not Perms-absence, decides the MuPDF string); pypdfium2
+  `Incorrect password error` identical on all three; pikepdf/qpdf ERROR
+  `some V=5 encryption dictionary parameters are missing or the wrong
+  type` at the encryption-dictionary offset — the cycle-39 parse-time
+  V5/CF consistency gate, RETREATING from the cycle-38 and cycle-45
+  `PasswordError: invalid password` (each single-absent stayed at
+  PasswordError; the DOUBLE-absent trips the parse-time completeness
+  check — combination gate, first observed qpdf escalation on this axis);
+  pdfjs ERROR `Invalid argument for stringToBytes` — RETREATS from the
+  cycle-45 `PasswordException: No password given` to the cycle-38
+  Perms-absent verdict (absent-Perms byte-conversion dominates: pdfjs
+  checks Perms presence even when CF is absent, the mirror of the pdfminer
+  StmF-first asymmetry). No stack treats the double-absent dict as
+  no-encryption or falls back to plaintext; raw `CANARY` bytes in the
+  built files are only the seeds' own plaintext XMP META-CANARY
+  (`/EncryptMetadata` false by design, INFO). Baseline re-verified this
+  cycle: 2 unmodified seeds x 6 engines = 12/12 BLOCKED without password.
+  Fifty-first variant overall. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
