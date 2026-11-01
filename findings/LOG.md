@@ -2804,3 +2804,37 @@ empty-page caveat above.**
   extension), not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- Extension 2026-11-01 (cycle 90, Track 2): new variant
+  `t_encrypt_stdV4R4IDmismatch` (/ID-axis round 2: cycle-12 CF-complete
+  V4/R4 hostile direct dict with a MISMATCHED `/ID [<00x16><FFx16>]` in
+  the appended trailer -- matches neither seed; single-token delta vs
+  cycle 89 which copied the ORIGINAL `/ID`; same appended page n..n+3,
+  `/Root` n, `/Prev` orig, `/Size` n+12; same 2 seeds x 6 engines =
+  12 no-password probes, builder `/tmp/opencode/cycle90_IDmismatch.py`,
+  raw results `/tmp/opencode/cycle90_IDmismatch/results.json`,
+  pure-append verified, not in prevchain VARIANTS) -- ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes.
+  Verdict profile IDENTICAL to cycle-12 baseline AND cycle-89 orig-ID on
+  every stack (pypdf `FileNotDecryptedError`; pdfminer
+  `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback
+  with str password with AND without the correct user password on both
+  files, i.e. derivation ATTEMPTED against zeroed O/U, NOT an /ID gate;
+  pymupdf `ValueError: document closed or encrypted` -- no open-time
+  `FileDataError` escalation; pypdfium2 `Incorrect password error`;
+  pikepdf/qpdf `PasswordError: invalid password` -- still NO V4
+  parse-time escalation; pdfjs `PasswordException: No password given`):
+  the `/ID` VALUE is never validated anywhere -- absent (cycle 12) /
+  orig-present (cycle 89) / mismatched (here) indistinguishable on all
+  six stacks. With-password controls refuse too (pikepdf/qpdf WITH the
+  correct user password on both files, PyMuPDF `authenticate` 0 with
+  `needs_pass=1`) -- no fallback to the original-via-`/Prev` dict.
+  Raw `CANARY` bytes: 0 in the aes256 file (md5 fcaf28b5438a), 2 in the
+  rc4 file (md5 fbbd26cde31c) -- seed's own plaintext XMP META-CANARY
+  (`/EncryptMetadata` false by design in the SEED dict, INFO, not a
+  leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified:
+  2 unmodified seeds x 6 engines = 12/12 BLOCKED. Seventieth variant
+  overall, /ID axis COMPLETE at three points. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
