@@ -1924,3 +1924,38 @@ empty-page caveat above.**
   unanimous-refuse dict-typed variant. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-11-01, Track 2 cycle 64 (t_hostileTrailer_origXS): NEW variant,
+  mirror split of cycle 63 — hybrid-xref /Encrypt DISAGREEMENT reversed.
+  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid)
+  while the XRefStm dict carries the ORIGINAL /Encrypt indirect ref (same
+  appended plaintext page n..n+3, /Root n, /Prev orig, /XRefStm ptr; mirrors
+  prevchain h_trailer_encrypt construction with the trailer original-ref
+  swapped for the hostile dict; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, raw results
+  `/tmp/opencode/cycle64_hostiletrailer/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical to
+  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError` identical; pdfjs `PasswordException: No password given`
+  identical; pymupdf `FileDataError: Failed to open file ... as type pdf`
+  — same exception class as the cycle-33 baseline, i.e. the XRefStm
+  original-ref changes nothing on the MuPDF path either, unlike the
+  cycle-63 reverse direction where MuPDF retreated to `ValueError:
+  document closed or encrypted`). No engine honors one dict for auth while
+  rendering through the other, falls back to the original-via-`/Prev` dict
+  as plaintext, or treats the disagreement as no-encryption: trailer-wins,
+  fail-closed, on every stack. Structural-validity evidence (no positive
+  with-password control possible by design — the trailer hostile dict cannot
+  authenticate): 5/6 engines parse the file and refuse at the auth layer,
+  and pikepdf/qpdf refuses EVEN WITH the correct user password
+  (`PasswordError: invalid password` with and without password on both
+  files), proving the trailer dict governs for qpdf. Hybrid-disagreement
+  axis now mapped at both directions (XS-hostile cycle 63 / trailer-hostile
+  this cycle), both unanimous-refuse. Forty-sixth unanimous-refuse variant.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.

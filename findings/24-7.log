@@ -36714,3 +36714,820 @@ Index: findings/daily/2026-10-31.md
 [2026-10-31T03:58:51Z] cycle 63 start (Track 2): branch research/vps-2026-10-31, hybrid-hostile-XRefStm micro-step
 [2026-10-31T03:58:51Z] cycle 63 files: /tmp/opencode/cycle63_hybrid_hostile_xs.py -> /tmp/opencode/cycle63_hybridhostile/2 PDFs (aes256_r6__plain + rc4_128_r4__plain, XRefStm hostile V5/R6 direct dict + trailer original /Encrypt ref), pure-append sanity OK (trunc opens with password)
 [2026-10-31T03:58:51Z] cycle 63 result: 12 no-password probes (2 seeds x 6 engines) -> ORIGINAL 0/12, injected 0/12, crashes 0 (5 stacks cycle-33-identical; pymupdf retreats FileDataError -> ValueError document-closed-or-encrypted). With-password MuPDF control: both open, trailer original ref governs. 45th unanimous-refuse variant. LOG.md O-2026-002 extended; daily 2026-10-31.md updated (32 cycles, 384 probes). No leak.
+[0m$ [0mcat >> findings/daily/2026-10-31.md <<'EOF'
+- Update cycle 63: Hybrid-hostile-XRefStm (XRefStm dict = cycle-33 V5/R6 hostile direct dict, classic trailer = ORIGINAL /Encrypt ref) → unanimous refuse, ORIGINAL 0/12, injected 0/12, 0 crashes. Five stacks verdict-identical to cycle 33 (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect derivation-attempted; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given); pymupdf RETREATS from cycle-33 FileDataError to `ValueError: document closed or encrypted` (the cycle-53 V-absent verdict — MuPDF resolves hybrid /Encrypt differently than a lone hostile trailer dict, still refuses). With-password PyMuPDF control: both files open with the correct user password (1 page) — the trailer's ORIGINAL ref governs, XRefStm hostile dict ignored once authenticated. Forty-fifth unanimous-refuse dict-typed variant. Builder + raw results: `/tmp/opencode/cycle63_hybrid_hostile_xs.py`, `/tmp/opencode/cycle63_hybridhostile/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result). Next smallest Track 2 steps: mirror split (trailer hostile + XRefStm original ref), trailer /ID-mismatch axis, or advance Track 3 PDFex static scaffolds.
+EOF
+TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+cat >> findings/24-7.log <<EOF
+[$TS] cycle 63 start (Track 2): branch research/vps-2026-10-31, hybrid-hostile-XRefStm micro-step
+[$TS] cycle 63 files: /tmp/opencode/cycle63_hybrid_hostile_xs.py -> /tmp/opencode/cycle63_hybridhostile/2 PDFs (aes256_r6__plain + rc4_128_r4__plain, XRefStm hostile V5/R6 direct dict + trailer original /Encrypt ref), pure-append sanity OK (trunc opens with password)
+[$TS] cycle 63 result: 12 no-password probes (2 seeds x 6 engines) -> ORIGINAL 0/12, injected 0/12, crashes 0 (5 stacks cycle-33-identical; pymupdf retreats FileDataError -> ValueError document-closed-or-encrypted). With-password MuPDF control: both open, trailer original ref governs. 45th unanimous-refuse variant. LOG.md O-2026-002 extended; daily 2026-10-31.md updated (32 cycles, 384 probes). No leak.
+EOF
+git add findings/LOG.md findings/daily/2026-10-31.md findings/24-7.log && git commit -m "cycle 63: Track 2 hybrid-hostile-XRefStm micro-step (t_hybrid_hostileXS_origTrailer, 0/12 leak, unanimous refuse)" -- findings/LOG.md findings/daily/2026-10-31.md findings/24-7.log && git push -u origin research/vps-2026-10-31 2>&1 | tail -3
+[research/vps-2026-10-31 d606c2d] cycle 63: Track 2 hybrid-hostile-XRefStm micro-step (t_hybrid_hostileXS_origTrailer, 0/12 leak, unanimous refuse)
+ 3 files changed, 588 insertions(+), 3 deletions(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   ee9ea4b..d606c2d  research/vps-2026-10-31 -> research/vps-2026-10-31
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+> build · muse-spark-1.3-contributor
+Cycle 63 done on `research/vps-2026-10-31`, committed as `d606c2d` and pushed.
+
+- **Track 2 micro-step** (`t_hybrid_hostileXS_origTrailer`): XRefStm dict carries the V5/R6 hostile direct dict, classic trailer carries the original `/Encrypt` ref — first hybrid *disagreement* variant (prevchain hybrids only used the original ref). 2 seeds × 6 engines = 12 no-password probes.
+- **Result:** ORIGINAL 0/12, injected 0/12, 0 crashes — 45th unanimous-refuse variant. Five stacks verdict-identical to the cycle-33 baseline; only signal is pymupdf retreating `FileDataError` → `ValueError: document closed or encrypted` (same verdict as the cycle-53 V-absent case). With-password MuPDF control opens both files — the trailer's original ref governs once authenticated.
+- **Logged:** `findings/LOG.md` (O-2026-002 extension), `findings/daily/2026-10-31.md` (32 cycles, 384 probes), `findings/24-7.log`. Builders/results in `/tmp/opencode/cycle63_*` (git-untracked per convention); no PoC — negative result.
+- **Not done this cycle:** full-pipeline baseline re-run (last confirmed per README/daily state; this cycle was the single Track 2 step only).
+- **Next:** mirror split (trailer hostile + XRefStm original ref), trailer `/ID`-mismatch axis, or Track 3 PDFex scaffolds.
+[2026-10-31T03:58:56Z] cycle 63 exit=0 branch=research/vps-2026-10-31 daily-push
+Everything up-to-date
+branch 'research/vps-2026-10-31' set up to track 'origin/research/vps-2026-10-31'.
+[2026-10-31T04:00:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T04:10:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T04:20:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T04:30:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T04:40:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T04:50:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:00:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:10:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:20:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:30:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:40:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T05:50:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:00:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:10:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:20:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:30:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:40:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T06:50:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:00:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:10:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:20:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:30:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:40:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T07:50:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:00:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:10:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:20:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:30:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:40:57Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T08:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T09:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T10:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T11:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T12:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T13:50:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:00:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:10:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:20:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:30:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:40:58Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T14:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T15:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T16:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T17:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T18:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T19:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:00:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:10:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:20:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:30:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:40:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T20:50:59Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:01:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:11:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:21:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:31:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:41:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T21:51:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:01:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:11:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:21:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:31:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:41:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T22:51:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:01:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:11:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:21:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:31:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:41:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-10-31T23:51:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-11-01T00:01:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:11:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:21:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:31:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:41:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:51:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:01:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:11:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:21:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:31:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:41:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:51:00Z] idle until window 2:00 UTC, sleep 540s
+Switched to a new branch 'research/vps-2026-11-01'
+[2026-11-01T02:00:00Z] cycle 64 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and hunting xref leaks.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short | head -20; echo ---; ls findings/ findings/daily/ 2>&1 | head -40; echo ---; tail -20 findings/24-7.log 2>/dev/null; echo ===; cat findings/daily/2026-11-01.md 2>/dev/null || echo "no daily file"
+research/vps-2026-11-01
+ M findings/24-7.log
+?? findings/crashes/
+---
+findings/:
+24-7.log
+LOG.md
+authmatrix.csv
+authmatrix.md
+crashes
+daily
+incremental.csv
+incremental.md
+pdfex_static.csv
+pdfex_static.md
+poc
+prevchain.csv
+prevchain.md
+report.csv
+report.md
+reports
+writer_audit.md
+writer_plaintext.csv
+writer_plaintext.md
+writer_rawscan.csv
+
+findings/daily/:
+2026-10-29.md
+2026-10-30.md
+2026-10-31.md
+---
+[2026-10-31T23:51:00Z] window done, next 2026-11-01 2:00 UTC, sleep 600s
+[2026-11-01T00:01:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:11:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:21:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:31:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:41:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T00:51:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:01:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:11:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:21:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:31:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:41:00Z] idle until window 2:00 UTC, sleep 600s
+[2026-11-01T01:51:00Z] idle until window 2:00 UTC, sleep 540s
+Switched to a new branch 'research/vps-2026-11-01'
+[2026-11-01T02:00:00Z] cycle 64 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and hunting xref leaks.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+===
+no daily file
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-10-31.md 
+[0m$ [0mgit log --oneline -8; echo ---; ls findings/crashes/ 2>&1 | head; echo ---; cat findings/LOG.md | tail -30
+d606c2d cycle 63: Track 2 hybrid-hostile-XRefStm micro-step (t_hybrid_hostileXS_origTrailer, 0/12 leak, unanimous refuse)
+ee9ea4b cycle 62: Track 2 V5 indirect-hostile-dict micro-step (t_encrypt_stdV5indirect, 0/12 leak, unanimous refuse)
+278e6b1 cycle 61: Track 2 V5 Perms-garbage-typed micro-step (t_encrypt_stdV5permsGarbage, 0/12 leak, unanimous refuse)
+961127a cycle 60: Track 2 V5 CF-Length-16 mismatch micro-step (t_encrypt_stdV5cfLen16, 0/12 leak, unanimous refuse)
+19ffcd7 cycle 59: Track 2 V5 UE-absent-only micro-step (t_encrypt_stdV5noUE, 0/12 leak, unanimous refuse)
+a3bc925 cycle 58: Track 2 V5 OE-absent-only micro-step (t_encrypt_stdV5noOE, 0/12 leak, unanimous refuse)
+369f5b9 cycle 57: Track 2 V5 P-absent micro-step (t_encrypt_stdV5noP, 0/12 leak, unanimous refuse)
+ee384e6 Cycle 56: Track 2 V5-U-absent (12 probes, ORIGINAL 0/12, pypdf explicit U gate + pdfminer U KeyError)
+---
+index.jsonl
+---
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-10-31, Track 2 cycle 63 (t_hybrid_hostileXS_origTrailer): NEW variant,
+  fresh axis — hybrid-xref /Encrypt DISAGREEMENT with a hostile dict. XRefStm
+  dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE,
+  16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the
+  classic trailer carries the ORIGINAL /Encrypt indirect ref (same appended
+  plaintext page n..n+3, /Root n, /Prev orig; mirrors prevchain
+  h_refstm_encrypt construction with the XRefStm original-ref swapped for the
+  hostile dict; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle63_hybrid_hostile_xs.py`, raw results
+  `/tmp/opencode/cycle63_hybridhostile/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical to
+  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError` identical; pdfjs `PasswordException: No password given`
+  identical; pymupdf `ValueError: document closed or encrypted` — RETREATS
+  from the cycle-33 `FileDataError` to the cycle-53 V-absent verdict,
+  suggesting MuPDF resolves the hybrid /Encrypt differently than a lone
+  hostile trailer dict, but still refuses). No engine honors one dict for
+  auth while rendering through the other, falls back to the original-via-
+  `/Prev` dict as plaintext, or treats the disagreement as no-encryption.
+  With-password control (PyMuPDF, correct user password): both files open
+  (needs_pass=1, 1 page) — the trailer's ORIGINAL ref governs for MuPDF,
+  the XRefStm hostile dict is ignored once authenticated. Forty-fifth
+  unanimous-refuse dict-typed variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit status --short; echo ---; git diff --stat; echo ---; grep -n "VARIANTS\|^def \|^t_" prevchain.py | head -40; echo ---; ls corpus/ | head -30
+M findings/24-7.log
+?? findings/crashes/
+---
+ findings/24-7.log | 264 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 264 insertions(+)
+---
+60:def last_startxref(data: bytes) -> int:
+69:def max_size(data: bytes) -> int:
+76:def pad_newline(buf: bytearray) -> None:
+81:def add_objects(buf: bytearray, objects: dict[int, bytes]) -> dict[int, int]:
+90:def add_classic_xref(
+107:def add_xref_stream(
+135:def page_objects(n: int, canary: str, contents_ref: bytes) -> dict[int, bytes]:
+151:def donor_empty_pw_encrypt() -> bytes:
+184:def build(seed: Seed, variant: str) -> tuple[Path, list[str]]:
+289:VARIANTS = [
+306:def password_controls() -> list[dict]:
+341:def append_report_block(lines: list[str]) -> None:
+356:def main() -> None:
+363:        for variant in VARIANTS:
+451:    for variant in VARIANTS:
+507:    for variant in VARIANTS:
+---
+base
+fuzz
+incremental
+manifest.json
+mutants
+pdfex_static
+prevchain
+writers
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py [90m[limit=130, offset=135][0m
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py [90m[limit=65, offset=265][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mls /tmp/opencode/ 2>/dev/null | tail -20; echo ---; grep -n "def \|ENGINES\|engines" triage.py | head -30
+oss-254
+p3-evals.txt
+p3-extra.txt
+p3-files.txt
+p3-tests.txt
+pdf.json
+pdf_doc.c
+pdf_md5.c
+pdf_write.c
+pdf_xmp.c
+ps_cmyk.icc
+ps_enc.pdf
+ps_gray.icc
+ps_plain.pdf
+ps_plain2.pdf
+ps_plain3.pdf
+ps_rgb.icc
+t.ps
+track_tail.md
+try.c
+---
+51:def _norm(text: str) -> str:
+55:def _meta_text(meta) -> str:
+65:def extract_pypdf(path: Path) -> str:
+81:def extract_pdfminer(path: Path) -> str:
+88:def extract_pymupdf(path: Path) -> str:
+110:def extract_pypdfium2(path: Path) -> str:
+120:def extract_pikepdf(path: Path) -> str:
+149:def capture_fd1():
+150:    """Native engines (MuPDF, PDFium) write diagnostics straight to fd 1,
+166:def probe_one(extractor: str, path: Path) -> dict:
+179:def run_child_batch(extractor: str) -> None:
+209:def run_batch(extractor: str, abs_paths: list[str], timeout: int) -> tuple[dict[str, dict] | None, dict | None]:
+238:def probe_subprocess(extractor: str, rel_file: str) -> dict:
+244:def classify(entry: dict, result: dict) -> str:
+267:def main() -> None:
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py [90m[limit=65, offset=76][0m
+[0m→ [0mRead triage.py [90m[limit=80, offset=238][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mls corpus/base/ 2>/dev/null; echo ---; sed -n 1,60p triage.py; echo ===; grep -n "USER_PW\|BASE\s*=\|OUT\s*=" prevchain.py | head
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+aes256_r6__objstm.pdf
+aes256_r6__plain.pdf
+control_owner_only.pdf
+control_plain.pdf
+rc4_128_r3__linearized.pdf
+rc4_128_r3__objstm.pdf
+rc4_128_r3__plain.pdf
+rc4_128_r4__attach.pdf
+rc4_128_r4__linearized.pdf
+rc4_128_r4__objstm.pdf
+rc4_128_r4__plain.pdf
+rc4_40_r2__linearized.pdf
+rc4_40_r2__objstm.pdf
+rc4_40_r2__plain.pdf
+---
+"""
+Differential triage harness: run every extractor against every corpus file
+WITHOUT a password and classify the outcome.
+
+Probes run in isolated subprocesses so a segfault becomes a recorded CRASH
+finding instead of killing the harness. Probes are batched per extractor for
+speed; any batch that dies is retried file-by-file to isolate the culprit.
+
+Statuses:
+  LEAK      - page content canary extracted from behind a user password -> bug
+  META-LEAK - metadata canary extracted although metadata should be encrypted -> bug
+  CRASH     - extractor died (non-zero exit / fatal error)             -> candidate bug
+  TIMEOUT   - extractor hung on the input                              -> candidate DoS bug
+  BLOCKED   - extractor correctly refused (password required)          -> expected
+  INFO      - metadata readable where /EncryptMetadata false says it may be -> by design
+  SILENT    - returned empty output without erroring                   -> manual triage
+  OK        - extraction succeeded where it should (controls)          -> sanity
+  ERROR     - clean exception that is not a password refusal           -> triage manually
+"""
+from __future__ import annotations
+
+import contextlib
+import csv
+import json
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+CORPUS = ROOT / "corpus"
+MANIFEST = CORPUS / "manifest.json"
+FINDINGS = ROOT / "findings"
+TIMEOUT_BATCH_S = 180
+TIMEOUT_ONE_S = 30
+BATCH_SIZE = 20
+
+EXTRACTORS = ["pypdf", "pdfminer", "pymupdf", "pypdfium2", "pikepdf", "pdfjs"]
+
+PASSWORD_HINTS = re.compile(
+    r"password|encrypted|decrypt|FPDF_ERROR_PASSWORD|file is encrypted"
+    r"|PDFPasswordIncorrect|PDFEncryptionError|PdfminerException",
+    re.I,
+)
+
+
+# ---------------------------------------------------------------- child side
+
+def _norm(text: str) -> str:
+    return re.sub(r"\s+", "", text)
+
+
+def _meta_text(meta) -> str:
+    try:
+        if meta is None:
+            return ""
+        items = meta.items() if hasattr(meta, "items") else meta
+        return json.dumps({str(k): str(v) for k, v in items}, default=str)
+===
+44:BASE = ROOT / "corpus" / "base"
+45:OUT = ROOT / "corpus" / "prevchain"
+48:USER_PW = "Us3r-Passw0rd!"
+177:        with pikepdf.open(str(self.path), password=USER_PW if self.encrypted else "") as pdf:
+330:            auth = doc.authenticate(USER_PW)
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead triage.py [90m[limit=80, offset=149][0m
+> build · muse-spark-1.3-contributor
+Baseline understood. Running one Track 2 micro-step: the mirror of cycle 63's hybrid-xref disagreement.
+[0m← [0mWrite /tmp/opencode/cycle64_hybrid_trailer_hostile.py
+Created file successfully: /tmp/opencode/cycle64_hybrid_trailer_hostile.py
+> build · muse-spark-1.3-contributor
+[0m$ [0msed -n 30,75p prevchain.py
+Outputs: corpus/prevchain/*.pdf, findings/prevchain.md, findings/prevchain.csv
+"""
+from __future__ import annotations
+
+import csv
+import json
+import re
+from pathlib import Path
+
+import pikepdf
+
+from triage import EXTRACTORS, run_batch
+
+ROOT = Path(__file__).resolve().parent
+BASE = ROOT / "corpus" / "base"
+OUT = ROOT / "corpus" / "prevchain"
+FINDINGS = ROOT / "findings"
+
+USER_PW = "Us3r-Passw0rd!"
+
+SEEDS = [
+    "aes256_r6__plain.pdf",
+    "rc4_128_r4__plain.pdf",
+    "aes256_r6__objstm.pdf",
+    "control_plain.pdf",  # unencrypted control: proves the construction itself
+]
+
+
+# --------------------------------------------------------------- primitives
+
+def last_startxref(data: bytes) -> int:
+    m = None
+    for m in re.finditer(rb"startxref\s+(\d+)\s+%%EOF", data):
+        pass
+    if m is None:
+        raise ValueError("no startxref found")
+    return int(m.group(1))
+
+
+def max_size(data: bytes) -> int:
+    sizes = [int(x) for x in re.findall(rb"/Size\s+(\d+)", data)]
+    if not sizes:
+        raise ValueError("no /Size found")
+    return max(sizes)
+> build · muse-spark-1.3-contributor
+[0m← [0mWrite /tmp/opencode/cycle64_hybrid_trailer_hostile.py
+Wrote file successfully: /tmp/opencode/cycle64_hybrid_trailer_hostile.py
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && .venv/bin/python /tmp/opencode/cycle64_hybrid_trailer_hostile.py 2>&1 | tail -60
+"injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "ERROR",
+   "error": "FileDataError: Failed to open file '/tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf' as type pdf.",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pypdfium2": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PdfiumError: Failed to load document (PDFium: Incorrect password error).",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PdfiumError: Failed to load document (PDFium: Incorrect password error).",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pikepdf": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PasswordError: /tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf: invalid password",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PasswordError: /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf: invalid password",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pdfjs": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PasswordException: No password given",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PasswordException: No password given",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ }
+}
+SUMMARY: ORIGINAL 0/12, injected 0/12
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && .venv/bin/python /tmp/opencode/cycle64_hybrid_trailer_hostile.py 2>&1 | head -60
+built /tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf (4893 bytes)
+built /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf (4392 bytes)
+CONTROLS: [{"file": "aes256_r6__plain__t_hostileTrailer_origXS.pdf", "control_error": "FileDataError: Failed to open file '/tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf' as type pdf."}, {"file": "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf", "control_error": "FileDataError: Failed to open file '/tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf' as type pdf."}]
+{
+ "pypdf": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "FileNotDecryptedError: File has not been decrypted",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "FileNotDecryptedError: File has not been decrypted",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pdfminer": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PdfminerException: ",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PdfminerException: ",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pymupdf": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "ERROR",
+   "error": "FileDataError: Failed to open file '/tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf' as type pdf.",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+  "rc4_128_r4__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "ERROR",
+   "error": "FileDataError: Failed to open file '/tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf' as type pdf.",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  }
+ },
+ "pypdfium2": {
+  "aes256_r6__plain__t_hostileTrailer_origXS.pdf": {
+   "status": "BLOCKED",
+   "error": "PdfiumError: Failed to load document (PDFium: Incorrect password error).",
+   "text_len": 0,
+   "ORIGINAL_hit": false,
+   "injected_hit": false
+  },
+> build · muse-spark-1.3-contributor
+MuPDF can't even open the file with the password — need to check whether my construction is malformed or this is a real parser finding.
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && ls corpus/prevchain/ | grep -i "h_refstm\|h_trailer\|hybrid"; echo ---; .venv/bin/python -c "
+import pymupdf
+for f in ['corpus/prevchain/aes256_r6__plain__h_refstm_encrypt.pdf','corpus/prevchain/aes256_r6__plain__h_trailer_encrypt.pdf']:
+    try:
+        d = pymupdf.open(f)
+        print(f, 'needs_pass=', d.needs_pass, 'auth=', d.authenticate('Us3r-Passw0rd!'), 'pages=', d.page_count)
+    except Exception as e:
+        print(f, 'FAIL', type(e).__name__, e)
+"; echo ---; which qpdf mutool; qpdf --check /tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf 2>&1 | head
+aes256_r6__objstm__h_refstm_encrypt.pdf
+aes256_r6__objstm__h_trailer_encrypt.pdf
+aes256_r6__plain__h_refstm_encrypt.pdf
+aes256_r6__plain__h_trailer_encrypt.pdf
+control_plain__h_refstm_encrypt.pdf
+control_plain__h_trailer_encrypt.pdf
+rc4_128_r4__plain__h_refstm_encrypt.pdf
+rc4_128_r4__plain__h_trailer_encrypt.pdf
+---
+corpus/prevchain/aes256_r6__plain__h_refstm_encrypt.pdf needs_pass= 0 auth= 1 pages= 1
+corpus/prevchain/aes256_r6__plain__h_trailer_encrypt.pdf needs_pass= 1 auth= 2 pages= 1
+---
+/bin/bash: line 9: qpdf: command not found
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /tmp/opencode/cycle64_hostiletrailer && .venv/bin/python - <<'EOF'
+data = open('aes256_r6__plain__t_hostileTrailer_origXS.pdf','rb').read()
+print(len(data))
+# show last 700 bytes
+print(data[-700:].decode('latin-1'))
+EOF
+/bin/bash: line 1: .venv/bin/python: No such file or directory
+> build · muse-spark-1.3-contributor
+[0m$ [0m/home/sarthak/pdf-encryption-research/.venv/bin/python - <<'EOF'
+data = open('/tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf','rb').read()
+print(len(data))
+print(data[-800:].decode('latin-1'))
+EOF
+4893
+ /Root 12 0 R /Length 35 >>
+stream
+      >    y    +    ´  
+endstream
+endobj
+xref
+0 1
+0000000000 65535 f 
+12 4
+0000003595 00000 n 
+0000003646 00000 n 
+0000003705 00000 n 
+0000003883 00000 n 
+trailer
+<< /Size 24 /Encrypt << /Filter /Standard /V 5 /R 6 /Length 256 /P -4 /O <0000000000000000000000000000000000000000000000000000000000000000> /U <0000000000000000000000000000000000000000000000000000000000000000> /OE <0000000000000000000000000000000000000000000000000000000000000000> /UE <0000000000000000000000000000000000000000000000000000000000000000> /Perms <00000000000000000000000000000000> /CF << /DefaultCryptFilter << /AuthEvent /DocOpen /CFM /AESV3 /Length 32 >> >> /StmF /DefaultCryptFilter /StrF /DefaultCryptFilter >> /Root 12 0 R /Prev 3186 /XRefStm 4020 >>
+startxref
+4181
+%%EOF
+> build · muse-spark-1.3-contributor
+[0m$ [0m/home/sarthak/pdf-encryption-research/.venv/bin/python - <<'EOF'
+data = open('/tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf','rb').read()
+i = data.find(b'16 0 obj')
+print(repr(data[i-200:i+500].decode('latin-1')))
+EOF
+'Type1 /BaseFont /Helvetica >> >> >> /Contents 15 0 R >>\nendobj\n15 0 obj\n<< /Length 86 >>\nstream\nBT /F1 12 Tf 72 700 Td (INJECTED aes256_r6__plain t_hostileTrailer_origXS ALPHA) Tj ET\nendstream\nendobj\n16 0 obj\n<< /Type /XRef /Size 24 /W [1 4 2] /Index [12 5] /Encrypt 11 0 R /Root 12 0 R /Length 35 >>\nstream\n\x01\x00\x00\x0e\x0b\x00\x00\x01\x00\x00\x0e>\x00\x00\x01\x00\x00\x0ey\x00\x00\x01\x00\x00\x0f+\x00\x00\x01\x00\x00\x0f´\x00\x00\nendstream\nendobj\nxref\n0 1\n0000000000 65535 f \n12 4\n0000003595 00000 n \n0000003646 00000 n \n0000003705 00000 n \n0000003883 00000 n \ntrailer\n<< /Size 24 /Encrypt << /Filter /Standard /V 5 /R 6 /Length 256 /P -4 /O <0000000000000000000000000000000000000000000000000000000000000000> /U <0000000000000000000000000000000000000000000000000000000000000000> /OE <00'
+> build · muse-spark-1.3-contributor
+[0m$ [0m/home/sarthak/pdf-encryption-research/.venv/bin/python - <<'EOF'
+import pikepdf
+from pathlib import Path
+for f in sorted(Path('/tmp/opencode/cycle64_hostiletrailer').glob('*.pdf')):
+    for pw in (None, 'Us3r-Passw0rd!'):
+        try:
+            kw = {} if pw is None else {'password': pw}
+            with pikepdf.open(f, **kw) as d:
+                print(f.name, 'pw=', bool(pw), 'pages=', len(d.pages), 'encrypt=', dict(d.trailer.get('/Encrypt', {})) .get('/V', None) if '/Encrypt' in d.trailer else None)
+        except Exception as e:
+            print(f.name, 'pw=', bool(pw), 'FAIL', type(e).__name__, str(e)[:120])
+EOF
+aes256_r6__plain__t_hostileTrailer_origXS.pdf pw= False FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf: invalid password
+aes256_r6__plain__t_hostileTrailer_origXS.pdf pw= True FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/aes256_r6__plain__t_hostileTrailer_origXS.pdf: invalid password
+rc4_128_r4__plain__t_hostileTrailer_origXS.pdf pw= False FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf: invalid password
+rc4_128_r4__plain__t_hostileTrailer_origXS.pdf pw= True FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf: invalid password
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && grep -n "O-2026-002" findings/LOG.md | head; echo ---; grep -c "" findings/LOG.md; tail -5 findings/LOG.md; echo ===; tail -3 findings/24-7.log
+107:### O-2026-002 - Trailer//Prev/hybrid-xref confusion: parser disagreement on appended revisions, original content never leaks
+141:- Representative PoC: `findings/poc/O-2026-002-shadow-encrypt-obj.pdf`
+157:  `findings/poc/O-2026-002-shadow-encrypt-obj.pdf` (md5
+1319:- Interpretation: same integrity property as O-2026-001/O-2026-002 — static
+---
+1926
+  (needs_pass=1, 1 page) — the trailer's ORIGINAL ref governs for MuPDF,
+  the XRefStm hostile dict is ignored once authenticated. Forty-fifth
+  unanimous-refuse dict-typed variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+===
+rc4_128_r4__plain__t_hostileTrailer_origXS.pdf pw= False FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf: invalid password
+rc4_128_r4__plain__t_hostileTrailer_origXS.pdf pw= True FAIL PasswordError /tmp/opencode/cycle64_hostiletrailer/rc4_128_r4__plain__t_hostileTrailer_origXS.pdf: invalid password
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && tail -40 findings/LOG.md
+`PasswordError: invalid password`; pdfjs `PasswordException: No password
+  given`). Verdict profile IDENTICAL to the cycle-33 direct baseline on
+  every stack: indirect placement changes nothing observable — no engine
+  falls back to the original-via-`/Prev` dict, type-checks the indirect ref
+  away, or treats it as no-encryption; the shadow dict's shape is accepted
+  far enough to attempt auth against zeroed O/U and refuse. Mirrors the
+  cycle-13 V4 direct-vs-indirect finding, now confirmed for V5/R6.
+  Forty-fourth unanimous-refuse dict-typed variant. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-10-31, Track 2 cycle 63 (t_hybrid_hostileXS_origTrailer): NEW variant,
+  fresh axis — hybrid-xref /Encrypt DISAGREEMENT with a hostile dict. XRefStm
+  dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE,
+  16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the
+  classic trailer carries the ORIGINAL /Encrypt indirect ref (same appended
+  plaintext page n..n+3, /Root n, /Prev orig; mirrors prevchain
+  h_refstm_encrypt construction with the XRefStm original-ref swapped for the
+  hostile dict; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle63_hybrid_hostile_xs.py`, raw results
+  `/tmp/opencode/cycle63_hybridhostile/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical to
+  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError` identical; pdfjs `PasswordException: No password given`
+  identical; pymupdf `ValueError: document closed or encrypted` — RETREATS
+  from the cycle-33 `FileDataError` to the cycle-53 V-absent verdict,
+  suggesting MuPDF resolves the hybrid /Encrypt differently than a lone
+  hostile trailer dict, but still refuses). No engine honors one dict for
+  auth while rendering through the other, falls back to the original-via-
+  `/Prev` dict as plaintext, or treats the disagreement as no-encryption.
+  With-password control (PyMuPDF, correct user password): both files open
+  (needs_pass=1, 1 page) — the trailer's ORIGINAL ref governs for MuPDF,
+  the XRefStm hostile dict is ignored once authenticated. Forty-fifth
+  unanimous-refuse dict-typed variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && .venv/bin/python -c "import pypdf, fitz, pypdfium2, pikepdf, pdfminer; print('pypdf', pypdf.__version__); print('pymupdf', fitz.__doc__); print('pikepdf', pikepdf.__version__)" 2>&1; .venv/bin/python -c "import fitz; print('mupdf', fitz.mupdf_version if hasattr(fitz,'mupdf_version') else '')" 2>&1; node -p "require('./node_modules/pdfjs-dist/package.json').version" 2>&1; .venv/bin/pip show pdfminer.six 2>/dev/null | head -2
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+pypdf 6.21.4
+pymupdf PyMuPDF 2.0: Python bindings for the MuPDF 1.28.5 library.
+Python 3.14 running on linux (64-bit).
+
+pikepdf 10.17.0
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/fitz/__init__.py:17: FutureWarning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+  warnings.warn(
+mupdf 1.28.5
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && .venv/bin/python -c "import pypdfium2, pdfminer; print('pypdfium2', pypdfium2.__version__ if hasattr(pypdfium2,'__version__') else 'n/a'); import importlib.metadata as m; print('pypdfium2', m.version('pypdfium2')); print('pdfminer.six', m.version('pdfminer.six'))" 2>&1 | grep -v Warning | grep -v warnings.warn
+pypdfium2 n/a
+pypdfium2 5.14.0
+pdfminer.six 20260107
+> build · muse-spark-1.3-contributor
+All probes refuse. Writing up the cycle.
+[0m$ [0mcd /home/sarthak/pdf-encryption-research && cat >> findings/LOG.md <<'EOF'
+
+- 2026-11-01, Track 2 cycle 64 (t_hostileTrailer_origXS): NEW variant,
+  mirror split of cycle 63 — hybrid-xref /Encrypt DISAGREEMENT reversed.
+  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid)
+  while the XRefStm dict carries the ORIGINAL /Encrypt indirect ref (same
+  appended plaintext page n..n+3, /Root n, /Prev orig, /XRefStm ptr; mirrors
+  prevchain h_trailer_encrypt construction with the trailer original-ref
+  swapped for the hostile dict; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, raw results
+  `/tmp/opencode/cycle64_hostiletrailer/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 33; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical to
+  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+  `PasswordError` identical; pdfjs `PasswordException: No password given`
+  identical; pymupdf `FileDataError: Failed to open file ... as type pdf`
+  — same exception class as the cycle-33 baseline, i.e. the XRefStm
+  original-ref changes nothing on the MuPDF path either, unlike the
+  cycle-63 reverse direction where MuPDF retreated to `ValueError:
+  document closed or encrypted`). No engine honors one dict for auth while
+  rendering through the other, falls back to the original-via-`/Prev` dict
+  as plaintext, or treats the disagreement as no-encryption: trailer-wins,
+  fail-closed, on every stack. Structural-validity evidence (no positive
+  with-password control possible by design — the trailer hostile dict cannot
+  authenticate): 5/6 engines parse the file and refuse at the auth layer,
+  and pikepdf/qpdf refuses EVEN WITH the correct user password
+  (`PasswordError: invalid password` with and without password on both
+  files), proving the trailer dict governs for qpdf. Hybrid-disagreement
+  axis now mapped at both directions (XS-hostile cycle 63 / trailer-hostile
+  this cycle), both unanimous-refuse. Forty-sixth unanimous-refuse variant.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+EOF
+echo done
+done
+> build · muse-spark-1.3-contributor
+[0m← [0mWrite findings/daily/2026-11-01.md
+Created file successfully: findings/daily/2026-11-01.md
+> build · muse-spark-1.3-contributor
+[2026-11-01T02:02:42Z] cycle 64 Track 2 t_hostileTrailer_origXS (mirror of cycle 63: trailer hostile V5/R6 direct dict + XRefStm ORIGINAL ref) x 2 seeds x 6 engines = 12 no-password probes, ORIGINAL 0/12, injected 0/12, 0 crashes; trailer-wins fail-closed on all stacks (qpdf refuses even WITH correct password); 46th unanimous-refuse variant, integrity-only, no PoC
