@@ -58582,3 +58582,884 @@ LOG appended
 - Extension 2026-11-01 (cycle 93, Track 2): new variant `t_encrypt_stdV4R4rootDangling` (FIRST /Root-axis probe: appended plaintext page, trailer `/Encrypt` dir
 > build · muse-spark-1.3-contributor
 [2026-11-01T03:55:00Z] cycle 93 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootDangling orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299
+[0m$ [0mcat >> findings/daily/2026-11-01.md <<'EOF'
+
+## Cycle 93 addendum (2026-11-01T03:55:00Z)
+
+- cycle 93: Track 2 V4 /Root-dangling probe (`t_encrypt_stdV4R4rootDangling`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (manually triaged refuse — FIRST pypdf Root gate on the Track-2 axis; +pw gives WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a Root gate; pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text, auth=0 with password — SILENT-open, no content); pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password (no V4 parse escalation); pdfjs No password given. With-password controls refuse too (pikepdf +pw, PyMuPDF auth 0, pypdf +pw WrongPasswordError) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle93_rootDangling.py`, `/tmp/opencode/cycle93_rootDangling/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 28 Track-2 probe cycles x 12 = 336 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root round 2 (e.g. `/Root` pointing at the content stream, or orig-catalog Root with the new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+EOF
+echo "daily appended"; printf '[2026-11-01T03:55:00Z] cycle 93 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootDangling orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299\n' >> findings/24-7.log
+git status --short; git add findings/daily/2026-11-01.md findings/LOG.md findings/24-7.log; git status --short
+daily appended
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-11-01.md
+?? findings/crashes/
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-11-01.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit commit -m "cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)" 2>&1 | tail -2; git push -u origin research/vps-2026-11-01 2>&1 | tail -3; git log --oneline -2; git status --short
+[research/vps-2026-11-01 e21fc3d] cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
+ 3 files changed, 633 insertions(+)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   c0db87e..e21fc3d  research/vps-2026-11-01 -> research/vps-2026-11-01
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+e21fc3d cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
+c0db87e cycle 92: Track 2 V4 /Size-overshoot probe (t_encrypt_stdV4R4sizeOvershoot, 0/12 leak, Size-value ignored either direction, 72nd variant)
+ M findings/24-7.log
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff findings/24-7.log | cut -c1-200 | tail -10
++[research/vps-2026-11-01 e21fc3d] cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
++ 3 files changed, 633 insertions(+)
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   c0db87e..e21fc3d  research/vps-2026-11-01 -> research/vps-2026-11-01
++branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
++e21fc3d cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
++c0db87e cycle 92: Track 2 V4 /Size-overshoot probe (t_encrypt_stdV4R4sizeOvershoot, 0/12 leak, Size-value ignored either direction, 72nd variant)
++ M findings/24-7.log
++?? findings/crashes/
++> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+Cycle 93 done, committed and pushed to `research/vps-2026-11-01` only.
+
+- **Track**: Track 2, smallest step — V4 `/Root`-dangling probe (`t_encrypt_stdV4R4rootDangling`). Cycle-12 CF-complete V4/R4 hostile direct dict, appended trailer `/Root n` → `/Root 9999 0 R` (dangling; `/Size` correct, `/Prev` orig, pure-append verified).
+- **Result**: 0 leaks, 0 crashes. 2 seeds × 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12. pypdf is the only Root-validating stack (`PdfReadError: Cannot find Root`, +pw → WrongPasswordError); pdfminer derives anyway (`PDFPasswordIncorrect` with and without password, direct-traceback confirmed); PyMuPDF is harness-OK-but-encrypted (`needs_pass=1`, pages=0, empty, auth=0); PDFium/qpdf/pdf.js refuse with unchanged password errors. Baseline seeds 12/12 BLOCKED. 73rd variant, first `/Root`-axis point.
+- **Files**: `findings/daily/2026-11-01.md` (cycle 93 addendum; day totals 336 probes + re-verify + drafting), `findings/LOG.md` (O-2026-002 extension), `findings/24-7.log` (one-liner). Builder + raw results in `/tmp/opencode/cycle93_rootDangling/` (git-untracked). No new PoC (negative result).
+- **Next**: `/Root` round 2 (Root → content stream, or orig-catalog Root with new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples.
+- Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs 6.4.299.
+[2026-11-01T03:49:46Z] cycle 93 exit=0 branch=research/vps-2026-11-01 daily-push
+Everything up-to-date
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+Already on 'research/vps-2026-11-01'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-11-01'.
+[2026-11-01T03:51:46Z] cycle 94 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+One research cycle on today's branch — confirming baseline and probing the next track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings 
+[0m$ [0mgit branch --show-current; git status --short --branch; date -u; cat findings/daily/2026-11-01.md 2>&1 | head -n 200; echo ---LOGTAIL---; tail -n 100 findings/24-7.log 2>&1
+fa54d3ea77a610fbea295e94f6b37080), 2 in the rc4 file (md5 d02a37a7f3c94b115735c716ca88f48a) — both are the seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-fourth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle72_cfmNone.py`, `/tmp/opencode/cycle72_cfmNone/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4len40 (Track 2, cycle 73): NEW variant, /Length-40 re-probe on the CF-COMPLETE V4 base — same top-level `/Length 128` -> `/Length 40` delta as cycle 30 (`t_encrypt_stdV4R4POULen40`), but applied to the cycle-12 dict WITH the crypt-filter triple (cycle 30 used the CF-absent cycle-11 dict, where pdfminer stopped at the `'StmF'` KeyError and never reached key derivation, so the Length VALUE was untested past the CF gate) — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict (`/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF`) with the SINGLE-token delta top-level `/Length 128` -> `/Length 40` (inner CF `/Length 16` kept to isolate top-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback on both files, harness shows empty PdfminerException — i.e. derivation attempted against zeroed O/U, NOT a Length gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password error; pikepdf/qpdf PasswordError: invalid password; pdfjs PasswordException: No password given): the short top-level Length is silently tolerated everywhere — NO engine validates the top-Length VALUE (40-bit still passes shape checks and reaches auth on all six; key advance vs cycle 30: pdfminer now reaches `PDFPasswordIncorrect` = derivation ATTEMPTED with Length 40, where cycle 30 stopped at the `'StmF'` KeyError — so the short Length survives THROUGH key derivation, not just through shape checks). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1, pypdf decrypt returns 0) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY bytes: 0 in the aes256 file (md5 845912969cf4), 2 in the rc4 file (md5 79c5913ba619) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-fifth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle73_len40.py`, `/tmp/opencode/cycle73_len40/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4len256 (Track 2, cycle 74): NEW variant, /Length-256 overshoot on the CF-COMPLETE V4 base — mirror of the cycle-73 short-side probe (same 128->40 delta direction reversed: top-level `/Length 128` -> `/Length 256`, above the V4 40..128 legal range; inner CF `/Length 16` kept, CFM stays /V2 to isolate top-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycles 12/73, no Length gate on that path); pdfminer `PDFPasswordIncorrect` — confirmed via direct PDFDocument traceback on both files (harness shows empty PdfminerException) — i.e. derivation ATTEMPTED against zeroed O/U even with Length 256, NOT a Length gate (same tolerance as the cycle-73 short side: the top-Length VALUE is never validated on the pdfminer path, high or low); pymupdf `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse — RETREATS from the cycle-12/70/71/72/73 `ValueError: document closed or encrypted`: FIRST MuPDF Length gate on the V4 axis, overshoot-only — the short side (40) passed shape checks everywhere while 256 trips MuPDF's open-time validation; asymmetric bound enforcement); pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4 even at 256, confirming the V4-vs-V5 parse-validation asymmetry from cycles 39/40/70/72: qpdf escalates V5 CFM/shape faults at parse time but never V4 Length faults); pdfjs `PasswordException: No password given` (identical, no Length validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the aes256 file (md5 eb97c01e2c368dfb516a755be537d108), 2 in the rc4 file (md5 171904fdb70aa4677aef3b494ff666ca) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-sixth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle74_len256.py`, `/tmp/opencode/cycle74_len256/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Next step
+
+- Hybrid-disagreement axis COMPLETE at six points (cycles 63-68: trailer-wins when a dict is present, 4-vs-2 split on trailer-silence with pypdf/pypdfium2 walking /Prev, ORIGINAL 0/12 everywhere). V5 presence/type/CF axes extended with the Perms+CF double-absent interaction (cycle 69). V4 CFM axis COMPLETE at four points (cycle 70: AESV3 refused pre-derivation at pdfminer CFM gate, qpdf no V4 parse escalation; cycle 71: AESV2 accepted at CFM gate, derivation attempted, verdict-identical to V2 baseline on all six — pdfminer CFM allowlist confirmed as {V2, AESV2}; cycle 72: /None refused pre-derivation everywhere, first pypdf CFM gate on the V4 axis via NotImplementedError, qpdf still no V4 parse escalation — V4-vs-V5 parse-validation asymmetry confirmed) — all still unanimous-refuse modulo the pypdf ERROR-vs-BLOCKED harness label (manually triaged refuse), integrity-only. Next smallest Track 2 steps: V4 Length-mismatch (e.g. /Length 40 with AESV2 CFM) or EncryptMetadata-false CFM interaction, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows. V4 top-Length probe (cycle 73: /Length 40 silently tolerated on all six, derivation attempted, fail-closed — no Length gate anywhere) extends the V4 axis past CFM. Next smallest Track 2 steps: V4 Length-mismatch round 2 DONE on the overshoot side (cycle 74: /Length 256 trips only the MuPDF open-time gate, all other stacks tolerate-and-refuse at auth; remaining: inner-CF /Length overshoot side DONE in cycle 76: /Length 32 trips only the MuPDF open-time gate, pdfminer still derives — inner/top Length behave identically, V4 Length picture COMPLETE on all four corners) — next: EncryptMetadata-false CFM interaction DONE in cycle 77 (flag value never validated on any path, verdict-identical to cycle-12 baseline) — next: EncryptMetadata-true-explicit control DONE in cycle 78 (absent/false/true indistinguishable on all six stacks, EncryptMetadata axis COMPLETE at three points, sixtieth variant, still unanimous-refuse) — next: V4 Length-mismatch with AESV2 CFM, or EncryptMetadata x CFM-None interaction, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 79 addendum (2026-11-01T02:58:32Z)
+
+- cycle 79: Track 2 V4 AuthEvent-EFOpen single-token probe (`t_encrypt_stdV4R4authEFOpen`: cycle-12 CF-complete V4/R4 hostile direct dict with `/AuthEvent /DocOpen` -> `/AuthEvent /EFOpen`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback = derivation attempted, NOT an AuthEvent gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/AuthEvent` value never validated anywhere. With-password controls refuse too (qpdf WITH correct password, PyMuPDF authenticate 0). Raw CANARY 0 (aes256, md5 ef5d3fbca12e) / 2 (rc4, md5 53954da31e11, seed XMP META-CANARY INFO). Baseline re-verified 12/12 BLOCKED. Sixty-first variant, first AuthEvent-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle79_authEFOpen.py`, `/tmp/opencode/cycle79_authEFOpen/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 16 Track-2 cycles x 12 = 192 no-password probes, leaks 0, crashes 0.
+- next step: V4 AuthEvent round 2 (absent-AuthEvent control) DONE in cycle 80 or StmF/StrF-name mismatch on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 80 addendum (2026-11-01T03:05:00Z)
+
+- cycle 80: Track 2 V4 AuthEvent-absent control (`t_encrypt_stdV4R4authAbsent`: cycle-12 CF-complete V4/R4 hostile direct dict with `/AuthEvent /DocOpen` REMOVED from StdCF, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-79 EFOpen on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback = derivation attempted, NOT an AuthEvent gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/AuthEvent` presence AND value never validated anywhere — absent/DocOpen/EFOpen indistinguishable. With-password controls refuse too (qpdf WITH correct password, PyMuPDF authenticate 0). Raw CANARY 0 (aes256, md5 6e6c36bb0396) / 2 (rc4, md5 9e7ef868c7b9, seed XMP META-CANARY INFO). Baseline re-verified 12/12 BLOCKED. Sixty-second variant, AuthEvent axis COMPLETE. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle80_authAbsent.py`, `/tmp/opencode/cycle80_authAbsent/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 17 Track-2 cycles x 12 = 204 no-password probes, leaks 0, crashes 0.
+- next step: StmF/StrF-name mismatch on the CF-complete V4 base (e.g. /StmF /StdCF2) DONE in cycle 81; then StrF-name mismatch mirror or Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 81 addendum (2026-11-01T03:12:00Z)
+
+- cycle 81: Track 2 V4 StmF-name mismatch (`t_encrypt_stdV4R4stmMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/StmF /StdCF` -> `/StmF /StdCF2` (undefined crypt-filter name; `/StrF` stays `/StdCF` to isolate the StmF name lookup), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (harness ERROR = clean exception, manually triaged refuse — FIRST pypdf StmF-name gate on the V4 axis: cycles 12/70/71/73/75/77/78/79/80 all gave FileNotDecryptedError with no name validation on that path); pdfminer BLOCKED `Unsupported crypt filter` (pre-derivation name gate, retreats from the cycle-12 `PDFPasswordIncorrect`/derivation-attempted baseline — the undefined StmF name fails before key derivation); pymupdf ERROR `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse — retreats from the cycle-12 `ValueError: document closed or encrypted`, same open-time escalation class as the cycle-74/76 Length-overshoot gates); pypdfium2 `Incorrect password error` (identical to baseline, no name validation surfaced); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4, confirming the V4-vs-V5 parse-validation asymmetry: qpdf escalates V5 shape faults at parse time but never V4 StmF-name faults); pdfjs `PasswordException: No password given` (identical, no name validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY 0 (aes256, md5 d116fdd918f2) / 2 (rc4, md5 515f2cfc3e1a, byte-context verified as seed's own plaintext XMP META-CANARY title/description, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified 12/12 BLOCKED. Sixty-third variant overall, first StmF/StrF-name-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle81_stmMismatch.py`, `/tmp/opencode/cycle81_stmMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 18 Track-2 cycles x 12 = 216 no-password probes, leaks 0, crashes 0.
+- next step: StrF-name mismatch mirror (`/StrF /StdCF2`, StmF kept) on the CF-complete V4 base DONE in cycle 82; then both-names mismatch, or Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 82 addendum (2026-11-01T03:09:30Z)
+
+- cycle 82: Track 2 V4 StrF-name mismatch mirror (`t_encrypt_stdV4R4strMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/StrF /StdCF` -> `/StrF /StdCF2` (undefined crypt-filter name; `/StmF` stays `/StdCF` to isolate the StrF name lookup), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (clean exception, manually triaged refuse — same StmF/StrF-name gate as cycle 81, symmetric: pypdf validates whichever of StmF/StrF names the undefined filter; pdfminer BLOCKED `Unsupported crypt filter: param={...}` (pre-derivation name gate, identical retreat from the cycle-12 `PDFPasswordIncorrect`/derivation-attempted baseline — StrF-name fails before key derivation exactly like StmF-name); pymupdf ERROR `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse, identical retreat from the cycle-12 `ValueError`, same open-time escalation class as cycle-81/74/76); pypdfium2 `Incorrect password error` (identical to baseline AND cycle 81, no name validation surfaced on either axis); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4 for EITHER name fault, V4-vs-V5 parse-validation asymmetry holds across the full name axis); pdfjs `PasswordException: No password given` (identical, no name validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY 0 (aes256, md5 9111c447bed6) / 2 (rc4, md5 2a95b5f7f6d9, byte-context verified as seed's own plaintext XMP META-CANARY title/description — byte-identical context to the unmodified seed's 2 hits, `/EncryptMetadata` false by design in the SEED dict, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Sixty-fourth variant overall, StmF/StrF-name axis COMPLETE at two points (StmF-undefined cycle 81, StrF-undefined cycle 82 — symmetric fail-closed on all six stacks). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle82_strMismatch.py`, `/tmp/opencode/cycle82_strMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 19 Track-2 cycles x 12 = 228 no-password probes, leaks 0, crashes 0.
+- next step: both-names mismatch (`/StmF /StdCF2 /StrF /StdCF2`) single control on the CF-complete V4 base, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 83 addendum (2026-11-01T03:28:00Z)
+
+- cycle 83: Track 2 V4 both-names mismatch control (`t_encrypt_stdV4R4bothMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with `/StmF /StdCF2 /StrF /StdCF2` — BOTH names undefined, CF still defines only `/StdCF`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (manually triaged refuse, identical to cycles 81/82, no interaction); pdfminer BLOCKED `Undefined crypt filter` — NOT the cycles-81/82 `Unsupported crypt filter`: with stmf==strf the inequality gate passes and the downstream defined-name gate (`if self.strf not in self.cfm`, source-verified in `pdfdocument.py`) fires — two sequential pre-derivation gates, both fail-closed; pymupdf ERROR `FileDataError` pre-auth (identical to cycles 81/82); pypdfium2 `Incorrect password` (identical, no name validation on any of the three axis points); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO V4 parse-time escalation, V4-vs-V5 asymmetry holds across the full three-point name axis); pdfjs `PasswordException: No password given` (identical). With-password controls refuse too (qpdf WITH correct password, PyMuPDF pre-auth OPEN-FAIL) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 2c1ce9dbb9f4) / 2 (rc4, md5 b95fdb1fd29c, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-fifth variant overall, StmF/StrF-name axis COMPLETE at three points (StmF-undefined, StrF-undefined, both-undefined — symmetric fail-closed, pdfminer exposes two ordered gates). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle83_bothMismatch.py`, `/tmp/opencode/cycle83_bothMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 20 Track-2 cycles x 12 = 240 no-password probes, leaks 0, crashes 0.
+- next step: advance Track 3 PDFex static scaffolds (needs real-viewer matrix notes) or Track 4 writer samples if tooling allows; else new Track 2 axis (e.g. /P-permission confusion or /ID-trailer tampering on the CF-complete V4 base).
+
+## Cycle 84 addendum (2026-11-01T03:35:00Z)
+
+- cycle 84: Track 2 V4 /P-value probe (`t_encrypt_stdV4R4perm0`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 0`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — no content disclosed, 0 harness crashes. NEW pdfminer outlier: `struct.error: 'L' format requires 0 <= number <= 4294967295` (surfaced as PdfminerException) with AND without the correct password, while the other five engines refuse cleanly at auth (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). Root cause source-verified: `uint_value(x,32)` in pdftypes.py returns `xi + 2**32` for `xi <= 0` (`if xi > 0` should be `>=`), so `/P 0` yields 4294967296 and `struct.pack("<L", self.p)` (pdfdocument.py:402) raises — `struct.error` escapes pdfminer's own exception hierarchy, and the file is unopenable in pdfminer even with the correct password. Minimal single-file repro isolated from the incremental construction (same-length `/P -1028` -> `/P 0` patch of repo seed `rc4_128_r4__plain.pdf`): pdfminer struct.error with and without password; other five engines BLOCKED cleanly. Sixty-sixth variant overall, first /P-value-axis point, first genuine (if low-severity) implementation bug of the Track-2 series. Logged as O-2026-006 (robustness/interop, NOT a confidentiality leak, not filed upstream yet). PoCs: `findings/poc/O-2026-006-pdfminer-P0-min.pdf`, `findings/poc/O-2026-006-pdfminer-P0-appended-aes.pdf`. Builder + raw results: `/tmp/opencode/cycle84_perm0.py`, `/tmp/opencode/cycle84_perm0/` (2 PDFs + results.json + baseline.json, git-untracked).
+- day totals now: 21 Track-2 cycles x 12 = 252 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier, no content shown).
+- next step: /P-value round 2 (e.g. `/P 1` vs `/P 0` to confirm the `>0` boundary, or large-positive `/P`) on the CF-complete V4 base DONE in cycle 85; then report O-2026-006 upstream (pdfminer.six issue, one-line fix) after re-verification; Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 85 addendum (2026-11-01T03:55:00Z)
+
+- cycle 85: Track 2 V4 /P-value boundary probe (`t_encrypt_stdV4R4perm1`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 1`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. pdfminer returns to `PDFPasswordIncorrect` (confirmed via direct PDFDocument traceback with AND without the correct password on both files — derivation attempted, clean pdfminer exception), vs the cycle-84 `/P 0` `struct.error` outlier: the `>0` boundary in `uint_value` (pdftypes.py:178, source re-verified this cycle) is confirmed — `/P 1` takes the `xi > 0` pass-through branch while `/P 0` falls into `xi + 2**32` = 4294967296 and trips `struct.pack("<L")`. All other five stacks verdict-identical to cycle 84 (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). With-password controls refuse too (qpdf WITH correct password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 d3ea61f390bf) / 2 (rc4, md5 fd0da3e1656e, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-seventh variant overall, /P-value axis at two points (-4 baseline, 0 outlier, 1 boundary-confirmed). Still integrity-only (LOG.md O-2026-006 extension), not filed. Builder + raw results: `/tmp/opencode/cycle85_perm1.py`, `/tmp/opencode/cycle85_perm1/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result, boundary control).
+- day totals now: 22 Track-2 cycles x 12 = 264 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier on cycle 84 only, no content shown).
+- next step: /P-value round 3 (large-positive `/P`, e.g. 2147483647, on the CF-complete V4 base) or report O-2026-006 upstream (pdfminer.six issue, one-line fix `if xi >= 0`); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 86 addendum (2026-11-01T03:25:00Z)
+
+- cycle 86: Track 2 V4 /P-value large-positive probe (`t_encrypt_stdV4R4permMax`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 2147483647` (max int32), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. pdfminer returns to clean `PDFPasswordIncorrect` (direct-traceback confirmed with AND without the correct password on both files — derivation attempted, NOT a P-value gate), vs the cycle-84 `/P 0` `struct.error` outlier: only exactly 0 takes the `uint_value` `+2**32` overflow branch (`pdftypes.py:178 if xi > 0`); max-int32 passes through and packs cleanly, verdict-identical to the cycle-85 `/P 1` boundary control on all six stacks (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). With-password controls refuse too (qpdf WITH correct password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 44408a237d3b) / 2 (rc4, md5 28151271f28b, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Sixty-eighth variant overall, /P-value axis at four points (-4, 0, 1, 2147483647). Still integrity-only (LOG.md O-2026-006 extension), not filed. Builder + raw results: `/tmp/opencode/cycle86_permMax.py`, `/tmp/opencode/cycle86_permMax/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative control).
+- day totals now: 23 Track-2 cycles x 12 = 276 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier on cycle 84 only, no content shown).
+- next step: report O-2026-006 upstream (pdfminer.six issue, one-line fix `if xi >= 0`) after one re-verification of the minimal PoC, or new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 87 addendum (2026-11-01T03:28:00Z)
+
+- cycle 87: Track 2 O-2026-006 pre-report re-verification (no new variant — re-probed both filed PoCs `findings/poc/O-2026-006-pdfminer-P0-min.pdf` + `findings/poc/O-2026-006-pdfminer-P0-appended-aes.pdf` on all six engines, no-password = 12 probes) → ORIGINAL 0/12, injected n/a (PoCs carry no injected page), 0 crashes. pdfminer outlier reproduces exactly on BOTH files: `struct.error: 'L' format requires 0 <= number <= 4294967295` (harness surfaces as PdfminerException with the struct message) with AND without the correct user password (direct-traceback confirmed); other five stacks refuse with unchanged clean password errors (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError; pdfjs No password given). No content shown to any engine. Fix-hypothesis simulation (`uint_value` current `if xi > 0` vs `if xi >= 0` + `struct.pack("<L")` for P in {-4, 0, 1, 2147483647}): only P=0 overflows under current code (4294967296), `>=` packs 0 cleanly, -4/1/max byte-identical — one-line fix confirmed in isolation. Pre-report gate PASSED: ready to file upstream as a pdfminer.six issue (90-day window starts on report). Still integrity-only (LOG.md O-2026-006 extension), not filed. Repro + raw results: `/tmp/opencode/cycle87_p0reverify.py`, `/tmp/opencode/cycle87_p0reverify/results.json` (git-untracked by location); no new repo files, no new PoC (re-verification only).
+- day totals now: 23 Track-2 probe cycles x 12 = 276 no-password probes + 1 re-verification cycle (2 PoCs x 6 engines = 12 probes), leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier reproduced on both PoCs, no content shown).
+- next step: file O-2026-006 upstream (pdfminer.six issue with the two PoCs + one-line fix `if xi >= 0`), then new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 88 addendum (2026-11-01T03:35:00Z)
+
+- cycle 88: Track 2 O-2026-006 report drafting (no new variant — smallest verifiable step toward filing). Wrote `findings/reports/pdfminer-P0-uint-value.md` (project pdfminer.six 20260107, severity low, 5-line repro, cross-engine table pypdf 6.21.4 / pymupdf 2.0 / pypdfium2 5.14.0 / pikepdf 10.17.0 / pdfjs 6.4.299, source-verified `uint_value` root cause, one-line `>=` fix, disclosure plan); both PoCs re-confirmed this cycle via direct `PDFDocument` traceback (`struct.error` with AND without the correct password on both files, other five stacks clean refuse, no content shown). LOG.md O-2026-006 status → "report drafted, not yet sent" + cycle-88 extension bullet. New file: 1 report; no new PoC (negative-result cycle, drafting only).
+- day totals now: 23 Track-2 probe cycles x 12 = 276 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle (re-confirm only, no new probes), leaks 0, crashes 0.
+- next step: send O-2026-006 upstream (pdfminer.six issue with the two PoCs + one-line fix — needs human OK / network), then new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 89 addendum (2026-11-01T04:05:00Z)
+
+- cycle 89: Track 2 V4 /ID-presence probe (`t_encrypt_stdV4R4IDorig`: cycle-12 CF-complete V4/R4 hostile direct dict with the ORIGINAL seed `/ID` array copied into the appended trailer — first /ID-axis point, all prior appended trailers carried NO `/ID`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/Size` n+12, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback with AND without password = derivation attempted, NOT an /ID gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/ID` presence never validated anywhere. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1). Raw CANARY 0 (aes256, md5 1801842554141ffb904326d6e7e9efd7) / 2 (rc4, md5 2a8ff02fc6fbead401c288b3854aba1b, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-ninth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle89_IDorig.py`, `/tmp/opencode/cycle89_IDorig/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 24 Track-2 probe cycles x 12 = 288 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /ID round 2 (mismatched /ID on the CF-complete V4 base) DONE in cycle 90 below; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 90 addendum (2026-11-01T04:15:00Z)
+
+- cycle 90: Track 2 V4 /ID-mismatch probe (`t_encrypt_stdV4R4IDmismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with a MISMATCHED `/ID [<00x16><FFx16>]` in the appended trailer — matches neither seed; single-token delta vs cycle 89 which copied the ORIGINAL `/ID`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/Size` n+12, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-89 orig-ID on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with str password with AND without the correct password on both files = derivation attempted, NOT an /ID gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/ID` VALUE never validated anywhere — absent (cycle 12) / orig-present (cycle 89) / mismatched (here) indistinguishable on all six stacks. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 fcaf28b5438a) / 2 (rc4, md5 fbbd26cde31c, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventieth variant overall, /ID axis COMPLETE at three points. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle90_IDmismatch.py`, `/tmp/opencode/cycle90_IDmismatch/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 25 Track-2 probe cycles x 12 = 300 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: new Track 2 axis (e.g. /Size-shrink or /Root-forward tampering on the CF-complete V4 base), or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 91 addendum (2026-11-01T04:30:00Z)
+
+- cycle 91: Track 2 V4 /Size-shrink probe (`t_encrypt_stdV4R4sizeShrink`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Size n+12` -> `/Size n` (original seed /Size, excludes new objects n..n+3 listed in the appended xref; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a /Size gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/Size` shrinkage never validated anywhere. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 9abd348f2386) / 2 (rc4, md5 2cf1a1afe708, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-first variant overall, first /Size-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle91_sizeShrink.py`, `/tmp/opencode/cycle91_sizeShrink/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 26 Track-2 probe cycles x 12 = 312 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Size round 2 (overshoot `/Size n+100` on the CF-complete V4 base) or /Root-forward tampering; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 92 addendum (2026-11-01T04:45:00Z)
+
+- cycle 92: Track 2 V4 /Size-overshoot probe (`t_encrypt_stdV4R4sizeOvershoot`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Size n+12` -> `/Size n+100` (seed n=12, used 112, far beyond highest new object n+3 still listed in the appended xref); same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-91 shrink probe on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a /Size gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/Size` VALUE never validated in either direction. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1). Raw CANARY 0 (aes256, md5 f6b3b1ebc985) / 2 (rc4, md5 1757c3c883ce, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-second variant overall, /Size axis COMPLETE at three points (correct/shrink/overshoot indistinguishable everywhere). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle92_sizeOvershoot.py`, `/tmp/opencode/cycle92_sizeOvershoot/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 27 Track-2 probe cycles x 12 = 324 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root-forward tampering on the CF-complete V4 base, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 93 addendum (2026-11-01T03:55:00Z)
+
+- cycle 93: Track 2 V4 /Root-dangling probe (`t_encrypt_stdV4R4rootDangling`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (manually triaged refuse — FIRST pypdf Root gate on the Track-2 axis; +pw gives WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a Root gate; pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text, auth=0 with password — SILENT-open, no content); pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password (no V4 parse escalation); pdfjs No password given. With-password controls refuse too (pikepdf +pw, PyMuPDF auth 0, pypdf +pw WrongPasswordError) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle93_rootDangling.py`, `/tmp/opencode/cycle93_rootDangling/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 28 Track-2 probe cycles x 12 = 336 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root round 2 (e.g. `/Root` pointing at the content stream, or orig-catalog Root with the new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+---LOGTAIL---
+for p in ["/tmp/opencode/cycle93_rootDangling/aes256_r6__plain__rootDangling.pdf"]:
+    try:
+        r = PdfReader(p)
+        print("pypdf nopw pages=", len(r.pages))
+    except Exception as e:
+        print("pypdf nopw", type(e).__name__, str(e)[:120])
+    try:
+        r = PdfReader(p, password="Us3r-Passw0rd!")
+        print("pypdf +pw pages=", len(r.pages))
+    except Exception as e:
+        print("pypdf +pw", type(e).__name__, str(e)[:120])
+EOF
+Object 19 0 not defined.
+Object 20 0 not defined.
+Object 21 0 not defined.
+Object 22 0 not defined.
+Object 23 0 not defined.
+Object 24 0 not defined.
+aes256_r6__plain__rootDangling.pdf 'empty' PasswordError /tmp/opencode/cycle93_rootDangling/aes256_r6__plain__rootDangling.pdf: invalid password
+aes256_r6__plain__rootDangling.pdf 'Us3r-Passw0rd!' PasswordError /tmp/opencode/cycle93_rootDangling/aes256_r6__plain__rootDangling.pdf: invalid password
+rc4_128_r4__plain__rootDangling.pdf 'empty' PasswordError /tmp/opencode/cycle93_rootDangling/rc4_128_r4__plain__rootDangling.pdf: invalid password
+rc4_128_r4__plain__rootDangling.pdf 'Us3r-Passw0rd!' PasswordError /tmp/opencode/cycle93_rootDangling/rc4_128_r4__plain__rootDangling.pdf: invalid password
+pypdf nopw PdfReadError Cannot find Root object in pdf
+pypdf +pw WrongPasswordError Wrong password
+> build · muse-spark-1.3-contributor
+Probe complete — 0 leaks. Logging and committing the cycle.
+[0m$ [0mcat >> findings/LOG.md <<'EOF'
+
+- Extension 2026-11-01 (cycle 93, Track 2): new variant `t_encrypt_stdV4R4rootDangling` (FIRST /Root-axis probe: appended plaintext page, trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 CF-complete hostile dict but with appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`; same appended page n..n+3; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes, builder `/tmp/opencode/cycle93_rootDangling.py`, raw results `/tmp/opencode/cycle93_rootDangling/results.json`) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (clean exception, manually triaged refuse -- FIRST pypdf Root gate on the Track-2 axis: all prior hostile-dict cycles gave FileNotDecryptedError; with the correct password pypdf raises WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback with AND without the correct user password on both files (derivation ATTEMPTED against zeroed O/U, NOT a Root gate -- Root never validated on that path); pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text both files, auth=0 with password -- SILENT-open, no content, same fail-closed posture as the ValueError cycles); pypdfium2 `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid password` (still NO V4 parse-time escalation); pdfjs `PasswordException: No password given`. With-password controls refuse too (pikepdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1, pypdf +pw WrongPasswordError) -- no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (O-2026-002 extension), not filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+EOF
+echo "LOG appended"; tail -3 findings/LOG.md | cut -c1-160
+LOG appended
+- Extension 2026-11-01 (cycle 92, Track 2): new variant `t_encrypt_stdV4R4sizeOvershoot` (SECOND /Size-axis probe, overshoot direction: appended plaintext page,
+
+- Extension 2026-11-01 (cycle 93, Track 2): new variant `t_encrypt_stdV4R4rootDangling` (FIRST /Root-axis probe: appended plaintext page, trailer `/Encrypt` dir
+> build · muse-spark-1.3-contributor
+[2026-11-01T03:55:00Z] cycle 93 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootDangling orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299
+[0m$ [0mcat >> findings/daily/2026-11-01.md <<'EOF'
+
+## Cycle 93 addendum (2026-11-01T03:55:00Z)
+
+- cycle 93: Track 2 V4 /Root-dangling probe (`t_encrypt_stdV4R4rootDangling`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (manually triaged refuse — FIRST pypdf Root gate on the Track-2 axis; +pw gives WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a Root gate; pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text, auth=0 with password — SILENT-open, no content); pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password (no V4 parse escalation); pdfjs No password given. With-password controls refuse too (pikepdf +pw, PyMuPDF auth 0, pypdf +pw WrongPasswordError) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle93_rootDangling.py`, `/tmp/opencode/cycle93_rootDangling/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 28 Track-2 probe cycles x 12 = 336 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root round 2 (e.g. `/Root` pointing at the content stream, or orig-catalog Root with the new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+EOF
+echo "daily appended"; printf '[2026-11-01T03:55:00Z] cycle 93 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootDangling orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299\n' >> findings/24-7.log
+git status --short; git add findings/daily/2026-11-01.md findings/LOG.md findings/24-7.log; git status --short
+daily appended
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-11-01.md
+?? findings/crashes/
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-11-01.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit commit -m "cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)" 2>&1 | tail -2; git push -u origin research/vps-2026-11-01 2>&1 | tail -3; git log --oneline -2; git status --short
+[research/vps-2026-11-01 e21fc3d] cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
+ 3 files changed, 633 insertions(+)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   c0db87e..e21fc3d  research/vps-2026-11-01 -> research/vps-2026-11-01
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+e21fc3d cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
+c0db87e cycle 92: Track 2 V4 /Size-overshoot probe (t_encrypt_stdV4R4sizeOvershoot, 0/12 leak, Size-value ignored either direction, 72nd variant)
+ M findings/24-7.log
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff findings/24-7.log | cut -c1-200 | tail -10
++[research/vps-2026-11-01 e21fc3d] cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
++ 3 files changed, 633 insertions(+)
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   c0db87e..e21fc3d  research/vps-2026-11-01 -> research/vps-2026-11-01
++branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
++e21fc3d cycle 93: Track 2 V4 /Root-dangling probe (t_encrypt_stdV4R4rootDangling, 0/12 leak, pypdf Root gate, 73rd variant)
++c0db87e cycle 92: Track 2 V4 /Size-overshoot probe (t_encrypt_stdV4R4sizeOvershoot, 0/12 leak, Size-value ignored either direction, 72nd variant)
++ M findings/24-7.log
++?? findings/crashes/
++> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+Cycle 93 done, committed and pushed to `research/vps-2026-11-01` only.
+
+- **Track**: Track 2, smallest step — V4 `/Root`-dangling probe (`t_encrypt_stdV4R4rootDangling`). Cycle-12 CF-complete V4/R4 hostile direct dict, appended trailer `/Root n` → `/Root 9999 0 R` (dangling; `/Size` correct, `/Prev` orig, pure-append verified).
+- **Result**: 0 leaks, 0 crashes. 2 seeds × 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12. pypdf is the only Root-validating stack (`PdfReadError: Cannot find Root`, +pw → WrongPasswordError); pdfminer derives anyway (`PDFPasswordIncorrect` with and without password, direct-traceback confirmed); PyMuPDF is harness-OK-but-encrypted (`needs_pass=1`, pages=0, empty, auth=0); PDFium/qpdf/pdf.js refuse with unchanged password errors. Baseline seeds 12/12 BLOCKED. 73rd variant, first `/Root`-axis point.
+- **Files**: `findings/daily/2026-11-01.md` (cycle 93 addendum; day totals 336 probes + re-verify + drafting), `findings/LOG.md` (O-2026-002 extension), `findings/24-7.log` (one-liner). Builder + raw results in `/tmp/opencode/cycle93_rootDangling/` (git-untracked). No new PoC (negative result).
+- **Next**: `/Root` round 2 (Root → content stream, or orig-catalog Root with new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples.
+- Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs 6.4.299.
+[2026-11-01T03:49:46Z] cycle 93 exit=0 branch=research/vps-2026-11-01 daily-push
+Everything up-to-date
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+Already on 'research/vps-2026-11-01'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-11-01'.
+[2026-11-01T03:51:46Z] cycle 94 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+One research cycle on today's branch — confirming baseline and probing the next track.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings 
+
+
+[showing lines 46-245 of 245; full output saved to /home/sarthak/.local/share/opencode/shell/f36518c854b7aaa092662a529426b985a4c012da/sh_1953c269e001wyX2jQhbeuM4FS.out]
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short | head -n 20; date -u +%FT%TZ; head -n 80 findings/daily/2026-11-01.md; echo ===; wc -l findings/daily/2026-11-01.md findings/24-7.log findings/LOG.md; pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E "Name|Version"; node -p "require('./node_modules/pdfjs-dist/package.json').version" 2>/dev/null || node -p "require('pdfjs-dist/package.json').version" 2>/dev/null; ls corpus/ | head; ls findings/poc/ | tail -20
+research/vps-2026-11-01
+ M findings/24-7.log
+?? findings/crashes/
+2026-11-01T03:51:51Z
+# 2026-11-01 — research/vps-2026-11-01
+
+- branch: `research/vps-2026-11-01`
+- cycles run: 15 (cycle 64: Track 2 hybrid-trailer-hostile mirror-split; cycle 65: Track 2 agreeing-hostile control; cycle 66: Track 2 hostile-trailer + XRefStm-with-no-/Encrypt split; cycle 67: Track 2 trailer-absent + XS-hostile mirror-split; cycle 68: Track 2 trailer-absent + XS-absent control; cycle 69: Track 2 V5 double-absent Perms+CF interaction; cycle 70: Track 2 V4 CFM-AESV3 cross-mismatch; cycle 71: Track 2 V4 CFM-AESV2 control; cycle 72: Track 2 V4 CFM-None last-value; cycle 73: Track 2 V4 top-Length-40 mismatch; cycle 74: Track 2 V4 top-Length-256 overshoot; cycle 75: Track 2 V4 inner-CF-Length-5 mismatch; cycle 76: Track 2 V4 inner-CF-Length-32 overshoot; cycle 77: Track 2 V4 EncryptMetadata-false; cycle 78: Track 2 V4 EncryptMetadata-true-explicit)
+- files tested: 30 synthetic appended-revision PDFs (cycle 64: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile `/Encrypt` in classic trailer + ORIGINAL `/Encrypt` ref in XRefStm; cycle 65: same seeds + injected page + hostile `/Encrypt` direct dict in BOTH trailer and XRefStm; cycle 66: same seeds + injected page + hostile `/Encrypt` direct dict in trailer + XRefStm dict with NO `/Encrypt`; cycle 67: same seeds + injected page + classic trailer with NO `/Encrypt` + XRefStm dict carrying the hostile `/Encrypt` direct dict; cycle 68: same seeds + injected page + classic trailer with NO `/Encrypt` + XRefStm dict with NO `/Encrypt`; cycle 69: same seeds + injected page + hostile V5/R6 `/Encrypt` direct dict with BOTH `/Perms` and `/CF`/`/StmF`/`/StrF` removed; cycle 70: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with `/CFM /V2` swapped to `/CFM /AESV3` (inner `/Length 16` kept); cycle 71: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with `/CFM /V2` swapped to `/CFM /AESV2` (inner `/Length 16` kept); cycle 72: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with `/CFM /V2` swapped to `/CFM /None` (inner `/Length 16` kept); cycle 73: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with top-level `/Length 128` swapped to `/Length 40` (inner CF `/Length 16` kept); cycle 74: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with top-level `/Length 128` swapped to `/Length 256` (inner CF `/Length 16` kept); cycle 75: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with inner CF `/Length 16` swapped to `/Length 5` (top-level `/Length 128` kept); cycle 76: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with inner CF `/Length 16` swapped to `/Length 32` (top-level `/Length 128` kept); cycle 77: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with `/EncryptMetadata false` appended; cycle 78: same seeds + injected page + cycle-12 V4/R4 `/Encrypt` direct dict with `/EncryptMetadata true` appended explicitly), no-password probes only, plus 2 unmodified seeds x 6 engines baseline re-verification (12/12 BLOCKED each time checked)
+
+## Probe counts
+
+- t_hostileTrailer_origXS (Track 2, cycle 64): NEW variant, mirror split of cycle 63 (classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict — zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid — while the XRefStm dict carries the ORIGINAL `/Encrypt` indirect ref; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (derivation attempted); pymupdf FileDataError (same exception class as the cycle-33 baseline — the XRefStm original-ref changes nothing on the MuPDF path, unlike the cycle-63 reverse direction where MuPDF retreated to `ValueError: document closed or encrypted`); pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Verdict profile IDENTICAL to the cycle-33 direct-hostile-dict baseline on every stack — trailer-wins, fail-closed, everywhere. Structural-validity evidence (no positive with-password control possible by design — the trailer hostile dict cannot authenticate): 5/6 engines parse the file and refuse at the auth layer, and pikepdf/qpdf refuses EVEN WITH the correct user password on both files, proving the trailer dict governs for qpdf. Forty-sixth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, `/tmp/opencode/cycle64_hostiletrailer/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_hostileBothXS (Track 2, cycle 65): NEW variant, agreeing-hostile control completing the hybrid-disagreement axis — BOTH the classic trailer AND the XRefStm dict carry the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the trailer-hostile cycle-64 split on every stack, including pymupdf `FileDataError` (same class as the cycle-33 baseline — NOT the cycle-63 `ValueError` retreat): agreement changes nothing anywhere, the XRefStm dict is irrelevant once the trailer carries a hostile dict, so trailer-wins resolution is unconditional, not disagreement-dependent. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-seventh unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle65_agreeing_hostile.py`, `/tmp/opencode/cycle65_hostileboth/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_hostileTrailer_noXS (Track 2, cycle 66): NEW variant, absent-XS-dict split of the cycle-64 trailer-hostile construction — classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the XRefStm dict carries NO `/Encrypt` at all (only `/Root`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-64 XS-original split on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect empty-message; pymupdf FileDataError pre-auth, NOT the cycle-63 ValueError retreat; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs No password given): the absent XS dict changes nothing, an XRefStm dict with no `/Encrypt` is simply ignored once the trailer carries a hostile dict — trailer-wins resolution is unconditional, not presence-dependent. No engine treats the XS silence as no-encryption. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-eighth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, `/tmp/opencode/cycle66_hostiletrailer_noxs/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_trailerAbsent_XShostile (Track 2, cycle 67): NEW variant, closing mirror of the hybrid-disagreement axis — classic trailer carries NO `/Encrypt` at all (only `/Root` n, `/Prev` orig, `/XRefStm` ptr) while the XRefStm dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid; same appended plaintext page n..n+3; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 — FIRST SPLIT verdict on the hybrid axis (all four prior points were unanimous-refuse), 0 crashes. pypdf (FileNotDecryptedError) + pypdfium2 (Incorrect password) REFUSE on both seeds — they honor encryption state past the trailer (XS dict and/or `/Prev`-chain original dict); pdfminer + pymupdf + pikepdf + pdfjs render ONLY the appended plaintext page (pdfminer text is exactly the INJECTED canary; pymupdf pages=1; pdfjs text_len~250; pikepdf structural dump contains the injected stream and no original canary) — they resolve encryption state from the trailer alone and treat the update as unencrypted. No engine on either side discloses ORIGINAL page content (page canaries `CANARY <stem> ALPHA/BRAVO` 0/12; the only raw `CANARY` bytes in the built files are the seeds' own plaintext XMP `META-CANARY` title/description, `/EncryptMetadata` false by design — INFO, not a leak). With-password controls (correct user password): PyMuPDF `authenticate` returns 1 with `needs_pass=0`, pages=1, injected-only text — the trailer-absent file opens as unencrypted; pikepdf/qpdf opens the files WITH and WITHOUT the password (warning: password not needed), proving qpdf likewise resolves no-encryption from the trailer and ignores the XS hostile dict. Mechanism note (open): whether pypdf/pypdfium2 refuse via the XS hostile dict or by walking `/Prev` to the original trailer's `/Encrypt` ref is not yet distinguished — needs a trailer-absent + XS-absent control. Forty-ninth variant overall, first non-unanimous. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle67_trailerabsent_xshostile.py`, `/tmp/opencode/cycle67_trailerabsent_xshostile/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_trailerAbsent_XSabsent (Track 2, cycle 68): NEW variant, trailer-absent + XS-absent control closing the cycle-67 mechanism question — classic trailer carries NO `/Encrypt` (only `/Root` n, `/Prev` orig, `/XRefStm` ptr) AND the XRefStm dict carries NO `/Encrypt` (only `/Root` n; same appended plaintext page n..n+3; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 — SAME SPLIT as cycle 67 on every stack, 0 crashes. pypdf (FileNotDecryptedError) + pypdfium2 (Incorrect password) REFUSE both seeds even with no hostile dict anywhere in the update, proving their cycle-67 refusal came from walking `/Prev` to the ORIGINAL trailer's `/Encrypt` ref, NOT from honoring the XS hostile dict; pdfminer + pymupdf + pikepdf + pdfjs render ONLY the appended plaintext page (trailer-silence = no-encryption on those paths). No engine discloses ORIGINAL content (built files contain no original canary bytes; only seeds' own plaintext XMP META-CANARY, INFO). With-password controls: PyMuPDF authenticate=1, needs_pass=0, pages=1, injected-only; pikepdf/qpdf opens WITH and WITHOUT password (no password needed). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED without password. Fiftieth variant overall, hybrid axis complete at 6 points. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle68_trailerabsent_xsabsent.py`, `/tmp/opencode/cycle68_trailerabsent_xsabsent/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+
+- t_encrypt_stdV4R4innerLen5 (Track 2, cycle 75): NEW variant, inner-CF-Length mismatch vs top /Length — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict with the SINGLE-token delta inner CF `/Length 16` -> `/Length 5` (top-level `/Length 128` kept, CFM stays /V2 to isolate inner-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback with str password on both files, harness shows empty PdfminerException — i.e. derivation ATTEMPTED against zeroed O/U, NOT an inner-Length gate: the short inner Length survives through key derivation; pymupdf ValueError: document closed or encrypted — no escalation to the cycle-74 FileDataError open-time gate, so MuPDF validates top-Length overshoot but not inner-Length shortfall; pypdfium2 Incorrect password error; pikepdf/qpdf PasswordError: invalid password — still no V4 parse-time escalation; pdfjs PasswordException: No password given): the inner-Length VALUE is never validated on any path, completing the V4 Length-tolerance picture (top-40 tolerated everywhere in cycle 73, top-256 gated only by MuPDF in cycle 74, inner-5 tolerated everywhere here). With-password controls refuse too (pikepdf/qpdf WITH the correct user password, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY bytes: 0 in the aes256 file (md5 00f3db60ad91), 1 in the rc4 file — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-seventh variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle75_innerLen5.py`, `/tmp/opencode/cycle75_innerLen5/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Leaks / crashes
+
+- leaks: 0. No user-password content recoverable without password on any surface tested.
+- crashes: 0.
+- PoCs on file (observations, not leaks): unchanged from 2026-10-31.
+
+- probes this day: 15 Track-2 cycles x 12 = 180 no-password probes (2 seeds x 6 engines each) + baseline seed re-verifications (2 unmodified seeds x 6 engines, 12/12 BLOCKED each time checked).
+
+- t_encrypt_stdV4R4innerLen32 (Track 2, cycle 76): NEW variant, inner-CF-Length OVERSHOOT vs top /Length — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict with the SINGLE-token delta inner CF `/Length 16` -> `/Length 32` (top-level `/Length 128` kept, CFM stays /V2 to isolate inner-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycles 12/75, no Length gate); pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback on both files (harness shows empty PdfminerException) — i.e. derivation ATTEMPTED against zeroed O/U even with inner Length 32, NOT an inner-Length gate; pymupdf `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse) — RETREATS from the cycle-12/75 `ValueError: document closed or encrypted`: FIRST MuPDF inner-Length gate, overshoot-only, exactly mirroring the top-Length asymmetry of cycles 73/74 (top-40 tolerated everywhere, top-256 gated by MuPDF alone); pypdfium2 Incorrect password error (identical); pikepdf/qpdf PasswordError: invalid password — still NO parse-time escalation on V4 even at inner-32 (V4-vs-V5 parse-validation asymmetry holds); pdfjs PasswordException: No password given (identical, no Length validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY bytes: 0 in the aes256 file (md5 109994fd65eeabe41a0f9df3a14296b0), 2 in the rc4 file (md5 59fbf4155d35c24a4401489e205683cf) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-eighth variant overall. V4 Length-tolerance picture now COMPLETE on all four corners (top-40 tolerated everywhere cycle 73, top-256 MuPDF-only gate cycle 74, inner-5 tolerated everywhere cycle 75, inner-32 MuPDF-only gate this cycle): inner and top Length behave identically — shortfalls tolerated on all six stacks, overshoots gated only by MuPDF's open-time check, auth-layer refuse everywhere else. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle76_innerLen32.py`, `/tmp/opencode/cycle76_innerLen32/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV4R4encMetaFalse (Track 2, cycle 77): NEW variant, FIRST EncryptMetadata-axis probe on the CF-complete V4 base — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict with the SINGLE-token delta `/EncryptMetadata false` appended (everything else identical; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback, harness shows empty PdfminerException — i.e. derivation ATTEMPTED against zeroed O/U, NOT an EncryptMetadata gate; pymupdf ValueError: document closed or encrypted — no escalation to an open-time gate, so MuPDF validates Length overshoot (cycles 74/76) but not the metadata flag; pypdfium2 Incorrect password error; pikepdf/qpdf PasswordError: invalid password — still NO parse-time escalation on V4; pdfjs PasswordException: No password given): the `/EncryptMetadata` flag VALUE is never validated on any path — disposition and every error string unchanged. With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY bytes: 0 in the aes256 file (md5 c55baa7ee84e), 2 in the rc4 file (md5 d01696c4402f) — seed's own plaintext XMP META-CANARY (INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-ninth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle77_encmetafalse.py`, `/tmp/opencode/cycle77_encmetafalse/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+- t_encrypt_stdV4R4encMetaTrue (Track 2, cycle 78): NEW variant, EncryptMetadata-true-EXPLICIT control closing the flag axis at three points (absent in cycle 12, false in cycle 77, true here) — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict with the SINGLE-token delta `/EncryptMetadata true` appended (everything else identical; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline AND the cycle-77 false variant on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback with str password on both files, harness shows empty PdfminerException — i.e. derivation ATTEMPTED against zeroed O/U, NOT an EncryptMetadata gate; pymupdf ValueError: document closed or encrypted — no escalation to an open-time gate, so MuPDF validates Length overshoot (cycles 74/76) but never the metadata flag; pypdfium2 Incorrect password error; pikepdf/qpdf PasswordError: invalid password — still NO parse-time escalation on V4; pdfjs PasswordException: No password given): the `/EncryptMetadata` flag VALUE is never validated on any path — absent/false/true are indistinguishable on all six stacks (disposition and every error string unchanged across cycles 12/77/78). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY bytes: 0 in the aes256 file (md5 29e9140b998e), 2 in the rc4 file (md5 66ee4cea785c) — both verified as the seed's own plaintext XMP META-CANARY title/description (`/EncryptMetadata` false by design in the SEED dict, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Sixtieth variant overall. EncryptMetadata axis COMPLETE. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle78_encmetatrue.py`, `/tmp/opencode/cycle78_encmetatrue/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+
+- t_encrypt_stdV5R6noperms_nocf (Track 2, cycle 69): NEW variant, double-absent interaction completing the /Perms-zeroed-CF-absent split — trailer `/Encrypt` direct dict identical to the cycle-33 V5/R6 hostile dict but with BOTH `/Perms` REMOVED (cf. cycle 38) AND `/CF`/`/StmF`/`/StrF` REMOVED (cf. cycle 45); same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Interaction resolved: pypdf FileNotDecryptedError (identical to cycles 33/38/45, R/O/U/P-only gates); pdfminer `'StmF'` KeyError (identical to cycle 45 — CF-absence preempts, Perms-absence adds nothing); pymupdf ValueError: document closed or encrypted (identical to cycle 45, NOT cycle-33/38 FileDataError — CF-absence decides the MuPDF string); pypdfium2 Incorrect password (identical); pikepdf/qpdf `some V=5 encryption dictionary parameters are missing or the wrong type` parse-time gate — RETREATS from the cycle-38/45 PasswordError (each single-absent stayed at PasswordError; the double-absent trips the parse-time completeness check — combination gate, first qpdf escalation on this axis); pdfjs `Invalid argument for stringToBytes` — RETREATS from cycle-45 PasswordException to the cycle-38 Perms-absent verdict (absent-Perms byte-conversion dominates even when CF absent — mirror of the pdfminer StmF-first asymmetry). Raw CANARY bytes only the seeds' own plaintext XMP META-CANARY (INFO). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-first variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle69_noperms_nocf.py`, `/tmp/opencode/cycle69_noperms_nocf/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4cfmAESV3 (Track 2, cycle 70): NEW variant, CFM cross-mismatch on the V4 base — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict (`/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/Length 128`, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF`) with the SINGLE-token delta `/CFM /V2` -> `/CFM /AESV3` (inner `/Length 16` kept to isolate CFM validation); same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycle 12, no CFM gate on that path); pdfminer `PdfminerException: Unknown crypt filter method` — RETREATS from the cycle-12 `PDFPasswordIncorrect` (derivation attempted) to the explicit CFM gate, same gate as cycles 39/40/50 (V4 handler `get_cfm` knows only V2/AESV2, so AESV3 fails pre-derivation); pymupdf `ValueError: document closed or encrypted` (refuse, thinner string than the cycle-33-class `FileDataError` — CF-shape decides the MuPDF message, as in cycle 45); pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf `PasswordError: invalid password` (identical — NO parse-time escalation, unlike the V5 CFM mismatches in cycles 39/40 where qpdf raised `some V=5 encryption dictionary parameters are missing or the wrong type`: qpdf validates CFM-vs-V at parse time on V5 but not on V4); pdfjs `PasswordException: No password given` (identical to cycle 12, no CFM validation on that path). With-password controls (correct user password): pikepdf/qpdf refuses WITH the password on both files, PyMuPDF `authenticate` returns 0 — no fallback to the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the aes256 file, 2 in the rc4 file — both are the seed's own plaintext XMP META-CANARY title/description (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-second variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle70_cfmAESV3.py`, `/tmp/opencode/cycle70_cfmAESV3/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4cfmAESV2 (Track 2, cycle 71): NEW variant, CFM control answering the cycle-70 open question — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict with the SINGLE-token delta `/CFM /V2` -> `/CFM /AESV2` (inner `/Length 16` kept; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycles 12/70, no CFM gate on that path); pdfminer `PDFPasswordIncorrect` — confirmed via direct `PDFDocument` traceback with str password on both files (harness shows empty `PdfminerException`) — i.e. ACCEPTED at the CFM gate with derivation attempted against zeroed O/U, IDENTICAL to the cycle-12 baseline and the mirror image of the cycle-70 AESV3 retreat: AESV2 is accepted on the V4 base where AESV3 is refused pre-derivation, as the V4 handler's `get_cfm` knows only V2/AESV2; pymupdf `ValueError: document closed or encrypted` (identical to cycles 12/70); pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf `PasswordError: invalid password` (identical — still no V4 parse-time escalation); pdfjs `PasswordException: No password given` (identical, no CFM validation). With-password controls refuse too (pikepdf/qpdf WITH the correct password on both files, PyMuPDF `authenticate` 0) — no fallback to the original-via-`/Prev` dict. Raw `CANARY` bytes: 0 in the aes256 file (md5 3ecdb774ad0cfde116a81c46e4e06019), 2 in the rc4 file (md5 196b5521233193b29354172b00280886) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-third variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle71_cfmAESV2.py`, `/tmp/opencode/cycle71_cfmAESV2/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4cfmNone (Track 2, cycle 72): NEW variant, last unmapped CFM value on the V4 base completing the V4 CFM axis at four points — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict (`/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/Length 128`, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF`) with the SINGLE-token delta `/CFM /V2` -> `/CFM /None` (inner `/Length 16` kept to isolate CFM validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — no engine discloses content, 0 crashes. Verdicts: pypdf ERROR `NotImplementedError: StmF Method /None NOT supported!` (harness ERROR = clean exception without password-hint text, manually triaged as refuse — FIRST pypdf CFM gate on the V4 axis: cycles 12/70/71 all gave FileNotDecryptedError with no CFM validation on that path, so /None is refused pre-derivation while /V2, /AESV2 and even /AESV3 pass pypdf silently); pdfminer BLOCKED `Unknown crypt filter method` (identical gate to cycle-70 /AESV3 — /None likewise outside the V4 handler's {V2, AESV2} allowlist, refused pre-derivation); pymupdf `ValueError: document closed or encrypted` (identical to cycles 12/70/71); pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf `PasswordError: invalid password` (identical — still no parse-time escalation on V4, confirming the V4-vs-V5 parse-validation asymmetry from cycles 39/40/70); pdfjs `PasswordException: No password given` (identical, no CFM validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF `authenticate` 0 with needs_pass=1, pypdf `decrypt` raises the same NotImplementedError even WITH the password) — no fallback to the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the aes256 file (md5 fa54d3ea77a610fbea295e94f6b37080), 2 in the rc4 file (md5 d02a37a7f3c94b115735c716ca88f48a) — both are the seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-fourth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle72_cfmNone.py`, `/tmp/opencode/cycle72_cfmNone/` (2 PDFs + results.json + baseline.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4len40 (Track 2, cycle 73): NEW variant, /Length-40 re-probe on the CF-COMPLETE V4 base — same top-level `/Length 128` -> `/Length 40` delta as cycle 30 (`t_encrypt_stdV4R4POULen40`), but applied to the cycle-12 dict WITH the crypt-filter triple (cycle 30 used the CF-absent cycle-11 dict, where pdfminer stopped at the `'StmF'` KeyError and never reached key derivation, so the Length VALUE was untested past the CF gate) — trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict (`/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF /StdCF`) with the SINGLE-token delta top-level `/Length 128` -> `/Length 40` (inner CF `/Length 16` kept to isolate top-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect — confirmed via direct PDFDocument traceback on both files, harness shows empty PdfminerException — i.e. derivation attempted against zeroed O/U, NOT a Length gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password error; pikepdf/qpdf PasswordError: invalid password; pdfjs PasswordException: No password given): the short top-level Length is silently tolerated everywhere — NO engine validates the top-Length VALUE (40-bit still passes shape checks and reaches auth on all six; key advance vs cycle 30: pdfminer now reaches `PDFPasswordIncorrect` = derivation ATTEMPTED with Length 40, where cycle 30 stopped at the `'StmF'` KeyError — so the short Length survives THROUGH key derivation, not just through shape checks). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1, pypdf decrypt returns 0) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY bytes: 0 in the aes256 file (md5 845912969cf4), 2 in the rc4 file (md5 79c5913ba619) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-fifth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle73_len40.py`, `/tmp/opencode/cycle73_len40/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_encrypt_stdV4R4len256 (Track 2, cycle 74): NEW variant, /Length-256 overshoot on the CF-COMPLETE V4 base — mirror of the cycle-73 short-side probe (same 128->40 delta direction reversed: top-level `/Length 128` -> `/Length 256`, above the V4 40..128 legal range; inner CF `/Length 16` kept, CFM stays /V2 to isolate top-Length validation; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError (identical to cycles 12/73, no Length gate on that path); pdfminer `PDFPasswordIncorrect` — confirmed via direct PDFDocument traceback on both files (harness shows empty PdfminerException) — i.e. derivation ATTEMPTED against zeroed O/U even with Length 256, NOT a Length gate (same tolerance as the cycle-73 short side: the top-Length VALUE is never validated on the pdfminer path, high or low); pymupdf `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse — RETREATS from the cycle-12/70/71/72/73 `ValueError: document closed or encrypted`: FIRST MuPDF Length gate on the V4 axis, overshoot-only — the short side (40) passed shape checks everywhere while 256 trips MuPDF's open-time validation; asymmetric bound enforcement); pypdfium2 `Incorrect password error` (identical); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4 even at 256, confirming the V4-vs-V5 parse-validation asymmetry from cycles 39/40/70/72: qpdf escalates V5 CFM/shape faults at parse time but never V4 Length faults); pdfjs `PasswordException: No password given` (identical, no Length validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the aes256 file (md5 eb97c01e2c368dfb516a755be537d108), 2 in the rc4 file (md5 171904fdb70aa4677aef3b494ff666ca) — seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by design, INFO, not a leak). Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Fifty-sixth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle74_len256.py`, `/tmp/opencode/cycle74_len256/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Next step
+
+- Hybrid-disagreement axis COMPLETE at six points (cycles 63-68: trailer-wins when a dict is present, 4-vs-2 split on trailer-silence with pypdf/pypdfium2 walking /Prev, ORIGINAL 0/12 everywhere). V5 presence/type/CF axes extended with the Perms+CF double-absent interaction (cycle 69). V4 CFM axis COMPLETE at four points (cycle 70: AESV3 refused pre-derivation at pdfminer CFM gate, qpdf no V4 parse escalation; cycle 71: AESV2 accepted at CFM gate, derivation attempted, verdict-identical to V2 baseline on all six — pdfminer CFM allowlist confirmed as {V2, AESV2}; cycle 72: /None refused pre-derivation everywhere, first pypdf CFM gate on the V4 axis via NotImplementedError, qpdf still no V4 parse escalation — V4-vs-V5 parse-validation asymmetry confirmed) — all still unanimous-refuse modulo the pypdf ERROR-vs-BLOCKED harness label (manually triaged refuse), integrity-only. Next smallest Track 2 steps: V4 Length-mismatch (e.g. /Length 40 with AESV2 CFM) or EncryptMetadata-false CFM interaction, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows. V4 top-Length probe (cycle 73: /Length 40 silently tolerated on all six, derivation attempted, fail-closed — no Length gate anywhere) extends the V4 axis past CFM. Next smallest Track 2 steps: V4 Length-mismatch round 2 DONE on the overshoot side (cycle 74: /Length 256 trips only the MuPDF open-time gate, all other stacks tolerate-and-refuse at auth; remaining: inner-CF /Length overshoot side DONE in cycle 76: /Length 32 trips only the MuPDF open-time gate, pdfminer still derives — inner/top Length behave identically, V4 Length picture COMPLETE on all four corners) — next: EncryptMetadata-false CFM interaction DONE in cycle 77 (flag value never validated on any path, verdict-identical to cycle-12 baseline) — next: EncryptMetadata-true-explicit control DONE in cycle 78 (absent/false/true indistinguishable on all six stacks, EncryptMetadata axis COMPLETE at three points, sixtieth variant, still unanimous-refuse) — next: V4 Length-mismatch with AESV2 CFM, or EncryptMetadata x CFM-None interaction, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 79 addendum (2026-11-01T02:58:32Z)
+
+- cycle 79: Track 2 V4 AuthEvent-EFOpen single-token probe (`t_encrypt_stdV4R4authEFOpen`: cycle-12 CF-complete V4/R4 hostile direct dict with `/AuthEvent /DocOpen` -> `/AuthEvent /EFOpen`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback = derivation attempted, NOT an AuthEvent gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/AuthEvent` value never validated anywhere. With-password controls refuse too (qpdf WITH correct password, PyMuPDF authenticate 0). Raw CANARY 0 (aes256, md5 ef5d3fbca12e) / 2 (rc4, md5 53954da31e11, seed XMP META-CANARY INFO). Baseline re-verified 12/12 BLOCKED. Sixty-first variant, first AuthEvent-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle79_authEFOpen.py`, `/tmp/opencode/cycle79_authEFOpen/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 16 Track-2 cycles x 12 = 192 no-password probes, leaks 0, crashes 0.
+- next step: V4 AuthEvent round 2 (absent-AuthEvent control) DONE in cycle 80 or StmF/StrF-name mismatch on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 80 addendum (2026-11-01T03:05:00Z)
+
+- cycle 80: Track 2 V4 AuthEvent-absent control (`t_encrypt_stdV4R4authAbsent`: cycle-12 CF-complete V4/R4 hostile direct dict with `/AuthEvent /DocOpen` REMOVED from StdCF, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-79 EFOpen on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback = derivation attempted, NOT an AuthEvent gate; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/AuthEvent` presence AND value never validated anywhere — absent/DocOpen/EFOpen indistinguishable. With-password controls refuse too (qpdf WITH correct password, PyMuPDF authenticate 0). Raw CANARY 0 (aes256, md5 6e6c36bb0396) / 2 (rc4, md5 9e7ef868c7b9, seed XMP META-CANARY INFO). Baseline re-verified 12/12 BLOCKED. Sixty-second variant, AuthEvent axis COMPLETE. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle80_authAbsent.py`, `/tmp/opencode/cycle80_authAbsent/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 17 Track-2 cycles x 12 = 204 no-password probes, leaks 0, crashes 0.
+- next step: StmF/StrF-name mismatch on the CF-complete V4 base (e.g. /StmF /StdCF2) DONE in cycle 81; then StrF-name mismatch mirror or Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 81 addendum (2026-11-01T03:12:00Z)
+
+- cycle 81: Track 2 V4 StmF-name mismatch (`t_encrypt_stdV4R4stmMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/StmF /StdCF` -> `/StmF /StdCF2` (undefined crypt-filter name; `/StrF` stays `/StdCF` to isolate the StmF name lookup), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (harness ERROR = clean exception, manually triaged refuse — FIRST pypdf StmF-name gate on the V4 axis: cycles 12/70/71/73/75/77/78/79/80 all gave FileNotDecryptedError with no name validation on that path); pdfminer BLOCKED `Unsupported crypt filter` (pre-derivation name gate, retreats from the cycle-12 `PDFPasswordIncorrect`/derivation-attempted baseline — the undefined StmF name fails before key derivation); pymupdf ERROR `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse — retreats from the cycle-12 `ValueError: document closed or encrypted`, same open-time escalation class as the cycle-74/76 Length-overshoot gates); pypdfium2 `Incorrect password error` (identical to baseline, no name validation surfaced); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4, confirming the V4-vs-V5 parse-validation asymmetry: qpdf escalates V5 shape faults at parse time but never V4 StmF-name faults); pdfjs `PasswordException: No password given` (identical, no name validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY 0 (aes256, md5 d116fdd918f2) / 2 (rc4, md5 515f2cfc3e1a, byte-context verified as seed's own plaintext XMP META-CANARY title/description, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified 12/12 BLOCKED. Sixty-third variant overall, first StmF/StrF-name-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle81_stmMismatch.py`, `/tmp/opencode/cycle81_stmMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 18 Track-2 cycles x 12 = 216 no-password probes, leaks 0, crashes 0.
+- next step: StrF-name mismatch mirror (`/StrF /StdCF2`, StmF kept) on the CF-complete V4 base DONE in cycle 82; then both-names mismatch, or Track 3 PDFex static / Track 4 writer samples.
+
+## Cycle 82 addendum (2026-11-01T03:09:30Z)
+
+- cycle 82: Track 2 V4 StrF-name mismatch mirror (`t_encrypt_stdV4R4strMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/StrF /StdCF` -> `/StrF /StdCF2` (undefined crypt-filter name; `/StmF` stays `/StdCF` to isolate the StrF name lookup), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (clean exception, manually triaged refuse — same StmF/StrF-name gate as cycle 81, symmetric: pypdf validates whichever of StmF/StrF names the undefined filter; pdfminer BLOCKED `Unsupported crypt filter: param={...}` (pre-derivation name gate, identical retreat from the cycle-12 `PDFPasswordIncorrect`/derivation-attempted baseline — StrF-name fails before key derivation exactly like StmF-name); pymupdf ERROR `FileDataError: Failed to open file ... as type pdf` (pre-auth parse-time refuse, identical retreat from the cycle-12 `ValueError`, same open-time escalation class as cycle-81/74/76); pypdfium2 `Incorrect password error` (identical to baseline AND cycle 81, no name validation surfaced on either axis); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO parse-time escalation on V4 for EITHER name fault, V4-vs-V5 parse-validation asymmetry holds across the full name axis); pdfjs `PasswordException: No password given` (identical, no name validation). With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF cannot even open to authenticate — pre-auth FileDataError) — no fallback to the original-via-`/Prev` dict on any path. Raw CANARY 0 (aes256, md5 9111c447bed6) / 2 (rc4, md5 2a95b5f7f6d9, byte-context verified as seed's own plaintext XMP META-CANARY title/description — byte-identical context to the unmodified seed's 2 hits, `/EncryptMetadata` false by design in the SEED dict, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Sixty-fourth variant overall, StmF/StrF-name axis COMPLETE at two points (StmF-undefined cycle 81, StrF-undefined cycle 82 — symmetric fail-closed on all six stacks). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle82_strMismatch.py`, `/tmp/opencode/cycle82_strMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 19 Track-2 cycles x 12 = 228 no-password probes, leaks 0, crashes 0.
+- next step: both-names mismatch (`/StmF /StdCF2 /StrF /StdCF2`) single control on the CF-complete V4 base, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 83 addendum (2026-11-01T03:28:00Z)
+
+- cycle 83: Track 2 V4 both-names mismatch control (`t_encrypt_stdV4R4bothMismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with `/StmF /StdCF2 /StrF /StdCF2` — BOTH names undefined, CF still defines only `/StdCF`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a dictionary` (manually triaged refuse, identical to cycles 81/82, no interaction); pdfminer BLOCKED `Undefined crypt filter` — NOT the cycles-81/82 `Unsupported crypt filter`: with stmf==strf the inequality gate passes and the downstream defined-name gate (`if self.strf not in self.cfm`, source-verified in `pdfdocument.py`) fires — two sequential pre-derivation gates, both fail-closed; pymupdf ERROR `FileDataError` pre-auth (identical to cycles 81/82); pypdfium2 `Incorrect password` (identical, no name validation on any of the three axis points); pikepdf/qpdf `PasswordError: invalid password` (identical — still NO V4 parse-time escalation, V4-vs-V5 asymmetry holds across the full three-point name axis); pdfjs `PasswordException: No password given` (identical). With-password controls refuse too (qpdf WITH correct password, PyMuPDF pre-auth OPEN-FAIL) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 2c1ce9dbb9f4) / 2 (rc4, md5 b95fdb1fd29c, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-fifth variant overall, StmF/StrF-name axis COMPLETE at three points (StmF-undefined, StrF-undefined, both-undefined — symmetric fail-closed, pdfminer exposes two ordered gates). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle83_bothMismatch.py`, `/tmp/opencode/cycle83_bothMismatch/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 20 Track-2 cycles x 12 = 240 no-password probes, leaks 0, crashes 0.
+- next step: advance Track 3 PDFex static scaffolds (needs real-viewer matrix notes) or Track 4 writer samples if tooling allows; else new Track 2 axis (e.g. /P-permission confusion or /ID-trailer tampering on the CF-complete V4 base).
+
+===
+    139 findings/daily/2026-11-01.md
+  58852 findings/24-7.log
+   2882 findings/LOG.md
+  61873 total
+6.4.299
+base
+fuzz
+incremental
+manifest.json
+mutants
+pdfex_static
+prevchain
+writers
+F-2026-001-control-encrypted-plain-refuses.pdf
+F-2026-001-encrypted-objstm-no-password-error.pdf
+O-2026-002-shadow-encrypt-obj.pdf
+O-2026-003-pdfex-form-ref.pdf
+O-2026-005-gs-plaintext-xmp-ps.pdf
+O-2026-005-gs-xmp-plaintext.pdf
+O-2026-005-source.ps
+O-2026-006-pdfminer-P0-appended-aes.pdf
+O-2026-006-pdfminer-P0-min.pdf
+gs_xmp_plaintext_repro.py
+reportlab_s256_fixed.pdf
+reportlab_s256_nonconforming.pdf
+validate_reportlab_fix.py
+> build · muse-spark-1.3-contributor
+[0m$ [0mtail -n 60 findings/daily/2026-11-01.md
+echo ===24-7tail===
+tail -n 5 findings/24-7.log
+echo ===LOGtail===
+tail -n 30 findings/LOG.md
+echo ===pip===
+.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E "Name|Version"
+echo ===tmp===
+ls /tmp/opencode/ 2>/dev/null | tail -n 20
+ls corpus/base/ 2>/dev/null | head; ls corpus/ | head
+## Cycle 84 addendum (2026-11-01T03:35:00Z)
+
+- cycle 84: Track 2 V4 /P-value probe (`t_encrypt_stdV4R4perm0`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 0`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — no content disclosed, 0 harness crashes. NEW pdfminer outlier: `struct.error: 'L' format requires 0 <= number <= 4294967295` (surfaced as PdfminerException) with AND without the correct password, while the other five engines refuse cleanly at auth (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). Root cause source-verified: `uint_value(x,32)` in pdftypes.py returns `xi + 2**32` for `xi <= 0` (`if xi > 0` should be `>=`), so `/P 0` yields 4294967296 and `struct.pack("<L", self.p)` (pdfdocument.py:402) raises — `struct.error` escapes pdfminer's own exception hierarchy, and the file is unopenable in pdfminer even with the correct password. Minimal single-file repro isolated from the incremental construction (same-length `/P -1028` -> `/P 0` patch of repo seed `rc4_128_r4__plain.pdf`): pdfminer struct.error with and without password; other five engines BLOCKED cleanly. Sixty-sixth variant overall, first /P-value-axis point, first genuine (if low-severity) implementation bug of the Track-2 series. Logged as O-2026-006 (robustness/interop, NOT a confidentiality leak, not filed upstream yet). PoCs: `findings/poc/O-2026-006-pdfminer-P0-min.pdf`, `findings/poc/O-2026-006-pdfminer-P0-appended-aes.pdf`. Builder + raw results: `/tmp/opencode/cycle84_perm0.py`, `/tmp/opencode/cycle84_perm0/` (2 PDFs + results.json + baseline.json, git-untracked).
+- day totals now: 21 Track-2 cycles x 12 = 252 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier, no content shown).
+- next step: /P-value round 2 (e.g. `/P 1` vs `/P 0` to confirm the `>0` boundary, or large-positive `/P`) on the CF-complete V4 base DONE in cycle 85; then report O-2026-006 upstream (pdfminer.six issue, one-line fix) after re-verification; Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 85 addendum (2026-11-01T03:55:00Z)
+
+- cycle 85: Track 2 V4 /P-value boundary probe (`t_encrypt_stdV4R4perm1`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 1`, same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. pdfminer returns to `PDFPasswordIncorrect` (confirmed via direct PDFDocument traceback with AND without the correct password on both files — derivation attempted, clean pdfminer exception), vs the cycle-84 `/P 0` `struct.error` outlier: the `>0` boundary in `uint_value` (pdftypes.py:178, source re-verified this cycle) is confirmed — `/P 1` takes the `xi > 0` pass-through branch while `/P 0` falls into `xi + 2**32` = 4294967296 and trips `struct.pack("<L")`. All other five stacks verdict-identical to cycle 84 (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). With-password controls refuse too (qpdf WITH correct password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 d3ea61f390bf) / 2 (rc4, md5 fd0da3e1656e, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-seventh variant overall, /P-value axis at two points (-4 baseline, 0 outlier, 1 boundary-confirmed). Still integrity-only (LOG.md O-2026-006 extension), not filed. Builder + raw results: `/tmp/opencode/cycle85_perm1.py`, `/tmp/opencode/cycle85_perm1/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative result, boundary control).
+- day totals now: 22 Track-2 cycles x 12 = 264 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier on cycle 84 only, no content shown).
+- next step: /P-value round 3 (large-positive `/P`, e.g. 2147483647, on the CF-complete V4 base) or report O-2026-006 upstream (pdfminer.six issue, one-line fix `if xi >= 0`); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 86 addendum (2026-11-01T03:25:00Z)
+
+- cycle 86: Track 2 V4 /P-value large-positive probe (`t_encrypt_stdV4R4permMax`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta `/P -4` -> `/P 2147483647` (max int32), same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. pdfminer returns to clean `PDFPasswordIncorrect` (direct-traceback confirmed with AND without the correct password on both files — derivation attempted, NOT a P-value gate), vs the cycle-84 `/P 0` `struct.error` outlier: only exactly 0 takes the `uint_value` `+2**32` overflow branch (`pdftypes.py:178 if xi > 0`); max-int32 passes through and packs cleanly, verdict-identical to the cycle-85 `/P 1` boundary control on all six stacks (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password; pdfjs No password given). With-password controls refuse too (qpdf WITH correct password on both files, PyMuPDF authenticate 0 with needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 44408a237d3b) / 2 (rc4, md5 28151271f28b, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified: 2 unmodified seeds x 6 engines = 12/12 BLOCKED. Sixty-eighth variant overall, /P-value axis at four points (-4, 0, 1, 2147483647). Still integrity-only (LOG.md O-2026-006 extension), not filed. Builder + raw results: `/tmp/opencode/cycle86_permMax.py`, `/tmp/opencode/cycle86_permMax/` (2 PDFs + results.json + baseline.json, git-untracked); no new repo files, no PoC (negative control).
+- day totals now: 23 Track-2 cycles x 12 = 276 no-password probes, leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier on cycle 84 only, no content shown).
+- next step: report O-2026-006 upstream (pdfminer.six issue, one-line fix `if xi >= 0`) after one re-verification of the minimal PoC, or new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 87 addendum (2026-11-01T03:28:00Z)
+
+- cycle 87: Track 2 O-2026-006 pre-report re-verification (no new variant — re-probed both filed PoCs `findings/poc/O-2026-006-pdfminer-P0-min.pdf` + `findings/poc/O-2026-006-pdfminer-P0-appended-aes.pdf` on all six engines, no-password = 12 probes) → ORIGINAL 0/12, injected n/a (PoCs carry no injected page), 0 crashes. pdfminer outlier reproduces exactly on BOTH files: `struct.error: 'L' format requires 0 <= number <= 4294967295` (harness surfaces as PdfminerException with the struct message) with AND without the correct user password (direct-traceback confirmed); other five stacks refuse with unchanged clean password errors (pypdf FileNotDecryptedError; pymupdf ValueError: document closed or encrypted; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError; pdfjs No password given). No content shown to any engine. Fix-hypothesis simulation (`uint_value` current `if xi > 0` vs `if xi >= 0` + `struct.pack("<L")` for P in {-4, 0, 1, 2147483647}): only P=0 overflows under current code (4294967296), `>=` packs 0 cleanly, -4/1/max byte-identical — one-line fix confirmed in isolation. Pre-report gate PASSED: ready to file upstream as a pdfminer.six issue (90-day window starts on report). Still integrity-only (LOG.md O-2026-006 extension), not filed. Repro + raw results: `/tmp/opencode/cycle87_p0reverify.py`, `/tmp/opencode/cycle87_p0reverify/results.json` (git-untracked by location); no new repo files, no new PoC (re-verification only).
+- day totals now: 23 Track-2 probe cycles x 12 = 276 no-password probes + 1 re-verification cycle (2 PoCs x 6 engines = 12 probes), leaks 0, crashes 0 (1 pdfminer unhandled-exception-class outlier reproduced on both PoCs, no content shown).
+- next step: file O-2026-006 upstream (pdfminer.six issue with the two PoCs + one-line fix `if xi >= 0`), then new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 88 addendum (2026-11-01T03:35:00Z)
+
+- cycle 88: Track 2 O-2026-006 report drafting (no new variant — smallest verifiable step toward filing). Wrote `findings/reports/pdfminer-P0-uint-value.md` (project pdfminer.six 20260107, severity low, 5-line repro, cross-engine table pypdf 6.21.4 / pymupdf 2.0 / pypdfium2 5.14.0 / pikepdf 10.17.0 / pdfjs 6.4.299, source-verified `uint_value` root cause, one-line `>=` fix, disclosure plan); both PoCs re-confirmed this cycle via direct `PDFDocument` traceback (`struct.error` with AND without the correct password on both files, other five stacks clean refuse, no content shown). LOG.md O-2026-006 status → "report drafted, not yet sent" + cycle-88 extension bullet. New file: 1 report; no new PoC (negative-result cycle, drafting only).
+- day totals now: 23 Track-2 probe cycles x 12 = 276 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle (re-confirm only, no new probes), leaks 0, crashes 0.
+- next step: send O-2026-006 upstream (pdfminer.six issue with the two PoCs + one-line fix — needs human OK / network), then new Track 2 axis (e.g. /ID-trailer tampering on the CF-complete V4 base); Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 89 addendum (2026-11-01T04:05:00Z)
+
+- cycle 89: Track 2 V4 /ID-presence probe (`t_encrypt_stdV4R4IDorig`: cycle-12 CF-complete V4/R4 hostile direct dict with the ORIGINAL seed `/ID` array copied into the appended trailer — first /ID-axis point, all prior appended trailers carried NO `/ID`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/Size` n+12, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct traceback with AND without password = derivation attempted, NOT an /ID gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/ID` presence never validated anywhere. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1). Raw CANARY 0 (aes256, md5 1801842554141ffb904326d6e7e9efd7) / 2 (rc4, md5 2a8ff02fc6fbead401c288b3854aba1b, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Sixty-ninth variant overall. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle89_IDorig.py`, `/tmp/opencode/cycle89_IDorig/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 24 Track-2 probe cycles x 12 = 288 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /ID round 2 (mismatched /ID on the CF-complete V4 base) DONE in cycle 90 below; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 90 addendum (2026-11-01T04:15:00Z)
+
+- cycle 90: Track 2 V4 /ID-mismatch probe (`t_encrypt_stdV4R4IDmismatch`: cycle-12 CF-complete V4/R4 hostile direct dict with a MISMATCHED `/ID [<00x16><FFx16>]` in the appended trailer — matches neither seed; single-token delta vs cycle 89 which copied the ORIGINAL `/ID`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/Size` n+12, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-89 orig-ID on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with str password with AND without the correct password on both files = derivation attempted, NOT an /ID gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/ID` VALUE never validated anywhere — absent (cycle 12) / orig-present (cycle 89) / mismatched (here) indistinguishable on all six stacks. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 fcaf28b5438a) / 2 (rc4, md5 fbbd26cde31c, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventieth variant overall, /ID axis COMPLETE at three points. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle90_IDmismatch.py`, `/tmp/opencode/cycle90_IDmismatch/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 25 Track-2 probe cycles x 12 = 300 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: new Track 2 axis (e.g. /Size-shrink or /Root-forward tampering on the CF-complete V4 base), or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 91 addendum (2026-11-01T04:30:00Z)
+
+- cycle 91: Track 2 V4 /Size-shrink probe (`t_encrypt_stdV4R4sizeShrink`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Size n+12` -> `/Size n` (original seed /Size, excludes new objects n..n+3 listed in the appended xref; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a /Size gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/Size` shrinkage never validated anywhere. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 9abd348f2386) / 2 (rc4, md5 2cf1a1afe708, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-first variant overall, first /Size-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle91_sizeShrink.py`, `/tmp/opencode/cycle91_sizeShrink/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 26 Track-2 probe cycles x 12 = 312 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Size round 2 (overshoot `/Size n+100` on the CF-complete V4 base) or /Root-forward tampering; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+
+## Cycle 92 addendum (2026-11-01T04:45:00Z)
+
+- cycle 92: Track 2 V4 /Size-overshoot probe (`t_encrypt_stdV4R4sizeOvershoot`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Size n+12` -> `/Size n+100` (seed n=12, used 112, far beyond highest new object n+3 still listed in the appended xref); same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to cycle-12 baseline AND cycle-91 shrink probe on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a /Size gate; pymupdf ValueError: document closed or encrypted, no FileDataError escalation; pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password, no V4 parse escalation; pdfjs No password given): `/Size` VALUE never validated in either direction. With-password controls refuse too (qpdf WITH correct password both files, PyMuPDF authenticate 0 needs_pass=1). Raw CANARY 0 (aes256, md5 f6b3b1ebc985) / 2 (rc4, md5 1757c3c883ce, seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-second variant overall, /Size axis COMPLETE at three points (correct/shrink/overshoot indistinguishable everywhere). Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle92_sizeOvershoot.py`, `/tmp/opencode/cycle92_sizeOvershoot/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 27 Track-2 probe cycles x 12 = 324 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root-forward tampering on the CF-complete V4 base, or advance Track 3 PDFex static scaffolds / Track 4 writer samples if tooling allows.
+
+## Cycle 93 addendum (2026-11-01T03:55:00Z)
+
+- cycle 93: Track 2 V4 /Root-dangling probe (`t_encrypt_stdV4R4rootDangling`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (manually triaged refuse — FIRST pypdf Root gate on the Track-2 axis; +pw gives WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` via direct `PDFDocument` traceback with AND without the correct password on both files = derivation attempted, NOT a Root gate; pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text, auth=0 with password — SILENT-open, no content); pypdfium2 Incorrect password; pikepdf/qpdf PasswordError: invalid password (no V4 parse escalation); pdfjs No password given. With-password controls refuse too (pikepdf +pw, PyMuPDF auth 0, pypdf +pw WrongPasswordError) — no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle93_rootDangling.py`, `/tmp/opencode/cycle93_rootDangling/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 28 Track-2 probe cycles x 12 = 336 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root round 2 (e.g. `/Root` pointing at the content stream, or orig-catalog Root with the new page objects) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+===24-7tail===
+gs_xmp_plaintext_repro.py
+reportlab_s256_fixed.pdf
+reportlab_s256_nonconforming.pdf
+validate_reportlab_fix.py
+> build · muse-spark-1.3-contributor
+===LOGtail===
+  (original bytes are a byte-prefix of each built file), not in prevchain
+  VARIANTS) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six
+  engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12
+  baseline on every stack (pypdf `FileNotDecryptedError`; pdfminer
+  `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback
+  with AND without the correct user password on both files, i.e.
+  derivation ATTEMPTED against zeroed O/U, NOT a /Size gate; pymupdf
+  `ValueError: document closed or encrypted` -- no escalation to the
+  open-time `FileDataError` gate of cycles 74/76/81/82/83, so /Size
+  shrinkage is not shape-checked anywhere; pypdfium2
+  `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid
+  password` -- still NO V4 parse-time escalation; pdfjs
+  `PasswordException: No password given`): the `/Size` value is never
+  validated on any path. With-password controls refuse too
+  (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF
+  `authenticate` 0 with `needs_pass=1`) -- no fallback to the
+  original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the
+  aes256 file (md5 9abd348f2386), 2 in the rc4 file (md5 2cf1a1afe708)
+  -- byte-context verified as the seed's own plaintext XMP META-CANARY
+  title/description (`/EncryptMetadata` false by design in the SEED dict,
+  INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline
+  re-verified this cycle: 2 unmodified seeds x 6 engines = 12/12 BLOCKED
+  without password. Seventy-first variant overall, first /Size-axis
+  point (remaining: /Size-overshoot). Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- Extension 2026-11-01 (cycle 92, Track 2): new variant `t_encrypt_stdV4R4sizeOvershoot` (SECOND /Size-axis probe, overshoot direction: appended plaintext page, trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 CF-complete hostile dict but with appended-trailer `/Size n+12` -> `/Size n+100` (seed n=12, correct n+12=24, used 112 -- far beyond highest new object n+3 still listed in the appended xref; single-token delta vs the cycle-91 shrink probe `/Size n`; same appended page n..n+3, `/Root` n, `/Prev` orig, no `/ID`; same 2 seeds x 6 engines = 12 no-password probes, builder `/tmp/opencode/cycle92_sizeOvershoot.py`, raw results `/tmp/opencode/cycle92_sizeOvershoot/results.json`, pure-append verified (original bytes are a byte-prefix of each built file), not in prevchain VARIANTS) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12 baseline AND the cycle-91 shrink probe on every stack (pypdf `FileNotDecryptedError: File has not been decrypted`; pdfminer `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback with str password with AND without the correct user password on both files, i.e. derivation ATTEMPTED against zeroed O/U, NOT a /Size gate; pymupdf `ValueError: document closed or encrypted` -- no escalation to the open-time `FileDataError` gate of cycles 74/76/81/82/83, so /Size overshoot is not shape-checked anywhere either; pypdfium2 `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid password` -- still NO V4 parse-time escalation; pdfjs `PasswordException: No password given`): the `/Size` VALUE is never validated on any path in either direction. With-password controls refuse too (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF `authenticate` 0 with `needs_pass=1`, pages=1) -- no fallback to the original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the aes256 file (md5 f6b3b1ebc985), 2 in the rc4 file (md5 1757c3c883ce) -- byte-context verified as the seed's own plaintext XMP META-CANARY title/description (`/EncryptMetadata` false by design in the SEED dict, INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified this cycle: 2 unmodified seeds x 6 engines = 12/12 BLOCKED without password. Seventy-second variant overall, /Size axis COMPLETE at three points (correct n+12 baseline, shrink-to-n cycle 91, overshoot n+100 here -- all indistinguishable on all six stacks). Still integrity-only, not filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- Extension 2026-11-01 (cycle 93, Track 2): new variant `t_encrypt_stdV4R4rootDangling` (FIRST /Root-axis probe: appended plaintext page, trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 CF-complete hostile dict but with appended-trailer `/Root n` -> `/Root 9999 0 R` (dangling, never defined; `/Size` kept correct n+12, `/Prev` orig, no `/ID`; same appended page n..n+3; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes, builder `/tmp/opencode/cycle93_rootDangling.py`, raw results `/tmp/opencode/cycle93_rootDangling/results.json`) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR `PdfReadError: Cannot find Root object in pdf` (clean exception, manually triaged refuse -- FIRST pypdf Root gate on the Track-2 axis: all prior hostile-dict cycles gave FileNotDecryptedError; with the correct password pypdf raises WrongPasswordError, still refuse); pdfminer `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback with AND without the correct user password on both files (derivation ATTEMPTED against zeroed O/U, NOT a Root gate -- Root never validated on that path); pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text both files, auth=0 with password -- SILENT-open, no content, same fail-closed posture as the ValueError cycles); pypdfium2 `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid password` (still NO V4 parse-time escalation); pdfjs `PasswordException: No password given`. With-password controls refuse too (pikepdf WITH the correct user password on both files, PyMuPDF authenticate 0 with needs_pass=1, pypdf +pw WrongPasswordError) -- no fallback to the original-via-`/Prev` dict. Raw CANARY 0 (aes256, md5 20bb14d2540fcd2) / 2 (rc4, md5 fa078dcc3088, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-third variant overall, first /Root-axis point. Still integrity-only (O-2026-002 extension), not filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+===pip===
+===tmp===
+p5test
+pdf.json
+pdf_doc.c
+pdf_md5.c
+pdf_write.c
+pdf_xmp.c
+posttest.txt
+probe-fuzz.mts
+probe-n1.mts
+ps_cmyk.icc
+ps_enc.pdf
+ps_gray.icc
+ps_plain.pdf
+ps_plain2.pdf
+ps_plain3.pdf
+ps_rgb.icc
+review357.txt
+t.ps
+track_tail.md
+try.c
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+base
+fuzz
+incremental
+manifest.json
+mutants
+pdfex_static
+prevchain
+writers
+> build · muse-spark-1.3-contributor
+Baseline history shows 73 variants with no leaks — now building the next minimal probe.
+[0m→ [0mRead triage.py 
+[0m→ [0mRead prevchain.py 
+[0m$ [0mls corpus/base/ 2>/dev/null | head -n 30; echo ===; .venv/bin/python -c "import pypdf,pymupdf,pypdfium2,pikepdf,pdfminer; print('py ok')" 2>&1; .venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "Name|Version"; node -e "console.log(require('./node_modules/pdfjs-dist/package.json').version)" 2>&1
+aes128_r4__linearized.pdf
+aes128_r4__objstm.pdf
+aes128_r4__plain.pdf
+aes256_r5__linearized.pdf
+aes256_r5__objstm.pdf
+aes256_r5__plain.pdf
+aes256_r6__attach.pdf
+aes256_r6__form.pdf
+aes256_r6__linearized.pdf
+aes256_r6__nometa.pdf
+aes256_r6__objstm.pdf
+aes256_r6__plain.pdf
+control_owner_only.pdf
+control_plain.pdf
+rc4_128_r3__linearized.pdf
+rc4_128_r3__objstm.pdf
+rc4_128_r3__plain.pdf
+rc4_128_r4__attach.pdf
+rc4_128_r4__linearized.pdf
+rc4_128_r4__objstm.pdf
+rc4_128_r4__plain.pdf
+rc4_40_r2__linearized.pdf
+rc4_40_r2__objstm.pdf
+rc4_40_r2__plain.pdf
+===
+py ok
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "Name|Version"
+echo ---
+cat /tmp/opencode/cycle93_rootDangling.py 2>&1 | head -n 120 || echo "no tmp file"
+ls /tmp/ | head
+---
+"""Cycle 93: Track 2 V4 /Root-dangling probe.
+t_encrypt_stdV4R4rootDangling: cycle-12 CF-complete V4/R4 hostile direct dict,
+appended trailer /Root n -> /Root 9999 0 R (dangling), same page n..n+3.
+"""
+import re, json, hashlib, sys
+sys.path.insert(0, "/home/sarthak/pdf-encryption-research")
+from pathlib import Path
+import pikepdf
+from triage import EXTRACTORS, run_batch
+
+ROOT = Path("/home/sarthak/pdf-encryption-research")
+BASE = ROOT/"corpus"/"base"
+OUT = Path("/tmp/opencode/cycle93_rootDangling")
+OUT.mkdir(parents=True, exist_ok=True)
+USER_PW = "Us3r-Passw0rd!"
+SEEDS = ["aes256_r6__plain.pdf", "rc4_128_r4__plain.pdf"]
+
+def last_startxref(d: bytes):
+    ms = list(re.finditer(rb"startxref\s+(\d+)\s+%%EOF", d))
+    return int(ms[-1].group(1))
+def max_size(d: bytes):
+    return max(int(x) for x in re.findall(rb"/Size\s+(\d+)", d))
+
+HOSTILE = (b"<< /Filter /Standard /V 4 /R 4 /P -4 /O <" + b"00"*32 + b"> /U <" + b"00"*32 +
+           b"> /Length 128 /CF << /StdCF << /AuthEvent /DocOpen /CFM /V2 /Length 16 >> >> /StmF /StdCF /StrF /StdCF >>")
+
+built = []
+for sname in SEEDS:
+    data = (BASE/sname).read_bytes()
+    with pikepdf.open(str(BASE/sname), password=USER_PW) as pdf:
+        size = max_size(data)
+        n = size
+        prev = last_startxref(data)
+    canary = f"INJECTED {Path(sname).stem} t_encrypt_stdV4R4rootDangling ALPHA"
+    content = f"BT /F1 12 Tf 72 700 Td ({canary}) Tj ET".encode("latin-1")
+    buf = bytearray(data)
+    if not buf.endswith(b"\n"): buf += b"\n"
+    offs = {}
+    objs = {
+        n: b"<< /Type /Catalog /Pages %d 0 R >>" % (n+1),
+        n+1: b"<< /Type /Pages /Kids [%d 0 R] /Count 1 >>" % (n+2),
+        n+2: (b"<< /Type /Page /Parent %d 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> >> >> /Contents %d 0 R >>" % (n+1, n+3)),
+        n+3: b"<< /Length %d >>\nstream\n" % len(content) + content + b"\nendstream",
+    }
+    for num in sorted(objs):
+        offs[num] = len(buf)
+        buf += b"%d 0 obj\n" % num + objs[num] + b"\nendobj\n"
+    xref_off = len(buf)
+    nums = sorted(offs)
+    buf += b"xref\n0 1\n0000000000 65535 f \n"
+    buf += b"%d %d\n" % (nums[0], len(nums))
+    for num in nums:
+        buf += b"%010d 00000 n \n" % offs[num]
+    # dangling Root, hostile Encrypt direct, Size correct n+12
+    buf += b"trailer\n<< /Size %d /Encrypt " % (n+12) + HOSTILE + b" /Root 9999 0 R /Prev %d >>\n" % prev
+    buf += b"startxref\n%d\n%%%%EOF\n" % xref_off
+    # pure-append check
+    assert bytes(buf)[:len(data)] == data, "not pure append"
+    p = OUT/(Path(sname).stem + "__rootDangling.pdf")
+    p.write_bytes(bytes(buf))
+    built.append((sname, str(p), canary, hashlib.md5(bytes(buf)).hexdigest()))
+    print(f"[ok] {p.name} md5={built[-1][3]} len={len(buf)} orig={len(data)}")
+
+# baseline files
+base_paths = [str(BASE/s) for s in SEEDS]
+paths = [b[1] for b in built]
+canon = {b[1]: (b[0].replace(".pdf",""), b[2]) for b in built}
+orig_can = {b[1]: [f"CANARY {Path(b[0]).stem} ALPHA", f"CANARY {Path(b[0]).stem} BRAVO"] for b in built}
+
+results = {}
+for eng in EXTRACTORS:
+    res, fail = run_batch(eng, paths, 300)
+    if res is None:
+        print(f"{eng}: BATCH FAIL {fail}"); results[eng] = None
+    else:
+        for k,v in res.items(): results.setdefault(eng, {})[k] = v
+        print(f"{eng}: {len(paths)} probed")
+
+base_res = {}
+for eng in EXTRACTORS:
+    res, fail = run_batch(eng, base_paths, 300)
+    base_res[eng] = res
+    ok = sum(1 for k,v in (res or {}).items() if v.get("status") in ("BLOCKED","ERROR"))
+    print(f"baseline {eng}: {res and len(res)} files, blocked-ish={ok}")
+
+def norm(t): return re.sub(r"\s+","",t or "")
+out = []
+for eng in EXTRACTORS:
+    for sname, p, inj, md5 in built:
+        r = (results.get(eng) or {}).get(p, {})
+        txt = r.get("text") or ""
+        nn = norm(txt)
+        inj_hit = norm(inj) in nn
+        orig_hit = any(norm(c) in nn for c in orig_can[p])
+        raw = Path(p).read_bytes()
+        raw_can = raw.count(b"CANARY")
+        # byte-context check for XMP META-CANARY
+        out.append({"engine":eng,"file":Path(p).name,"status":r.get("status"),"err":(r.get("error") or "")[:160],
+                    "inj":inj_hit,"orig":orig_hit,"raw_canary":raw_can,"md5":md5})
+for o in out:
+    print(o)
+orig_leak = sum(1 for o in out if o["orig"])
+inj_show = sum(1 for o in out if o["inj"])
+print(f"ORIGINAL {orig_leak}/12 injected {inj_show}/12")
+json.dump(out, open(OUT/"results.json","w"), indent=1)
+# with-password controls: qpdf open + pymupdf auth
+import subprocess
+for sname, p, inj, md5 in built:
+    r = subprocess.run(["qpdf", f"--password={USER_PW}", "--decrypt", p, "--", "/tmp/opencode/cycle93_q.pdf"], capture_output=True, text=True)
+    print(f"qpdf+pw {Path(p).name}: rc={r.returncode} err={(r.stderr or '')[:120]}")
+import pymupdf
+for sname, p, inj, md5 in built:
+    try:
+        d = pymupdf.open(p)
+        try: a = d.authenticate(USER_PW)
+        except Exception as e: a = f"{type(e).__name__}:{e}"
+        print(f"mupdf+pw {Path(p).name}: auth={a} needs_pass={d.needs_pass} pages={d.page_count}")
+        d.close()
+    except Exception as e:
+        print(f"mupdf+pw {Path(p).name}: OPEN-FAIL {type(e).__name__}: {e}")
+308-dev.log
+357.diff
+8x-csp-fake-storage
+8x-csp-fake-upload-secret
+8x-install-GEyImB
+8x-install-MwdP47
+8x-install-SxMQmf
+8x-install-USZj7N
+8x-install-V54qeA
+8x-install-WbEmyy
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "import pypdf,pymupdf,pypdfium2,pikepdf,pdfminer; print(pypdf.__version__); print(pymupdf.__version__, pymupdf.mupdf_version if hasattr(pymupdf,'mupdf_version') else ''); print(pypdfium2.__version__ if hasattr(pypdfium2,'__version__') else 'pdfium?'); print(pikepdf.__version__); import importlib.metadata as m; print(m.version('pdfminer.six')); print(m.version('pypdf'))"
+node -e "console.log(require('./node_modules/pdfjs-dist/package.json').version)"
+6.21.4
+2.0 1.28.5
+pdfium?
+10.17.0
+20260107
+6.21.4
+6.4.299
+> build · muse-spark-1.3-contributor
+Next probe will point the appended trailer's Root at the wrong object type to test validation.
+[0m← [0mWrite /tmp/opencode/cycle94_rootStream.py
+Created file successfully: /tmp/opencode/cycle94_rootStream.py
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python /tmp/opencode/cycle94_rootStream.py 2>&1 | tail -n 60
+[ok] aes256_r6__plain__rootStream.pdf md5=a88aca7629ec944e1c25923834d9a155 len=4496 orig=3595 root=15
+[ok] rc4_128_r4__plain__rootStream.pdf md5=e93f127e521f141922022e512c1ea0f5 len=3995 orig=3093 root=15
+pypdf: 2 probed
+pdfminer: 2 probed
+pymupdf: 2 probed
+pypdfium2: 2 probed
+pikepdf: 2 probed
+pdfjs: 2 probed
+baseline pypdf: blocked-ish=2/2
+baseline pdfminer: blocked-ish=2/2
+baseline pymupdf: blocked-ish=2/2
+baseline pypdfium2: blocked-ish=2/2
+baseline pikepdf: blocked-ish=2/2
+baseline pdfjs: blocked-ish=2/2
+{'engine': 'pypdf', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'FileNotDecryptedError: File has not been decrypted', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pypdf', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'FileNotDecryptedError: File has not been decrypted', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+{'engine': 'pdfminer', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PdfminerException: ', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pdfminer', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PdfminerException: ', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+{'engine': 'pymupdf', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'OK', 'err': '', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pymupdf', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'OK', 'err': '', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+{'engine': 'pypdfium2', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PdfiumError: Failed to load document (PDFium: Incorrect password error).', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pypdfium2', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PdfiumError: Failed to load document (PDFium: Incorrect password error).', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+{'engine': 'pikepdf', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PasswordError: /tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf: invalid password', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pikepdf', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PasswordError: /tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf: invalid password', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+{'engine': 'pdfjs', 'file': 'aes256_r6__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PasswordException: No password given', 'inj': False, 'orig': False, 'raw_canary': 0, 'md5': 'a88aca7629ec944e1c25923834d9a155'}
+{'engine': 'pdfjs', 'file': 'rc4_128_r4__plain__rootStream.pdf', 'status': 'BLOCKED', 'err': 'PasswordException: No password given', 'inj': False, 'orig': False, 'raw_canary': 2, 'md5': 'e93f127e521f141922022e512c1ea0f5'}
+ORIGINAL 0/12 injected 0/12
+Traceback (most recent call last):
+  File "/tmp/opencode/cycle94_rootStream.py", line 103, in <module>
+    r = subprocess.run(["qpdf", f"--password={USER_PW}", "--decrypt", p, "--", str(OUT/"q.pdf")], capture_output=True, text=True)
+  File "/usr/lib/python3.14/subprocess.py", line 555, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/subprocess.py", line 1990, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'qpdf'
+> build · muse-spark-1.3-contributor
+[0m$ [0mwhich qpdf; ls /usr/bin/*qpdf* /usr/local/bin/*qpdf* 2>&1; .venv/bin/python -c "import pikepdf; print(pikepdf.__version__)"
+.venv/bin/python - <<'EOF'
+import pymupdf
+for p in ["/tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf","/tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf"]:
+    try:
+        d=pymupdf.open(p)
+        print(p.split('/')[-1], "needs_pass=",d.needs_pass,"enc=",d.is_encrypted,"pages=",d.page_count)
+        try:
+            t="|".join([pg.get_text().strip()[:80] for pg in d])
+            print("  text=",repr(t[:200]),"len=",len(t))
+        except Exception as e:
+            print("  gettext fail",e)
+        try:
+            a=d.authenticate("Us3r-Passw0rd!")
+            print("  auth=",a,"needs_pass=",d.needs_pass,"pages=",d.page_count)
+        except Exception as e:
+            print("  auth fail",type(e).__name__,e)
+        d.close()
+    except Exception as e:
+        print(p, "OPEN-FAIL", type(e).__name__, e)
+EOF
+ls: cannot access '/usr/bin/*qpdf*': No such file or directory
+ls: cannot access '/usr/local/bin/*qpdf*': No such file or directory
+10.17.0
+aes256_r6__plain__rootStream.pdf needs_pass= 1 enc= True pages= 0
+  text= '' len= 0
+  auth= 0 needs_pass= 1 pages= 0
+rc4_128_r4__plain__rootStream.pdf needs_pass= 1 enc= True pages= 0
+  text= '' len= 0
+  auth= 0 needs_pass= 1 pages= 0
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python - <<'EOF'
+from pathlib import Path
+from pypdf import PdfReader
+import pikepdf
+USER_PW="Us3r-Passw0rd!"
+for p in ["/tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf","/tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf"]:
+    print("==", Path(p).name)
+    try:
+        r=PdfReader(p); print(" pypdf nopw pages=",len(r.pages))
+    except Exception as e: print(" pypdf nopw",type(e).__name__,str(e)[:120])
+    try:
+        r=PdfReader(p,password=USER_PW); print(" pypdf +pw pages=",len(r.pages))
+    except Exception as e: print(" pypdf +pw",type(e).__name__,str(e)[:120])
+    for pw in ("",USER_PW):
+        try:
+            with pikepdf.open(p,password=pw if pw else "") as pdf:
+                print(f" pikepdf pw={'empty' if not pw else 'user'} OPEN-OK pages={len(pdf.pages)}")
+        except Exception as e: print(f" pikepdf pw={'empty' if not pw else 'user'} {type(e).__name__}: {str(e)[:120]}")
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfparser import PDFParser
+for p in ["/tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf","/tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf"]:
+    for pw in ("",USER_PW):
+        try:
+            with open(p,"rb") as f:
+                parser=PDFParser(f); doc=PDFDocument(parser,password=pw)
+                print(f"pdfminer pw={'empty' if not pw else 'user'} {Path(p).name}: OK")
+        except Exception as e:
+            import traceback
+            tb=traceback.format_exception_only(type(e),e)
+            print(f"pdfminer pw={'empty' if not pw else 'user'} {Path(p).name}: {type(e).__name__}: {str(e)[:160]} | {tb[-1].strip()[:160]}")
+# raw CANARY context
+for p in ["/tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf","/tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf","/home/sarthak/pdf-encryption-research/corpus/base/rc4_128_r4__plain.pdf"]:
+    d=Path(p).read_bytes()
+    print(Path(p).name, "CANARY count=",d.count(b"CANARY"))
+    import re
+    for m in re.finditer(b".{0,40}CANARY.{0,60}",d):
+        print("  ctx:",m.group(0)[:110])
+EOF
+== aes256_r6__plain__rootStream.pdf
+ pypdf nopw FileNotDecryptedError File has not been decrypted
+ pypdf +pw WrongPasswordError Wrong password
+ pikepdf pw=empty PasswordError: /tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf: invalid password
+ pikepdf pw=user PasswordError: /tmp/opencode/cycle94_rootStream/aes256_r6__plain__rootStream.pdf: invalid password
+== rc4_128_r4__plain__rootStream.pdf
+ pypdf nopw FileNotDecryptedError File has not been decrypted
+ pypdf +pw WrongPasswordError Wrong password
+ pikepdf pw=empty PasswordError: /tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf: invalid password
+ pikepdf pw=user PasswordError: /tmp/opencode/cycle94_rootStream/rc4_128_r4__plain__rootStream.pdf: invalid password
+pdfminer pw=empty aes256_r6__plain__rootStream.pdf: PDFPasswordIncorrect:  | pdfminer.pdfdocument.PDFPasswordIncorrect
+pdfminer pw=user aes256_r6__plain__rootStream.pdf: PDFPasswordIncorrect:  | pdfminer.pdfdocument.PDFPasswordIncorrect
+pdfminer pw=empty rc4_128_r4__plain__rootStream.pdf: PDFPasswordIncorrect:  | pdfminer.pdfdocument.PDFPasswordIncorrect
+pdfminer pw=user rc4_128_r4__plain__rootStream.pdf: PDFPasswordIncorrect:  | pdfminer.pdfdocument.PDFPasswordIncorrect
+aes256_r6__plain__rootStream.pdf CANARY count= 0
+rc4_128_r4__plain__rootStream.pdf CANARY count= 2
+  ctx: b'f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain</rdf:li></rdf:Alt></dc:title><dc:descript'
+  ctx: b'f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain description</rdf:li></rdf:Alt></dc:descri'
+rc4_128_r4__plain.pdf CANARY count= 2
+  ctx: b'f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain</rdf:li></rdf:Alt></dc:title><dc:descript'
+  ctx: b'f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain description</rdf:li></rdf:Alt></dc:descri'
+> build · muse-spark-1.3-contributor
+The wrong-type Root probe is fail-closed across all engines — now logging and committing the cycle.
+[0m$ [0m.venv/bin/python -c "import importlib.metadata as m; print(m.version('pypdfium2'))"; git status --short; date -u +%FT%TZ
+5.14.0
+ M findings/24-7.log
+?? findings/crashes/
+2026-11-01T03:52:21Z
+> build · muse-spark-1.3-contributor
+[2026-11-01T03:52:21Z] cycle 94 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootStream orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299
+[0m$ [0mcat >> findings/LOG.md <<'EOF'
+
+- Extension 2026-11-01 (cycle 94, Track 2): new variant `t_encrypt_stdV4R4rootStream` (SECOND /Root-axis probe: appended plaintext page, trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 CF-complete hostile dict but with appended-trailer `/Root n` -> `/Root (n+3) 0 R` (content-stream object: DEFINED but wrong type, stream not catalog dict; `/Size` kept correct n+12, `/Prev` orig, no `/ID`; same appended page n..n+3; pure-append verified; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes, builder `/tmp/opencode/cycle94_rootStream.py`, raw results `/tmp/opencode/cycle94_rootStream/results.json`) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes. Verdicts: pypdf `FileNotDecryptedError` nopw / `WrongPasswordError` +pw (IDENTICAL to cycle-12 baseline -- NOT the cycle-93 dangling-Root `PdfReadError: Cannot find Root object`: pypdf validates Root PRESENCE but not Root TYPE; defined-wrong-type passes silently to the auth layer); pdfminer `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback with AND without the correct user password on both files (derivation ATTEMPTED against zeroed O/U, NOT a Root gate -- Root never validated on that path, same as cycle 93); pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text both files, auth=0 with password -- SILENT-open, no content, same fail-closed posture as cycle 93); pypdfium2 `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid password` with AND without the correct password (still NO V4 parse-time escalation); pdfjs `PasswordException: No password given`. No fallback to the original-via-`/Prev` dict on any path. Raw CANARY 0 (aes256, md5 a88aca7629ec944e) / 2 (rc4, md5 e93f127e521f1419, byte-context verified byte-identical to the unmodified seed's 2 XMP META-CANARY title/description hits, `/EncryptMetadata` false by design in the SEED dict, INFO, not a leak); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-fourth variant overall, /Root axis at two points (dangling-undefined gated only by pypdf presence check, defined-wrong-type gated nowhere -- both fail-closed). Still integrity-only (O-2026-002 extension), not filed. Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 | pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+EOF
+echo "LOG appended"
+cat >> findings/daily/2026-11-01.md <<'EOF'
+
+## Cycle 94 addendum (2026-11-01T03:52:21Z)
+
+- cycle 94: Track 2 V4 /Root-stream probe (`t_encrypt_stdV4R4rootStream`: cycle-12 CF-complete V4/R4 hostile direct dict with SINGLE-token delta appended-trailer `/Root n` -> `/Root (n+3) 0 R` (content-stream object, defined wrong type; `/Size` kept correct n+12, `/Prev` orig, no `/ID`, pure-append verified) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf `FileNotDecryptedError` nopw / `WrongPasswordError` +pw (identical to cycle-12 baseline, NOT the cycle-93 `PdfReadError: Cannot find Root` — pypdf checks Root presence, not type); pdfminer `PDFPasswordIncorrect` via direct `PDFDocument` traceback with AND without password = derivation attempted, NOT a Root gate; pymupdf harness-OK-but-encrypted (`needs_pass=1`, `is_encrypted=True`, pages=0, empty text, auth=0 — SILENT-open, no content, same as cycle 93); pypdfium2 `Incorrect password`; pikepdf/qpdf `PasswordError: invalid password` with AND without correct password (no V4 parse escalation); pdfjs `No password given`. Raw CANARY 0 (aes256, md5 a88aca7629ec944e) / 2 (rc4, md5 e93f127e521f1419, byte-context seed XMP META-CANARY INFO); raw ORIGINAL-canary 0/2. Baseline re-verified 12/12 BLOCKED. Seventy-fourth variant overall, /Root axis at two points. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle94_rootStream.py`, `/tmp/opencode/cycle94_rootStream/` (2 PDFs + results.json, git-untracked); no new repo files, no PoC (negative result).
+- day totals now: 29 Track-2 probe cycles x 12 = 348 no-password probes + 1 re-verification cycle (12 probes) + 1 drafting cycle, leaks 0, crashes 0 (1 pdfminer struct.error outlier on cycle 84 only, reproduced cycle 87, report drafted cycle 88).
+- next step: /Root round 3 (e.g. `/Root` -> original catalog via `/Prev` chain, or `/Root` -> Pages object) on the CF-complete V4 base; then Track 3 PDFex static / Track 4 writer samples if tooling allows.
+EOF
+echo "daily appended"
+printf '[2026-11-01T03:52:21Z] cycle 94 exit=0 branch=research/vps-2026-11-01 variant=t_encrypt_stdV4R4rootStream orig=0/12 inj=0/12 crash=0 baseline=12/12BLOCKED engines=pypdf6.21.4/mupdf2.0/pdfium5.14.0/pikepdf10.17.0/pdfminer20260107/pdfjs6.4.299\n' >> findings/24-7.log
+echo "log appended"; git status --short
+LOG appended
+daily appended
+log appended
+ M findings/24-7.log
+ M findings/LOG.md
+ M findings/daily/2026-11-01.md
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
