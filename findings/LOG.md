@@ -1440,7 +1440,8 @@ empty-page caveat above.**
 
 ### O-2026-006 - pdfminer.six `uint_value` off-by-one: /P 0 raises struct.error instead of a pdfminer exception (interop/crash class, no leak)
 
-- Status: observed 2026-11-01 (cycle 84, Track 2); not yet reported upstream.
+- Status: observed 2026-11-01 (cycle 84, Track 2); report drafted at
+  `findings/reports/pdfminer-P0-uint-value.md` (cycle 88), not yet sent upstream.
 - Severity (self-assessed): low (no confidentiality impact; robustness/interop).
 - Affected: pdfminer.six 20260107 (`pdfdocument.py`
   `PDFStandardSecurityHandler.compute_encryption_key`, `pdftypes.py`
@@ -1496,7 +1497,9 @@ empty-page caveat above.**
   injected across the cycle-84 variant; minimal PoC shows no text to any
   engine). Robustness/interop only. NOT a reportable confidentiality bug;
   candidate for a small upstream pdfminer.six issue/PR (one-line fix).
-- Disclosure: not yet reported (90-day window would start on report).
+- Disclosure: not yet reported (90-day window would start on report). Report
+  drafted cycle 88 at `findings/reports/pdfminer-P0-uint-value.md` with both
+  PoCs + one-line fix; ready to file as a pdfminer.six issue.
 - Extension 2026-11-01 (cycle 85, Track 2): boundary control `t_encrypt_stdV4R4perm1`
   (same construction, `/P 1` instead of `/P 0`) x 2 seeds x 6 engines = 12
   no-password probes → ORIGINAL 0/12, injected 0/12, pdfminer back to clean
@@ -1543,6 +1546,13 @@ empty-page caveat above.**
   Repro + raw results: `/tmp/opencode/cycle87_p0reverify.py`,
   `/tmp/opencode/cycle87_p0reverify/results.json` (git-untracked); no new
   repo files, no new PoC (re-verification only).
+- Extension 2026-11-01 (cycle 88, Track 2): upstream report drafted at
+  `findings/reports/pdfminer-P0-uint-value.md` (project/version/severity,
+  5-line repro, cross-engine table, source-verified root cause, one-line
+  `>=` fix, disclosure plan); both PoCs re-confirmed this cycle
+  (`struct.error` with and without password, other five stacks clean
+  refuse). Status now "report drafted, not yet sent". Still
+  integrity-only, not filed.
 
 ---
 
