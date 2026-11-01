@@ -2838,3 +2838,41 @@ empty-page caveat above.**
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- Extension 2026-11-01 (cycle 91, Track 2): new variant
+  `t_encrypt_stdV4R4sizeShrink` (FIRST /Size-axis probe: appended
+  plaintext page, trailer `/Encrypt` direct dict identical to the
+  cycle-12 V4/R4 CF-complete hostile dict but with appended-trailer
+  `/Size n+12` -> `/Size n` (original seed /Size, excludes new objects
+  n..n+3 still listed in the appended xref -- all prior appended
+  trailers carried `/Size n+12`, so this isolates /Size validation;
+  same appended page n..n+3, `/Root` n, `/Prev` orig, no `/ID`; same 2
+  seeds x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle91_sizeShrink.py`, raw results
+  `/tmp/opencode/cycle91_sizeShrink/results.json`, pure-append verified
+  (original bytes are a byte-prefix of each built file), not in prevchain
+  VARIANTS) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six
+  engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12
+  baseline on every stack (pypdf `FileNotDecryptedError`; pdfminer
+  `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback
+  with AND without the correct user password on both files, i.e.
+  derivation ATTEMPTED against zeroed O/U, NOT a /Size gate; pymupdf
+  `ValueError: document closed or encrypted` -- no escalation to the
+  open-time `FileDataError` gate of cycles 74/76/81/82/83, so /Size
+  shrinkage is not shape-checked anywhere; pypdfium2
+  `Incorrect password error`; pikepdf/qpdf `PasswordError: invalid
+  password` -- still NO V4 parse-time escalation; pdfjs
+  `PasswordException: No password given`): the `/Size` value is never
+  validated on any path. With-password controls refuse too
+  (pikepdf/qpdf WITH the correct user password on both files, PyMuPDF
+  `authenticate` 0 with `needs_pass=1`) -- no fallback to the
+  original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the
+  aes256 file (md5 9abd348f2386), 2 in the rc4 file (md5 2cf1a1afe708)
+  -- byte-context verified as the seed's own plaintext XMP META-CANARY
+  title/description (`/EncryptMetadata` false by design in the SEED dict,
+  INFO, not a leak); raw ORIGINAL-canary bytes 0/2 files. Baseline
+  re-verified this cycle: 2 unmodified seeds x 6 engines = 12/12 BLOCKED
+  without password. Seventy-first variant overall, first /Size-axis
+  point (remaining: /Size-overshoot). Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
