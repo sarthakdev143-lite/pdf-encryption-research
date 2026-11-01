@@ -60673,3 +60673,126 @@ tail -2 findings/daily/2026-11-01.md | cut -c1-120; echo ===; git status --short
  findings/daily/2026-11-01.md |   6 +
  3 files changed, 437 insertions(+)
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit add findings/24-7.log findings/LOG.md findings/daily/2026-11-01.md && git commit -m "cycle 96: Track 2 V4 /Root-origCatalog probe (t_encrypt_stdV4R4rootOrig, 0/12 leak, valid-orig Root gated nowhere, 76th variant)" && git push -u origin research/vps-2026-11-01 2>&1 | tail -3
+[research/vps-2026-11-01 3c2eb0a] cycle 96: Track 2 V4 /Root-origCatalog probe (t_encrypt_stdV4R4rootOrig, 0/12 leak, valid-orig Root gated nowhere, 76th variant)
+ 3 files changed, 453 insertions(+)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   99a2185..3c2eb0a  research/vps-2026-11-01 -> research/vps-2026-11-01
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+> build · muse-spark-1.3-contributor
+Cycle 96 done and pushed to `research/vps-2026-11-01` (commit `3c2eb0a`).
+
+- **Probe**: Track 2 V4 `/Root`-origCatalog (`t_encrypt_stdV4R4rootOrig`) — single-token delta vs cycles 93–95: appended-trailer `/Root` → original catalog `1 0 R`, leaving the injected page orphaned. 2 seeds × 6 engines = 12 no-password probes.
+- **Result**: ORIGINAL 0/12, injected 0/12, 0 crashes. All six refuse, verdict-identical to the cycle-12 baseline (pdfminer `PDFPasswordIncorrect` with and without password = derivation attempted, not a Root gate; qpdf refuses even with the correct password).
+- **Axis status**: `/Root` complete at 4 points — only the pypdf presence-check (dangling) gates anywhere; stream-leaf, Pages-intermediate, and valid-orig Roots are validated nowhere. All fail-closed, integrity-only, no PoC.
+- **Logs**: `findings/daily/2026-11-01.md`, `findings/LOG.md` (O-2026-002 extension), `findings/24-7.log` updated. Day totals: 372 no-password probes, leaks 0, crashes 0.
+- **Next**: new axis (`/Prev` tampering on the CF-complete V4 base) or Track 3/4 if tooling allows.
+[2026-11-01T03:59:13Z] cycle 96 exit=0 branch=research/vps-2026-11-01 daily-push
+Everything up-to-date
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+[2026-11-01T04:01:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T04:11:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T04:21:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T04:31:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T04:41:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T04:51:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:01:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:11:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:21:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:31:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:41:14Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T05:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:41:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T06:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:41:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T07:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:41:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T08:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:41:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T09:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:41:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T10:51:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:01:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:11:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:21:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:31:15Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T11:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:21:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:31:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T12:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:21:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:31:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T13:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:21:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:31:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T14:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:21:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:31:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T15:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:21:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:31:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:41:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T16:51:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:01:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:11:16Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:21:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:31:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:41:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T17:51:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:01:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:11:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:21:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:31:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:41:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T18:51:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:01:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:11:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:21:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:31:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:41:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T19:51:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:01:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:11:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:21:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:31:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:41:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T20:51:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T21:01:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T21:11:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T21:21:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
+[2026-11-01T21:31:17Z] window done, next 2026-11-02 2:00 UTC, sleep 600s
