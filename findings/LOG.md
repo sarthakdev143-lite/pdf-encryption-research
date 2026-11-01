@@ -1991,3 +1991,35 @@ empty-page caveat above.**
   unanimous-refuse variant. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-11-01, Track 2 cycle 66 (t_hostileTrailer_noXS): NEW variant,
+  absent-XRefStm-dict split of the cycle-64 trailer-hostile construction.
+  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid)
+  while the XRefStm dict carries NO /Encrypt at all (only /Root; same
+  appended plaintext page n..n+3, /Root n, /Prev orig, /XRefStm ptr; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, raw results
+  `/tmp/opencode/cycle66_hostiletrailer_noxs/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycles 33/64/65; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf `PasswordError`
+  identical; pdfjs `PasswordException: No password given` identical;
+  pymupdf `FileDataError: Failed to open file ... as type pdf` — same
+  exception class as the cycle-33 baseline and cycles 64/65, NOT the
+  cycle-63 `ValueError: document closed or encrypted` retreat). The absent
+  XS dict changes nothing anywhere: the verdict profile is IDENTICAL to the
+  cycle-64 XS-original split on every stack, so an XRefStm dict with no
+  /Encrypt is simply ignored once the trailer carries a hostile dict —
+  trailer-wins resolution is unconditional, not presence-dependent. No
+  engine treats the XS dict's silence as no-encryption or renders either
+  canary. With-password controls (correct user password): PyMuPDF cannot
+  open either file even to authenticate (pre-auth FileDataError), and
+  pikepdf/qpdf refuses WITH the password (`PasswordError: invalid
+  password`), proving no fallback to the original-via-`/Prev` dict exists
+  on any path. Forty-eighth unanimous-refuse variant. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
