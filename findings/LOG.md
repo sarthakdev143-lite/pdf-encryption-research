@@ -2124,3 +2124,36 @@ empty-page caveat above.**
   Fifty-first variant overall. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-11-01 (cycle 70, Track 2): new variant
+  `t_encrypt_stdV4R4cfmAESV3` (appended plaintext page, trailer `/Encrypt`
+  direct dict identical to the cycle-12 V4/R4 dict —
+  `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/Length 128`,
+  `/CF <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF
+  /StrF /StdCF` — with the single-token delta `/CFM /V2` -> `/CFM /AESV3`,
+  inner `/Length 16` kept to isolate CFM validation; pure-append verified;
+  not in prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle70_cfmAESV3.py`, raw results
+  `/tmp/opencode/cycle70_cfmAESV3/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycle 12, no CFM gate on that path;
+  pdfminer BLOCKED `Unknown crypt filter method`, RETREATING from the
+  cycle-12 `PDFPasswordIncorrect` to the explicit CFM gate (same gate as
+  cycles 39/40/50: the V4 security handler's `get_cfm` knows only V2/AESV2,
+  so CFM/AESV3 fails pre-derivation); pymupdf `ValueError: document closed
+  or encrypted` (refuse; CF-shape decides the MuPDF message, as in cycle
+  45); pypdfium2 `Incorrect password error` identical; pikepdf/qpdf
+  `PasswordError: invalid password` identical — NO parse-time escalation,
+  unlike the V5 CFM mismatches of cycles 39/40 where qpdf raised `some V=5
+  encryption dictionary parameters are missing or the wrong type`, so qpdf
+  validates CFM-vs-V at parse time on V5 but not on V4; pdfjs
+  `PasswordException: No password given` identical to cycle 12, no CFM
+  validation on that path). With-password controls refuse too
+  (pikepdf/qpdf WITH the correct password, PyMuPDF `authenticate` 0), so no
+  fallback to the original-via-`/Prev` dict; raw `CANARY` bytes are only
+  the seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by
+  design, INFO). Baseline re-verified this cycle: 2 unmodified seeds x 6
+  engines = 12/12 BLOCKED without password. Fifty-second variant overall.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
