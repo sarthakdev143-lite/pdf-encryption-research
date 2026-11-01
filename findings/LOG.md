@@ -2569,3 +2569,45 @@ empty-page caveat above.**
   V4 StmF/StrF-name axis. Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-11-01 (cycle 82, Track 2): new variant
+  `t_encrypt_stdV4R4strMismatch` (StrF-name mirror of cycle 81: appended
+  plaintext page, trailer `/Encrypt` direct dict identical to the cycle-12
+  V4/R4 CF-complete dict but with the SINGLE-token delta `/StrF /StdCF` ->
+  `/StrF /StdCF2` (undefined crypt-filter name; `/StmF` stays `/StdCF` to
+  isolate the StrF name lookup; same 2 seeds x 6 engines = 12 no-password
+  probes, builder `/tmp/opencode/cycle82_strMismatch.py`, raw results
+  `/tmp/opencode/cycle82_strMismatch/results.json`, pure-append verified,
+  not in prevchain VARIANTS) -- ORIGINAL canary 0/12, injected rendered
+  0/12: ALL six engines refuse, 0 crashes. Verdicts: pypdf ERROR
+  `PdfReadError: Crypt filter /StdCF2 is missing from /CF or not a
+  dictionary` (clean exception, manually triaged refuse -- the SAME name
+  gate as cycle 81, symmetric: pypdf validates whichever of StmF/StrF names
+  the undefined filter, cycles 12/70/71/73/75/77/78/79/80 gave
+  `FileNotDecryptedError` with no name validation on either axis); pdfminer
+  `Unsupported crypt filter` (pre-derivation name gate, identical retreat
+  from the cycle-12 `PDFPasswordIncorrect`/derivation-attempted baseline --
+  the undefined StrF name fails before key derivation exactly like the StmF
+  name); pymupdf `FileDataError: Failed to open file ... as type pdf`
+  (pre-auth parse-time refuse, identical retreat from the cycle-12
+  `ValueError: document closed or encrypted` -- same open-time escalation
+  class as the cycle-81/74/76 gates); pypdfium2 `Incorrect password error`
+  (identical to baseline AND cycle 81, no name validation surfaced on
+  either axis); pikepdf/qpdf `PasswordError: invalid password` (identical
+  -- still NO parse-time escalation on V4 for EITHER name fault, V4-vs-V5
+  parse-validation asymmetry holds across the full name axis); pdfjs
+  `PasswordException: No password given` (identical, no name validation).
+  With-password controls refuse too (pikepdf/qpdf WITH the correct user
+  password on both files, PyMuPDF cannot even open to authenticate --
+  pre-auth `FileDataError`) -- no fallback to the original-via-`/Prev`
+  dict on any path. Raw `CANARY` bytes: 0 in the aes256 file (md5
+  9111c447bed6), 2 in the rc4 file (md5 2a95b5f7f6d9) -- byte-context
+  verified as the seed's own plaintext XMP META-CANARY title/description
+  (byte-identical context to the unmodified seed's own 2 hits,
+  `/EncryptMetadata` false by design in the SEED dict, INFO, not a leak);
+  raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified this cycle:
+  2 unmodified seeds x 6 engines = 12/12 BLOCKED without password.
+  Sixty-fourth variant overall, StmF/StrF-name axis COMPLETE at two points
+  (StmF-undefined cycle 81, StrF-undefined cycle 82 -- symmetric
+  fail-closed on all six stacks). Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
