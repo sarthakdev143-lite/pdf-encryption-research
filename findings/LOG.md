@@ -1497,6 +1497,13 @@ empty-page caveat above.**
   engine). Robustness/interop only. NOT a reportable confidentiality bug;
   candidate for a small upstream pdfminer.six issue/PR (one-line fix).
 - Disclosure: not yet reported (90-day window would start on report).
+- Extension 2026-11-01 (cycle 85, Track 2): boundary control `t_encrypt_stdV4R4perm1`
+  (same construction, `/P 1` instead of `/P 0`) x 2 seeds x 6 engines = 12
+  no-password probes → ORIGINAL 0/12, injected 0/12, pdfminer back to clean
+  `PDFPasswordIncorrect` with and without password (direct-traceback
+  confirmed): the `>0` boundary is the whole story — 1 takes the pass-through
+  branch, 0 takes the `+2**32` branch. `uint_value` source re-verified
+  (pdftypes.py:178 `if xi > 0`). No new PoC (negative control).
 
 ---
 
