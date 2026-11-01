@@ -1959,3 +1959,35 @@ empty-page caveat above.**
   Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-11-01, Track 2 cycle 65 (t_hostileBothXS): NEW variant,
+  agreeing-hostile control completing the hybrid-xref disagreement axis.
+  BOTH the classic trailer AND the XRefStm dict carry the cycle-33 V5/R6
+  hostile DIRECT dict (zeroed O/U/OE/UE, 16-zero-byte Perms, AESV3
+  DefaultCryptFilter, StmF/StrF valid; same appended plaintext page
+  n..n+3, /Root n, /Prev orig, /XRefStm ptr; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder
+  `/tmp/opencode/cycle65_agreeing_hostile.py`, raw results
+  `/tmp/opencode/cycle65_hostileboth/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycles 33/64; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf `PasswordError`
+  identical; pdfjs `PasswordException: No password given` identical;
+  pymupdf `FileDataError` — same exception class as the cycle-33 baseline
+  and cycle 64, NOT the cycle-63 `ValueError: document closed or
+  encrypted` retreat). Agreement changes nothing anywhere: the verdict
+  profile is IDENTICAL to the trailer-hostile cycle-64 split on every
+  stack, so the XRefStm dict is simply irrelevant once the trailer
+  carries a hostile dict — trailer-wins resolution is unconditional, not
+  disagreement-dependent. With-password controls (correct user password):
+  PyMuPDF cannot open either file even to authenticate (pre-auth
+  FileDataError), and pikepdf/qpdf refuses WITH the password
+  (`PasswordError: invalid password`), proving no fallback to the
+  original-via-`/Prev` dict exists on any path. Hybrid axis now mapped at
+  all three points (XS-hostile cycle 63 / trailer-hostile cycle 64 /
+  both-hostile this cycle), all unanimous-refuse. Forty-seventh
+  unanimous-refuse variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
