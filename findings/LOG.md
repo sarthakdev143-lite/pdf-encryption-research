@@ -2233,3 +2233,40 @@ empty-page caveat above.**
   integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-11-01 (cycle 73, Track 2): new variant
+  `t_encrypt_stdV4R4len40` (/Length-40 re-probe on the CF-COMPLETE V4 base:
+  trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4 dict —
+  `/Filter/Standard /V 4 /R 4 /P -4`, O/U 32 zero bytes, `/CF
+  <</StdCF <</AuthEvent /DocOpen /CFM /V2 /Length 16>>>> /StmF /StdCF /StrF
+  /StdCF` — with the SINGLE-token delta top-level `/Length 128` ->
+  `/Length 40` (inner CF `/Length 16` kept to isolate top-Length
+  validation); same appended plaintext page n..n+3, `/Root` n, `/Prev`
+  orig; pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle73_len40.py`, raw results
+  `/tmp/opencode/cycle73_len40/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct PDFDocument traceback on both files, harness shows empty
+  `PdfminerException: ` — i.e. derivation ATTEMPTED against zeroed O/U;
+  pymupdf `ValueError: document closed or encrypted`; pypdfium2 `Incorrect
+  password error`; pikepdf/qpdf `PasswordError: invalid password`; pdfjs
+  `PasswordException: No password given`). Verdict profile IDENTICAL to the
+  cycle-12 baseline (`/Length 128`) on every stack — the top-Length VALUE
+  is never validated at any gate reached here. Delta vs cycle 30
+  (`t_encrypt_stdV4R4POULen40`, same 128->40 swap on the CF-ABSENT
+  cycle-11 dict): there pdfminer stopped at the `'StmF'` KeyError and never
+  reached derivation, so the Length value was untested past the CF gate;
+  here pdfminer reaches derivation with Length 40 — the short Length
+  survives THROUGH key derivation, a strictly stronger tolerance result,
+  still fail-closed. With-password controls refuse too (pikepdf/qpdf WITH
+  the correct user password on both files, PyMuPDF `authenticate` 0 with
+  needs_pass=1, pypdf `decrypt` returns 0) — no fallback to the
+  original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the
+  aes256 file (md5 845912969cf4), 2 in the rc4 file (md5 79c5913ba619) —
+  seed's own plaintext XMP META-CANARY (`/EncryptMetadata` false by
+  design, INFO, not a leak). Baseline re-verified this cycle: 2 unmodified
+  seeds x 6 engines = 12/12 BLOCKED without password. Fifty-fifth variant
+  overall. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
