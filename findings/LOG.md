@@ -2766,3 +2766,41 @@ empty-page caveat above.**
   Still integrity-only, not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- Extension 2026-11-01 (cycle 89, Track 2): new variant
+  `t_encrypt_stdV4R4IDorig` (FIRST /ID-axis probe: appended plaintext
+  page, trailer `/Encrypt` direct dict identical to the cycle-12 V4/R4
+  CF-complete hostile dict but with the ORIGINAL seed `/ID` array copied
+  into the appended trailer -- all prior appended trailers carried NO
+  `/ID` at all while both seeds carry one, so this isolates /ID presence;
+  same appended page n..n+3, `/Root` n, `/Prev` orig, `/Size` n+12; same 2
+  seeds x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle89_IDorig.py`, raw results
+  `/tmp/opencode/cycle89_IDorig/results.json`, pure-append verified
+  (original bytes are a byte-prefix of each built file), not in prevchain
+  VARIANTS) -- ORIGINAL canary 0/12, injected rendered 0/12: ALL six
+  engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-12
+  baseline on every stack (pypdf `FileNotDecryptedError`; pdfminer
+  `PDFPasswordIncorrect` -- confirmed via direct `PDFDocument` traceback
+  with AND without the correct user password on both files, i.e.
+  derivation ATTEMPTED against zeroed O/U, NOT an /ID gate; pymupdf
+  `ValueError: document closed or encrypted` -- no escalation to the
+  open-time `FileDataError` gate of cycles 74/76/81/82/83, so /ID presence
+  is not shape-checked anywhere; pypdfium2 `Incorrect password error`;
+  pikepdf/qpdf `PasswordError: invalid password` -- still NO V4
+  parse-time escalation; pdfjs `PasswordException: No password given`):
+  the `/ID` value is never consulted on any path. With-password controls
+  refuse too (pikepdf/qpdf WITH the correct user password on both files,
+  PyMuPDF `authenticate` 0 with `needs_pass=1`) -- no fallback to the
+  original-via-`/Prev` dict on any path. Raw `CANARY` bytes: 0 in the
+  aes256 file (md5 1801842554141ffb904326d6e7e9efd7), 2 in the rc4 file
+  (md5 2a8ff02fc6fbead401c288b3854aba1b) -- byte-context verified as the
+  seed's own plaintext XMP META-CANARY title/description
+  (`/EncryptMetadata` false by design in the SEED dict, INFO, not a leak);
+  raw ORIGINAL-canary bytes 0/2 files. Baseline re-verified this cycle:
+  2 unmodified seeds x 6 engines = 12/12 BLOCKED without password.
+  Sixty-ninth variant overall, first /ID-axis point (/ID-present-match;
+  remaining: /ID-mismatch). Still integrity-only (LOG.md O-2026-002
+  extension), not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
