@@ -2023,3 +2023,35 @@ empty-page caveat above.**
   not filed.
   Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
   pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- 2026-11-01, Track 2 cycle 67 (t_trailerAbsent_XShostile): NEW variant,
+  closing mirror of the hybrid-disagreement axis. Classic trailer carries
+  NO /Encrypt at all (only /Root n, /Prev orig, /XRefStm ptr) while the
+  XRefStm dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid;
+  same appended plaintext page n..n+3; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle67_trailerabsent_xshostile.py`, raw results
+  `/tmp/opencode/cycle67_trailerabsent_xshostile/results.json` — ORIGINAL
+  canary 0/12, injected rendered 8/12: FIRST SPLIT verdict on the hybrid
+  axis (cycles 63-66 were all unanimous-refuse), 0 crashes. pypdf
+  (`FileNotDecryptedError`) + pypdfium2 (`Incorrect password error`) REFUSE
+  on both seeds — they honor encryption state past the trailer (XS hostile
+  dict and/or /Prev-chain original dict); pdfminer (text is exactly the
+  INJECTED canary) + pymupdf (pages=1, injected-only) + pikepdf
+  (structural dump, injected stream only) + pdfjs render ONLY the appended
+  plaintext page — they resolve encryption state from the trailer alone.
+  No engine on either side discloses ORIGINAL page content; the only raw
+  `CANARY` bytes in the built files are the seeds' own plaintext XMP
+  META-CANARY (EncryptMetadata false by design, INFO). With-password
+  controls (correct user password): PyMuPDF `authenticate` returns 1 with
+  `needs_pass=0`, pages=1 — the file opens as unencrypted; pikepdf/qpdf
+  opens WITH and WITHOUT the password (`UserWarning: password was
+  provided, but no password was needed`), proving qpdf resolves
+  no-encryption from the trailer and ignores the XS hostile dict.
+  Mechanism open: whether pypdf/pypdfium2 refuse via the XS hostile dict
+  or by walking /Prev to the original /Encrypt ref needs a trailer-absent
+  + XS-absent control. Forty-ninth variant overall, first non-unanimous.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.

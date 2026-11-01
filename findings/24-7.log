@@ -39102,3 +39102,814 @@ Index: findings/daily/2026-11-01.md
  M findings/daily/2026-11-01.md
 ?? findings/crashes/
 > build · muse-spark-1.3-contributor
+[0m$ [0mgit rev-parse --abbrev-ref HEAD; git add findings/LOG.md findings/daily/2026-11-01.md findings/24-7.log; git status --short; git commit -m "cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)"; git push -u origin research/vps-2026-11-01 2>&1 | tail -n 3; git log --oneline -3; git status --short
+research/vps-2026-11-01
+M  findings/24-7.log
+M  findings/LOG.md
+M  findings/daily/2026-11-01.md
+?? findings/crashes/
+[research/vps-2026-11-01 3cb5d4e] cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
+ 3 files changed, 727 insertions(+), 4 deletions(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   0705e10..3cb5d4e  research/vps-2026-11-01 -> research/vps-2026-11-01
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+3cb5d4e cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
+0705e10 cycle 65: Track 2 agreeing-hostile control micro-step (t_hostileBothXS, 0/12 leak, unanimous refuse)
+b2ccaa3 cycle 64: Track 2 hybrid-trailer-hostile mirror-split micro-step (t_hostileTrailer_origXS, 0/12 leak, unanimous refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 66 done, committed as `3cb5d4e` and pushed to `research/vps-2026-11-01`.
+
+**Track 2, smallest step** — absent-XS-dict split (`t_hostileTrailer_noXS`): hostile V5/R6 direct dict in the classic trailer + XRefStm dict with NO `/Encrypt`, testing whether XS silence flips the cycle-64 verdict.
+
+**Result:** 2 seeds × 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12, 0 crashes. Verdict profile identical to cycle 64 on every stack (including MuPDF `FileDataError`, not the cycle-63 `ValueError` retreat). With-password controls refuse on all paths. 48th unanimous-refuse variant, integrity-only (LOG.md O-2026-002 extension), not filed.
+
+**Files:** `findings/LOG.md` + `findings/24-7.log` appended, `findings/daily/2026-11-01.md` updated (3 cycles, 36 probes). Builder/results in `/tmp/opencode/cycle66_*` (untracked, per negative-result convention). `findings/crashes/` left alone (pre-existing untracked).
+
+**Next:** trailer-absent + XS-hostile split (untested mirror), or single-revision leftovers (/Perms-zeroed-CF-absent, CFM-AESV3-with-V4).
+[2026-11-01T02:10:27Z] cycle 66 exit=0 branch=research/vps-2026-11-01 daily-push
+Everything up-to-date
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+Already on 'research/vps-2026-11-01'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-11-01'.
+[2026-11-01T02:12:28Z] cycle 67 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and probing incremental updates.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit branch --show-current; git status --short; git log --oneline -5; date -u; cat findings/daily/2026-11-01.md 2>&1 | head -n 100; echo ---; cat findings/24-7.log 2>&1 | tail -n 30
+research/vps-2026-11-01
+ M findings/24-7.log
+?? findings/crashes/
+3cb5d4e cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
+0705e10 cycle 65: Track 2 agreeing-hostile control micro-step (t_hostileBothXS, 0/12 leak, unanimous refuse)
+b2ccaa3 cycle 64: Track 2 hybrid-trailer-hostile mirror-split micro-step (t_hostileTrailer_origXS, 0/12 leak, unanimous refuse)
+d606c2d cycle 63: Track 2 hybrid-hostile-XRefStm micro-step (t_hybrid_hostileXS_origTrailer, 0/12 leak, unanimous refuse)
+ee9ea4b cycle 62: Track 2 V5 indirect-hostile-dict micro-step (t_encrypt_stdV5indirect, 0/12 leak, unanimous refuse)
+Sun Nov  1 02:12:31 UTC 2026
+# 2026-11-01 — research/vps-2026-11-01
+
+- branch: `research/vps-2026-11-01`
+- cycles run: 3 (cycle 64: Track 2 hybrid-trailer-hostile mirror-split; cycle 65: Track 2 agreeing-hostile control; cycle 66: Track 2 hostile-trailer + XRefStm-with-no-/Encrypt split)
+- files tested: 6 synthetic appended-revision PDFs (cycle 64: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile `/Encrypt` in classic trailer + ORIGINAL `/Encrypt` ref in XRefStm; cycle 65: same seeds + injected page + hostile `/Encrypt` direct dict in BOTH trailer and XRefStm; cycle 66: same seeds + injected page + hostile `/Encrypt` direct dict in trailer + XRefStm dict with NO `/Encrypt`), no-password probes only
+
+## Probe counts
+
+- t_hostileTrailer_origXS (Track 2, cycle 64): NEW variant, mirror split of cycle 63 (classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict — zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid — while the XRefStm dict carries the ORIGINAL `/Encrypt` indirect ref; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (derivation attempted); pymupdf FileDataError (same exception class as the cycle-33 baseline — the XRefStm original-ref changes nothing on the MuPDF path, unlike the cycle-63 reverse direction where MuPDF retreated to `ValueError: document closed or encrypted`); pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Verdict profile IDENTICAL to the cycle-33 direct-hostile-dict baseline on every stack — trailer-wins, fail-closed, everywhere. Structural-validity evidence (no positive with-password control possible by design — the trailer hostile dict cannot authenticate): 5/6 engines parse the file and refuse at the auth layer, and pikepdf/qpdf refuses EVEN WITH the correct user password on both files, proving the trailer dict governs for qpdf. Forty-sixth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, `/tmp/opencode/cycle64_hostiletrailer/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_hostileBothXS (Track 2, cycle 65): NEW variant, agreeing-hostile control completing the hybrid-disagreement axis — BOTH the classic trailer AND the XRefStm dict carry the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the trailer-hostile cycle-64 split on every stack, including pymupdf `FileDataError` (same class as the cycle-33 baseline — NOT the cycle-63 `ValueError` retreat): agreement changes nothing anywhere, the XRefStm dict is irrelevant once the trailer carries a hostile dict, so trailer-wins resolution is unconditional, not disagreement-dependent. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-seventh unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle65_agreeing_hostile.py`, `/tmp/opencode/cycle65_hostileboth/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+- t_hostileTrailer_noXS (Track 2, cycle 66): NEW variant, absent-XS-dict split of the cycle-64 trailer-hostile construction — classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the XRefStm dict carries NO `/Encrypt` at all (only `/Root`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-64 XS-original split on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect empty-message; pymupdf FileDataError pre-auth, NOT the cycle-63 ValueError retreat; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs No password given): the absent XS dict changes nothing, an XRefStm dict with no `/Encrypt` is simply ignored once the trailer carries a hostile dict — trailer-wins resolution is unconditional, not presence-dependent. No engine treats the XS silence as no-encryption. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-eighth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, `/tmp/opencode/cycle66_hostiletrailer_noxs/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+## Leaks / crashes
+
+- leaks: 0. No user-password content recoverable without password on any surface tested.
+- crashes: 0.
+- PoCs on file (observations, not leaks): unchanged from 2026-10-31.
+
+- probes this day: 3 cycles x 12 = 36 no-password probes (2 seeds x 6 engines each).
+
+## Next step
+
+- Hybrid-disagreement axis now mapped at all four points (XS-hostile cycle 63 / trailer-hostile + XS-original cycle 64 / both-hostile cycle 65 / trailer-hostile + XS-absent cycle 66), all unanimous-refuse with unconditional trailer-wins resolution — the XRefStm dict is fully irrelevant once the trailer carries a hostile dict. Next smallest Track 2 steps: return to single-revision axis leftovers (/Perms-zeroed-CF-absent split, CFM-AESV3-with-V4 cross-mismatch); or close the hybrid axis with the remaining mirror (trailer with NO /Encrypt + XS hostile — already covered by cycle 63's XS-hostile/trailer-original? no, that had an original ref in the trailer; a trailer-absent + XS-hostile split would test whether absence in the trailer flips any engine to the XS dict).
+---
+ 3 files changed, 727 insertions(+), 4 deletions(-)
+To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
+   0705e10..3cb5d4e  research/vps-2026-11-01 -> research/vps-2026-11-01
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+3cb5d4e cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
+0705e10 cycle 65: Track 2 agreeing-hostile control micro-step (t_hostileBothXS, 0/12 leak, unanimous refuse)
+b2ccaa3 cycle 64: Track 2 hybrid-trailer-hostile mirror-split micro-step (t_hostileTrailer_origXS, 0/12 leak, unanimous refuse)
+?? findings/crashes/
+> build · muse-spark-1.3-contributor
+Cycle 66 done, committed as `3cb5d4e` and pushed to `research/vps-2026-11-01`.
+
+**Track 2, smallest step** — absent-XS-dict split (`t_hostileTrailer_noXS`): hostile V5/R6 direct dict in the classic trailer + XRefStm dict with NO `/Encrypt`, testing whether XS silence flips the cycle-64 verdict.
+
+**Result:** 2 seeds × 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12, 0 crashes. Verdict profile identical to cycle 64 on every stack (including MuPDF `FileDataError`, not the cycle-63 `ValueError` retreat). With-password controls refuse on all paths. 48th unanimous-refuse variant, integrity-only (LOG.md O-2026-002 extension), not filed.
+
+**Files:** `findings/LOG.md` + `findings/24-7.log` appended, `findings/daily/2026-11-01.md` updated (3 cycles, 36 probes). Builder/results in `/tmp/opencode/cycle66_*` (untracked, per negative-result convention). `findings/crashes/` left alone (pre-existing untracked).
+
+**Next:** trailer-absent + XS-hostile split (untested mirror), or single-revision leftovers (/Perms-zeroed-CF-absent, CFM-AESV3-with-V4).
+[2026-11-01T02:10:27Z] cycle 66 exit=0 branch=research/vps-2026-11-01 daily-push
+Everything up-to-date
+branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
+Already on 'research/vps-2026-11-01'
+M	findings/24-7.log
+Your branch is up to date with 'origin/research/vps-2026-11-01'.
+[2026-11-01T02:12:28Z] cycle 67 start branch=research/vps-2026-11-01
+[0m
+> build · muse-spark-1.3-contributor
+Doing one research cycle — re-running the pipeline and probing incremental updates.
+[0m→ [0mRead . 
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m$ [0mgit diff findings/24-7.log | head -n 40
+echo ===LOG_TAIL===
+tail -n 60 findings/LOG.md
+echo ===PREVCHAIN_HEAD===
+wc -l prevchain.py incremental.py triage.py; head -n 120 prevchain.py
+diff --git a/findings/24-7.log b/findings/24-7.log
+index 3a507f3..fe476c5 100644
+--- a/findings/24-7.log
++++ b/findings/24-7.log
+@@ -39102,3 +39102,107 @@ Index: findings/daily/2026-11-01.md
+  M findings/daily/2026-11-01.md
+ ?? findings/crashes/
+ > build · muse-spark-1.3-contributor
++[0m$ [0mgit rev-parse --abbrev-ref HEAD; git add findings/LOG.md findings/daily/2026-11-01.md findings/24-7.log; git status --short; git commit -m "cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)"; git push -u origin research/vps-2026-11-01 2>&1 | tail -n 3; git log --oneline -3; git status --short
++research/vps-2026-11-01
++M  findings/24-7.log
++M  findings/LOG.md
++M  findings/daily/2026-11-01.md
++?? findings/crashes/
++[research/vps-2026-11-01 3cb5d4e] cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
++ 3 files changed, 727 insertions(+), 4 deletions(-)
++To https://github.com/sarthakdev143-lite/pdf-encryption-research.git
++   0705e10..3cb5d4e  research/vps-2026-11-01 -> research/vps-2026-11-01
++branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
++3cb5d4e cycle 66: Track 2 hostile-trailer + XS-absent split micro-step (t_hostileTrailer_noXS, 0/12 leak, unanimous refuse)
++0705e10 cycle 65: Track 2 agreeing-hostile control micro-step (t_hostileBothXS, 0/12 leak, unanimous refuse)
++b2ccaa3 cycle 64: Track 2 hybrid-trailer-hostile mirror-split micro-step (t_hostileTrailer_origXS, 0/12 leak, unanimous refuse)
++?? findings/crashes/
++> build · muse-spark-1.3-contributor
++Cycle 66 done, committed as `3cb5d4e` and pushed to `research/vps-2026-11-01`.
++
++**Track 2, smallest step** — absent-XS-dict split (`t_hostileTrailer_noXS`): hostile V5/R6 direct dict in the classic trailer + XRefStm dict with NO `/Encrypt`, testing whether XS silence flips the cycle-64 verdict.
++
++**Result:** 2 seeds × 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12, 0 crashes. Verdict profile identical to cycle 64 on every stack (including MuPDF `FileDataError`, not the cycle-63 `ValueError` retreat). With-password controls refuse on all paths. 48th unanimous-refuse variant, integrity-only (LOG.md O-2026-002 extension), not filed.
++
++**Files:** `findings/LOG.md` + `findings/24-7.log` appended, `findings/daily/2026-11-01.md` updated (3 cycles, 36 probes). Builder/results in `/tmp/opencode/cycle66_*` (untracked, per negative-result convention). `findings/crashes/` left alone (pre-existing untracked).
++
++**Next:** trailer-absent + XS-hostile split (untested mirror), or single-revision leftovers (/Perms-zeroed-CF-absent, CFM-AESV3-with-V4).
++[2026-11-01T02:10:27Z] cycle 66 exit=0 branch=research/vps-2026-11-01 daily-push
++Everything up-to-date
++branch 'research/vps-2026-11-01' set up to track 'origin/research/vps-2026-11-01'.
++Already on 'research/vps-2026-11-01'
++M	findings/24-7.log
++Your branch is up to date with 'origin/research/vps-2026-11-01'.
++[2026-11-01T02:12:28Z] cycle 67 start branch=research/vps-2026-11-01
+===LOG_TAIL===
+  hostile DIRECT dict (zeroed O/U/OE/UE, 16-zero-byte Perms, AESV3
+  DefaultCryptFilter, StmF/StrF valid; same appended plaintext page
+  n..n+3, /Root n, /Prev orig, /XRefStm ptr; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines =
+  12 no-password probes, builder
+  `/tmp/opencode/cycle65_agreeing_hostile.py`, raw results
+  `/tmp/opencode/cycle65_hostileboth/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycles 33/64; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf `PasswordError`
+  identical; pdfjs `PasswordException: No password given` identical;
+  pymupdf `FileDataError` — same exception class as the cycle-33 baseline
+  and cycle 64, NOT the cycle-63 `ValueError: document closed or
+  encrypted` retreat). Agreement changes nothing anywhere: the verdict
+  profile is IDENTICAL to the trailer-hostile cycle-64 split on every
+  stack, so the XRefStm dict is simply irrelevant once the trailer
+  carries a hostile dict — trailer-wins resolution is unconditional, not
+  disagreement-dependent. With-password controls (correct user password):
+  PyMuPDF cannot open either file even to authenticate (pre-auth
+  FileDataError), and pikepdf/qpdf refuses WITH the password
+  (`PasswordError: invalid password`), proving no fallback to the
+  original-via-`/Prev` dict exists on any path. Hybrid axis now mapped at
+  all three points (XS-hostile cycle 63 / trailer-hostile cycle 64 /
+  both-hostile this cycle), all unanimous-refuse. Forty-seventh
+  unanimous-refuse variant. Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+
+- 2026-11-01, Track 2 cycle 66 (t_hostileTrailer_noXS): NEW variant,
+  absent-XRefStm-dict split of the cycle-64 trailer-hostile construction.
+  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid)
+  while the XRefStm dict carries NO /Encrypt at all (only /Root; same
+  appended plaintext page n..n+3, /Root n, /Prev orig, /XRefStm ptr; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, raw results
+  `/tmp/opencode/cycle66_hostiletrailer_noxs/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError` identical to cycles 33/64/65; pdfminer
+  `PDFPasswordIncorrect` empty-message, derivation attempted, identical;
+  pypdfium2 `Incorrect password error` identical; pikepdf `PasswordError`
+  identical; pdfjs `PasswordException: No password given` identical;
+  pymupdf `FileDataError: Failed to open file ... as type pdf` — same
+  exception class as the cycle-33 baseline and cycles 64/65, NOT the
+  cycle-63 `ValueError: document closed or encrypted` retreat). The absent
+  XS dict changes nothing anywhere: the verdict profile is IDENTICAL to the
+  cycle-64 XS-original split on every stack, so an XRefStm dict with no
+  /Encrypt is simply ignored once the trailer carries a hostile dict —
+  trailer-wins resolution is unconditional, not presence-dependent. No
+  engine treats the XS dict's silence as no-encryption or renders either
+  canary. With-password controls (correct user password): PyMuPDF cannot
+  open either file even to authenticate (pre-auth FileDataError), and
+  pikepdf/qpdf refuses WITH the password (`PasswordError: invalid
+  password`), proving no fallback to the original-via-`/Prev` dict exists
+  on any path. Forty-eighth unanimous-refuse variant. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+===PREVCHAIN_HEAD===
+  520 prevchain.py
+  201 incremental.py
+  352 triage.py
+ 1073 total
+"""
+Track 2 - /Prev chain, trailer and hybrid-xref confusion.
+
+Question: when an encrypted PDF is extended with an attacker-written revision,
+which engines disagree about (a) whether the document is still encrypted and
+(b) which revision's objects are live - and can any disagreement cause the
+ORIGINAL user-password-protected content to be extracted without the password?
+
+An appended plaintext page is *not* a leak: it was never encrypted. The leak
+test is whether the original canary ("CANARY <seed> ALPHA/BRAVO") ever appears
+in no-password output.
+
+Variants (all built from corpus/base seeds, all synthetic):
+
+  t_none               classic trailer, no /Encrypt, new Root
+  t_encrypt_ref        classic trailer, /Encrypt -> original encrypt object
+  t_encrypt_empty      classic trailer, /Encrypt -> fresh empty-user-pw R6 dict
+  alias_plain          no /Encrypt; new page's /Contents -> ORIGINAL content stream
+  alias_encrypt        alias_plain + /Encrypt original ref (with-password control)
+  root_old             no /Encrypt, /Root -> ORIGINAL catalog
+  chain_none_encrypt   rev A (no /Encrypt) then rev B (/Encrypt ref)
+  chain_encrypt_none   rev A (/Encrypt ref) then rev B (no /Encrypt)
+  shadow_encrypt_obj   no /Encrypt; redefines the original /Encrypt object number
+  h_refstm_encrypt     hybrid: trailer w/o /Encrypt, /XRefStm dict WITH /Encrypt
+  h_trailer_encrypt    hybrid: trailer WITH /Encrypt, /XRefStm dict without
+  xs_pure_encrypt      pure xref-stream update, dict WITH /Encrypt, new Root
+  xs_pure_none         pure xref-stream update, dict without /Encrypt, /Root -> old
+
+Usage: python prevchain.py
+Outputs: corpus/prevchain/*.pdf, findings/prevchain.md, findings/prevchain.csv
+"""
+from __future__ import annotations
+
+import csv
+import json
+import re
+from pathlib import Path
+
+import pikepdf
+
+from triage import EXTRACTORS, run_batch
+
+ROOT = Path(__file__).resolve().parent
+BASE = ROOT / "corpus" / "base"
+OUT = ROOT / "corpus" / "prevchain"
+FINDINGS = ROOT / "findings"
+
+USER_PW = "Us3r-Passw0rd!"
+
+SEEDS = [
+    "aes256_r6__plain.pdf",
+    "rc4_128_r4__plain.pdf",
+    "aes256_r6__objstm.pdf",
+    "control_plain.pdf",  # unencrypted control: proves the construction itself
+]
+
+
+# --------------------------------------------------------------- primitives
+
+def last_startxref(data: bytes) -> int:
+    m = None
+    for m in re.finditer(rb"startxref\s+(\d+)\s+%%EOF", data):
+        pass
+    if m is None:
+        raise ValueError("no startxref found")
+    return int(m.group(1))
+
+
+def max_size(data: bytes) -> int:
+    sizes = [int(x) for x in re.findall(rb"/Size\s+(\d+)", data)]
+    if not sizes:
+        raise ValueError("no /Size found")
+    return max(sizes)
+
+
+def pad_newline(buf: bytearray) -> None:
+    if buf and not buf.endswith(b"\n"):
+        buf += b"\n"
+
+
+def add_objects(buf: bytearray, objects: dict[int, bytes]) -> dict[int, int]:
+    pad_newline(buf)
+    offsets: dict[int, int] = {}
+    for num in sorted(objects):
+        offsets[num] = len(buf)
+        buf += b"%d 0 obj\n" % num + objects[num] + b"\nendobj\n"
+    return offsets
+
+
+def add_classic_xref(
+    buf: bytearray, offsets: dict[int, int], trailer_extra: bytes, size: int
+) -> int:
+    """Append a classic xref section + trailer; returns the xref offset."""
+    pad_newline(buf)
+    xref_off = len(buf)
+    nums = sorted(offsets)
+    buf += b"xref\n0 1\n0000000000 65535 f \n"
+    if nums:
+        buf += b"%d %d\n" % (nums[0], len(nums))
+        for num in nums:
+            buf += b"%010d 00000 n \n" % offsets[num]
+    buf += b"trailer\n<< /Size %d " % size + trailer_extra + b" >>\n"
+    buf += b"startxref\n%d\n%%%%EOF\n" % xref_off
+    return xref_off
+
+
+def add_xref_stream(
+    buf: bytearray,
+    offsets: dict[int, int],
+    xref_num: int,
+    trailer_extra: bytes,
+    size: int,
+) -> int:
+    """Append an xref stream object covering `offsets` plus itself.
+
+    Xref streams are never encrypted (ISO 32000-2 7.5.8), so this works on an
+    otherwise-encrypted file without knowing the key.
+    """
+    pad_newline(buf)
+    xref_off = len(buf)
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead prevchain.py [90m[limit=400, offset=120][0m
+[0m→ [0mRead triage.py [90m[limit=80][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mls /tmp/opencode/ 2>&1 | tail -n 20
+grep -n "cycle 33\|t_encrypt_stdV5\|hostile" findings/LOG.md | tail -n 30
+echo ===; pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>/dev/null | grep -E "Name|Version"; node -p "require('./node_modules/pdfjs-dist/package.json').version" 2>&1
+oss-254
+p3-evals.txt
+p3-extra.txt
+p3-files.txt
+p3-tests.txt
+pdf.json
+pdf_doc.c
+pdf_md5.c
+pdf_write.c
+pdf_xmp.c
+ps_cmyk.icc
+ps_enc.pdf
+ps_gray.icc
+ps_plain.pdf
+ps_plain2.pdf
+ps_plain3.pdf
+ps_rgb.icc
+t.ps
+track_tail.md
+try.c
+1908:  `/tmp/opencode/cycle63_hybrid_hostile_xs.py`, raw results
+1909:  `/tmp/opencode/cycle63_hybridhostile/results.json` — ORIGINAL canary 0/12,
+1911:  `FileNotDecryptedError` identical to cycle 33; pdfminer
+1913:  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+1918:  hostile trailer dict, but still refuses). No engine honors one dict for
+1923:  the XRefStm hostile dict is ignored once authenticated. Forty-fifth
+1928:- 2026-11-01, Track 2 cycle 64 (t_hostileTrailer_origXS): NEW variant,
+1930:  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+1935:  swapped for the hostile dict; not in prevchain VARIANTS) x 2 seeds
+1937:  builder `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, raw results
+1938:  `/tmp/opencode/cycle64_hostiletrailer/results.json` — ORIGINAL canary 0/12,
+1940:  `FileNotDecryptedError` identical to cycle 33; pdfminer
+1942:  cycle 33; pypdfium2 `Incorrect password error` identical; pikepdf
+1952:  with-password control possible by design — the trailer hostile dict cannot
+1957:  axis now mapped at both directions (XS-hostile cycle 63 / trailer-hostile
+1963:- 2026-11-01, Track 2 cycle 65 (t_hostileBothXS): NEW variant,
+1964:  agreeing-hostile control completing the hybrid-xref disagreement axis.
+1966:  hostile DIRECT dict (zeroed O/U/OE/UE, 16-zero-byte Perms, AESV3
+1971:  `/tmp/opencode/cycle65_agreeing_hostile.py`, raw results
+1972:  `/tmp/opencode/cycle65_hostileboth/results.json` — ORIGINAL canary 0/12,
+1981:  profile is IDENTICAL to the trailer-hostile cycle-64 split on every
+1983:  carries a hostile dict — trailer-wins resolution is unconditional, not
+1989:  all three points (XS-hostile cycle 63 / trailer-hostile cycle 64 /
+1990:  both-hostile this cycle), all unanimous-refuse. Forty-seventh
+1995:- 2026-11-01, Track 2 cycle 66 (t_hostileTrailer_noXS): NEW variant,
+1996:  absent-XRefStm-dict split of the cycle-64 trailer-hostile construction.
+1997:  Classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+2003:  `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, raw results
+2004:  `/tmp/opencode/cycle66_hostiletrailer_noxs/results.json` — ORIGINAL canary
+2015:  /Encrypt is simply ignored once the trailer carries a hostile dict —
+===
+6.4.299
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cycle 33\|t_hostile\|V5.*hostile\|hostile.*V5" findings/LOG.md | head -n 20
+echo ===
+sed -n '/cycle 33/,+60p' findings/LOG.md | head -n 80
+echo === ENGINES ===
+.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "Name|Version"
+903:- Extension 2026-10-31 (cycle 33, Track 2): new variant
+904:  `t_encrypt_stdV5R6zeroed` (fresh V5 axis: hostile trailer `/Encrypt`
+929:  `t_encrypt_stdV5R6missing` (minimal delta vs cycle 33: IDENTICAL hostile
+939:  unanimous-refuse dict-typed variant. Validation-step movement vs cycle 33
+941:  `PDFPasswordIncorrect` (cycle 33, zeroed OE accepted into key derivation)
+944:  retreats from `PasswordException: No password given` (cycle 33) to
+955:  `t_encrypt_stdV5R6trunc` (minimal delta vs cycle 33: IDENTICAL hostile
+982:  `t_encrypt_stdV5R6garbage` (minimal delta vs cycle 33: IDENTICAL hostile
+996:  IDENTICAL to cycle 33 (zeroed-32 hex) on every stack — NO validation-step
+1011:  `t_encrypt_stdV5R6garbageOU` (minimal delta vs cycle 33: IDENTICAL hostile
+1026:  IDENTICAL to cycle 33 (zeroed V5) on every stack — NO validation-step
+1040:  `t_encrypt_stdV5R6noperms` (minimal delta vs cycle 33: IDENTICAL hostile
+1052:  direct traceback, derivation attempted exactly as in cycle 33, NO retreat
+1068:  `t_encrypt_stdV5R6cfmv2` (minimal delta vs cycle 33: IDENTICAL hostile
+1079:  `FileNotDecryptedError` identical to cycle 33; pdfminer BLOCKED
+1085:  consistency gate, vs `PasswordError` in cycle 33; pdfjs
+1097:  `t_encrypt_stdV5R6cfmnone` (minimal delta vs cycle 33: IDENTICAL hostile
+1117:  CFM axis now mapped at three points (AESV3 cycle 33 / V2 cycle 39 / None
+1127:  `t_encrypt_stdV5R6stmfdangle` (minimal delta vs cycle 33: IDENTICAL hostile
+1159:  hostile V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`,
+===
+- Extension 2026-10-31 (cycle 33, Track 2): new variant
+  `t_encrypt_stdV5R6zeroed` (fresh V5 axis: hostile trailer `/Encrypt`
+  direct dict `/Filter/Standard /V 5 /R 6 /Length 256 /P -4` with 32-zero-
+  byte `/O /U /OE /UE`, 16-zero-byte `/Perms`, and `/CF
+  <</DefaultCryptFilter <</AuthEvent/DocOpen /CFM/AESV3 /Length 32>>>>`
+  `/StmF /DefaultCryptFilter /StrF /DefaultCryptFilter` on an appended
+  revision with the injected plaintext page; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6
+  engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle33_v5zeroed.py`, raw results
+  `/tmp/opencode/cycle33_v5zeroed/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError`; pypdfium2 `Incorrect password error`; pikepdf
+  `PasswordError: invalid password`; pdfjs `PasswordException: No password
+  given`). Fifteenth unanimous-refuse dict-typed variant. Nuance vs the
+  cycle-12 V4+CF dict: pdfminer reaches the same `PDFPasswordIncorrect`
+  gate (the CF/StmF triple is what moves it past the `'StmF'` KeyError,
+  V4-vs-V5 changes nothing); all other stacks refuse with their unchanged
+  password errors. No stack parses zeroed V5 OE/UE into a plaintext
+  fallback. Still integrity-only (original ciphertext never disclosed),
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 34, Track 2): new variant
+  `t_encrypt_stdV5R6missing` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, AESV3 `/CF <</DefaultCryptFilter ...>>` + StmF/StrF triple —
+  but with `/OE /UE /Perms` REMOVED, not zeroed; V5-required keys absent on
+  an appended revision with the injected plaintext page; pure-append
+  verified; not in prevchain VARIANTS) x 2 seeds aes256_r6__plain +
+  rc4_128_r4__plain x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle34_v5missing.py`, raw results
+  `/tmp/opencode/cycle34_v5missing/results.json` — ORIGINAL canary 0/12,
+  injected rendered 0/12: ALL six engines refuse, 0 crashes. Sixteenth
+  unanimous-refuse dict-typed variant. Validation-step movement vs cycle 33
+  on exactly the two stacks that consume V5 fields: pdfminer retreats from
+  `PDFPasswordIncorrect` (cycle 33, zeroed OE accepted into key derivation)
+  to `'OE'` KeyError (missing OE stops it before derivation — an explicit
+  OE lookup, the V5 analogue of the cycles 10-12 `'StmF'` CF gate); pdfjs
+  retreats from `PasswordException: No password given` (cycle 33) to
+  `UnknownErrorException: Invalid argument for stringToBytes` (it attempts
+  to byte-convert the absent OE/UE). pypdf (`FileNotDecryptedError`) and
+  pymupdf/pypdfium2/pikepdf (unchanged password errors) never reach a
+  V5-field gate. No stack treats absent OE/UE as no-encryption or falls
+  back to plaintext — absence is handled strictly everywhere it is
+  reached. Still integrity-only (original ciphertext never disclosed), not
+  filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+- Extension 2026-10-31 (cycle 35, Track 2): new variant
+  `t_encrypt_stdV5R6trunc` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict — `/Filter/Standard /V 5 /R 6 /Length 256 /P -4`, O/U 32
+  zero bytes, 16-zero-byte `/Perms`, AESV3 `/CF <</DefaultCryptFilter ...>>` +
+  StmF/StrF triple — but with `/OE /UE` TRUNCATED to 16 zero bytes each
+  (half of the required 32) instead of zeroed-full-length; short-but-present
+  V5 blobs on an appended revision with the injected plaintext page;
+  pure-append verified; not in prevchain VARIANTS) x 2 seeds
+  aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12 no-password probes,
+  builder `/tmp/opencode/cycle35_v5trunc.py`, raw results
+  `t_encrypt_stdV5R6garbage` (minimal delta vs cycle 33: IDENTICAL hostile
+  V5/R6 trailer dict, but with `/OE /UE` as WRONG-TYPED literal paren strings
+  (`(GARBAGEBLOB1234567890GARBAGEBLOB1234)`, 38 ASCII chars) instead of hex
+  strings; present-but-mistyped V5 blobs on an appended revision with the
+  injected plaintext page; pure-append verified; not in prevchain VARIANTS)
+  x 2 seeds aes256_r6__plain + rc4_128_r4__plain x 6 engines = 12
+  no-password probes, builder `/tmp/opencode/cycle36_v5garbage.py`, raw
+  results `/tmp/opencode/cycle36_v5garbage/results.json` — ORIGINAL canary
+  0/12, injected rendered 0/12: ALL six engines refuse, 0 crashes (pypdf
+  `FileNotDecryptedError`; pdfminer `PDFPasswordIncorrect` — confirmed via
+  direct traceback, harness shows empty `PdfminerException: ` — pymupdf
+  `FileDataError` (harness status ERROR, clean open failure, no content);
+  pypdfium2 `Incorrect password error`; pikepdf `PasswordError: invalid
+  password`; pdfjs `PasswordException: No password given`). Verdict profile
+  IDENTICAL to cycle 33 (zeroed-32 hex) on every stack — NO validation-step
+  movement: pdfminer attempts derivation against the mistyped blobs rather
+  than retreating to the cycle-34 `'OE'` KeyError (presence, not hex-type,
+  is what its OE lookup checks); pdfjs stays at `PasswordException` rather
+  than retreating to the cycle-34 `stringToBytes` error. No stack
+=== ENGINES ===
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "Name|Version"
+echo ---
+.venv/bin/python -c "import triage; print(triage.EXTRACTORS)"
+---
+['pypdf', 'pdfminer', 'pymupdf', 'pypdfium2', 'pikepdf', 'pdfjs']
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -m pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "Name|Version"; echo ---; .venv/bin/python -c "import pypdf, pymupdf, pypdfium2, pikepdf, pdfminer; print('ok')"
+---
+ok
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/pip show pypdf 2>&1 | head -n 5; ls .venv/lib/python*/site-packages/ 2>&1 | head
+/bin/bash: line 1: .venv/bin/pip: No such file or directory
+PIL
+_cffi_backend.cpython-314-x86_64-linux-gnu.so
+_yaml
+cffi
+cffi-2.1.1.dist-info
+charset_normalizer
+charset_normalizer-3.5.2.dist-info
+cryptography
+cryptography-50.0.2.dist-info
+fitz
+> build · muse-spark-1.3-contributor
+[0m$ [0mls .venv/bin/ | head -n 20; .venv/bin/python -m pip show pypdf pymupdf pypdfium2 pikepdf pdfminer.six 2>&1 | grep -E "^(Name|Version)"
+activate
+activate.bat
+activate.csh
+activate.fish
+activate.nu
+activate.ps1
+activate.xsh
+activate_this.py
+cffi-gen-src
+deactivate.bat
+dumppdf.py
+f2py
+normalizer
+numpy-config
+onnxruntime_test
+pdf2txt.py
+pdfplumber
+pydoc.bat
+pymupdf
+pymupdf-config
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -m pip show pypdf 2>&1 | head -n 10
+/home/sarthak/pdf-encryption-research/.venv/bin/python: No module named pip
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python -c "import importlib.metadata as m; print([(d.metadata['Name'], d.version) for d in m.distributions() if (d.metadata['Name'] or '').lower() in ('pypdf','pymupdf','pypdfium2','pikepdf','pdfminer.six','pdfjs-dist')])"
+node -p "require('./node_modules/pdfjs-dist/package.json').version"
+[('pypdf', '6.21.4'), ('pikepdf', '10.17.0'), ('pymupdf', '2.0'), ('pypdfium2', '5.14.0'), ('pdfminer.six', '20260107')]
+6.4.299
+> build · muse-spark-1.3-contributor
+Baseline versions match the log. Building the untested mirror case next.
+[0m→ [0mRead triage.py [90m[limit=120, offset=200][0m
+> build · muse-spark-1.3-contributor
+[0m← [0mWrite /tmp/opencode/cycle67_trailerabsent_xshostile.py
+Created file successfully: /tmp/opencode/cycle67_trailerabsent_xshostile.py
+> build · muse-spark-1.3-contributor
+[0m$ [0m.venv/bin/python /tmp/opencode/cycle67_trailerabsent_xshostile.py 2>&1 | tail -n 40
+/home/sarthak/pdf-encryption-research/.venv/lib/python3.14/site-packages/pikepdf/_methods.py:625: UserWarning: A password was provided, but no password was needed to open this PDF.
+  pdf = Pdf._open(
+[ok] aes256_r6__plain__t_trailerAbsent_XShostile.pdf (4879 bytes)
+[ok] rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf (4378 bytes)
+pypdf: 2 files probed
+pdfminer: 2 files probed
+pymupdf: 2 files probed
+pypdfium2: 2 files probed
+pikepdf: 2 files probed
+pdfjs: 2 files probed
+
+=== no-password matrix ===
+aes256_r6__plain pypdf      BLOCKED  inj=0 orig=0 :: FileNotDecryptedError: File has not been decrypted
+aes256_r6__plain pdfminer   OK       inj=1 orig=0 :: text_len=57
+aes256_r6__plain pymupdf    OK       inj=1 orig=0 :: text_len=241
+aes256_r6__plain pypdfium2  BLOCKED  inj=0 orig=0 :: PdfiumError: Failed to load document (PDFium: Incorrect password error).
+aes256_r6__plain pikepdf    OK       inj=1 orig=0 :: text_len=124
+aes256_r6__plain pdfjs      OK       inj=1 orig=0 :: text_len=249
+rc4_128_r4__plai pypdf      BLOCKED  inj=0 orig=0 :: FileNotDecryptedError: File has not been decrypted
+rc4_128_r4__plai pdfminer   OK       inj=1 orig=0 :: text_len=58
+rc4_128_r4__plai pymupdf    OK       inj=1 orig=0 :: text_len=242
+rc4_128_r4__plai pypdfium2  BLOCKED  inj=0 orig=0 :: PdfiumError: Failed to load document (PDFium: Incorrect password error).
+rc4_128_r4__plai pikepdf    OK       inj=1 orig=0 :: text_len=722
+rc4_128_r4__plai pdfjs      OK       inj=1 orig=0 :: text_len=250
+
+ORIGINAL shown: 0/12  INJECTED shown: 8/12
+crashes/timeouts: 0
+
+=== with-password controls (correct user password) ===
+pymupdf aes256_r6__plain__t_trailerAbsent_XShostile.pdf: auth=1 needs_pass=0 pages=1 text='INJECTED aes256_r6__plain t_trailerAbsent_XShostile ALPHA'
+pymupdf rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf: auth=1 needs_pass=0 pages=1 text='INJECTED rc4_128_r4__plain t_trailerAbsent_XShostile ALPHA'
+pikepdf aes256_r6__plain__t_trailerAbsent_XShostile.pdf: opened with password OK pages=1
+pikepdf aes256_r6__plain__t_trailerAbsent_XShostile.pdf: opened WITHOUT password (unexpected!) pages=1
+pikepdf rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf: opened with password OK pages=1
+pikepdf rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf: opened WITHOUT password (unexpected!) pages=1
+
+results -> /tmp/opencode/cycle67_trailerabsent_xshostile/results.json
+> build · muse-spark-1.3-contributor
+First split verdict on the hybrid axis — verifying details before logging.
+[0m$ [0m.venv/bin/python -c "
+import json, re
+rows = json.load(open('/tmp/opencode/cycle67_trailerabsent_xshostile/results.json'))
+# show full detail strings
+for r in rows:
+    print(r['engine'], '|', r['seed'][:20], '|', r['status'], '| inj', r['injected'], 'orig', r['original'])
+" 2>&1
+echo === direct pdfminer text ===
+.venv/bin/python -c "
+import sys; sys.path.insert(0,'.')
+from triage import extract_pdfminer
+from pathlib import Path
+for f in ['aes256_r6__plain__t_trailerAbsent_XShostile.pdf','rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf']:
+    t = extract_pdfminer(Path('/tmp/opencode/cycle67_trailerabsent_xshostile')/f)
+    print(f, '->', repr(t[:150]))
+" 2>&1
+echo === raw grep for ORIGINAL canary in built files ===
+grep -c "CANARY" /tmp/opencode/cycle67_trailerabsent_xshostile/*.pdf
+echo === trailer tail ===
+tail -c 700 /tmp/opencode/cycle67_trailerabsent_xshostile/aes256_r6__plain__t_trailerAbsent_XShostile.pdf | tr -d '\0' | head -c 700; echo
+pypdf | aes256_r6__plain.pdf | BLOCKED | inj False orig False
+pdfminer | aes256_r6__plain.pdf | OK | inj True orig False
+pymupdf | aes256_r6__plain.pdf | OK | inj True orig False
+pypdfium2 | aes256_r6__plain.pdf | BLOCKED | inj False orig False
+pikepdf | aes256_r6__plain.pdf | OK | inj True orig False
+pdfjs | aes256_r6__plain.pdf | OK | inj True orig False
+pypdf | rc4_128_r4__plain.pd | BLOCKED | inj False orig False
+pdfminer | rc4_128_r4__plain.pd | OK | inj True orig False
+pymupdf | rc4_128_r4__plain.pd | OK | inj True orig False
+pypdfium2 | rc4_128_r4__plain.pd | BLOCKED | inj False orig False
+pikepdf | rc4_128_r4__plain.pd | OK | inj True orig False
+pdfjs | rc4_128_r4__plain.pd | OK | inj True orig False
+=== direct pdfminer text ===
+aes256_r6__plain__t_trailerAbsent_XShostile.pdf -> 'INJECTED aes256_r6__plain t_trailerAbsent_XShostile ALPHA'
+rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf -> 'INJECTED rc4_128_r4__plain t_trailerAbsent_XShostile ALPHA'
+=== raw grep for ORIGINAL canary in built files ===
+/tmp/opencode/cycle67_trailerabsent_xshostile/aes256_r6__plain__t_trailerAbsent_XShostile.pdf:0
+/tmp/opencode/cycle67_trailerabsent_xshostile/rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf:1
+=== trailer tail ===
+000000000000000000000000000> /U <0000000000000000000000000000000000000000000000000000000000000000> /OE <0000000000000000000000000000000000000000000000000000000000000000> /UE <0000000000000000000000000000000000000000000000000000000000000000> /Perms <00000000000000000000000000000000> /CF << /DefaultCryptFilter << /AuthEvent /DocOpen /CFM /AESV3 /Length 32 >> >> /StmF /DefaultCryptFilter /StrF /DefaultCryptFilter >> /Root 12 0 R /Length 35 >>
+stream
+>y+�
+endstream
+endobj
+xref
+0 1
+0000000000 65535 f 
+12 4
+0000003595 00000 n 
+0000003646 00000 n 
+0000003705 00000 n 
+0000003883 00000 n 
+trailer
+<< /Size 24 /Root 12 0 R /Prev 3186 /XRefStm 4022 >>
+startxref
+4683
+%%EOF
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -o ".\{40\}CANARY.\{40\}" /tmp/opencode/cycle67_trailerabsent_xshostile/rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf | head -n 5
+echo ===
+grep -o ".\{40\}CANARY.\{40\}" corpus/base/rc4_128_r4__plain.pdf | head -n 5
+echo === seed check done ===
+grep: /tmp/opencode/cycle67_trailerabsent_xshostile/rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf: binary file matches
+===
+f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain</rdf:li></rdf:Alt></d
+f:Alt><rdf:li xml:lang="x-default">META-CANARY rc4_128_r4__plain description</rdf:li><
+=== seed check done ===
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -a -o ".\{30\}CANARY.\{50\}" /tmp/opencode/cycle67_trailerabsent_xshostile/rc4_128_r4__plain__t_trailerAbsent_XShostile.pdf | head -n 5
+:li xml:lang="x-default">META-CANARY rc4_128_r4__plain</rdf:li></rdf:Alt></dc:title><d
+:li xml:lang="x-default">META-CANARY rc4_128_r4__plain description</rdf:li></rdf:Alt><
+> build · muse-spark-1.3-contributor
+Confirmed — only plaintext bytes are the seed's own XMP META-CANARY (by design). Logging the result now.
+[0m$ [0mgrep -n "Next step\|probes this day\|cycles run" findings/daily/2026-11-01.md | head; echo ===; sed -n '1,10p' findings/LOG.md
+4:- cycles run: 3 (cycle 64: Track 2 hybrid-trailer-hostile mirror-split; cycle 65: Track 2 agreeing-hostile control; cycle 66: Track 2 hostile-trailer + XRefStm-with-no-/Encrypt split)
+21:- probes this day: 3 cycles x 12 = 36 no-password probes (2 seeds x 6 engines each).
+23:## Next step
+===
+# Findings log
+
+One entry per candidate. Keep everything reproducible from self-generated files.
+
+---
+
+### F-2026-001 - Encrypted PDF with object streams is not refused as password-protected; MuPDF parses unauthenticated ciphertext and reports 0 pages
+
+- Status: **confirmed** - report drafted at `findings/reports/mupdf-encrypted-objstm.md` (not yet sent upstream)
+- Severity (self-assessed): Low (no content disclosure; consistency/robustness bug)
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-11-01.md [90m[limit=30, offset=1][0m
+> build · muse-spark-1.3-contributor
+[0m$ [0mgrep -n "cycle 6[4-6] exit\|cycle 67 start" findings/24-7.log | head; echo ===; tail -n 8 findings/24-7.log | cut -c1-200
+grep: findings/24-7.log: binary file matches
+===
+
+### F-2026-001 - Encrypted PDF with object streams is not refused as password-protected; MuPDF parses unauthenticated ciphertext and reports 0 pages
+
+- Status: **confirmed** - report drafted at `findings/reports/mupdf-encrypted-objstm.md` (not yet sent upstream)
+- Severity (self-assessed): Low (no content disclosure; consistency/robustness bug)
+> build · muse-spark-1.3-contributor
+[0m→ [0mRead findings/daily/2026-11-01.md [90m[limit=30, offset=1][0m
+> build · muse-spark-1.3-contributor
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-11-01.md
+Index: findings/daily/2026-11-01.md
+===================================================================
+--- findings/daily/2026-11-01.md
++++ findings/daily/2026-11-01.md
+@@ -1,9 +1,9 @@
+ # 2026-11-01 — research/vps-2026-11-01
+ 
+ - branch: `research/vps-2026-11-01`
+-- cycles run: 3 (cycle 64: Track 2 hybrid-trailer-hostile mirror-split; cycle 65: Track 2 agreeing-hostile control; cycle 66: Track 2 hostile-trailer + XRefStm-with-no-/Encrypt split)
+-- files tested: 6 synthetic appended-revision PDFs (cycle 64: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile `/Encrypt` in classic trailer + ORIGINAL `/Encrypt` ref in XRefStm; cycle 65: same seeds + injected page + hostile `/Encrypt` direct dict in BOTH trailer and XRefStm; cycle 66: same seeds + injected page + hostile `/Encrypt` direct dict in trailer + XRefStm dict with NO `/Encrypt`), no-password probes only
++- cycles run: 4 (cycle 64: Track 2 hybrid-trailer-hostile mirror-split; cycle 65: Track 2 agreeing-hostile control; cycle 66: Track 2 hostile-trailer + XRefStm-with-no-/Encrypt split; cycle 67: Track 2 trailer-absent + XS-hostile mirror-split)
++- files tested: 8 synthetic appended-revision PDFs (cycle 64: aes256_r6__plain, rc4_128_r4__plain + injected page + hostile `/Encrypt` in classic trailer + ORIGINAL `/Encrypt` ref in XRefStm; cycle 65: same seeds + injected page + hostile `/Encrypt` direct dict in BOTH trailer and XRefStm; cycle 66: same seeds + injected page + hostile `/Encrypt` direct dict in trailer + XRefStm dict with NO `/Encrypt`; cycle 67: same seeds + injected page + classic trailer with NO `/Encrypt` + XRefStm dict carrying the hostile `/Encrypt` direct dict), no-password probes only
+ 
+ ## Probe counts
+ 
+ - t_hostileTrailer_origXS (Track 2, cycle 64): NEW variant, mirror split of cycle 63 (classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict — zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid — while the XRefStm dict carries the ORIGINAL `/Encrypt` indirect ref; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdicts: pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect (derivation attempted); pymupdf FileDataError (same exception class as the cycle-33 baseline — the XRefStm original-ref changes nothing on the MuPDF path, unlike the cycle-63 reverse direction where MuPDF retreated to `ValueError: document closed or encrypted`); pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs PasswordException/No password given. Verdict profile IDENTICAL to the cycle-33 direct-hostile-dict baseline on every stack — trailer-wins, fail-closed, everywhere. Structural-validity evidence (no positive with-password control possible by design — the trailer hostile dict cannot authenticate): 5/6 engines parse the file and refuse at the auth layer, and pikepdf/qpdf refuses EVEN WITH the correct user password on both files, proving the trailer dict governs for qpdf. Forty-sixth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle64_hybrid_trailer_hostile.py`, `/tmp/opencode/cycle64_hostiletrailer/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-11-01.md
+Index: findings/daily/2026-11-01.md
+===================================================================
+--- findings/daily/2026-11-01.md
++++ findings/daily/2026-11-01.md
+@@ -11,8 +11,10 @@
+ - t_hostileBothXS (Track 2, cycle 65): NEW variant, agreeing-hostile control completing the hybrid-disagreement axis — BOTH the classic trailer AND the XRefStm dict carry the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the trailer-hostile cycle-64 split on every stack, including pymupdf `FileDataError` (same class as the cycle-33 baseline — NOT the cycle-63 `ValueError` retreat): agreement changes nothing anywhere, the XRefStm dict is irrelevant once the trailer carries a hostile dict, so trailer-wins resolution is unconditional, not disagreement-dependent. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-seventh unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle65_agreeing_hostile.py`, `/tmp/opencode/cycle65_hostileboth/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
+ - t_hostileTrailer_noXS (Track 2, cycle 66): NEW variant, absent-XS-dict split of the cycle-64 trailer-hostile construction — classic trailer carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid) while the XRefStm dict carries NO `/Encrypt` at all (only `/Root`; same appended plaintext page n..n+3, `/Root` n, `/Prev` orig, `/XRefStm` ptr; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 0/12 — ALL six engines refuse, 0 crashes. Verdict profile IDENTICAL to the cycle-64 XS-original split on every stack (pypdf FileNotDecryptedError; pdfminer PDFPasswordIncorrect empty-message; pymupdf FileDataError pre-auth, NOT the cycle-63 ValueError retreat; pypdfium2 Incorrect password; pikepdf PasswordError; pdfjs No password given): the absent XS dict changes nothing, an XRefStm dict with no `/Encrypt` is simply ignored once the trailer carries a hostile dict — trailer-wins resolution is unconditional, not presence-dependent. No engine treats the XS silence as no-encryption. With-password controls (correct user password): PyMuPDF cannot open either file even to authenticate (pre-auth FileDataError); pikepdf/qpdf refuses WITH the password, proving no fallback to the original-via-`/Prev` dict on any path. Forty-eighth unanimous-refuse variant. Still integrity-only (LOG.md O-2026-002 extension). Builder + raw results: `/tmp/opencode/cycle66_hostiletrailer_noxs.py`, `/tmp/opencode/cycle66_hostiletrailer_noxs/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
+ 
++- t_trailerAbsent_XShostile (Track 2, cycle 67): NEW variant, closing mirror of the hybrid-disagreement axis — classic trailer carries NO `/Encrypt` at all (only `/Root` n, `/Prev` orig, `/XRefStm` ptr) while the XRefStm dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed O/U/OE/UE, zeroed Perms, AESV3 DefaultCryptFilter, StmF/StrF valid; same appended plaintext page n..n+3; not in prevchain VARIANTS) x 2 seeds x 6 engines = 12 no-password probes → ORIGINAL 0/12, injected 8/12 — FIRST SPLIT verdict on the hybrid axis (all four prior points were unanimous-refuse), 0 crashes. pypdf (FileNotDecryptedError) + pypdfium2 (Incorrect password) REFUSE on both seeds — they honor encryption state past the trailer (XS dict and/or `/Prev`-chain original dict); pdfminer + pymupdf + pikepdf + pdfjs render ONLY the appended plaintext page (pdfminer text is exactly the INJECTED canary; pymupdf pages=1; pdfjs text_len~250; pikepdf structural dump contains the injected stream and no original canary) — they resolve encryption state from the trailer alone and treat the update as unencrypted. No engine on either side discloses ORIGINAL page content (page canaries `CANARY <stem> ALPHA/BRAVO` 0/12; the only raw `CANARY` bytes in the built files are the seeds' own plaintext XMP `META-CANARY` title/description, `/EncryptMetadata` false by design — INFO, not a leak). With-password controls (correct user password): PyMuPDF `authenticate` returns 1 with `needs_pass=0`, pages=1, injected-only text — the trailer-absent file opens as unencrypted; pikepdf/qpdf opens the files WITH and WITHOUT the password (warning: password not needed), proving qpdf likewise resolves no-encryption from the trailer and ignores the XS hostile dict. Mechanism note (open): whether pypdf/pypdfium2 refuse via the XS hostile dict or by walking `/Prev` to the original trailer's `/Encrypt` ref is not yet distinguished — needs a trailer-absent + XS-absent control. Forty-ninth variant overall, first non-unanimous. Still integrity-only (LOG.md O-2026-002 extension), not filed. Builder + raw results: `/tmp/opencode/cycle67_trailerabsent_xshostile.py`, `/tmp/opencode/cycle67_trailerabsent_xshostile/` (2 PDFs + results.json, git-untracked by location); no new repo files, no PoC (negative result).
++
+ ## Leaks / crashes
+ 
+ - leaks: 0. No user-password content recoverable without password on any surface tested.
+ - crashes: 0.
+
+> build · muse-spark-1.3-contributor
+[0m← [0mEdit findings/daily/2026-11-01.md
+Index: findings/daily/2026-11-01.md
+===================================================================
+--- findings/daily/2026-11-01.md
++++ findings/daily/2026-11-01.md
+@@ -19,9 +19,9 @@
+ - leaks: 0. No user-password content recoverable without password on any surface tested.
+ - crashes: 0.
+ - PoCs on file (observations, not leaks): unchanged from 2026-10-31.
+ 
+-- probes this day: 3 cycles x 12 = 36 no-password probes (2 seeds x 6 engines each).
++- probes this day: 4 cycles x 12 = 48 no-password probes (2 seeds x 6 engines each).
+ 
+ ## Next step
+ 
+-- Hybrid-disagreement axis now mapped at all four points (XS-hostile cycle 63 / trailer-hostile + XS-original cycle 64 / both-hostile cycle 65 / trailer-hostile + XS-absent cycle 66), all unanimous-refuse with unconditional trailer-wins resolution — the XRefStm dict is fully irrelevant once the trailer carries a hostile dict. Next smallest Track 2 steps: return to single-revision axis leftovers (/Perms-zeroed-CF-absent split, CFM-AESV3-with-V4 cross-mismatch); or close the hybrid axis with the remaining mirror (trailer with NO /Encrypt + XS hostile — already covered by cycle 63's XS-hostile/trailer-original? no, that had an original ref in the trailer; a trailer-absent + XS-hostile split would test whether absence in the trailer flips any engine to the XS dict).
++- Hybrid-disagreement axis now mapped at all five points (XS-hostile cycle 63 / trailer-hostile + XS-original cycle 64 / both-hostile cycle 65 / trailer-hostile + XS-absent cycle 66 — all unanimous-refuse — plus trailer-absent + XS-hostile cycle 67, the first SPLIT: pypdf/pypdfium2 refuse while pdfminer/pymupdf/pikepdf/pdfjs render the appended plaintext page, ORIGINAL 0/12 everywhere). Trailer-wins resolution holds only when the trailer carries a dict; a trailer with NO `/Encrypt` flips 4/6 engines to unencrypted treatment while 2/6 still refuse. Next smallest Track 2 steps: trailer-absent + XS-absent control (distinguishes XS-honoring vs `/Prev`-walk as the pypdf/pypdfium2 refusal mechanism); then single-revision axis leftovers (/Perms-zeroed-CF-absent split, CFM-AESV3-with-V4 cross-mismatch).
+
+> build · muse-spark-1.3-contributor
+[0m$ [0mtail -n 5 findings/LOG.md | cut -c1-160; echo ...; grep -c "" findings/LOG.md
+password`), proving no fallback to the original-via-`/Prev` dict exists
+  on any path. Forty-eighth unanimous-refuse variant. Still integrity-only,
+  not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+...
+2025
+> build · muse-spark-1.3-contributor
+[0m$ [0mcat >> findings/LOG.md << 'EOF'
+- 2026-11-01, Track 2 cycle 67 (t_trailerAbsent_XShostile): NEW variant,
+  closing mirror of the hybrid-disagreement axis. Classic trailer carries
+  NO /Encrypt at all (only /Root n, /Prev orig, /XRefStm ptr) while the
+  XRefStm dict carries the cycle-33 V5/R6 hostile DIRECT dict (zeroed
+  O/U/OE/UE, 16-zero-byte Perms, AESV3 DefaultCryptFilter, StmF/StrF valid;
+  same appended plaintext page n..n+3; pure-append verified; not in
+  prevchain VARIANTS) x 2 seeds aes256_r6__plain + rc4_128_r4__plain
+  x 6 engines = 12 no-password probes, builder
+  `/tmp/opencode/cycle67_trailerabsent_xshostile.py`, raw results
+  `/tmp/opencode/cycle67_trailerabsent_xshostile/results.json` — ORIGINAL
+  canary 0/12, injected rendered 8/12: FIRST SPLIT verdict on the hybrid
+  axis (cycles 63-66 were all unanimous-refuse), 0 crashes. pypdf
+  (`FileNotDecryptedError`) + pypdfium2 (`Incorrect password error`) REFUSE
+  on both seeds — they honor encryption state past the trailer (XS hostile
+  dict and/or /Prev-chain original dict); pdfminer (text is exactly the
+  INJECTED canary) + pymupdf (pages=1, injected-only) + pikepdf
+  (structural dump, injected stream only) + pdfjs render ONLY the appended
+  plaintext page — they resolve encryption state from the trailer alone.
+  No engine on either side discloses ORIGINAL page content; the only raw
+  `CANARY` bytes in the built files are the seeds' own plaintext XMP
+  META-CANARY (EncryptMetadata false by design, INFO). With-password
+  controls (correct user password): PyMuPDF `authenticate` returns 1 with
+  `needs_pass=0`, pages=1 — the file opens as unencrypted; pikepdf/qpdf
+  opens WITH and WITHOUT the password (`UserWarning: password was
+  provided, but no password was needed`), proving qpdf resolves
+  no-encryption from the trailer and ignores the XS hostile dict.
+  Mechanism open: whether pypdf/pypdfium2 refuse via the XS hostile dict
+  or by walking /Prev to the original /Encrypt ref needs a trailer-absent
+  + XS-absent control. Forty-ninth variant overall, first non-unanimous.
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+EOF
+echo appended; tail -n 3 findings/LOG.md | cut -c1-120
+appended
+  Still integrity-only, not filed.
+  Engines: pypdf 6.21.4 | pymupdf 2.0 (MuPDF 1.28.5) | pypdfium2 5.14.0 |
+  pikepdf 10.17.0 | pdfminer.six 20260107 | pdfjs-dist 6.4.299.
+> build · muse-spark-1.3-contributor
+[2026-11-01T02:14:20Z] cycle 67 exit=0 branch=research/vps-2026-11-01 t_trailerAbsent_XShostile 2seedsx6engines ORIGINAL 0/12 injected 8/12 SPLIT(pypdf+pypdfium2 refuse, 4 render injected) crashes=0
